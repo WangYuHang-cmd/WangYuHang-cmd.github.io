@@ -4,52 +4,24 @@ permalink: /file/awards-zh/index.html
 title: Awards-zh
 ---
 
-> 更新时间：2024/05/20 &nbsp; [English Version (英文)](https://caihanlin.com/awards/)
+> Update Date：2024/08/17 &nbsp; [English Version (英文)](https://WangYuHang-cmd/awards/)
 
-## 综合奖学金
+## Scholarships
 
-- 2023年12月：AAAI本科生学者奖学金（¥30000）<br>计算机领域顶级会议全额资助，每年奖励18名杰出本科生
-- 2024年05月：施然创新奖学金（¥10000）<br>福州大学最高奖学金之一，每年奖励10名杰出本科生
-- 2023年08月：能化奖学金（¥10000）<br>福州大学最高奖学金之一，每年奖励15名杰出本科生
-- 2023年05月：厦航奖学金（¥5000）
-- 2021-2024：福州大学综合一等奖学金（¥15000，四次）<br>中外合作办学，双学位项目联合奖学金
-- 2024年05月：爱尔兰国立梅努斯大学最佳毕业论文奖（¥3000）
-- 2023年10月：爱尔兰国立梅努斯大学最佳学术表现奖（¥750）
-- 2022年10月：爱尔兰国立梅努斯大学最佳课程项目奖（¥750）
+- 2021/9：Nanjing University of Information Science and Technology First Prize<br>
 
-## 科研基金
+## Fund Awards
 
-- 2024-2025：中国国际大学生创新大赛奖励基金<br>竞赛奖励基金（¥10000）基金主持人
-- 2023-2024：国家级大学生创新创业训练计划<br>国重点（No.202310386056， ¥20000）基金主持人
-- 2023-2024：全国青年科普创新实验暨项目大赛奖励基金<br>竞赛奖励基金（¥5000）基金主持人
+- 2020-2021：**First prize**, bonus RMB 1,000 & Free Business Startup Office Utilization  right in university-level Entrepreneurship Plan Competition <br>
 
-## 科研竞赛
+## Research Competition
 
-- 2024年01月：第9届中国国际大学生创新大赛国家级铜奖（互联网+）
-- 2023年08月：第9届“3S杯”大学生物联网技术与应用大赛国家级二等奖
-- 2023年08月：第9届全国青年科普创新实验暨项目大赛最佳技术奖、国家级三等奖
-- 2023年08月：第11届“NCDA”杯全国高校数字艺术设计大赛福建省级赛二等奖
-- 2023年08月：第16届中国大学生计算机设计大赛福建省级赛三等奖
-- 2023年06月：第3届福建省青年科普创新实验暨项目大赛福建省级赛一等奖（冠军）
-- 2023年05月：第25届国际大学生数学建模竞赛国际级特等奖提名（所有20508篇论文中的前1%）
-- 2023年05月：第7届米兰设计周中国高校设计学科师生优秀作品展省级赛三等奖
-- 2022年11月：第31届“高教社杯”全国大学生数学建模竞赛本科组福建赛区一等奖（前8%）
-- 2022年10月：爱尔兰国立梅努斯大学年度最佳学生项目奖（前8%）
-- 2022年08月：第15届中国大学生计算机设计大赛国家级三等奖
-- 2022年06月：福州大学游泳比赛100米自由泳冠军、50米蛙泳季军（达国家二级运动员标准）
-- 2022年06月：第13届“南威杯”福州大学数学建模竞赛三等奖
-- 2022年05月：第15届中国大学生计算机设计大赛福建省级赛二等奖
-- 2022年05月：第1届全国大学生新媒体大赛国家级三等奖
-
-## 社会服务
-
-- 2022年04月：福州大学年度“最美志愿者”（每年仅10名）
-- 2021年07月：第44届世界遗产大会优秀志愿者
-- 2021年07月：第4届数字中国建设峰会优秀志愿者
-- 2023年05月：福州大学年度优秀学生干部
-- 2022年05月：福州大学年度优秀共青团员
-- 2021年05月：福州大学年度三好学生
-- 2021年09月-2022年09月：福州大学团委志愿者工作部副部长
-- 2020年09月-2021年09月：福州大学梅努斯国际工程学院班长
-- 2022年09月至今：IEEE协会，AAAI协会，中国人工智能学会CAAI（学生会员）
+- 2023/10: **Silver Medal** in 2023 China Collegiate Programming Contest, Guilin site (Team: 廉颇老矣，尚能夺金)
+- 2023/5: **Gold Medal** in 2023 Jiangsu Collegiate Programming Contest (Team:)
+- 2025/5: **Gold Medal** in 2023 ICPC Xi'an National Invitational Programming Contest (Team: [Top dogs like real party](https://board.xcpcio.com/icpc/48th/xian-invitational?group=official))
+- 2022/12: **Bronze Medal** in 2022 ICPC Asia Hefei Regional Contest ()
+- 2022/12: **Bronze Medal** in 2022 ICPC Asia Jinan Regional Contest ()
+- 2022/05: **Silver Medal** in 2022 Jiangsu Collegiate Programming Contest (Team:[生椰拿铁不拿铁](https://board.xcpcio.com/provincial-contest/2022/jiangsu?group=official))
+- 2022/05: **1st Prize** in China College Group Programming Ladder Tournament (CCCC_GLPT)
+- 2020/12: **3rd place** in College Sports 1500 meters Game 
 
