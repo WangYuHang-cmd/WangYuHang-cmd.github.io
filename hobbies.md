@@ -6,47 +6,44 @@ title: Hobbies
 
 # Hobbies
 
-## Swimming & Surfing
+## Soccer & Running
 
-<div class="third">
-<img src="/images/swimming2.JPG">
-<img src="/images/swimming.JPG">
-<img src="/images/surfing1.JPG">
+
+
+<div style="display: flex; align-items: center; justify-content: center;">
+    <img src="/images/RunningPrize.JPG" alt="Running Prize" style="width: 300px; height: auto; object-fit: cover; margin-right: 10px;">
+    <img src="/images/Hiking.jpg" alt="Hiking" style="width: 300px; height: auto; object-fit: cover;">
 </div>
-<br>Swimming removes my worries, refreshes my body, and brings me courage to address any challenges. I extremely enjoy the feeling of being immersed in the water. Besides, I am a member of the Swimming Team at Fuzhou University, where I meet many sincere friends. I have reached **China National Second-level athlete Standard** in 50m breaststroke and won **Five Gold Medals** during my 10-year swimming career. Recently, I am also keen on surfing.
 
-## Workshop
+<br>I started playing soccer when I was 10 years old, and in middle school I used to play for **NJ Starhawks** as a winger. In high school, I led my class to **win the championship** of school's soccer league, playing as a back. In college, I joined the Automation College soccer team and the Nanjing Information Engineering University soccer team, playing as a center forward. I once scored two goals in ten minutes in a soccer league game.
 
-<div class="third">
-<img src="/images/prelection1.JPG">
-<img src="/images/speech1.JPG">
-<img src="/images/speech3.JPG">
+In addition, I'm a middle-distance jogger amateur. I once won the third in the men's 1500m event at the college games. During the week, I also go to the gym and jog for an hour. Running allows me to make appointments for my body and mind, releases stress, and allows me to be more focused in my work. As my favorite author, Haruki Murakami, says, no matter how insignificant an action is, as long as you keep at it day after day, something like an objective perception will always come out of it. <br>
+
+
+
+
+
+## Cooking
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="flex: 0 0 70%; margin-right: 20px;">
+        <p>I really enjoy cooking, it's something that gives me a sense of fulfillment. I specialize in braised dishes and modern improvements of some traditional dishes. I am also very passionate about experimenting with food. If you are interested, you can join me in exploring the cuisines of different countries and regions.</p>
+    </div>
+    <div class="third" style="flex: 0 0 25%; text-align: right;">
+        <img src="/images/Food1.jpg" style="width: 100%; margin-right: 10px;">
+    </div>
 </div>
-<br>There must be **something truly magical** about standing on stage to give a fantastic speech, which considerably lifts my spirits and energizes my entire body. If you desire to master a specific knowledge in depth, just give a prelection. If you can explain to others for complete understanding, you are already an expert. I really enjoy the accomplishment of imparting my knowledge to others, so what I strive for is to be **a student's favorite professor** at the [best universities in my hometown].
 
-[best universities in my hometown]:https://www.fzu.edu.cn/
-
-
-## Past Hobbies
-
-I previously enjoyed long-distance running, [vlog making](https://space.bilibili.com/594030035), and computer game developing/playing. However, I have no time to do any of these things recently.
-
-## My Cat
-
-She is my love. Her name is Qbao (Q宝).
-
-<div>
-<img src="/images/cat.JPG">
-</div>
 <br>
 
-## Chat with me
 
-**Jan 2023:** I have set up the [online-coffee-time](https://calendly.com/lancecai/meet-with-lance) (Inspired by [Shangzhe Wu](https://elliottwu.com/)). Welcome to chat with me!
+
+[You can book a session with me ]:
 
 <!-- Calendly inline widget begin -->
 
-<div class="calendly-inline-widget" data-url="https://calendly.com/lancecai/meet-with-lance" style="min-width:320px;height:630px;"></div>
+<div class="calendly-inline-widget" data-url="https://calendly.com/yuhangw-usf/30min" style="min-width:320px;height:630px;"></div>
 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
 <!-- Calendly inline widget end -->
 

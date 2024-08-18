@@ -8,16 +8,16 @@ title: Awards-zh
 
 ## Scholarships
 
-- 2021/9：Nanjing University of Information Science and Technology First Prize<br>
+- 2021/9：南京信息工程大学一等奖学金<br>
 
 ## Fund Awards
 
-- 2020-2021：**First prize**, bonus RMB 1,000 & Free Business Startup Office Utilization  right in university-level Entrepreneurship Plan Competition <br>
+- 2020-2021：校创新创业大赛一等奖 & RMB 1k奖励基金 & 创业办办公室一年免租金使用权 <br>
 
 ## Research Competition
 
-- 2023/10: **Silver Medal** in 2023 China Collegiate Programming Contest, Guilin site (Team: 廉颇老矣，尚能夺金)
-- 2023/5: **Gold Medal** in 2023 Jiangsu Collegiate Programming Contest (Team:)
+- 2023/10: 在CCPC中国大学生程序设计竞赛桂林站获得**银牌** (Team: 廉颇老矣，尚能夺金)
+- 2023/5: 在ICPC全球大学生程序设计竞赛西安全国邀请赛获得**金牌** (Team:)
 - 2025/5: **Gold Medal** in 2023 ICPC Xi'an National Invitational Programming Contest (Team: [Top dogs like real party](https://board.xcpcio.com/icpc/48th/xian-invitational?group=official))
 - 2022/12: **Bronze Medal** in 2022 ICPC Asia Hefei Regional Contest ()
 - 2022/12: **Bronze Medal** in 2022 ICPC Asia Jinan Regional Contest ()

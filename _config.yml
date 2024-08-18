@@ -2,11 +2,11 @@ title: Yuhang Wang
 # tagline: Here is personal website of Hanlin Cai. Powered by Jekyll, based on the Minimal Mistakes theme.
 # description: Two roads diverged in woods, I took the one less traveled by.
 #Comment out url when working locally to resolve base urls correctly
-url: https://github.com/WangYuHang-cmd/
+url: https://WangYuHang-cmd.github.io/
 # Owner/author information
 owner:
   name: Yuhang Wang
-  avatar: Yuhang.png
+  avatar: Yuhang.jpg
   # bio: Two roads diverged in woods, I took the one less traveled by.
   email: yuhangw@usf.edu
   cv: https://github.com/WangYuHang-cmd/wangyuhang-cmd.github.io/file/CV-Yuhang.pdf
@@ -18,9 +18,9 @@ owner:
   bilibili: 1252376239
   researchgate: https://www.researchgate.net/profile/Yuhang-Wang-72
   zhihu: https://www.zhihu.com/people/wang-yu-hang-88-87
-  # facebook: caihanlin2002
-  # twitter: lancecai2002
-  # instagram: lancecai2002
+  # facebook: henrywang
+  # twitter: henrywang
+  # instagram: henrywang
   # lastfm:
   # tumblr:
   # For Google Authorship https://plus.google.com/authorship
@@ -38,8 +38,6 @@ google_verify: "SkiyuGpJOKT74vv5GmXLvYXXDkXy4v8VWPtbelYz3Hs"
 links:
   - title: About Me
     url: /
-  - title: Publications
-    url: /publications/
   - title: Awards
     url: /awards/
   - title: Hobbies
@@ -48,9 +46,11 @@ links:
     url: /blogs/
   - title: Teams
     url: /teams/
+  # - title: Publications
+  #   url: /publications/
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone: China/Beijing
+timezone: America/New_York
 future: true
 highlighter: rouge
 # markdown: kramdown
