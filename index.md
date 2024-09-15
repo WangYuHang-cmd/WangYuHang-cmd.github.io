@@ -6,7 +6,7 @@ layout: page
 
 <img src="Yuhang.jpg" class="floatpic" width="360" height="480">
 
-Here is **Yuhang Wang (Lance, 王雨航)**.
+Here is **Yuhang Wang (Henry, 王雨航)**.
 
 I am a PhD student majoring in Civil Engineering Transportation at University of South Florida. Currently, I serve as a research assistant at the MOTIF-Lab, advised by [Prof. Hao Zhou](https://sites.google.com/view/haozhou-cv). I also spent a lovely one year research program with [Prof. Peng Song](https://istd.sutd.edu.sg/people/faculty/peng-song/#research) at Singapore University of Technology and Design.
 
