@@ -14,7 +14,7 @@ If you are interested in any aspect of me, I would love to chat and collaborate,
 
 ## Academic Background
 
-- **Oct 2024 - Present:** University of South Florida  (Tansporatation Phd student, supervised by [Prof. Hao Zhou](https://sites.google.com/view/haozhou-cv))
+- **Aug 2024 - Present:** University of South Florida  (Tansporatation Phd student, supervised by [Prof. Hao Zhou](https://sites.google.com/view/haozhou-cv))
 - **Oct 2023 - Jul 2024:** Singapore University of Technology and Design (Visiting Student, supervised by [Prof. Peng Song](https://istd.sutd.edu.sg/people/faculty/peng-song))
 - **Sep 2020 - June 2024:** Nanjing University of Information Science and Technology (BEng, CS, supervised by [Prof. Xiaolong Xu](https://faculty.nuist.edu.cn/xuxiaolong/zh_CN/index/87901/list/index.htm))
 
