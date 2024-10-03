@@ -34,6 +34,7 @@ My current research focuses on applying deep learning and the features of self-d
 
 ## News and Updates
 
+- Oct 2024: It's happy to share that Our extended abstract is accepted by the **Second USF Artificial Intelligence + X Symposium Poster** !
 - Sep 2024: It's a great honor to share our Paper [**Computational design of custom-fit PAP masks**](https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub) getting the Best Paper reward in SMI 2024.
 - May 2024:  Very excited to get a PhD offer from Civil Engineering department at University of South Florida!
 - May 2024:  Congratulations to our article  [**Computational design of custom-fit PAP masks**](https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub) for being accepted for presentation at the [Shape Modeling International 2024 conference](https://smiconf.github.io/2024/)!
