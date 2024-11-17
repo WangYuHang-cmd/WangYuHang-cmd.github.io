@@ -44,11 +44,23 @@ My current research focuses on applying deep learning and the features of self-d
 - May 2023:  Winning **Gold Medal** at the ICPC National Contest! [Team: Tops dogs like real party rank: 16](https://board.xcpcio.com/icpc/48th/xian-invitational)
 - Nov 2021:  Join the team supervised by [Prof. Xiaolong Xu](https://faculty.nuist.edu.cn/xuxiaolong).
 
-<br>
-
-<div>
+<div style="display: flex; justify-content: space-between; gap: 20px; margin: 20px 0;">
+<div style="flex: 1; min-width: 300px;">
 <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=Nz73efCm0j_zrK-Hu4wIlrHLSqmw5p95zxZhqDcMIG0"></script>
 </div>
 
-<br>
+<div style="flex: 1; min-width: 300px; border: 1px solid #eee; border-radius: 8px; padding: 15px;">
+<h2 style="margin: 0 0 15px 0; font-size: 1.2em;">Latest Updates</h2>
+<a class="twitter-timeline" data-lang="en" data-theme="light" href="https://twitter.com/Henry_YhWang?ref_src=twsrc%5Etfw">Tweets by Henry_YhWang</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+
+
+
+
+
+
+
 

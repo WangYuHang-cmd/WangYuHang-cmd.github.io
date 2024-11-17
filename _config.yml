@@ -84,4 +84,8 @@ disqus:
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "minimal-mistakes.sublime-project", "minimal-mistakes.sublime-workspace"]
 
+kramdown:
+  parse_block_html: true
+
+
 # Latest update in 2023/12/10 by Hanlin Cai.
