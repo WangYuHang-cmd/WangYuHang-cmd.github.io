@@ -34,6 +34,8 @@ My current research focuses on applying deep learning and the features of self-d
 
 ## News and Updates
 
+- Jul 2024: Our work **From OpenLKA to LKAlert: An End-to-End Pipeline for Real-World Lane-Keeping Safety** is Abstract Accepted by INFORMS 2025, will give a presentation at "Intelligent Transportation Systems and Cybersecurity" session. See you in Atlanta!
+- Jun 2024: Our work [**Openlka: An open dataset of lane keeping assist from recent car models under real-world driving conditions**](https://github.com/OpenLKA/OpenLKA) is accepted by ITSC 2025.
 - Oct 2024: It's happy to share that Our extended abstract is accepted by the **Second USF Artificial Intelligence + X Symposium Poster** !
 - Sep 2024: It's a great honor to share our Paper [**Computational design of custom-fit PAP masks**](https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub) getting the Best Paper reward in SMI 2024.
 - May 2024:  Very excited to get a PhD offer from Civil Engineering department at University of South Florida!
