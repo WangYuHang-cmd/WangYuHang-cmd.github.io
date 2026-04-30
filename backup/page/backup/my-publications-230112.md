@@ -16,7 +16,6 @@ pubs:
     title: "An IoT Garbage Monitoring System for Effective Garbage Management"
     url: "https://caihanlin.com/mypaper/202208cenim.pdf"
     slides: "https://caihanlin.com/mypaper/slides/2022-CENIM-Pre-v2.pdf"
-    Talk: "https://www.bilibili.com/video/BV1jv4y1S7VQ/"
     keywords: "IoT"
     month: "November"
     year: "2022"
