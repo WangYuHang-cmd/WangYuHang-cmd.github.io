@@ -32,7 +32,47 @@ My current research focuses on applying deep learning and the features of self-d
 
 ---
 
+## Featured Projects
+
+<style>
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.1rem;margin:1.1rem 0 .6rem}
+.feat-card{display:block;background:#fff;border:1px solid #ececec;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;transition:transform .15s ease,box-shadow .15s ease}
+.feat-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.feat-card .fthumb{aspect-ratio:16/9;overflow:hidden;background:#f2f4f8}
+.feat-card .fthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.feat-card .fbody{padding:.7rem .9rem .9rem}
+.feat-card .fvenue{font-size:.72rem;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:.03em}
+.feat-card h4{margin:.15rem 0 .3rem;font-size:1.1rem;color:#1f2937}
+.feat-card p{font-size:.86rem;color:#4b5563;margin:0}
+.feat-more{display:inline-block;margin:.3rem 0 .2rem;font-weight:700;color:#2563eb;text-decoration:none}
+.feat-more:hover{text-decoration:underline}
+</style>
+
+<div class="feat-grid" markdown="0">
+  <a class="feat-card" href="/openlka/">
+    <div class="fthumb"><img src="/images/th_openlka.jpg" alt="OpenLKA"></div>
+    <div class="fbody"><div class="fvenue">IEEE ITSC 2025</div><h4>OpenLKA</h4><p>Open dataset of Lane Keeping Assist from 62 production vehicles.</p></div>
+  </a>
+  <a class="feat-card" href="/adasto/">
+    <div class="fthumb"><img src="/images/th_adasto.jpg" alt="ADAS-TO"></div>
+    <div class="fbody"><div class="fvenue">IEEE ITSC 2027</div><h4>ADAS-TO</h4><p>15,000+ real-world ADAS takeover events, multimodal &amp; VLM-annotated.</p></div>
+  </a>
+  <a class="feat-card" href="/baton/">
+    <div class="fthumb"><img src="/images/th_baton.jpg" alt="BATON"></div>
+    <div class="fbody"><div class="fvenue">Preprint 2026</div><h4>BATON</h4><p>Benchmark for bidirectional human–automation control transitions.</p></div>
+  </a>
+  <a class="feat-card" href="/drivedna/">
+    <div class="fthumb"><img src="/images/th_drivedna.jpg" alt="DriveDNA"></div>
+    <div class="fbody"><div class="fvenue">Preprint 2026</div><h4>DriveDNA</h4><p>Driving-style identification from naturalistic driving.</p></div>
+  </a>
+</div>
+
+<a class="feat-more" href="/projects/">See all projects →</a>
+
+---
+
 ## News and Updates
+- Aug 2026: 🎉 Three papers are accepted by **ITSC 2027**: [**ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement**](/adasto/), **Cut-In Gap Acceptance Toward Autonomous vs. Human-Driven Vehicles: Evidence from the Waymo Open Motion Dataset**, and **A Closed-loop, State-centric, Multi-agent Framework for Passenger Load Estimation from Heterogeneous Data Streams**.
 - Oct 2025: 3 papers are accepted by TRBAM, see you in D.C
 - Jul 2025: Our work **From OpenLKA to LKAlert: An End-to-End Pipeline for Real-World Lane-Keeping Safety** is Abstract Accepted by INFORMS 2025, will give a presentation at "Intelligent Transportation Systems and Cybersecurity" session. See you in Atlanta!
 - Jun 2025: Our work [**Openlka: An open dataset of lane keeping assist from recent car models under real-world driving conditions**](https://github.com/OpenLKA/OpenLKA) is accepted by ITSC 2025.

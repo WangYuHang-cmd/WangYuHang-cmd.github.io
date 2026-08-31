@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles">
+  <meta name="description" content="OpenLKA is the first large-scale open dataset of Lane Keeping Assist (LKA) from 62 production vehicle models under real-world driving, pairing decoded CAN-bus logs with synchronized 1080p video.">
+  <meta name="keywords" content="Lane Keeping Assist, LKA, ADAS, autonomous driving, open dataset, CAN bus, driving safety, computer vision">
+  <meta name="author" content="Yuhang Wang, Abdulaziz Alhuraish, Shengming Yuan, Shuyi Wang, Hao Zhou">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+  <meta property="og:title" content="OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles">
+  <meta property="og:description" content="The first large-scale open dataset of real-world Lane Keeping Assist performance across 62 production vehicle models.">
+  <meta property="og:url" content="https://wangyuhang-cmd.github.io/openlka/">
+  <meta property="og:image" content="https://wangyuhang-cmd.github.io/openlka/static/images/openlka_view.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenLKA: An Open Dataset of Lane Keeping Assist">
+  <meta name="twitter:description" content="The first large-scale open dataset of real-world Lane Keeping Assist performance across 62 production vehicle models.">
+  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/openlka/static/images/openlka_view.png">
+
+  <meta name="citation_title" content="OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions">
+  <meta name="citation_author" content="Wang, Yuhang">
+  <meta name="citation_author" content="Alhuraish, Abdulaziz">
+  <meta name="citation_author" content="Yuan, Shengming">
+  <meta name="citation_author" content="Wang, Shuyi">
+  <meta name="citation_author" content="Zhou, Hao">
+  <meta name="citation_publication_date" content="2025">
+  <meta name="citation_conference_title" content="IEEE International Conference on Intelligent Transportation Systems (ITSC)">
+
+  <title>OpenLKA · An Open Dataset of Lane Keeping Assist</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
+  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
+  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
+  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
+  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
+  <script defer src="/projectpage-lib/js/index.js"></script>
+
+  <style>
+    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
+    .home-link:hover{background:#1d4ed8;color:#fff}
+    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
+    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
+    .stat{text-align:center;min-width:120px}
+    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
+    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
+    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
+    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+    .gif-card img{display:block;width:100%;height:auto}
+    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
+  </style>
+</head>
+<body>
+
+  <a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works Dropdown -->
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works">
+      <i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header"><h4>More Works</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="works-list">
+        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events with multimodal signals.</p><span class="work-venue">IEEE ITSC 2027</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/drivedna/" class="work-item"><div class="work-info"><h5>DriveDNA</h5><p>Driving-style identification from naturalistic driving.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
+              <span class="author-block">Abdulaziz Alhuraish,</span>
+              <span class="author-block">Shengming Yuan,</span>
+              <span class="author-block">Shuyi Wang,</span>
+              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of South Florida · MOTIF-Lab<br>IEEE International Conference on Intelligent Transportation Systems (ITSC 2025)</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://ieeexplore.ieee.org/document/11423194/" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper (IEEE)</span></a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2505.09092" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/OpenLKA/OpenLKA" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img class="teaser-img" src="static/images/openlka_view.png" alt="OpenLKA overview" loading="lazy"/>
+        <h2 class="subtitle has-text-centered" style="margin-top:1rem">
+          OpenLKA is the first large-scale, open, real-world dataset focused on Lane Keeping Assist (LKA) performance,
+          pairing decoded CAN-bus logs with synchronized front-camera video.
+        </h2>
+        <div class="stat-band">
+          <div class="stat"><div class="num">389 h</div><div class="lbl">LKA driving</div></div>
+          <div class="stat"><div class="num">62</div><div class="lbl">vehicle models</div></div>
+          <div class="stat"><div class="num">1080p</div><div class="lbl">20 fps video</div></div>
+          <div class="stat"><div class="num">MIT</div><div class="lbl">license</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              OpenLKA is the first open, large-scale dataset for evaluating Lane Keeping Assist (LKA). It comprises roughly
+              389 hours of LKA-steered driving from 62 production vehicle models, collected through systematic road testing
+              in Tampa, Florida and augmented with open-source community contributions. Each drive pairs reverse-engineered
+              CAN-bus logs — which expose otherwise-hidden LKA operating signals — with synchronized 1080p / 20&nbsp;fps
+              front-camera video and scenario annotations spanning degraded lane markings, complex road geometries, adverse
+              weather, and varied traffic. Our analysis reveals common LKA failure modes across perception, planning, and
+              control, with marked performance degradation near merges and diverges and under poor lane markings. The dataset
+              is released under the MIT License to support reproducible research on real-world driver-assistance safety.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image carousel -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/openlka_fleet.png" alt="Vehicle fleet" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">A fleet of 62 production vehicle models spanning many makes and model years.</h2>
+          </div>
+          <div class="item">
+            <img src="static/images/openlka_comma.png" alt="Data collection device" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">Data collection with a comma device to decode CAN-bus LKA signals alongside video.</h2>
+          </div>
+          <div class="item">
+            <img src="static/images/openlka_perception.png" alt="Perception analysis" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">Perception analysis of lane detection quality across scenarios.</h2>
+          </div>
+          <div class="item">
+            <img src="static/images/openlka_lkalert.png" alt="LKAlert model" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">LKAlert: an end-to-end pipeline predicting real-world lane-keeping safety.</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Failure scenario gallery -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">LKA Failure Scenarios</h2>
+      <p class="has-text-centered content">Real captured moments where production LKA degrades or disengages.</p>
+      <div class="gif-grid">
+        <div class="gif-card"><img src="static/images/olka_fail_glare.gif" alt="Sun glare failure" loading="lazy"/><div class="cap">Sun glare washing out lane markings.</div></div>
+        <div class="gif-card"><img src="static/images/olka_fail_night.gif" alt="Night failure" loading="lazy"/><div class="cap">Low-light nighttime driving.</div></div>
+        <div class="gif-card"><img src="static/images/olka_fail_edge.gif" alt="Road edge failure" loading="lazy"/><div class="cap">Ambiguous road edges and geometry.</div></div>
+        <div class="gif-card"><img src="static/images/olka_fail_faded.gif" alt="Faded markings failure" loading="lazy"/><div class="cap">Faded or worn lane markings.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{wang2025openlka,
+  title     = {OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions},
+  author    = {Wang, Yuhang and Alhuraish, Abdulaziz and Yuan, Shengming and Wang, Shuyi and Zhou, Hao},
+  booktitle = {IEEE International Conference on Intelligent Transportation Systems (ITSC)},
+  year      = {2025}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  </main>
+</body>
+</html>

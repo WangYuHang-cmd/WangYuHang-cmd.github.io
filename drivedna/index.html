@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="DriveDNA: A Benchmark for Driving Style Identification">
+  <meta name="description" content="DriveDNA is a large-scale multimodal naturalistic driving dataset and benchmark for driving-style identification: 4,121 drives from 465 drivers, 975 hours, with driver re-identification and route-leakage robustness.">
+  <meta name="keywords" content="driving style, driver identification, naturalistic driving, benchmark, re-identification, behavior modeling, autonomous driving">
+  <meta name="author" content="Yuhang Wang, Lingyao Li, Hao Zhou">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+  <meta property="og:title" content="DriveDNA: A Benchmark for Driving Style Identification">
+  <meta property="og:description" content="A large-scale multimodal naturalistic driving dataset and benchmark for driving-style identification.">
+  <meta property="og:url" content="https://wangyuhang-cmd.github.io/drivedna/">
+  <meta property="og:image" content="https://wangyuhang-cmd.github.io/drivedna/static/images/drivedna_teaser.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DriveDNA: Driving Style Identification">
+  <meta name="twitter:description" content="A large-scale multimodal naturalistic driving dataset and benchmark for driving-style identification.">
+  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivedna/static/images/drivedna_teaser.png">
+
+  <meta name="citation_title" content="DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification">
+  <meta name="citation_author" content="Wang, Yuhang">
+  <meta name="citation_author" content="Li, Lingyao">
+  <meta name="citation_author" content="Zhou, Hao">
+  <meta name="citation_publication_date" content="2026">
+
+  <title>DriveDNA · Benchmark for Driving Style Identification</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
+  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
+  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
+  <script defer src="/projectpage-lib/js/index.js"></script>
+  <style>
+    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
+    .home-link:hover{background:#1d4ed8;color:#fff}
+    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
+    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
+    .stat{text-align:center;min-width:120px}
+    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
+    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
+  </style>
+</head>
+<body>
+  <a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a>
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
+      <div class="works-list">
+        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events with multimodal signals.</p><span class="work-venue">IEEE ITSC 2027</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/drivemotion/" class="work-item"><div class="work-info"><h5>DriveMotion</h5><p>Driver body-motion forecasting benchmark.</p><span class="work-venue">Dataset 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
+              <span class="author-block">Lingyao Li,</span>
+              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of South Florida · MOTIF-Lab<br>arXiv preprint · 2026</span>
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block"><a href="https://huggingface.co/papers/2607.23822" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
+                <span class="link-block"><a href="https://arxiv.org/abs/2607.23822" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
+                <span class="link-block"><a href="https://github.com/WangYuHang-cmd/DriveDNA" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
+                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/DriveDNA" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img class="teaser-img" src="static/images/drivedna_teaser.png" alt="DriveDNA teaser" loading="lazy"/>
+        <h2 class="subtitle has-text-centered" style="margin-top:1rem">
+          Driving style as a consistent, driver-specific behavioral signature — isolated from vehicle, route, and environment.
+        </h2>
+        <div class="stat-band">
+          <div class="stat"><div class="num">4,121</div><div class="lbl">drives</div></div>
+          <div class="stat"><div class="num">465</div><div class="lbl">drivers</div></div>
+          <div class="stat"><div class="num">975 h</div><div class="lbl">driving @10 Hz</div></div>
+          <div class="stat"><div class="num">.935</div><div class="lbl">re-ID AUROC</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              DriveDNA operationalizes driving style as a consistent, driver-specific behavioral pattern in how a vehicle
+              moves under similar conditions, and isolates it from vehicle identity, route, and environment confounds. It
+              contains 4,121 drives from 465 drivers across 115 vehicle models — 975 hours of human-controlled driving at
+              10&nbsp;Hz with forward video — plus 62,674 annotated 60-second windows and 276,248 maneuver events. The
+              benchmark defines three tasks: few-shot driver re-identification, personalized behavior prediction, and
+              condition-matched comparison. Learned representations outperform classical descriptors on unseen drivers
+              (AUROC 0.935 vs. 0.707), but video-only models are vulnerable to "route leakage" — strong scores can stem from
+              contextual shortcuts rather than genuine behavior — motivating robustness-aware evaluation with frozen splits,
+              leakage diagnostics, and 30 baseline configurations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
+      <pre id="bibtex-code"><code>@article{wang2026drivedna,
+  title   = {DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification},
+  author  = {Wang, Yuhang and Li, Lingyao and Zhou, Hao},
+  journal = {arXiv preprint arXiv:2607.23822},
+  year    = {2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
+      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+    </div></div></div></div>
+  </footer>
+  </main>
+</body>
+</html>

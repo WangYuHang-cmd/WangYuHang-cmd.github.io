@@ -37,6 +37,8 @@ google_verify: "SkiyuGpJOKT74vv5GmXLvYXXDkXy4v8VWPtbelYz3Hs"
 links:
   - title: About Me
     url: /
+  - title: Projects
+    url: /projects/
   - title: Awards
     url: /awards/
   - title: Hobbies
@@ -81,7 +83,7 @@ disqus:
   shortname: lancecai
 
 include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "minimal-mistakes.sublime-project", "minimal-mistakes.sublime-workspace"]
+exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "backup", "minimal-mistakes.sublime-project", "minimal-mistakes.sublime-workspace"]
 
 kramdown:
   parse_block_html: true

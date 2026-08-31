@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation">
+  <meta name="description" content="BATON is a large-scale multimodal benchmark for bidirectional human–automation control transitions, with 136.6 hours of naturalistic driving from 127 drivers, synchronizing video, CAN, radar and GPS.">
+  <meta name="keywords" content="automation transition, handover, takeover, naturalistic driving, multimodal benchmark, ADAS, CAN bus, driving">
+  <meta name="author" content="Yuhang Wang, Yiyao Xu, Chaoyun Yang, Lingyao Li, Jingran Sun, Hao Zhou">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+  <meta property="og:title" content="BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation">
+  <meta property="og:description" content="A large-scale multimodal benchmark for bidirectional human–DAS control transitions in naturalistic driving.">
+  <meta property="og:url" content="https://wangyuhang-cmd.github.io/baton/">
+  <meta property="og:image" content="https://wangyuhang-cmd.github.io/baton/static/images/baton_teaser.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BATON: Bidirectional Automation Transition Observation">
+  <meta name="twitter:description" content="A large-scale multimodal benchmark for bidirectional human–DAS control transitions in naturalistic driving.">
+  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/baton/static/images/baton_teaser.png">
+
+  <meta name="citation_title" content="BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving">
+  <meta name="citation_author" content="Wang, Yuhang">
+  <meta name="citation_author" content="Xu, Yiyao">
+  <meta name="citation_author" content="Yang, Chaoyun">
+  <meta name="citation_author" content="Li, Lingyao">
+  <meta name="citation_author" content="Sun, Jingran">
+  <meta name="citation_author" content="Zhou, Hao">
+  <meta name="citation_publication_date" content="2026">
+
+  <title>BATON · Bidirectional Automation Transition Observation</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
+  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
+  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
+  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
+  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
+  <script defer src="/projectpage-lib/js/index.js"></script>
+  <style>
+    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
+    .home-link:hover{background:#1d4ed8;color:#fff}
+    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
+    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
+    .stat{text-align:center;min-width:120px}
+    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
+    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
+    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
+    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+    .gif-card img{display:block;width:100%;height:auto}
+    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
+  </style>
+</head>
+<body>
+  <a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a>
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
+      <div class="works-list">
+        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events with multimodal signals.</p><span class="work-venue">IEEE ITSC 2027</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/openlka/" class="work-item"><div class="work-info"><h5>OpenLKA</h5><p>Open dataset of Lane Keeping Assist from 62 production vehicles.</p><span class="work-venue">IEEE ITSC 2025</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/drivemotion/" class="work-item"><div class="work-info"><h5>DriveMotion</h5><p>Driver body-motion forecasting benchmark.</p><span class="work-venue">Dataset 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
+              <span class="author-block">Yiyao Xu,</span>
+              <span class="author-block">Chaoyun Yang,</span>
+              <span class="author-block">Lingyao Li,</span>
+              <span class="author-block">Jingran Sun,</span>
+              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of South Florida · MOTIF-Lab<br>arXiv preprint · 2026</span>
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block"><a href="https://arxiv.org/abs/2604.07263" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
+                <span class="link-block"><a href="https://arxiv.org/abs/2604.07263" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
+                <span class="link-block"><a href="https://github.com/OpenLKA/BATON" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
+                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/BATON" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img class="teaser-img" src="static/images/baton_teaser.png" alt="BATON benchmark teaser" loading="lazy"/>
+        <h2 class="subtitle has-text-centered" style="margin-top:1rem">
+          A large-scale multimodal benchmark for bidirectional human–automation control transitions in naturalistic driving.
+        </h2>
+        <div class="stat-band">
+          <div class="stat"><div class="num">136.6 h</div><div class="lbl">driving</div></div>
+          <div class="stat"><div class="num">127</div><div class="lbl">drivers</div></div>
+          <div class="stat"><div class="num">380</div><div class="lbl">routes</div></div>
+          <div class="stat"><div class="num">3</div><div class="lbl">benchmark tasks</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              BATON compiles 136.6 hours of naturalistic driving from 127 drivers across 380 routes, synchronizing
+              front-view video, in-cabin video, decoded CAN signals, radar-based lead-vehicle interaction, and GPS route
+              context to capture bidirectional control transitions between human and driving-automation systems. It defines
+              three benchmark tasks: driving-action understanding (7-class), handover prediction (human→DAS), and takeover
+              prediction (DAS→human), with baselines (GRU, TCN, XGBoost) and zero-shot vision-language-model evaluations.
+              We find that visual input alone is insufficient for reliable transition prediction; adding vehicle dynamics and
+              route context substantially improves accuracy; and that takeovers unfold gradually — benefiting from longer
+              prediction windows — while handovers hinge on immediate context.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item"><img src="static/images/baton_overview.jpg" alt="Dataset overview" loading="lazy"/><h2 class="subtitle has-text-centered">Dataset overview: synchronized multimodal streams per drive.</h2></div>
+          <div class="item"><img src="static/images/baton_benchmark.jpg" alt="Benchmark tasks" loading="lazy"/><h2 class="subtitle has-text-centered">The three benchmark tasks and their evaluation protocol.</h2></div>
+          <div class="item"><img src="static/images/baton_tasks.jpg" alt="Task distribution" loading="lazy"/><h2 class="subtitle has-text-centered">Distribution of driving actions and transition events.</h2></div>
+          <div class="item"><img src="static/images/baton_d_takeover.jpg" alt="In-cabin takeover still" loading="lazy"/><h2 class="subtitle has-text-centered">In-cabin view at the moment of a take-over.</h2></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Synchronized Multimodal Views</h2>
+      <p class="has-text-centered content">Front camera, cabin camera, and sensor streams aligned in time.</p>
+      <div class="gif-grid">
+        <div class="gif-card"><img src="static/images/baton_day.gif" alt="Daytime drive" loading="lazy"/><div class="cap">Daytime driving sequence.</div></div>
+        <div class="gif-card"><img src="static/images/baton_night.gif" alt="Nighttime drive" loading="lazy"/><div class="cap">Nighttime driving sequence.</div></div>
+        <div class="gif-card"><img src="static/images/baton_seq.gif" alt="Transition sequence" loading="lazy"/><div class="cap">A control-transition sequence.</div></div>
+        <div class="gif-card"><img src="static/images/baton_sensors.gif" alt="Sensor streams" loading="lazy"/><div class="cap">Aligned sensor streams over time.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
+      <pre id="bibtex-code"><code>@article{wang2026baton,
+  title   = {BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving},
+  author  = {Wang, Yuhang and Xu, Yiyao and Yang, Chaoyun and Li, Lingyao and Sun, Jingran and Zhou, Hao},
+  journal = {arXiv preprint arXiv:2604.07263},
+  year    = {2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
+      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+    </div></div></div></div>
+  </footer>
+  </main>
+</body>
+</html>

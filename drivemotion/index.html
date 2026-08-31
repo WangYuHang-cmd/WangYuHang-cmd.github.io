@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="DriveMotion: A Benchmark for Driver Motion Sequence Forecasting">
+  <meta name="description" content="DriveMotion is a large-scale multi-source benchmark for driver body-motion forecasting: 400 hours of in-cabin skeleton motion, 133 keypoints per frame, 9,010 sequences from 360 drivers.">
+  <meta name="keywords" content="driver monitoring, motion forecasting, skeleton, in-cabin, benchmark, human motion, autonomous driving, privacy">
+  <meta name="author" content="Yuhang Wang, Hao Zhou">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+  <meta property="og:title" content="DriveMotion: Driver Motion Sequence Forecasting">
+  <meta property="og:description" content="A skeleton-based benchmark for forecasting in-cabin driver body motion a few seconds ahead.">
+  <meta property="og:url" content="https://wangyuhang-cmd.github.io/drivemotion/">
+  <meta property="og:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/images/dm_teaser.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DriveMotion: Driver Motion Forecasting">
+  <meta name="twitter:description" content="A skeleton-based benchmark for forecasting in-cabin driver body motion a few seconds ahead.">
+  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/images/dm_teaser.jpg">
+
+  <title>DriveMotion · Driver Motion Sequence Forecasting</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
+  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
+  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
+  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
+  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
+  <script defer src="/projectpage-lib/js/index.js"></script>
+  <style>
+    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
+    .home-link:hover{background:#1d4ed8;color:#fff}
+    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
+    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
+    .stat{text-align:center;min-width:120px}
+    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
+    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
+    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
+    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+    .gif-card img{display:block;width:100%;height:auto}
+    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
+  </style>
+</head>
+<body>
+  <a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a>
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
+      <div class="works-list">
+        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/vlalert/" class="work-item"><div class="work-info"><h5>VLAlert</h5><p>Unified benchmark for driving-alert decisions.</p><span class="work-venue">Dataset 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events.</p><span class="work-venue">IEEE ITSC 2027</span></div><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling &amp; Forecasting</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
+              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of South Florida · MOTIF-Lab<br>Dataset &amp; benchmark · technical report in preparation</span>
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img class="teaser-img" src="static/images/dm_teaser.jpg" alt="DriveMotion teaser" loading="lazy"/>
+        <h2 class="subtitle has-text-centered" style="margin-top:1rem">
+          A skeleton-based benchmark for forecasting in-cabin driver body motion a few seconds ahead.
+        </h2>
+        <div class="stat-band">
+          <div class="stat"><div class="num">400 h</div><div class="lbl">in-cabin motion</div></div>
+          <div class="stat"><div class="num">133</div><div class="lbl">keypoints/frame</div></div>
+          <div class="stat"><div class="num">9,010</div><div class="lbl">sequences</div></div>
+          <div class="stat"><div class="num">360</div><div class="lbl">drivers</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overview</h2>
+          <div class="content has-text-justified">
+            <p>
+              DriveMotion combines in-cabin driver monitoring with motion forecasting, standardizing three heterogeneous
+              sources into a single skeleton motion representation and evaluation protocol. It provides 400 hours of in-cabin
+              motion at 10&nbsp;Hz, with 133 whole-body keypoints per frame (skeleton-only, privacy-reduced), yielding 9,010
+              sequences from 360 drivers and 680,082 forecasting windows, together with synchronized CAN telemetry and
+              road-camera context. The standardized task observes 8 seconds of motion and predicts the next 4 seconds. Source
+              data spans the BATON fleet (320 h), a web corpus (78 h), and AIDE (2.4 h, with behavior labels). Skeleton
+              artifacts and code are released under CC&nbsp;BY&nbsp;4.0.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item"><img src="static/images/dm_pipeline.jpg" alt="Pipeline" loading="lazy"/><h2 class="subtitle has-text-centered">Pipeline: heterogeneous sources unified into a skeleton motion representation.</h2></div>
+          <div class="item"><img src="static/images/dm_data_example.jpg" alt="Data example" loading="lazy"/><h2 class="subtitle has-text-centered">An example of extracted skeleton motion with synchronized context.</h2></div>
+          <div class="item"><img src="static/images/dm_ddpm.jpg" alt="DDPM diversity" loading="lazy"/><h2 class="subtitle has-text-centered">Diverse motion futures from a diffusion-based forecaster.</h2></div>
+          <div class="item"><img src="static/images/dm_sequence.png" alt="Motion sequence" loading="lazy"/><h2 class="subtitle has-text-centered">A forecasted driver motion sequence.</h2></div>
+          <div class="item"><img src="static/images/dm_motion_energy.png" alt="Motion energy" loading="lazy"/><h2 class="subtitle has-text-centered">Motion-energy profiles over time.</h2></div>
+          <div class="item"><img src="static/images/dm_part_valid.png" alt="Part validity" loading="lazy"/><h2 class="subtitle has-text-centered">Per-body-part keypoint validity across the corpus.</h2></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Motion in Context</h2>
+      <p class="has-text-centered content">Skeleton motion overlaid on the in-cabin view and across source datasets.</p>
+      <div class="gif-grid">
+        <div class="gif-card"><img src="static/images/dm_overlay.gif" alt="Skeleton overlay" loading="lazy"/><div class="cap">Skeleton overlaid on the driver (10 Hz).</div></div>
+        <div class="gif-card"><img src="static/images/dm_motion_baton.gif" alt="BATON motion" loading="lazy"/><div class="cap">Motion from the BATON fleet source.</div></div>
+        <div class="gif-card"><img src="static/images/dm_motion_aide.gif" alt="AIDE motion" loading="lazy"/><div class="cap">Motion from the AIDE source with behavior labels.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
+      <pre id="bibtex-code"><code>@misc{wang2026drivemotion,
+  title  = {DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting},
+  author = {Wang, Yuhang and Zhou, Hao},
+  year   = {2026},
+  howpublished = {Hugging Face Datasets},
+  url    = {https://huggingface.co/datasets/HenryYHW/DriveMotion}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
+      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+    </div></div></div></div>
+  </footer>
+  </main>
+</body>
+</html>
