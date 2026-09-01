@@ -26,7 +26,7 @@
   <meta name="citation_author" content="Xu, Yiyao">
   <meta name="citation_author" content="Sun, Jingran">
   <meta name="citation_author" content="Zhou, Hao">
-  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_publication_date" content="2027">
   <meta name="citation_conference_title" content="IEEE International Conference on Intelligent Transportation Systems (ITSC)">
 
   <title>ADAS-TO · Human Takeovers during ADAS Engagement</title>
@@ -54,15 +54,43 @@
   <style>
     .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
     .home-link:hover{background:#1d4ed8;color:#fff}
+    /* ---- cinematic dark hero ---- */
+    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
+    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
+    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
+    .hero-dark .publication-authors a{color:#7fb0ff}
+    .hero-dark .publication-authors a:hover{color:#fff}
+    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
+    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
+    /* filmstrip of live takeover moments */
+    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
+    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transform:translateY(0);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14)}
+    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
+    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
+    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
+    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em}
+    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
+    .hero-tagline b{color:#fff}
+    /* animated stat band on dark */
+    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
+    .stat{text-align:center;min-width:130px}
+    .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
+    .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
+    /* section polish */
+    .section-title-accent{position:relative;display:inline-block}
+    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
     .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
-    .stat{text-align:center;min-width:120px}
-    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
-    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
     .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
-    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+    .gif-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10);transition:transform .22s ease,box-shadow .22s ease}
+    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
     .gif-card img{display:block;width:100%;height:auto}
     .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
+    /* scroll reveal */
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.on{opacity:1;transform:none}
+    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}}
   </style>
 </head>
 <body>
@@ -82,9 +110,9 @@
   </div>
 
   <main id="main-content">
-  <section class="hero">
+  <section class="hero hero-dark">
     <div class="hero-body">
-      <div class="container is-max-desktop">
+      <div class="container is-max-widescreen">
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement</h1>
@@ -95,7 +123,8 @@
               <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
             </div>
             <div class="is-size-5 publication-authors">
-              <span class="author-block">University of South Florida · MOTIF-Lab<br>IEEE International Conference on Intelligent Transportation Systems (ITSC 2027)</span>
+              <span class="author-block">University of South Florida · MOTIF-Lab</span><br>
+              <span class="venue-pill">IEEE ITSC 2027</span>
             </div>
             <div class="column has-text-centered">
               <div class="publication-links">
@@ -105,34 +134,31 @@
                 <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/ADAS-TO" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
               </div>
             </div>
+
+            <div class="filmstrip">
+              <div class="film-card"><span class="rec">● REC</span><img src="static/images/to_cutin_truck.gif" alt="Truck cut-in takeover"/><div class="tag-cap">Truck cut-in &rarr; driver takes over</div></div>
+              <div class="film-card"><span class="rec">● REC</span><img src="static/images/to_high_severity.gif" alt="Safety-critical takeover"/><div class="tag-cap">Safety-critical event</div></div>
+              <div class="film-card"><span class="rec">● REC</span><img src="static/images/to_ttc_drop.gif" alt="TTC drop takeover"/><div class="tag-cap">Sudden time-to-collision drop</div></div>
+            </div>
+
+            <p class="hero-tagline"><b>15,000+ real-world takeover events</b> capturing the exact moment drivers reclaim control from automated driving &mdash; synchronized video, CAN, and system state.</p>
+            <div class="stat-band">
+              <div class="stat"><div class="num" data-count="15659">0</div><div class="lbl">20-s clips</div></div>
+              <div class="stat"><div class="num" data-count="327">0</div><div class="lbl">drivers</div></div>
+              <div class="stat"><div class="num" data-count="22">0</div><div class="lbl">vehicle brands</div></div>
+              <div class="stat"><div class="num" data-count="285">0</div><div class="lbl">safety-critical</div></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="hero teaser">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <img class="teaser-img" src="static/images/adasto_stats.png" alt="ADAS-TO dataset overview" loading="lazy"/>
-        <h2 class="subtitle has-text-centered" style="margin-top:1rem">
-          15,000+ real-world takeover events capturing the moment drivers reclaim control from automated driving systems.
-        </h2>
-        <div class="stat-band">
-          <div class="stat"><div class="num">15,659</div><div class="lbl">20-s clips</div></div>
-          <div class="stat"><div class="num">327</div><div class="lbl">drivers</div></div>
-          <div class="stat"><div class="num">22</div><div class="lbl">vehicle brands</div></div>
-          <div class="stat"><div class="num">285</div><div class="lbl">safety-critical</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section hero is-light">
+  <section class="section hero is-light reveal">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
+          <h2 class="title is-3 section-title-accent">Abstract</h2>
           <div class="content has-text-justified">
             <p>
               ADAS-TO characterizes transitions from Advanced Driver Assistance Systems (ADAS) back to manual control.
@@ -150,10 +176,11 @@
     </div>
   </section>
 
-  <section class="hero is-small">
+  <section class="hero is-small reveal">
     <div class="hero-body">
       <div class="container">
         <div id="results-carousel" class="carousel results-carousel">
+          <div class="item"><img src="static/images/adasto_stats.png" alt="Dataset overview" loading="lazy"/><h2 class="subtitle has-text-centered">Dataset composition at a glance: sources, triggers, and coverage.</h2></div>
           <div class="item"><img src="static/images/adasto_clip_structure.png" alt="Clip structure" loading="lazy"/><h2 class="subtitle has-text-centered">Structure of a 20-second takeover clip with synchronized multimodal streams.</h2></div>
           <div class="item"><img src="static/images/adasto_geo.png" alt="Geographic distribution" loading="lazy"/><h2 class="subtitle has-text-centered">Geographic and environmental distribution of the collected takeovers.</h2></div>
           <div class="item"><img src="static/images/adasto_kinematic.png" alt="Kinematic profiles" loading="lazy"/><h2 class="subtitle has-text-centered">Kinematic profiles of driver take-over actions.</h2></div>
@@ -163,9 +190,9 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Take-over Scenarios</h2>
+      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">Take-over Scenarios</span></h2>
       <p class="has-text-centered content">Representative real-world moments where drivers reclaim control.</p>
       <div class="gif-grid">
         <div class="gif-card"><img src="static/images/to_cutin_truck.gif" alt="Truck cut-in" loading="lazy"/><div class="cap">A truck cutting in ahead.</div></div>
@@ -197,5 +224,28 @@
     </div></div></div></div>
   </footer>
   </main>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+      function countUp(el) {
+        var target = +el.dataset.count, dur = 1400, t0 = null;
+        function step(t) {
+          if (!t0) t0 = t;
+          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased).toLocaleString();
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var io2 = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
+      }, { threshold: 0.4 });
+      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
+    });
+  </script>
 </body>
 </html>

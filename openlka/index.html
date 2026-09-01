@@ -70,7 +70,40 @@
     .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
     .gif-card img{display:block;width:100%;height:auto}
     .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
+  
+    /* ---- cinematic dark hero (design system v2) ---- */
+    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
+    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
+    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
+    .hero-dark .publication-authors a{color:#7fb0ff}
+    .hero-dark .publication-authors a:hover{color:#fff}
+    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
+    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
+    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
+    .filmstrip.single{grid-template-columns:minmax(0,860px);justify-content:center}
+    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14);background:#fff}
+    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
+    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
+    .filmstrip.single .film-card img{aspect-ratio:auto;object-fit:contain}
+    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
+    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em;z-index:2}
+    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
+    .hero-tagline b{color:#fff}
+    .hero-dark .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
+    .hero-dark .stat{text-align:center;min-width:130px}
+    .hero-dark .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
+    .hero-dark .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
+    .section-title-accent{position:relative;display:inline-block}
+    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
+    .gif-card{transition:transform .22s ease,box-shadow .22s ease}
+    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.on{opacity:1;transform:none}
+    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}.filmstrip.single{grid-template-columns:1fr}}
   </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
@@ -98,9 +131,9 @@
   </div>
 
   <main id="main-content">
-  <section class="hero">
+  <section class="hero hero-dark">
     <div class="hero-body">
-      <div class="container is-max-desktop">
+      <div class="container is-max-widescreen">
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions</h1>
@@ -112,7 +145,8 @@
               <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
             </div>
             <div class="is-size-5 publication-authors">
-              <span class="author-block">University of South Florida · MOTIF-Lab<br>IEEE International Conference on Intelligent Transportation Systems (ITSC 2025)</span>
+              <span class="author-block">University of South Florida · MOTIF-Lab</span><br>
+              <span class="venue-pill">IEEE ITSC 2025</span>
             </div>
 
             <div class="column has-text-centered">
@@ -131,6 +165,20 @@
                 </span>
               </div>
             </div>
+            <div class="filmstrip">
+              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/olka_fail_glare.gif" alt="Glare, lane tracking lost"/><div class="tag-cap">Glare, lane tracking lost</div></div>
+              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/olka_fail_night.gif" alt="Night, low-visibility markings"/><div class="tag-cap">Night, low-visibility markings</div></div>
+              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/olka_fail_faded.gif" alt="Faded lane paint"/><div class="tag-cap">Faded lane paint</div></div>
+            </div>
+
+            <p class="hero-tagline">OpenLKA is the first large-scale, open, real-world dataset focused on Lane Keeping Assist (LKA) performance, pairing decoded CAN-bus logs with synchronized front-camera video.</p>
+            <div class="stat-band">
+              <div class="stat"><div class="num" data-count="389" data-suffix=" h">0</div><div class="lbl">LKA driving</div></div>
+              <div class="stat"><div class="num" data-count="62">0</div><div class="lbl">vehicle models</div></div>
+              <div class="stat"><div class="num">1080p</div><div class="lbl">20 fps video</div></div>
+              <div class="stat"><div class="num">MIT</div><div class="lbl">license</div></div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -138,30 +186,22 @@
   </section>
 
   <!-- Teaser -->
-  <section class="hero teaser">
+  <section class="hero teaser reveal">
     <div class="container is-max-desktop">
       <div class="hero-body">
         <img class="teaser-img" src="static/images/openlka_view.png" alt="OpenLKA overview" loading="lazy"/>
-        <h2 class="subtitle has-text-centered" style="margin-top:1rem">
-          OpenLKA is the first large-scale, open, real-world dataset focused on Lane Keeping Assist (LKA) performance,
-          pairing decoded CAN-bus logs with synchronized front-camera video.
-        </h2>
-        <div class="stat-band">
-          <div class="stat"><div class="num">389 h</div><div class="lbl">LKA driving</div></div>
-          <div class="stat"><div class="num">62</div><div class="lbl">vehicle models</div></div>
-          <div class="stat"><div class="num">1080p</div><div class="lbl">20 fps video</div></div>
-          <div class="stat"><div class="num">MIT</div><div class="lbl">license</div></div>
-        </div>
+        
+        </div></div>
       </div>
     </div>
   </section>
 
   <!-- Abstract -->
-  <section class="section hero is-light">
+  <section class="section hero is-light reveal">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
+          <h2 class="title is-3 section-title-accent">Abstract</h2>
           <div class="content has-text-justified">
             <p>
               OpenLKA is the first open, large-scale dataset for evaluating Lane Keeping Assist (LKA). It comprises roughly
@@ -180,7 +220,7 @@
   </section>
 
   <!-- Image carousel -->
-  <section class="hero is-small">
+  <section class="hero is-small reveal">
     <div class="hero-body">
       <div class="container">
         <div id="results-carousel" class="carousel results-carousel">
@@ -208,7 +248,7 @@
   <!-- Failure scenario gallery -->
   <section class="section">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">LKA Failure Scenarios</h2>
+      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">LKA Failure Scenarios</span></h2>
       <p class="has-text-centered content">Real captured moments where production LKA degrades or disengages.</p>
       <div class="gif-grid">
         <div class="gif-card"><img src="static/images/olka_fail_glare.gif" alt="Sun glare failure" loading="lazy"/><div class="cap">Sun glare washing out lane markings.</div></div>
@@ -250,5 +290,30 @@
     </div>
   </footer>
   </main>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+      function countUp(el) {
+        var target = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0),
+            suf = el.dataset.suffix || "", dur = 1400, t0 = null;
+        function fmt(v) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString(); }
+        function step(t) {
+          if (!t0) t0 = t;
+          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * eased) + suf;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var io2 = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
+      }, { threshold: 0.4 });
+      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
+    });
+  </script>
 </body>
 </html>
