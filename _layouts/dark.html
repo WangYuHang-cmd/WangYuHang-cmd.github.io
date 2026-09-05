@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<link rel="canonical" href="{{ site.url }}{{ page.url | replace:'index.html','' }}">
+<meta property="og:title" content="{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}">
+<meta property="og:image" content="{{ site.url }}/images/default-thumb.png">
+<link rel="shortcut icon" href="/images/fav.ico">
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/dark/site-dark.css">
+<script src="https://cdn.counter.dev/script.js" data-id="4c8f7caa-2b55-46cd-a995-2c4633303773" data-utcoffset="8"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T5N5JY1E21"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-T5N5JY1E21');
+</script>
+<script defer src="/assets/dark/fx.js"></script>
+</head>
+<body class="dark-site">
+
+<nav class="dk-nav">
+  <div class="dk-nav-inner">
+    <a class="dk-brand" href="/">Yuhang <b>Wang</b></a>
+    <button class="dk-burger" aria-label="Menu"><span></span></button>
+    <ul class="dk-links">
+      {% for link in site.links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endfor %}<li><a class="cv-btn" href="/file/CV-Yuhang.pdf" target="_blank">CV</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="dk-page">
+{{ content }}
+</article>
+
+<footer class="dk-footer">
+  <p>
+    <a href="https://github.com/WangYuHang-cmd" target="_blank">GitHub</a> ·
+    <a href="https://scholar.google.com/citations?user=2bYt9ZAAAAAJ&amp;hl=en" target="_blank">Scholar</a> ·
+    <a href="https://huggingface.co/HenryYHW" target="_blank">Hugging Face</a> ·
+    <a href="https://www.researchgate.net/profile/Yuhang-Wang-72" target="_blank">ResearchGate</a> ·
+    <a href="https://www.linkedin.com/in/yuhang-wang-28bb06283" target="_blank">LinkedIn</a>
+  </p>
+  <p>© 2026 Yuhang Wang</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+/* ============ Yuhang Wang · dark AV design system ============ */
+:root{
+  --bg-0:#070d1d; --bg-1:#0a1428; --bg-2:#0f2044;
+  --surface:rgba(255,255,255,.045); --surface-2:rgba(255,255,255,.08);
+  --border:rgba(127,176,255,.16); --border-hi:rgba(127,176,255,.45);
+  --accent:#2563eb; --accent-2:#7fb0ff; --violet:#7c6cf0; --gold:#f0c34e;
+  --text:#e8eefc; --text-dim:#c7d5ef; --text-mute:#9fb2d6;
+  --glass:rgba(10,20,40,.68);
+  --radius:14px; --radius-pill:999px;
+  --shadow-card:0 12px 40px rgba(0,0,0,.5);
+  --glow:0 8px 22px rgba(37,99,235,.45);
+  --grad:linear-gradient(90deg,#2563eb,#7fb0ff);
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --maxw:1120px;
+}
+html{background:var(--bg-0);scroll-behavior:smooth}
+body.dark-site{margin:0;background:var(--bg-0);color:var(--text-dim);font-family:var(--font);
+  font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.dark-site ::selection{background:rgba(37,99,235,.45);color:#fff}
+.dark-site a{color:var(--accent-2);text-decoration:none;transition:color .15s}
+.dark-site a:hover{color:#fff}
+.dark-site img{max-width:100%;height:auto;border-radius:10px}
+
+/* ---------- glass sticky nav ---------- */
+.dk-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;
+  transition:background .25s,box-shadow .25s,backdrop-filter .25s}
+.dk-nav.scrolled{background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:0 2px 24px rgba(0,0,0,.45);border-bottom:1px solid var(--border)}
+.dk-nav-inner{max-width:var(--maxw);margin:0 auto;padding:.85rem 1.4rem;display:flex;align-items:center;gap:1rem}
+.dk-brand{font-weight:800;font-size:1.08rem;letter-spacing:.02em;color:#fff !important;white-space:nowrap}
+.dk-brand b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dk-links{margin-left:auto;display:flex;align-items:center;gap:.25rem;list-style:none;padding:0}
+.dk-links a{display:block;padding:.42rem .8rem;border-radius:8px;color:var(--text-dim);
+  font-size:.92rem;font-weight:600;letter-spacing:.02em}
+.dk-links a:hover{color:#fff;background:var(--surface-2)}
+.dk-links a.current{color:#fff;background:rgba(37,99,235,.28)}
+.dk-links a.cv-btn{border:1px solid var(--border-hi);border-radius:var(--radius-pill);
+  padding:.42rem 1.05rem;color:var(--accent-2)}
+.dk-links a.cv-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:var(--glow)}
+.dk-burger{display:none;margin-left:auto;background:none;border:1px solid var(--border);border-radius:8px;
+  width:42px;height:38px;cursor:pointer;position:relative}
+.dk-burger span,.dk-burger span::before,.dk-burger span::after{content:"";position:absolute;left:9px;right:9px;
+  height:2px;background:var(--text-dim);border-radius:2px;transition:transform .2s,opacity .2s}
+.dk-burger span{top:18px}.dk-burger span::before{top:-6px}.dk-burger span::after{top:6px}
+@media (max-width:900px){
+  .dk-burger{display:block}
+  .dk-links{position:fixed;top:58px;right:0;left:0;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);padding:.5rem 1rem 1rem;margin:0;
+    transform:translateY(-130%);transition:transform .25s;pointer-events:none}
+  .dk-nav.open .dk-links{transform:none;pointer-events:auto}
+  .dk-links a{padding:.75rem .8rem}
+  .dk-links a.cv-btn{text-align:center;margin-top:.4rem}
+}
+
+/* ---------- page content wrapper (dark layout) ---------- */
+.dk-page{max-width:var(--maxw);margin:0 auto;padding:6.2rem 1.4rem 3rem;position:relative;z-index:1}
+.dk-page h1{color:#fff;font-size:2.1rem;font-weight:800;letter-spacing:-.01em;margin:.2em 0 .6em}
+.dk-page h2{color:#fff;font-size:1.45rem;font-weight:750;margin:2em 0 .7em;padding-bottom:.35em;position:relative}
+.dk-page h2::after{content:"";position:absolute;left:0;bottom:0;width:64px;height:3px;border-radius:2px;background:var(--grad)}
+.dk-page h3{color:#fff;font-size:1.15rem;margin:1.6em 0 .5em}
+.dk-page hr{border:none;border-top:1px solid var(--border);margin:2.2rem 0}
+.dk-page blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);
+  background:var(--surface);border-radius:0 10px 10px 0;color:var(--text-mute)}
+.dk-page code{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;
+  padding:.12em .4em;font-size:.9em;color:var(--accent-2)}
+.dk-page pre{background:#0b1730;border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;
+  overflow-x:auto;line-height:1.55}
+.dk-page pre code{background:none;border:none;padding:0;color:var(--text-dim)}
+.dk-page table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.95rem}
+.dk-page th,.dk-page td{border:1px solid var(--border);padding:.5rem .8rem;text-align:left}
+.dk-page th{background:var(--surface);color:#fff}
+.dk-page ul,.dk-page ol{padding-left:1.4rem}
+.dk-page li{margin:.3rem 0}
+.dk-page details{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:.7rem 1rem;margin:1rem 0}
+.dk-page summary{cursor:pointer;color:#fff;font-weight:650}
+
+/* ---------- pills & badges ---------- */
+.venue-pill{display:inline-block;padding:.35rem 1.05rem;border:1px solid var(--border-hi);
+  border-radius:var(--radius-pill);color:var(--accent-2);font-weight:650;font-size:.9rem;
+  letter-spacing:.02em;background:rgba(37,99,235,.12)}
+.venue-pill.gold{border-color:rgba(240,195,78,.55);color:var(--gold);background:rgba(240,195,78,.1)}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.on{opacity:1;transform:none}
+
+/* ---------- reskin: existing inline-styled card grids ---------- */
+.dark-site .work-card,.dark-site .feat-card{background:var(--surface) !important;
+  border:1px solid var(--border) !important;box-shadow:var(--shadow-card) !important;color:var(--text-dim) !important}
+.dark-site .work-card:hover,.dark-site .feat-card:hover{border-color:var(--border-hi) !important;
+  box-shadow:0 14px 44px rgba(37,99,235,.35) !important;transform:translateY(-4px)}
+.dark-site .work-card h3,.dark-site .work-card h3 a,.dark-site .feat-card h4{color:#fff !important}
+.dark-site .work-card .blurb,.dark-site .feat-card p{color:var(--text-mute) !important}
+.dark-site .work-card .venue,.dark-site .feat-card .fvenue{color:var(--accent-2) !important}
+.dark-site .work-card .badges a{background:var(--surface-2) !important;border:1px solid var(--border) !important;
+  color:var(--text-dim) !important}
+.dark-site .work-card .badges a.primary{background:var(--accent) !important;border-color:var(--accent) !important;color:#fff !important}
+.dark-site .work-card .badges a:hover{border-color:var(--border-hi) !important;color:#fff !important}
+.dark-site .thumb,.dark-site .fthumb{background:#0b1730 !important}
+
+/* ---------- footer ---------- */
+.dk-footer{border-top:1px solid var(--border);margin-top:3.5rem;padding:2rem 1.4rem 2.6rem;
+  text-align:center;color:var(--text-mute);font-size:.9rem;position:relative;z-index:1}
+.dk-footer a{margin:0 .5rem}
+
+/* ---------- project-page contained hero canvas: keep content above ---------- */
+.hero-dark{position:relative;overflow:hidden}
+.hero-dark>*:not(#hero-canvas):not([data-hero-bg]){position:relative;z-index:2}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .reveal{opacity:1;transform:none}
+}

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /blogs/24fall/index.html
 title: 24Fall申请记录
 ---

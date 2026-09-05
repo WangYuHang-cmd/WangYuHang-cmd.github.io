@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /blogs/index.html
 title: Blogs
 ---
@@ -8,13 +8,13 @@ title: Blogs
 
 ### 2025
 
-- [Video Understanding](https://WangYuhang-cmd.gtihub.io/blogs/VideoUnderstanding/index.html)
+- [Video Understanding](https://wangyuhang-cmd.github.io/blogs/VideoUnderstanding/index.html)
 
-- [Code Generation For Planning](https://WangYuhang-cmd.gtihub.io/blogs/CodeGeneration/index.html)
+- [Code Generation For Planning](https://wangyuhang-cmd.github.io/blogs/CodeGeneration/index.html)
 
 ### 2024
 
-- [极简风Jekyll个人网站搭建指南](https://WangYuhang-cmd.gtihub.io/blogs/web)<br>
+- [极简风Jekyll个人网站搭建指南](https://wangyuhang-cmd.github.io/blogs/web)<br>
 
 ### 2023
 

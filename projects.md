@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /projects/index.html
 title: Projects
 ---

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /publications/index.html
 title: Publications
 ---

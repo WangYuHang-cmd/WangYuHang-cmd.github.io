@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /blogs/aaai-24/index.html
 title: Lance的AAAI参会实录
 ---
