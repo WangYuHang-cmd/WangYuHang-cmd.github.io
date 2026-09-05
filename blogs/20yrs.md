@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /blogs/20yrs/index.html
 title: 20yrs
 ---

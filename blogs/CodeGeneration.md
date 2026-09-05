@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /blogs/CodeGeneration/index.html
 title: CodeGeneration
 ---

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dark
 permalink: /hobbies/index.html
 title: Hobbies
 ---

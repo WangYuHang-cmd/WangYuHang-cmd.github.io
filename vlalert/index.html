@@ -91,7 +91,9 @@
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
-  <a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a>
+  <div id="site-nav"></div>
+  <script defer src="/assets/dark/nav.js"></script>
+  <noscript><a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a></noscript>
   <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
 
   <div class="more-works-container">
@@ -108,6 +110,7 @@
 
   <main id="main-content">
   <section class="hero hero-dark">
+    <div data-hero-bg data-mode="contained" hidden></div>
     <div class="hero-body">
       <div class="container is-max-widescreen">
         <div class="columns is-centered">
@@ -245,5 +248,6 @@
       document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
     });
   </script>
+<script type="module" src="/assets/dark/hero-bg.js"></script>
 </body>
 </html>
