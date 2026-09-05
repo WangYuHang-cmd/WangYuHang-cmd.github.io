@@ -54,7 +54,7 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/adasto/"><img src="/images/th_adasto.jpg" alt="ADAS-TO"></a>
     <div class="body">
-      <div class="venue">IEEE ITSC 2027</div>
+      <div class="venue">IEEE ITSC 2026</div>
       <h3><a href="/adasto/">ADAS-TO</a></h3>
       <p class="blurb">15,000+ real-world ADAS takeover events from 327 drivers across 22 brands — multimodal and vision-language-annotated — capturing the moment drivers reclaim control.</p>
       <div class="badges">
@@ -112,7 +112,7 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/vlalert/"><img src="/images/th_vlalert.jpg" alt="VLAlert"></a>
     <div class="body">
-      <div class="venue">Dataset 2026</div>
+      <div class="venue">CoRL 2026</div>
       <h3><a href="/vlalert/">VLAlert</a></h3>
       <p class="blurb">A unified per-tick benchmark for driving-alert decisions — SILENT, OBSERVE or ALERT — integrating six driving-event datasets into 192,892 one-second labeled ticks.</p>
       <div class="badges">

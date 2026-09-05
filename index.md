@@ -49,13 +49,17 @@ My current research focuses on applying deep learning and the features of self-d
 </style>
 
 <div class="feat-grid" markdown="0">
+  <a class="feat-card" href="/vlalert/">
+    <div class="fthumb"><img src="/images/th_vlalert.jpg" alt="VLAlert"></div>
+    <div class="fbody"><div class="fvenue">CoRL 2026</div><h4>VLAlert</h4><p>Unified per-tick benchmark for driving-alert decision making.</p></div>
+  </a>
   <a class="feat-card" href="/openlka/">
     <div class="fthumb"><img src="/images/th_openlka.jpg" alt="OpenLKA"></div>
     <div class="fbody"><div class="fvenue">IEEE ITSC 2025</div><h4>OpenLKA</h4><p>Open dataset of Lane Keeping Assist from 62 production vehicles.</p></div>
   </a>
   <a class="feat-card" href="/adasto/">
     <div class="fthumb"><img src="/images/th_adasto.jpg" alt="ADAS-TO"></div>
-    <div class="fbody"><div class="fvenue">IEEE ITSC 2027</div><h4>ADAS-TO</h4><p>15,000+ real-world ADAS takeover events, multimodal &amp; VLM-annotated.</p></div>
+    <div class="fbody"><div class="fvenue">IEEE ITSC 2026</div><h4>ADAS-TO</h4><p>15,000+ real-world ADAS takeover events, multimodal &amp; VLM-annotated.</p></div>
   </a>
   <a class="feat-card" href="/baton/">
     <div class="fthumb"><img src="/images/th_baton.jpg" alt="BATON"></div>
@@ -72,7 +76,8 @@ My current research focuses on applying deep learning and the features of self-d
 ---
 
 ## News and Updates
-- Aug 2026: 🎉 Three papers are accepted by **ITSC 2027**: [**ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement**](/adasto/), **Cut-In Gap Acceptance Toward Autonomous vs. Human-Driven Vehicles: Evidence from the Waymo Open Motion Dataset**, and **A Closed-loop, State-centric, Multi-agent Framework for Passenger Load Estimation from Heterogeneous Data Streams**.
+- Sep 2026: 🎉 Our work [**VLAlert-Bench: A Unified Benchmark for Driving-Alert Decision Making**](/vlalert/) is accepted by **CoRL 2026**!
+- Aug 2026: 🎉 Three papers are accepted by **ITSC 2026**: [**ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement**](/adasto/), **Cut-In Gap Acceptance Toward Autonomous vs. Human-Driven Vehicles: Evidence from the Waymo Open Motion Dataset**, and **A Closed-loop, State-centric, Multi-agent Framework for Passenger Load Estimation from Heterogeneous Data Streams**.
 - Oct 2025: 3 papers are accepted by TRBAM, see you in D.C
 - Jul 2025: Our work **From OpenLKA to LKAlert: An End-to-End Pipeline for Real-World Lane-Keeping Safety** is Abstract Accepted by INFORMS 2025, will give a presentation at "Intelligent Transportation Systems and Cybersecurity" session. See you in Atlanta!
 - Jun 2025: Our work [**Openlka: An open dataset of lane keeping assist from recent car models under real-world driving conditions**](https://github.com/OpenLKA/OpenLKA) is accepted by ITSC 2025.
