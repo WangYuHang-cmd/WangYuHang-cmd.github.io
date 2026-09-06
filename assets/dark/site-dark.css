@@ -2,14 +2,14 @@
 :root{
   --bg-0:#070d1d; --bg-1:#0a1428; --bg-2:#0f2044;
   --surface:rgba(255,255,255,.045); --surface-2:rgba(255,255,255,.08);
-  --border:rgba(127,176,255,.16); --border-hi:rgba(127,176,255,.45);
-  --accent:#2563eb; --accent-2:#7fb0ff; --violet:#7c6cf0; --gold:#f0c34e;
+  --border:rgba(96,180,255,.18); --border-hi:rgba(51,224,255,.5);
+  --accent:#3d7bff; --accent-2:#33e0ff; --violet:#b07cff; --gold:#f0c34e;
   --text:#e8eefc; --text-dim:#c7d5ef; --text-mute:#9fb2d6;
-  --glass:rgba(10,20,40,.68);
+  --glass:rgba(8,16,36,.66);
   --radius:14px; --radius-pill:999px;
   --shadow-card:0 12px 40px rgba(0,0,0,.5);
-  --glow:0 8px 22px rgba(37,99,235,.45);
-  --grad:linear-gradient(90deg,#2563eb,#7fb0ff);
+  --glow:0 8px 26px rgba(51,224,255,.35),0 4px 18px rgba(61,123,255,.45);
+  --grad:linear-gradient(100deg,#33e0ff,#5c8bff 45%,#c26bff);
   --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   --maxw:1120px;
 }

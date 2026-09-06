@@ -3,8 +3,9 @@
 /* CSS fallback background — always painted; WebGL canvas fades in above it */
 .bg-fallback{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.32),transparent 60%),
-    radial-gradient(900px 420px at 10% 110%,rgba(124,108,240,.16),transparent 60%),
+    radial-gradient(1200px 500px at 72% -10%,rgba(61,123,255,.34),transparent 60%),
+    radial-gradient(900px 460px at 96% 40%,rgba(176,108,255,.14),transparent 65%),
+    radial-gradient(1000px 480px at 4% 108%,rgba(51,224,255,.13),transparent 60%),
     linear-gradient(160deg,var(--bg-1),var(--bg-2) 55%,var(--bg-0))}
 .bg-fallback::before{content:"";position:absolute;inset:0;border-radius:50%;
   width:2px;height:2px;left:12%;top:22%;background:transparent;
@@ -28,7 +29,11 @@ main{position:relative;z-index:1}
   font-size:.85rem;margin-bottom:1rem}
 .hero h1{color:#fff;font-size:clamp(2.5rem,6.2vw,4.3rem);line-height:1.08;font-weight:850;
   letter-spacing:-.02em;margin:0 0 1rem}
-.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .grad{background:linear-gradient(100deg,#33e0ff,#5c8bff 35%,#c26bff 65%,#33e0ff);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:gradshift 7s linear infinite;
+  filter:drop-shadow(0 0 22px rgba(51,224,255,.28))}
+@keyframes gradshift{to{background-position:220% 0}}
 .typewriter{font-size:clamp(1.05rem,2.3vw,1.45rem);color:var(--text-dim);min-height:2.4em;margin:0 0 1.6rem}
 .typewriter .caret{display:inline-block;width:2px;height:1.15em;background:var(--accent-2);
   vertical-align:-.18em;margin-left:2px;animation:blink 1s steps(1) infinite}
@@ -40,13 +45,17 @@ main{position:relative;z-index:1}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.primary:hover{box-shadow:var(--glow)}
 .venue-wall{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:2.2rem}
-.stat-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;
-  border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);
-  padding:1.3rem 1.5rem;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.stat b{display:block;font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:850;color:#fff;
-  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.stat b .plus{color:var(--accent-2)}
-.stat span{color:var(--text-mute);font-size:.88rem;letter-spacing:.03em}
+.focus-band{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);
+  padding:1.4rem 1.6rem;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.focus-lede{margin:0 0 1.1rem;font-size:1.05rem;color:var(--text-dim)}
+.focus-lede b{color:#fff;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.focus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1rem}
+.focus-item{display:flex;flex-direction:column;gap:.15rem;padding:.85rem 1rem;border-radius:12px;
+  border:1px solid var(--border);background:rgba(10,20,44,.4);transition:border-color .2s,transform .2s,box-shadow .2s}
+.focus-item:hover{border-color:var(--border-hi);transform:translateY(-3px);box-shadow:var(--glow)}
+.focus-item .fi-ic{color:var(--accent-2);font-size:1.05rem;line-height:1}
+.focus-item b{color:#fff;font-size:1rem}
+.focus-item span:last-child{color:var(--text-mute);font-size:.82rem;line-height:1.5}
 .scroll-hint{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);color:var(--text-mute);
   font-size:1.4rem;animation:bob 2s ease-in-out infinite}
 @keyframes bob{50%{transform:translate(-50%,8px)}}

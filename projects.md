@@ -114,9 +114,10 @@ Below is the full set of projects. Explore more of my work on
     <div class="body">
       <div class="venue">CoRL 2026</div>
       <h3><a href="/vlalert/">VLAlert</a></h3>
-      <p class="blurb">A unified per-tick benchmark for driving-alert decisions — SILENT, OBSERVE or ALERT — integrating six driving-event datasets into 192,892 one-second labeled ticks.</p>
+      <p class="blurb">Observe Before You Alert: a vision–language framework for adaptive driver alerting (SILENT / OBSERVE / ALERT), with VLAlert-Bench — 192,892 one-second labeled ticks from six datasets.</p>
       <div class="badges">
         <a class="primary" href="/vlalert/">Project Page →</a>
+        <a href="/file/Observe_Before_You_Alert.pdf" target="_blank">Paper</a>
         <a href="https://huggingface.co/datasets/HenryYHW/VLAlert" target="_blank">🤗 Data</a>
       </div>
     </div>

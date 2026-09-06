@@ -58,8 +58,8 @@ if (gate()) {
     }, opts));
     return new THREE.Points(g, m);
   };
-  const cLane = new THREE.Color(0x7fb0ff), cScat = new THREE.Color(0x3b5ba9),
-        cViolet = new THREE.Color(0x7c6cf0), cSky = new THREE.Color(0x31538f);
+  const cLane = new THREE.Color(0x33e0ff), cScat = new THREE.Color(0x2c58c0),
+        cViolet = new THREE.Color(0xb07cff), cSky = new THREE.Color(0x2a6cae);
 
   /* A — road point cloud */
   const NA = Math.round(1400 * density);

@@ -10,7 +10,7 @@ title: Publications
 
 ## Conference Paper
 
-- [VLAlert-Bench: A Unified Benchmark for Driving-Alert Decision Making](/vlalert/)<br>Yuhang Wang, Hao Zhou<br>Conference on Robot Learning (CoRL 2026)<br>
+- [Observe Before You Alert: Adaptive Driver Alerting with Vision–Language Models](/vlalert/)<br>Yuhang Wang, Hao Zhou<br>Conference on Robot Learning (CoRL 2026). [[PDF]](/file/Observe_Before_You_Alert.pdf)<br>
 
 - [ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement](/adasto/)<br>Yuhang Wang, Yiyao Xu, Jingran Sun, Hao Zhou<br>IEEE Intelligent Transportation Systems Conference (ITSC 2026)<br>
 
