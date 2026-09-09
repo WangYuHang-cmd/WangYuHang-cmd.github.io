@@ -139,9 +139,12 @@ if (gate()) {
       }
     }
     sky.rotation.y += 0.004 * dt;
+    /* scroll parallax: camera climbs and pitches down as the page scrolls (fixed mode only) */
+    const sp = contained ? 0 : Math.min(scrollY / innerHeight, 1.6);
     camera.position.x += (mx * 0.9 - camera.position.x) * 0.04;
-    camera.position.y += (2.4 + my * 0.4 - camera.position.y) * 0.04;
-    camera.lookAt(0, 1, -60);
+    camera.position.y += (2.4 + my * 0.4 + sp * 7 - camera.position.y) * 0.06;
+    camera.position.z += (8 - sp * 5 - camera.position.z) * 0.06;
+    camera.lookAt(0, 1 - sp * 2.5, -60 + sp * 26);
     renderer.render(scene, camera);
   };
   const setLoop = (on) => renderer.setAnimationLoop(on ? tick : null);

@@ -6,7 +6,11 @@
   /* nav scroll state + hamburger */
   var nav = document.querySelector(".dk-nav");
   if (nav) {
-    var onScroll = function () { nav.classList.toggle("scrolled", scrollY > 24); };
+    var onScroll = function () {
+      nav.classList.toggle("scrolled", scrollY > 24);
+      var max = document.documentElement.scrollHeight - innerHeight;
+      nav.style.setProperty("--sp", max > 0 ? Math.min(scrollY / max, 1).toFixed(4) : 0);
+    };
     addEventListener("scroll", onScroll, { passive: true }); onScroll();
     var burger = nav.querySelector(".dk-burger");
     if (burger) burger.addEventListener("click", function () { nav.classList.toggle("open"); });

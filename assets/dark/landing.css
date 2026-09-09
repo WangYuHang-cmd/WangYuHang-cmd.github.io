@@ -7,18 +7,12 @@
     radial-gradient(900px 460px at 96% 40%,rgba(176,108,255,.14),transparent 65%),
     radial-gradient(1000px 480px at 4% 108%,rgba(51,224,255,.13),transparent 60%),
     linear-gradient(160deg,var(--bg-1),var(--bg-2) 55%,var(--bg-0))}
-.bg-fallback::before{content:"";position:absolute;inset:0;border-radius:50%;
-  width:2px;height:2px;left:12%;top:22%;background:transparent;
-  box-shadow:14vw 8vh 0 .6px #7fb0ff66, 32vw 4vh 0 .4px #c7d5ef55, 51vw 12vh 0 .7px #7fb0ff44,
-   68vw 6vh 0 .5px #c7d5ef66, 82vw 16vh 0 .4px #7c6cf055, 8vw 34vh 0 .5px #7fb0ff33,
-   24vw 44vh 0 .6px #c7d5ef44, 44vw 30vh 0 .4px #7fb0ff55, 62vw 40vh 0 .5px #7c6cf044,
-   77vw 33vh 0 .6px #c7d5ef44, 90vw 42vh 0 .4px #7fb0ff33, 5vw 58vh 0 .4px #c7d5ef33,
-   38vw 60vh 0 .5px #7fb0ff22, 71vw 63vh 0 .4px #c7d5ef33, 87vw 70vh 0 .5px #7c6cf033}
 #hero-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .6s ease}
 #hero-canvas.on{opacity:1}
 
-main{position:relative;z-index:1}
-.section{max-width:var(--maxw);margin:0 auto;padding:4.2rem 1.4rem}
+main{position:relative;z-index:1;overflow-x:hidden;overflow-x:clip}
+.section{max-width:var(--maxw);margin:0 auto;padding:4.2rem 1.4rem;position:relative}
+.section>*{position:relative;z-index:1}
 .section-title{color:#fff;font-size:1.7rem;font-weight:800;margin:0 0 1.6rem;position:relative;padding-bottom:.4rem}
 .section-title::after{content:"";position:absolute;left:0;bottom:0;width:72px;height:3px;border-radius:2px;background:var(--grad)}
 
@@ -105,3 +99,61 @@ details.news-more summary{color:var(--accent-2);font-weight:700;cursor:pointer;p
 /* ---------- footer embeds ---------- */
 .embed-row{display:flex;flex-wrap:wrap;gap:1.4rem;justify-content:center;align-items:flex-start;margin-top:1.2rem}
 .embed-row>div{flex:1;min-width:280px;max-width:460px}
+
+/* ============ parallax layers ============ */
+/* every parallaxed element moves through --plx so it composes with .reveal */
+[data-plx]{transform:translate3d(0,var(--plx,0px),0);will-change:transform}
+.reveal[data-plx]{transform:translate3d(0,calc(var(--plx,0px) + 22px),0)}
+.reveal.on[data-plx]{transform:translate3d(0,var(--plx,0px),0)}
+
+/* star field — slowest fixed layer, sits above the gradient, below the canvas glow */
+.plx-stars{position:fixed;left:0;top:0;width:100%;height:100vh;z-index:0;pointer-events:none}
+.plx-stars::before,.plx-stars::after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;left:12%;top:22%}
+.plx-stars::before{box-shadow:14vw 8vh 0 .6px #7fb0ff66, 32vw 4vh 0 .4px #c7d5ef55, 51vw 12vh 0 .7px #7fb0ff44,
+   68vw 6vh 0 .5px #c7d5ef66, 82vw 16vh 0 .4px #7c6cf055, 8vw 34vh 0 .5px #7fb0ff33,
+   24vw 44vh 0 .6px #c7d5ef44, 44vw 30vh 0 .4px #7fb0ff55, 62vw 40vh 0 .5px #7c6cf044,
+   77vw 33vh 0 .6px #c7d5ef44, 90vw 42vh 0 .4px #7fb0ff33, 5vw 58vh 0 .4px #c7d5ef33,
+   38vw 60vh 0 .5px #7fb0ff22, 71vw 63vh 0 .4px #c7d5ef33, 87vw 70vh 0 .5px #7c6cf033}
+.plx-stars::after{left:4%;top:118%;box-shadow:9vw 6vh 0 .5px #7fb0ff55, 27vw 2vh 0 .4px #c7d5ef44, 46vw 9vh 0 .6px #7c6cf055,
+   64vw 3vh 0 .5px #7fb0ff44, 80vw 12vh 0 .4px #c7d5ef55, 15vw 30vh 0 .6px #7fb0ff33, 35vw 40vh 0 .4px #c7d5ef44,
+   58vw 34vh 0 .5px #7c6cf044, 73vw 46vh 0 .6px #7fb0ff33, 92vw 26vh 0 .4px #c7d5ef44, 6vw 62vh 0 .5px #7fb0ff33,
+   40vw 68vh 0 .4px #c7d5ef33, 66vw 60vh 0 .6px #7c6cf033, 86vw 72vh 0 .5px #7fb0ff22, 22vw 84vh 0 .4px #c7d5ef33}
+
+/* floating glow orbs — each drifts upward at its own rate (no filter:blur → cheap on mobile) */
+.plx-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;mix-blend-mode:screen;opacity:.85}
+.orb.o1{width:52vw;height:52vw;left:-16vw;top:6vh;
+  background:radial-gradient(circle,rgba(51,224,255,.20) 0%,rgba(51,224,255,.06) 32%,transparent 66%)}
+.orb.o2{width:40vw;height:40vw;right:-10vw;top:48vh;
+  background:radial-gradient(circle,rgba(176,108,255,.22) 0%,rgba(176,108,255,.06) 34%,transparent 66%)}
+.orb.o3{width:34vw;height:34vw;left:28vw;top:118vh;
+  background:radial-gradient(circle,rgba(61,123,255,.26) 0%,rgba(61,123,255,.07) 34%,transparent 66%)}
+.orb.o4{width:24vw;height:24vw;right:16vw;top:165vh;
+  background:radial-gradient(circle,rgba(51,224,255,.24) 0%,rgba(51,224,255,.06) 36%,transparent 66%)}
+.orb.o5{width:44vw;height:44vw;left:-8vw;top:225vh;
+  background:radial-gradient(circle,rgba(176,108,255,.20) 0%,rgba(176,108,255,.05) 34%,transparent 66%)}
+.orb.o6{width:30vw;height:30vw;right:-6vw;top:280vh;
+  background:radial-gradient(circle,rgba(61,123,255,.22) 0%,rgba(61,123,255,.06) 34%,transparent 66%)}
+@media (max-width:760px){.orb{opacity:.7}.orb.o1{width:90vw;height:90vw}.orb.o2{width:70vw;height:70vw}
+  .orb.o3,.orb.o5{width:70vw;height:70vw}.orb.o4,.orb.o6{width:50vw;height:50vw}}
+
+/* hero content: slow upward drift + fade as the user scrolls away */
+.hero-inner{transform:translate3d(0,var(--hero-y,0px),0);opacity:var(--hero-o,1);will-change:transform,opacity}
+
+/* ghost section numerals — sit behind content, drift the opposite way */
+.ghost{position:absolute;right:.4rem;top:.6rem;z-index:0;pointer-events:none;user-select:none;
+  font-size:clamp(5.5rem,15vw,12rem);font-weight:900;line-height:.9;letter-spacing:-.05em;
+  color:transparent;-webkit-text-stroke:1.5px rgba(127,176,255,.12);white-space:nowrap;text-align:right}
+.ghost small{display:block;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+  -webkit-text-stroke:0;color:rgba(127,176,255,.28);font-weight:700;margin:0 .35rem .4rem 0}
+@media (max-width:760px){.ghost{right:.2rem;top:.2rem;-webkit-text-stroke-width:1px}}
+
+/* perspective floor line under the hero (visible on phones, where the WebGL road is gated off) */
+.hero::before{content:"";position:absolute;left:50%;bottom:0;width:140vw;height:38vh;transform:translateX(-50%);
+  pointer-events:none;z-index:0;opacity:.5;
+  background:
+    linear-gradient(to top,rgba(51,224,255,.10),transparent 70%),
+    repeating-linear-gradient(to top,rgba(51,224,255,.16) 0 1px,transparent 1px 34px);
+  -webkit-mask-image:linear-gradient(to top,#000 20%,transparent);mask-image:linear-gradient(to top,#000 20%,transparent)}
+@media (min-width:768px){.hero::before{display:none}}
+@media (prefers-reduced-motion:reduce){[data-plx],.hero-inner{transform:none !important;opacity:1 !important}}

@@ -24,6 +24,9 @@ body.dark-site{margin:0;background:var(--bg-0);color:var(--text-dim);font-family
 /* ---------- glass sticky nav ---------- */
 .dk-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;
   transition:background .25s,box-shadow .25s,backdrop-filter .25s}
+.dk-nav::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:var(--grad);
+  transform-origin:left;transform:scaleX(var(--sp,0));opacity:0;transition:opacity .25s;pointer-events:none}
+.dk-nav.scrolled::before{opacity:1}
 .dk-nav.scrolled{background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   box-shadow:0 2px 24px rgba(0,0,0,.45);border-bottom:1px solid var(--border)}
 .dk-nav-inner{max-width:var(--maxw);margin:0 auto;padding:.85rem 1.4rem;display:flex;align-items:center;gap:1rem}
