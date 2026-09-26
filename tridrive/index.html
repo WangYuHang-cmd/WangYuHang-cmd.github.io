@@ -4,33 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="title" content="BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation">
-  <meta name="description" content="BATON is a large-scale multimodal benchmark for bidirectional human–automation control transitions, with 136.6 hours of naturalistic driving from 127 drivers, synchronizing video, CAN, radar and GPS.">
-  <meta name="keywords" content="automation transition, handover, takeover, naturalistic driving, multimodal benchmark, ADAS, CAN bus, driving">
-  <meta name="author" content="Yuhang Wang, Yiyao Xu, Chaoyun Yang, Lingyao Li, Jingran Sun, Hao Zhou">
+  <meta name="title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving">
+  <meta name="description" content="TriDrive is a world-model-based driver-monitoring system that jointly forecasts driver kinematics, vehicle dynamics and road demands, runs in real time on comma four hardware, and is validated in a 14-participant on-road study.">
+  <meta name="keywords" content="driver monitoring, world model, driver motion forecasting, vehicle dynamics, road demand, human-centered driving, ADAS, comma four, openpilot, real-time">
+  <meta name="author" content="Yuhang Wang, Jingxin Yang, Chuheng Wei, Yuechen Guo, Jinghan Xu, Zhao Han, Hao Zhou">
   <meta name="robots" content="index, follow">
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
-  <meta property="og:title" content="BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation">
-  <meta property="og:description" content="A large-scale multimodal benchmark for bidirectional human–DAS control transitions in naturalistic driving.">
-  <meta property="og:url" content="https://wangyuhang-cmd.github.io/baton/">
-  <meta property="og:image" content="https://wangyuhang-cmd.github.io/baton/static/images/baton_teaser.png">
+  <meta property="og:title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving">
+  <meta property="og:description" content="A world model for the cockpit: jointly forecasting driver kinematics, vehicle dynamics and road demands — in real time on comma four.">
+  <meta property="og:url" content="https://wangyuhang-cmd.github.io/tridrive/">
+  <meta property="og:image" content="https://wangyuhang-cmd.github.io/tridrive/static/images/tridrive_poster.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="BATON: Bidirectional Automation Transition Observation">
-  <meta name="twitter:description" content="A large-scale multimodal benchmark for bidirectional human–DAS control transitions in naturalistic driving.">
-  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/baton/static/images/baton_teaser.png">
+  <meta name="twitter:title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling">
+  <meta name="twitter:description" content="A world model for the cockpit: jointly forecasting driver kinematics, vehicle dynamics and road demands — in real time on comma four.">
+  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/tridrive/static/images/tridrive_poster.jpg">
 
-  <meta name="citation_title" content="BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving">
+  <meta name="citation_title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving">
   <meta name="citation_author" content="Wang, Yuhang">
-  <meta name="citation_author" content="Xu, Yiyao">
-  <meta name="citation_author" content="Yang, Chaoyun">
-  <meta name="citation_author" content="Li, Lingyao">
-  <meta name="citation_author" content="Sun, Jingran">
+  <meta name="citation_author" content="Yang, Jingxin">
+  <meta name="citation_author" content="Wei, Chuheng">
+  <meta name="citation_author" content="Guo, Yuechen">
+  <meta name="citation_author" content="Xu, Jinghan">
+  <meta name="citation_author" content="Han, Zhao">
   <meta name="citation_author" content="Zhou, Hao">
   <meta name="citation_publication_date" content="2026">
 
-  <title>BATON · Bidirectional Automation Transition Observation</title>
+  <title>TriDrive · Joint Driver, Vehicle, and Road Modeling</title>
 
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
   <link rel="apple-touch-icon" href="static/images/favicon.ico">
@@ -81,6 +82,12 @@
     .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
     .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
     .filmstrip.single .film-card img{aspect-ratio:auto;object-fit:contain}
+    /* centred hero video */
+    .filmstrip.single.video{grid-template-columns:minmax(0,1040px)}
+    .filmstrip.video .film-card{background:#000}
+    .filmstrip.video .film-card:hover{transform:none;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+    .film-card video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+    .video-cap{color:#9fb2d6;font-size:.85rem;text-align:center;margin:.6rem auto 0;max-width:1040px;position:relative;z-index:2}
     .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
     .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em;z-index:2}
     .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
@@ -110,10 +117,9 @@
     <div class="more-works-dropdown" id="moreWorksDropdown">
       <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
       <div class="works-list">
-        <a href="/tridrive/" class="work-item"><div class="work-info"><h5>TriDrive</h5><p>Joint driver, vehicle and road modeling for human-centered driving.</p><span class="work-venue">Under review 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events with multimodal signals.</p><span class="work-venue">IEEE ITSC 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/openlka/" class="work-item"><div class="work-info"><h5>OpenLKA</h5><p>Open dataset of Lane Keeping Assist from 62 production vehicles.</p><span class="work-venue">IEEE ITSC 2025</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/vlalert/" class="work-item"><div class="work-info"><h5>VLAlert</h5><p>Observe Before You Alert: adaptive driver alerting with VLMs.</p><span class="work-venue">CoRL 2026</span></div><i class="fas fa-external-link-alt"></i></a>
         <a href="/drivemotion/" class="work-item"><div class="work-info"><h5>DriveMotion</h5><p>Driver body-motion forecasting benchmark.</p><span class="work-venue">Dataset 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
       </div>
     </div>
   </div>
@@ -125,53 +131,47 @@
       <div class="container is-max-widescreen">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving</h1>
+            <h1 class="title is-1 publication-title">TriDrive: Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
-              <span class="author-block">Yiyao Xu,</span>
-              <span class="author-block">Chaoyun Yang,</span>
-              <span class="author-block">Lingyao Li,</span>
-              <span class="author-block">Jingran Sun,</span>
+              <span class="author-block">Jingxin Yang,</span>
+              <span class="author-block">Chuheng Wei,</span>
+              <span class="author-block">Yuechen Guo,</span>
+              <span class="author-block">Jinghan Xu,</span>
+              <span class="author-block">Zhao Han,</span>
               <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
             </div>
             <div class="is-size-5 publication-authors">
               <span class="author-block">University of South Florida · MOTIF-Lab</span><br>
-              <span class="venue-pill">arXiv preprint · 2026</span>
+              <span class="venue-pill">Under review · 2026</span>
             </div>
             <div class="column has-text-centered">
               <div class="publication-links">
-                <span class="link-block"><a href="https://arxiv.org/abs/2604.07263" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
-                <span class="link-block"><a href="https://arxiv.org/abs/2604.07263" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
-                <span class="link-block"><a href="https://github.com/OpenLKA/BATON" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
-                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/BATON" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
+                <span class="link-block"><a href="#demo" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-play"></i></span><span>Demo Video</span></a></span>
+                <span class="link-block"><a href="https://huggingface.co/HenryYHW/TriDrive" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Code &amp; Models</span></a></span>
               </div>
             </div>
-            <div class="filmstrip">
-              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/baton_day.gif" alt="Daytime route, full sync"/><div class="tag-cap">Daytime route, full sync</div></div>
-              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/baton_night.gif" alt="Night driving"/><div class="tag-cap">Night driving</div></div>
-              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/baton_sensors.gif" alt="Synchronized sensor streams"/><div class="tag-cap">Synchronized sensor streams</div></div>
-            </div>
 
-            <p class="hero-tagline">A large-scale multimodal benchmark for bidirectional human–automation control transitions in naturalistic driving.</p>
+            <div class="filmstrip single video" id="demo">
+              <div class="film-card"><span class='rec'>● REC</span>
+                <video controls playsinline preload="metadata" poster="static/images/tridrive_poster.jpg" aria-label="TriDrive demo video">
+                  <source src="static/videos/tridrive_demo.mp4" type="video/mp4">
+                  Your browser does not support HTML5 video. <a href="static/videos/tridrive_demo.mp4">Download the demo (MP4, 14.6 MB)</a>.
+                </video>
+              </div>
+            </div>
+            <p class="video-cap">Narrated demo (2:02): system overview, real-time deployment on comma four, and the on-road user study.</p>
+
+            <p class="hero-tagline">A <b>world model for the cockpit</b>: jointly forecasting <b>driver kinematics</b>, <b>vehicle dynamics</b> and <b>road demands</b> from one automation-conditioned transition model — running in real time on a comma four.</p>
             <div class="stat-band">
-              <div class="stat"><div class="num" data-count="136.6" data-decimals="1" data-suffix=" h">0</div><div class="lbl">driving</div></div>
-              <div class="stat"><div class="num" data-count="127">0</div><div class="lbl">drivers</div></div>
-              <div class="stat"><div class="num" data-count="380">0</div><div class="lbl">routes</div></div>
-              <div class="stat"><div class="num" data-count="3">0</div><div class="lbl">benchmark tasks</div></div>
+              <div class="stat"><div class="num" data-count="48.05" data-decimals="2">0</div><div class="lbl">All-MPJPE on AIDE (SOTA)</div></div>
+              <div class="stat"><div class="num" data-count="197.2" data-decimals="1" data-suffix=" h">0</div><div class="lbl">naturalistic driving</div></div>
+              <div class="stat"><div class="num" data-count="177" data-suffix=" ms">0</div><div class="lbl">p95 latency · comma four</div></div>
+              <div class="stat"><div class="num" data-count="14">0</div><div class="lbl">drivers · on-road study</div></div>
             </div>
 
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="hero teaser reveal">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <img class="teaser-img" src="static/images/baton_teaser.png" alt="BATON benchmark teaser" loading="lazy"/>
-        
-        </div></div>
       </div>
     </div>
   </section>
@@ -183,14 +183,22 @@
           <h2 class="title is-3 section-title-accent">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              BATON compiles 136.6 hours of naturalistic driving from 127 drivers across 380 routes, synchronizing
-              front-view video, in-cabin video, decoded CAN signals, radar-based lead-vehicle interaction, and GPS route
-              context to capture bidirectional control transitions between human and driving-automation systems. It defines
-              three benchmark tasks: driving-action understanding (7-class), handover prediction (human→DAS), and takeover
-              prediction (DAS→human), with baselines (GRU, TCN, XGBoost) and zero-shot vision-language-model evaluations.
-              We find that visual input alone is insufficient for reliable transition prediction; adding vehicle dynamics and
-              route context substantially improves accuracy; and that takeovers unfold gradually — benefiting from longer
-              prediction windows — while handovers hinge on immediate context.
+              Predicting how drivers, vehicles, and road scenes interact and evolve together is central to human-centered
+              driving. Prior work models in-cabin activity or traffic-conditioned driver motion in isolation; a framework that
+              models all three jointly and runs in real time on vehicle hardware had not been shown. TriDrive jointly models
+              the driver, the vehicle, and the road: to our knowledge it is the first to forecast driver kinematics, vehicle
+              dynamics, and road demands together from an automation-conditioned transition model, with forecasting and
+              warning as its two applications. Modality-specific encoders — an anchored kinematic representation of the
+              driver, causal CAN-bus dynamics, and frozen V-JEPA&nbsp;2 road latents with structured road margins — are
+              connected by directed residual connections through which driver and road context refine vehicle forecasts.
+              On the public AIDE benchmark the kinematic encoder recipe sets a new full-set state of the art among published
+              baselines (48.05 vs. 71.47 All-MPJPE). On 197.2 hours of naturalistic BATON driving, directed connections and
+              road margins raise assistance-engaged PR-AUC by 0.084 for steering onset and 0.286 for time-to-collision drops.
+              For real-time use we distill the road encoders and run TriDrive on a comma four with an external 8&nbsp;GB GPU,
+              where a lightweight current-state warning probe updates at 5&nbsp;Hz with 177&nbsp;ms p95 latency while the
+              forecasting model runs concurrently. The probe is above an openpilot-based baseline on human-labeled
+              manual-driving warnings (AUROC 0.725 vs. 0.563), and in a paired on-road study 14 drivers rate its warnings as
+              more appropriate (+1.79) and timely (+2.67) than those of openpilot's driver-monitoring system.
             </p>
           </div>
         </div>
@@ -198,40 +206,14 @@
     </div>
   </section>
 
-  <section class="hero is-small reveal">
-    <div class="hero-body">
-      <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item"><img src="static/images/baton_overview.jpg" alt="Dataset overview" loading="lazy"/><h2 class="subtitle has-text-centered">Dataset overview: synchronized multimodal streams per drive.</h2></div>
-          <div class="item"><img src="static/images/baton_benchmark.jpg" alt="Benchmark tasks" loading="lazy"/><h2 class="subtitle has-text-centered">The three benchmark tasks and their evaluation protocol.</h2></div>
-          <div class="item"><img src="static/images/baton_tasks.jpg" alt="Task distribution" loading="lazy"/><h2 class="subtitle has-text-centered">Distribution of driving actions and transition events.</h2></div>
-          <div class="item"><img src="static/images/baton_d_takeover.jpg" alt="In-cabin takeover still" loading="lazy"/><h2 class="subtitle has-text-centered">In-cabin view at the moment of a take-over.</h2></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">Synchronized Multimodal Views</span></h2>
-      <p class="has-text-centered content">Front camera, cabin camera, and sensor streams aligned in time.</p>
-      <div class="gif-grid">
-        <div class="gif-card"><img src="static/images/baton_day.gif" alt="Daytime drive" loading="lazy"/><div class="cap">Daytime driving sequence.</div></div>
-        <div class="gif-card"><img src="static/images/baton_night.gif" alt="Nighttime drive" loading="lazy"/><div class="cap">Nighttime driving sequence.</div></div>
-        <div class="gif-card"><img src="static/images/baton_seq.gif" alt="Transition sequence" loading="lazy"/><div class="cap">A control-transition sequence.</div></div>
-        <div class="gif-card"><img src="static/images/baton_sensors.gif" alt="Sensor streams" loading="lazy"/><div class="cap">Aligned sensor streams over time.</div></div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
-      <pre id="bibtex-code"><code>@article{wang2026baton,
-  title   = {BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving},
-  author  = {Wang, Yuhang and Xu, Yiyao and Yang, Chaoyun and Li, Lingyao and Sun, Jingran and Zhou, Hao},
-  journal = {arXiv preprint arXiv:2604.07263},
-  year    = {2026}
+      <pre id="bibtex-code"><code>@misc{wang2026tridrive,
+  title  = {TriDrive: Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving},
+  author = {Wang, Yuhang and Yang, Jingxin and Wei, Chuheng and Guo, Yuechen and Xu, Jinghan and Han, Zhao and Zhou, Hao},
+  year   = {2026},
+  note   = {Under review}
 }</code></pre>
     </div>
   </section>

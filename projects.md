@@ -38,6 +38,20 @@ Below is the full set of projects. Explore more of my work on
 <div class="works-grid">
 
   <div class="work-card">
+    <a class="thumb" href="/tridrive/"><img src="/images/th_tridrive.jpg" alt="TriDrive"></a>
+    <div class="body">
+      <div class="venue">Under review 2026</div>
+      <h3><a href="/tridrive/">TriDrive</a></h3>
+      <p class="blurb">Joint driver, vehicle and road modeling for human-centered driving: a world-model-based driver-monitoring system that forecasts driver kinematics, vehicle dynamics and road demands, deployed in real time on comma four and validated in a 14-participant on-road study.</p>
+      <div class="badges">
+        <a class="primary" href="/tridrive/">Project Page →</a>
+        <a href="/tridrive/#demo">Demo Video</a>
+        <a href="https://huggingface.co/HenryYHW/TriDrive" target="_blank">🤗 Code &amp; Models</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-card">
     <a class="thumb" href="/openlka/"><img src="/images/th_openlka.jpg" alt="OpenLKA"></a>
     <div class="body">
       <div class="venue">IEEE ITSC 2025</div>
@@ -104,6 +118,7 @@ Below is the full set of projects. Explore more of my work on
       <p class="blurb">A multi-source benchmark for driver body-motion forecasting: 400 h of in-cabin skeleton motion (133 keypoints/frame, privacy-reduced) with an 8 s → 4 s prediction task.</p>
       <div class="badges">
         <a class="primary" href="/drivemotion/">Project Page →</a>
+        <a href="https://arxiv.org/abs/2609.08117" target="_blank">arXiv</a>
         <a href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank">🤗 Data</a>
       </div>
     </div>
@@ -118,6 +133,7 @@ Below is the full set of projects. Explore more of my work on
       <div class="badges">
         <a class="primary" href="/vlalert/">Project Page →</a>
         <a href="/file/Observe_Before_You_Alert.pdf" target="_blank">Paper</a>
+        <a href="https://arxiv.org/abs/2609.08130" target="_blank">arXiv</a>
         <a href="https://huggingface.co/datasets/HenryYHW/VLAlert" target="_blank">🤗 Data</a>
       </div>
     </div>
