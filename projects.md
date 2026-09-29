@@ -40,11 +40,12 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/tridrive/"><img src="/images/th_tridrive.jpg" alt="TriDrive"></a>
     <div class="body">
-      <div class="venue">Under review 2026</div>
+      <div class="venue">arXiv preprint 2026</div>
       <h3><a href="/tridrive/">TriDrive</a></h3>
       <p class="blurb">Joint driver, vehicle and road modeling for human-centered driving: a world-model-based driver-monitoring system that forecasts driver kinematics, vehicle dynamics and road demands, deployed in real time on comma four and validated in a 14-participant on-road study.</p>
       <div class="badges">
         <a class="primary" href="/tridrive/">Project Page →</a>
+        <a href="https://arxiv.org/abs/2609.33000" target="_blank">arXiv</a>
         <a href="/tridrive/#demo">Demo Video</a>
         <a href="https://huggingface.co/HenryYHW/TriDrive" target="_blank">🤗 Code &amp; Models</a>
       </div>
