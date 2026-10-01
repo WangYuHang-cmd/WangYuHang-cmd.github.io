@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Primary Meta Tags -->
+  <title>OpenLKA · Lane Keeping Assist on Real Roads</title>
   <meta name="title" content="OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles">
-  <meta name="description" content="OpenLKA is the first large-scale open dataset of Lane Keeping Assist (LKA) from 62 production vehicle models under real-world driving, pairing decoded CAN-bus logs with synchronized 1080p video.">
-  <meta name="keywords" content="Lane Keeping Assist, LKA, ADAS, autonomous driving, open dataset, CAN bus, driving safety, computer vision">
+  <meta name="description" content="OpenLKA is a large-scale open dataset of how production lane keeping assist (LKA) systems perform on real roads: 389 hours from 62 vehicle models, most of it recorded on Tampa Bay highways, with decoded vehicle signals, synchronized video and scene annotations.">
+  <meta name="keywords" content="Lane Keeping Assist, LKA, lane centering, ADAS, open dataset, CAN bus, road markings, Florida, Tampa, infrastructure readiness">
   <meta name="author" content="Yuhang Wang, Abdulaziz Alhuraish, Shengming Yuan, Hao Zhou">
   <meta name="robots" content="index, follow">
-
-  <!-- Open Graph -->
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://wangyuhang-cmd.github.io/openlka/">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
-  <meta property="og:title" content="OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles">
-  <meta property="og:description" content="The first large-scale open dataset of real-world Lane Keeping Assist performance across 62 production vehicle models.">
+  <meta property="og:title" content="OpenLKA: how lane keeping assist really performs on public roads">
+  <meta property="og:description" content="389 hours from 62 production vehicle models, most of it on Tampa Bay roads. See where lane centering drifts or disengages, and what road owners can do about it.">
   <meta property="og:url" content="https://wangyuhang-cmd.github.io/openlka/">
-  <meta property="og:image" content="https://wangyuhang-cmd.github.io/openlka/static/images/openlka_view.png">
-
+  <meta property="og:image" content="https://wangyuhang-cmd.github.io/openlka/static/images/olka_og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="OpenLKA: real-world lane keeping assist, 62 vehicle models, 389 hours">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="OpenLKA: An Open Dataset of Lane Keeping Assist">
-  <meta name="twitter:description" content="The first large-scale open dataset of real-world Lane Keeping Assist performance across 62 production vehicle models.">
-  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/openlka/static/images/openlka_view.png">
-
+  <meta name="twitter:title" content="OpenLKA: Lane Keeping Assist on Real Roads">
+  <meta name="twitter:description" content="389 hours from 62 production vehicle models, most of it on Tampa Bay roads. Where lane centering drifts or disengages, and what road owners can do about it.">
+  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/openlka/static/images/olka_og.jpg">
   <meta name="citation_title" content="OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions">
   <meta name="citation_author" content="Wang, Yuhang">
   <meta name="citation_author" content="Alhuraish, Abdulaziz">
@@ -31,293 +31,678 @@
   <meta name="citation_author" content="Zhou, Hao">
   <meta name="citation_publication_date" content="2025">
   <meta name="citation_conference_title" content="IEEE International Conference on Intelligent Transportation Systems (ITSC)">
-
-  <title>OpenLKA · An Open Dataset of Lane Keeping Assist</title>
-
+  <meta name="citation_arxiv_id" content="2505.09092">
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-
-  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
-  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
-  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
-  <script defer src="/projectpage-lib/js/index.js"></script>
-
-  <style>
-    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
-    .home-link:hover{background:#1d4ed8;color:#fff}
-    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
-    .stat{text-align:center;min-width:120px}
-    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
-    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
-    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
-    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
-    .gif-card img{display:block;width:100%;height:auto}
-    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
-  
-    /* ---- cinematic dark hero (design system v2) ---- */
-    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
-    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
-    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
-    .hero-dark .publication-authors a{color:#7fb0ff}
-    .hero-dark .publication-authors a:hover{color:#fff}
-    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
-    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
-    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
-    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
-    .filmstrip.single{grid-template-columns:minmax(0,860px);justify-content:center}
-    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14);background:#fff}
-    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
-    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
-    .filmstrip.single .film-card img{aspect-ratio:auto;object-fit:contain}
-    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
-    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em;z-index:2}
-    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
-    .hero-tagline b{color:#fff}
-    .hero-dark .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
-    .hero-dark .stat{text-align:center;min-width:130px}
-    .hero-dark .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
-    .hero-dark .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-    .section-title-accent{position:relative;display:inline-block}
-    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
-    .gif-card{transition:transform .22s ease,box-shadow .22s ease}
-    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-    .reveal.on{opacity:1;transform:none}
-    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}.filmstrip.single{grid-template-columns:1fr}}
-  </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+  <link rel="stylesheet" href="static/openlka.css">
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Dataset","name":"OpenLKA",
+   "description":"An open dataset of lane keeping assist (LKA) performance from 62 production vehicle models under real-world driving: 389 hours of decoded vehicle CAN signals, synchronized front video and scene annotations.",
+   "url":"https://wangyuhang-cmd.github.io/openlka/","license":"https://opensource.org/licenses/MIT",
+   "creator":{"@type":"Organization","name":"MOTIF-Lab, University of South Florida"},
+   "distribution":[{"@type":"DataDownload","contentUrl":"https://github.com/OpenLKA/OpenLKA"}],
+   "citation":"https://arxiv.org/abs/2505.09092","keywords":["lane keeping assist","ADAS","naturalistic driving","CAN bus","road markings"]}
+  </script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-  <div id="site-nav"></div>
-  <script defer src="/assets/dark/nav.js"></script>
-  <noscript><a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a></noscript>
-
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
-    <i class="fas fa-chevron-up"></i>
-  </button>
-
-  <!-- More Works Dropdown -->
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works">
-      <i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i>
+<!-- ============ NAV ============ -->
+<header class="lk-nav" id="lk-nav">
+  <div class="lk-nav__in">
+    <a class="lk-brand" href="/">Yuhang <b>Wang</b></a>
+    <button class="lk-burger" id="lk-burger" aria-expanded="false" aria-controls="lk-menu" aria-label="Open menu">
+      <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
     </button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header"><h4>More Works</h4>
-        <button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button>
+    <nav id="lk-menu" class="lk-menu" aria-label="Page and site navigation">
+      <ul class="lk-anchors">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#scenarios">Scenarios</a></li>
+        <li><a href="#vehicles">Fleet</a></li>
+        <li><a href="#findings">Findings</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#outputs">Our work</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ul>
+      <ul class="lk-site">
+        <li><a href="/projects/">Projects</a></li>
+        <li><a href="/publications/">Publications</a></li>
+        <li class="lk-dd">
+          <button class="lk-dd__btn" id="lk-more" aria-expanded="false" aria-controls="lk-more-menu">More works <svg class="ic ic-sm" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+          <ul class="lk-dd__menu" id="lk-more-menu">
+            <li><a href="/adasto/"><b>ADAS-TO</b><span>Takeover clips from the same recordings</span></a></li>
+            <li><a href="/baton/"><b>BATON</b><span>Control-transition benchmark</span></a></li>
+            <li><a href="/drivedna/"><b>DriveDNA</b><span>Driving-style identification</span></a></li>
+            <li><a href="/drivemotion/"><b>DriveMotion</b><span>Driver body-motion forecasting</span></a></li>
+            <li><a href="/vlalert/"><b>VLAlert</b><span>Adaptive driver alerting</span></a></li>
+            <li><a href="/tridrive/"><b>TriDrive</b><span>Driver, vehicle and road world model</span></a></li>
+          </ul>
+        </li>
+        <li class="lk-site-extra"><a href="/">About</a></li>
+        <li class="lk-site-extra"><a href="/awards/">Awards</a></li>
+        <li class="lk-site-extra"><a href="/blogs/">Blogs</a></li>
+        <li class="lk-site-extra"><a href="/teams/">Teams</a></li>
+        <li class="lk-site-extra"><a href="/hobbies/">Hobbies</a></li>
+        <li><a class="lk-cv" href="/file/CV-Yuhang.pdf">CV</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="lk-progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <svg class="hero-road" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="roadfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="1"/></linearGradient></defs>
+    <path d="M600 60 L120 420 M600 60 L1080 420" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+    <path class="hero-dash" d="M600 60 L600 420" stroke="#0a8f62" stroke-width="4" fill="none" stroke-dasharray="18 26"/>
+    <path d="M600 60 L360 420 M600 60 L840 420" stroke="#e2e8f0" stroke-width="1.5" fill="none" stroke-dasharray="10 16"/>
+    <rect x="0" y="0" width="1200" height="200" fill="url(#roadfade)" transform="rotate(180 600 100)"/>
+  </svg>
+  <div class="wrap hero__grid">
+    <div class="hero__text">
+      <div class="hero__eyebrow">
+        <img src="static/images/olka_motif.png" width="862" height="216" alt="MOTIF-Lab, University of South Florida" class="hero__logo" fetchpriority="high">
       </div>
-      <div class="works-list">
-        <a href="/tridrive/" class="work-item"><div class="work-info"><h5>TriDrive</h5><p>Joint driver, vehicle and road modeling for human-centered driving.</p><span class="work-venue">Under review 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events with multimodal signals.</p><span class="work-venue">IEEE ITSC 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/drivedna/" class="work-item"><div class="work-info"><h5>DriveDNA</h5><p>Driving-style identification from naturalistic driving.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+      <div class="pills">
+        <span class="pill pill--green">IEEE ITSC 2025</span>
+        <span class="pill">Journal extension under review · Accident Analysis &amp; Prevention</span>
+        <span class="pill">MIT license</span>
       </div>
+      <h1 id="hero-title">OpenLKA</h1>
+      <p class="hero__sub">How lane keeping assist really performs on public roads</p>
+      <p class="hero__lede">Lane keeping assist (LKA) is the feature that steers a car to stay centered in its lane. It ships on most new vehicles, and it works only as well as the road lets it. OpenLKA is the largest open record of how production LKA systems behave in real traffic: <b>389 hours</b> of driving from <b>62 vehicle models</b>, most of it recorded on Tampa Bay highways and rural roads.</p>
+      <div class="cta">
+        <a class="btn btn--primary" href="#findings">See what the road does to LKA</a>
+        <a class="btn" href="https://ieeexplore.ieee.org/document/11423194/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pdf"/></svg>Paper (IEEE)</a>
+        <a class="btn" href="https://arxiv.org/abs/2505.09092" target="_blank" rel="noopener"><span class="arxiv-mark" aria-hidden="true">arXiv</span>Preprint</a>
+        <a class="btn" href="https://github.com/OpenLKA/OpenLKA" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+        <a class="btn" href="https://openlka.github.io/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg>Data portal</a>
+      </div>
+      <p class="hero__authors">
+        <a href="https://wangyuhang-cmd.github.io/">Yuhang Wang</a>, Abdulaziz Alhuraish, Shengming Yuan, <a href="https://sites.google.com/view/haozhou-cv" target="_blank" rel="noopener">Hao Zhou</a>
+        <span class="sep">·</span> University of South Florida · MOTIF-Lab
+      </p>
+    </div>
+    <div class="hero__visual">
+      <figure class="ba ba--hero" id="hero-ba" style="--pos:50%">
+        <img class="ba__after" src="static/images/olka_ba_glare_after.jpg" width="960" height="598" alt="The same sun-glare frame with the lane detector's lane lines, road edge and path drawn over it" fetchpriority="high" decoding="async">
+        <img class="ba__before" src="static/images/olka_ba_glare_before.jpg" width="960" height="598" alt="Forward camera frame on a Tampa interstate at sunset, with sun glare washing out the lane lines" fetchpriority="high" decoding="async">
+        <input class="ba__range" type="range" min="0" max="100" step="0.5" value="50" aria-label="Compare the camera frame with the lane detection overlay" aria-valuetext="50 percent camera frame">
+        <span class="ba__handle" aria-hidden="true"><span class="ba__grip"><svg class="ic" aria-hidden="true"><use href="#i-arrows"/></svg></span></span>
+        <span class="ba__tag ba__tag--l">Camera</span><span class="ba__tag ba__tag--r">Lane detector</span>
+        <figcaption>Sun glare on a Tampa interstate. Drag the handle: left is what the camera saw, right is what the lane model found. Lane-line confidence in this frame fell to 0.21 (left line) and 0.26 (right line) on a scale where 1.0 is certain.</figcaption>
+      </figure>
     </div>
   </div>
+  <div class="wrap">
+    <div class="stat-band reveal">
+      <div class="stat"><div class="num" data-count="389.1" data-decimals="1" data-suffix=" h">389.1 h</div><div class="lbl">of LKA driving</div></div>
+      <div class="stat"><div class="num" data-count="62">62</div><div class="lbl">vehicle models</div></div>
+      <div class="stat"><div class="num" data-count="12">12</div><div class="lbl">automakers</div></div>
+      <div class="stat"><div class="num" data-count="53">53</div><div class="lbl">drivers</div></div>
+      <div class="stat"><div class="num" data-count="80" data-suffix="+">80+</div><div class="lbl">cities</div></div>
+    </div>
+    <p class="stat-foot reveal">322 unique route logs · 30+ states and provinces · 83% recorded in Tampa Bay · decoded vehicle signals, synchronized video and scene labels · MIT license</p>
+  </div>
+</section>
 
-  <main id="main-content">
-  <section class="hero hero-dark">
-    <div data-hero-bg data-mode="contained" hidden></div>
-    <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions</h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
-              <span class="author-block">Abdulaziz Alhuraish,</span>
-              <span class="author-block">Shengming Yuan,</span>
-              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
-            </div>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">University of South Florida · MOTIF-Lab</span><br>
-              <span class="venue-pill">IEEE ITSC 2025</span>
-              <span class="venue-pill">Journal extension under review · Accident Analysis &amp; Prevention</span>
-            </div>
+<!-- ============ OVERVIEW ============ -->
+<section class="lk-section" id="overview" aria-labelledby="overview-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <h2 id="overview-title">Why this matters for Florida roads</h2>
+      <p class="sec-lede">Lane keeping assist reads painted lines with a camera. The road is half of the system.</p>
+    </div>
+    <div class="cards3">
+      <article class="card reveal" style="--i:0">
+        <div class="card__icon"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></div>
+        <h3>It is already on the road</h3>
+        <p>Lane keeping assist is on <b>86.3%</b> of model-year-2023 vehicles, and continuous lane centering on <b>53.9%</b> (PARTS, 2024). Drivers lean on it every day, whether or not the road was designed for it.</p>
+      </article>
+      <article class="card reveal" style="--i:1">
+        <div class="card__icon"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></div>
+        <h3>The road decides how well it works</h3>
+        <p>Faded paint, white lines on pale concrete, glare, rain and tight curves all change what the car does. In our sample, four of the five most common conditions behind large drifts were about seeing the line.</p>
+      </article>
+      <article class="card reveal" style="--i:2">
+        <div class="card__icon"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></div>
+        <h3>Measured here, on Tampa Bay roads</h3>
+        <p>Four lab drivers logged <b>323 hours</b> on I-275, I-75 and rural two-lane roads from late 2023 through 2025, including the 2024 hurricane season. Community drivers added 66 hours from 30+ states and provinces.</p>
+      </article>
+    </div>
 
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <span class="link-block">
-                  <a href="https://ieeexplore.ieee.org/document/11423194/" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper (IEEE)</span></a>
-                </span>
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2505.09092" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a>
-                </span>
-                <span class="link-block">
-                  <a href="https://github.com/OpenLKA/OpenLKA" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a>
-                </span>
-              </div>
-            </div>
-            <div class="filmstrip">
-              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/olka_fail_glare.gif" alt="Glare, lane tracking lost"/><div class="tag-cap">Glare, lane tracking lost</div></div>
-              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/olka_fail_night.gif" alt="Night, low-visibility markings"/><div class="tag-cap">Night, low-visibility markings</div></div>
-              <div class="film-card"><span class='rec'>● REC</span><img src="static/images/olka_fail_faded.gif" alt="Faded lane paint"/><div class="tag-cap">Faded lane paint</div></div>
-            </div>
-
-            <p class="hero-tagline">OpenLKA is the first large-scale, open, real-world dataset focused on Lane Keeping Assist (LKA) performance, pairing decoded CAN-bus logs with synchronized front-camera video.</p>
-            <div class="stat-band">
-              <div class="stat"><div class="num" data-count="389" data-suffix=" h">0</div><div class="lbl">LKA driving</div></div>
-              <div class="stat"><div class="num" data-count="62">0</div><div class="lbl">vehicle models</div></div>
-              <div class="stat"><div class="num">1080p</div><div class="lbl">20 fps video</div></div>
-              <div class="stat"><div class="num">MIT</div><div class="lbl">license</div></div>
-            </div>
-
-          </div>
-        </div>
+    <div class="steps reveal">
+      <div class="steps__img">
+        <img src="static/images/olka_setup.jpg" width="1200" height="627" alt="A comma 3X recorder mounted behind the windshield of a Hyundai Ioniq 5, next to cockpit photos of six test cars: Kia EV6, Tesla Model 3, Honda Accord, Hyundai Ioniq 5, Ford Mustang Mach-E and Volkswagen Tiguan" loading="lazy" decoding="async" data-zoom>
+      </div>
+      <div class="steps__list">
+        <h3>How we measure it, in four steps</h3>
+        <ol>
+          <li><span class="step__n">1</span><div><b>Record.</b> A dash-cam-sized recorder sits behind the mirror of an ordinary rental car. It logs the car's internal data network (the CAN bus) and the forward camera at the same time.</div></li>
+          <li><span class="step__n">2</span><div><b>Decode.</b> We decode the hidden signals: whether lane keeping is engaged, steering angle and torque, speed, pedals. Every decoded signal is checked against the video.</div></li>
+          <li><span class="step__n">3</span><div><b>Measure.</b> A camera-based lane model gives the car's position in the lane. We checked it against LiDAR ground truth: typical error 0.135 m.</div></li>
+          <li><span class="step__n">4</span><div><b>Tag.</b> An AI model that reads images labels every scene in ten categories (rain, glare, faded paint, construction and more). We checked 2,000+ of its labels by hand.</div></li>
+        </ol>
       </div>
     </div>
-  </section>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> The same recorder and method can audit any Florida corridor for how production lane keeping behaves there, before and after a marking or paving project.</p>
+  </div>
+</section>
 
-  <!-- Teaser -->
-  <section class="hero teaser reveal">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <img class="teaser-img" src="static/images/openlka_view.png" alt="OpenLKA overview" loading="lazy"/>
+<!-- ============ SCENARIOS ============ -->
+<section class="lk-section band" id="scenarios" aria-labelledby="scn-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <h2 id="scn-title">Ten road conditions, one dataset</h2>
+      <p class="sec-lede">The same Tampa roads were driven again and again in different weather and light. Community drivers added snow, mountains and city traffic.</p>
+    </div>
+    <div class="tabs reveal" id="scn-tabs">
+      <div class="tabs__list" role="tablist" aria-label="Road conditions">
+        <button role="tab" id="tab-weather" aria-selected="true" aria-controls="panel-weather" tabindex="0">Weather</button>
+        <button role="tab" id="tab-light" aria-selected="false" aria-controls="panel-light" tabindex="-1">Light</button>
+        <button role="tab" id="tab-markings" aria-selected="false" aria-controls="panel-markings" tabindex="-1">Markings</button>
+        <button role="tab" id="tab-geometry" aria-selected="false" aria-controls="panel-geometry" tabindex="-1">Geometry &amp; traffic</button>
+      </div>
+
+      <section role="tabpanel" id="panel-weather" aria-labelledby="tab-weather" class="tabs__panel">
+        <div class="tiles">
+          <figure class="tile"><img src="static/images/olka_scn_heavyrain.jpg" width="800" height="520" alt="Interstate in heavy rain; spray from the vehicles ahead hides both lane lines" loading="lazy" decoding="async"><figcaption>Heavy rain, Tampa</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_scn_snowy.jpg" width="800" height="519" alt="Snow-covered highway at dusk with the lane lines buried" loading="lazy" decoding="async"><figcaption>Snow, community drive in Canada</figcaption></figure>
+          <figure class="tile tile--video"><video muted loop playsinline preload="none" poster="static/images/olka_loop_edge.jpg" width="460" height="289" aria-label="Looping clip: the lane detector loses the road edge on a wet road"><source src="static/images/olka_loop_edge.mp4" type="video/mp4"></video><figcaption>Road edge lost on a wet surface (loop)</figcaption></figure>
+        </div>
+        <div class="finding"><span class="badge badge--crit">Rain: lines lost, system hands back control</span><p>Spray hides both lane lines. In our recordings LKA often disengaged in heavy rain, which means the driver gets the car back with no warning. Florida's afternoon storms make this a routine event, not an edge case.</p></div>
+      </section>
+
+      <section role="tabpanel" id="panel-light" aria-labelledby="tab-light" class="tabs__panel" hidden>
+        <div class="tiles">
+          <figure class="tile"><img src="static/images/olka_scn_glare.jpg" width="800" height="522" alt="Low sun straight ahead on an interstate, washing out the lane lines" loading="lazy" decoding="async"><figcaption>Sun glare, Tampa</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_ba_night_before.jpg" width="960" height="598" alt="Night driving with only the headlight-lit stretch of lane line visible" loading="lazy" decoding="async"><figcaption>Night, only the lit stretch of line is visible</figcaption></figure>
+          <figure class="tile tile--video"><video muted loop playsinline preload="none" poster="static/images/olka_loop_glare.jpg" width="460" height="289" aria-label="Looping clip: lane tracking is lost under sun glare"><source src="static/images/olka_loop_glare.mp4" type="video/mp4"></video><figcaption>Glare: lane tracking lost (loop)</figcaption></figure>
+        </div>
+        <div class="finding"><span class="badge badge--warn">Low light: 12.1% of large drifts</span><p>Low sun washes out the paint, and at night only the headlight-lit stretch of line is visible. Low light was tagged in 12.1% of the samples with a large lane deviation, and glare in 5.5%.</p></div>
+      </section>
+
+      <section role="tabpanel" id="panel-markings" aria-labelledby="tab-markings" class="tabs__panel" hidden>
+        <div class="tiles">
+          <figure class="tile"><img src="static/images/olka_scn_lowcontrast.jpg" width="800" height="516" alt="White lane lines on pale concrete beside a truck; the lines barely stand out from the pavement" loading="lazy" decoding="async"><figcaption>Low-contrast lines on concrete</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_scn_faded.jpg" width="800" height="506" alt="Faded lane line on an interstate approaching an overpass" loading="lazy" decoding="async"><figcaption>Faded lane line</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_scn_occlusion.jpg" width="800" height="504" alt="A blue SUV close ahead hides the lane line from the camera" loading="lazy" decoding="async"><figcaption>Lane line hidden by traffic</figcaption></figure>
+          <figure class="tile tile--video"><video muted loop playsinline preload="none" poster="static/images/olka_loop_faded.jpg" width="460" height="289" aria-label="Looping clip: faded lane paint" ><source src="static/images/olka_loop_faded.mp4" type="video/mp4"></video><figcaption>Faded paint (loop)</figcaption></figure>
+        </div>
+        <div class="finding"><span class="badge badge--crit">Markings: 45.8% of large drifts</span><p>Occlusion (19.7%), low contrast (14.6%) and faded markings (11.5%) were the three most common conditions behind large drifts. White lines on white concrete are the hardest case: the camera sees almost no contrast. This is the lever a road owner controls most directly.</p></div>
+      </section>
+
+      <section role="tabpanel" id="panel-geometry" aria-labelledby="tab-geometry" class="tabs__panel" hidden>
+        <div class="tiles">
+          <figure class="tile"><img src="static/images/olka_scn_sharpturn.jpg" width="800" height="512" alt="Sharp turn on a two-lane road with a yellow center line" loading="lazy" decoding="async"><figcaption>Sharp turn</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_scn_transition.jpg" width="800" height="511" alt="Interstate where the lane lines split at a transition" loading="lazy" decoding="async"><figcaption>Road transition at a merge</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_scn_mountain.jpg" width="800" height="513" alt="Narrow mountain road without lane lines" loading="lazy" decoding="async"><figcaption>Mountain road, community drive in Europe</figcaption></figure>
+          <figure class="tile"><img src="static/images/olka_scn_crowded.jpg" width="800" height="509" alt="Crowded city street with many scooters in front of the car" loading="lazy" decoding="async"><figcaption>Crowded street, community drive in Taiwan</figcaption></figure>
+        </div>
+        <div class="finding"><span class="badge badge--warn">Sharp curves: 9.6% of large drifts, up to 1.2 m outward</span><p>Tight curves and lane transitions at merges and diverges confuse both the camera and the steering. On one sharp rural curve the car drifted 1.2 m (3.9 ft) toward the outside even though both lines were detected the whole time.</p></div>
+      </section>
+    </div>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> Every one of these conditions exists on the state system today. The dataset lets an engineer see how a production car reacts to each one, without a test track.</p>
+  </div>
+</section>
+
+<!-- ============ PERCEPTION (before/after) ============ -->
+<section class="lk-section" id="perception" aria-labelledby="perc-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <h2 id="perc-title">What the car sees</h2>
+      <p class="sec-lede">Pick a road condition, then drag the handle. Left is the camera frame, right is what the lane model found.</p>
+    </div>
+    <div class="chips reveal" id="scene-chips" role="group" aria-label="Road condition">
+      <button class="chip" data-scene="glare" aria-pressed="true">Sun glare</button>
+      <button class="chip" data-scene="heavyrain" aria-pressed="false">Heavy rain</button>
+      <button class="chip" data-scene="wornout" aria-pressed="false">Worn markings</button>
+      <button class="chip" data-scene="lowcontrast" aria-pressed="false">Low contrast</button>
+      <button class="chip" data-scene="night" aria-pressed="false">Night</button>
+      <button class="chip" data-scene="diverge" aria-pressed="false">Diverge</button>
+      <button class="chip" data-scene="curve" aria-pressed="false">Rural curve</button>
+      <button class="chip" data-scene="split" aria-pressed="false">Clear day (baseline)</button>
+    </div>
+    <div class="perc reveal">
+      <figure class="ba" id="scene-ba" style="--pos:50%">
+        <img class="ba__after" id="scene-after" src="static/images/olka_ba_glare_after.jpg" width="960" height="598" alt="Sun glare frame with the lane detection overlay" loading="lazy" decoding="async">
+        <img class="ba__before" id="scene-before" src="static/images/olka_ba_glare_before.jpg" width="960" height="598" alt="Sun glare on a Tampa interstate" loading="lazy" decoding="async">
+        <input class="ba__range" type="range" min="0" max="100" step="0.5" value="50" aria-label="Compare the camera frame with the lane detection overlay" aria-valuetext="50 percent camera frame">
+        <span class="ba__handle" aria-hidden="true"><span class="ba__grip"><svg class="ic" aria-hidden="true"><use href="#i-arrows"/></svg></span></span>
+        <span class="ba__tag ba__tag--l">Camera</span><span class="ba__tag ba__tag--r">Lane detector</span>
+      </figure>
+      <aside class="perc__side">
+        <h3 id="scene-title">Sun glare</h3>
+        <p id="scene-text">Low sun straight ahead on a Tampa interstate. The paint is still there, but the camera can barely separate it from the pavement.</p>
+        <div class="conf">
+          <div class="conf__row"><span>Left line</span><div class="conf__bar"><i id="conf-l" style="--w:21%"></i></div><b id="conf-l-v">0.21</b></div>
+          <div class="conf__row"><span>Right line</span><div class="conf__bar"><i id="conf-r" style="--w:26%"></i></div><b id="conf-r-v">0.26</b></div>
+          <p class="conf__note">Lane-line confidence in this frame (1.0 = certain). Illustrative: single frames run through the open-source lane model offline. The paper's statistics use the full recordings.</p>
+        </div>
+        <p class="perc__lever" id="scene-lever"><b>Lever:</b> glare cannot be fixed, but high-contrast, retroreflective markings keep the line visible longer into the sun.</p>
+      </aside>
+    </div>
+    <p class="perc__foot reveal">The lane model is the open-source openpilot lane detector, used here only as a camera-based measuring tool. Its lane-position estimate was checked against LiDAR ground truth on the OpenLane benchmark: typical error 0.135 m for lane position and 0.281 m for line distance. The drifts discussed on this page are two to nine times larger than that error.</p>
+  </div>
+</section>
+
+<!-- ============ VEHICLES ============ -->
+<section class="lk-section band" id="vehicles" aria-labelledby="veh-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <h2 id="veh-title">The Tampa test fleet</h2>
+      <p class="sec-lede">Ordinary rental cars with factory driver assistance, recorded by the lab's own devices. Click a car to watch a 12-second clip around the moment the driver takes over.</p>
+    </div>
+    <div class="vgrid" id="vgrid">
+      <a class="vcard reveal" style="--i:0" href="static/clips/hyundai-ioniq-5.mp4" data-slug="hyundai-ioniq-5" data-label="Hyundai Ioniq 5" data-hours="89.7 h across two configurations" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Interstate driving in clear afternoon light." data-second="1" data-system2="Lane centering engaged until the driver took over" data-caption2="Second vehicle configuration. Late-morning interstate driving.">
+        <img src="static/clips/hyundai-ioniq-5.jpg" width="526" height="330" alt="Hyundai Ioniq 5 forward-camera frame on an interstate" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Hyundai Ioniq 5</span><span class="vcard__sub">89.7 h · two configurations</span>
+      </a>
+      <a class="vcard reveal" style="--i:1" href="static/clips/kia-niro-ev.mp4" data-slug="kia-niro-ev" data-label="Kia Niro EV" data-hours="48.3 h" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Afternoon interstate driving with a driver takeover.">
+        <img src="static/clips/kia-niro-ev.jpg" width="526" height="330" alt="Kia Niro EV forward-camera frame on an interstate" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Kia Niro EV</span><span class="vcard__sub">48.3 h</span>
+      </a>
+      <a class="vcard reveal" style="--i:2" href="static/clips/tesla-model-3.mp4" data-slug="tesla-model-3" data-label="Tesla Model 3" data-hours="47.8 h" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Highway driving at midday; the driver takes over mid-clip." data-second="1" data-system2="Lane centering engaged until the driver took over" data-caption2="Late-afternoon highway driving with a driver takeover.">
+        <img src="static/clips/tesla-model-3.jpg" width="526" height="330" alt="Tesla Model 3 forward-camera frame on a highway" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Tesla Model 3</span><span class="vcard__sub">47.8 h</span>
+      </a>
+      <a class="vcard reveal" style="--i:3" href="static/clips/kia-ev6.mp4" data-slug="kia-ev6" data-label="Kia EV6" data-hours="51.3 h across two entries" data-system="Camera-only route video; vehicle signals were not available for this car" data-where="Tampa Bay, Florida" data-caption="Interstate driving in daylight from a raw route recording (no takeover in this clip).">
+        <img src="static/clips/kia-ev6.jpg" width="526" height="330" alt="Kia EV6 forward-camera frame on an interstate" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Kia EV6</span><span class="vcard__sub">51.3 h · raw footage</span>
+      </a>
+      <a class="vcard reveal" style="--i:4" href="static/clips/ford-mustang-mach-e.mp4" data-slug="ford-mustang-mach-e" data-label="Ford Mustang Mach-E" data-hours="30.3 h" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Work zone on the interstate with cones along the lane edge." data-second="1" data-system2="Lane centering engaged until the driver took over" data-caption2="Heavy rain on the interstate. Spray hides the lane lines and the driver takes over.">
+        <img src="static/clips/ford-mustang-mach-e.jpg" width="526" height="330" alt="Ford Mustang Mach-E forward-camera frame in an interstate work zone" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Ford Mustang Mach-E</span><span class="vcard__sub">30.3 h · work zone and rain clips</span>
+      </a>
+      <a class="vcard reveal" style="--i:5" href="static/clips/toyota-camry.mp4" data-slug="toyota-camry" data-label="Toyota Camry" data-hours="41.2 h across two configurations" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Early-evening arterial driving." data-second="1" data-system2="The vehicle's own driver assistance was engaged; the recorder was passive" data-caption2="Second vehicle configuration. Afternoon highway driving behind a truck.">
+        <img src="static/clips/toyota-camry.jpg" width="526" height="330" alt="Toyota Camry forward-camera frame on an arterial road" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Toyota Camry</span><span class="vcard__sub">41.2 h · two configurations</span>
+      </a>
+      <a class="vcard reveal" style="--i:6" href="static/clips/honda-accord.mp4" data-slug="honda-accord" data-label="Honda Accord Hybrid" data-hours="19.0 h" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Late-morning highway driving in dense traffic.">
+        <img src="static/clips/honda-accord.jpg" width="526" height="330" alt="Honda Accord Hybrid forward-camera frame on a busy highway" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Honda Accord Hybrid</span><span class="vcard__sub">19.0 h</span>
+      </a>
+      <a class="vcard reveal" style="--i:7" href="static/clips/tesla-model-x.mp4" data-slug="tesla-model-x" data-label="Tesla Model X" data-hours="" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Morning drive on a multi-lane road.">
+        <img src="static/clips/tesla-model-x.jpg" width="526" height="330" alt="Tesla Model X forward-camera frame on a multi-lane road" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Tesla Model X</span><span class="vcard__sub">Tampa test fleet</span>
+      </a>
+      <a class="vcard reveal" style="--i:8" href="static/clips/toyota-rav4.mp4" data-slug="toyota-rav4" data-label="Toyota RAV4" data-hours="" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Early-evening highway driving." data-second="1" data-system2="Lane centering engaged until the driver took over" data-caption2="Second vehicle configuration. Midday highway driving.">
+        <img src="static/clips/toyota-rav4.jpg" width="526" height="330" alt="Toyota RAV4 forward-camera frame on a highway" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Toyota RAV4</span><span class="vcard__sub">two configurations</span>
+      </a>
+      <a class="vcard reveal" style="--i:9" href="static/clips/volkswagen-tiguan.mp4" data-slug="volkswagen-tiguan" data-label="Volkswagen Tiguan" data-hours="" data-system="Lane centering engaged until the driver took over" data-where="Tampa Bay, Florida" data-caption="Afternoon interstate driving with a driver takeover.">
+        <img src="static/clips/volkswagen-tiguan.jpg" width="526" height="330" alt="Volkswagen Tiguan forward-camera frame on an interstate" loading="lazy" decoding="async"><span class="vcard__play" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="vcard__label">Volkswagen Tiguan</span><span class="vcard__sub">Tampa test fleet</span>
+      </a>
+    </div>
+    <p class="vgrid__note reveal">Clips come from <a href="/adasto/">ADAS-TO</a>, the takeover subset of the same recordings, trimmed to 12 seconds with the driver's takeover at the midpoint. The lab's recorder runs openpilot; in most clips its lane centering was engaged before the takeover, and in one Camry clip the vehicle's own system was. Each clip's caption states which. Hours per model are from the dataset paper where published. Source video is 526 × 330 pixels.</p>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> These are the cars Floridians rent and buy today. The dataset shows how each one behaves on the same roads, under the same conditions.</p>
+  </div>
+</section>
+
+<!-- ============ FINDINGS ============ -->
+<section class="lk-section" id="findings" aria-labelledby="find-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">05</span>
+      <h2 id="find-title">Where lane keeping struggles</h2>
+      <p class="sec-lede">On good roads the systems are steadier than people. When the line is hard to see, drifts get large.</p>
+    </div>
+
+    <div class="ftiles">
+      <div class="ftile reveal" style="--i:0"><div class="ftile__num">0.107 <small>vs 0.140 m</small></div><p>Spread of lane position under normal conditions, LKA versus human drivers. The systems are about 24% steadier when the road is clear.</p></div>
+      <div class="ftile reveal" style="--i:1"><div class="ftile__num">0.3 m</div><p>Typical worst drift on a route (the 95th-percentile deviation, median across routes: 0.32 m left, 0.28 m right).</p></div>
+      <div class="ftile reveal" style="--i:2"><div class="ftile__num">&gt; 0.8 m</div><p>Some drifts exceed 0.8 m (2.6 ft), seen across automakers. That puts a tire on the line.</p></div>
+      <div class="ftile reveal" style="--i:3"><div class="ftile__num">&gt; 0.2 m/s</div><p>Sideways drift rates above 0.2 m/s are common. At that rate a car uses up half its lane margin in about two seconds.</p></div>
+    </div>
+
+    <div class="two reveal">
+      <div class="panel">
+        <h3>What was going on when the car drifted a lot</h3>
+        <p class="panel__sub">Share of large-deviation samples tagged with each condition. A sample can carry more than one tag.</p>
+        <ul class="bars" aria-label="Conditions behind large lane deviations">
+          <li><span class="bars__lbl">Lane line hidden by traffic</span><span class="bars__track"><i class="bars__fill bars__fill--mark" style="--w:100%"></i></span><b>19.7%</b></li>
+          <li><span class="bars__lbl">Low line contrast</span><span class="bars__track"><i class="bars__fill bars__fill--mark" style="--w:74%"></i></span><b>14.6%</b></li>
+          <li><span class="bars__lbl">Low light</span><span class="bars__track"><i class="bars__fill bars__fill--mark" style="--w:61%"></i></span><b>12.1%</b></li>
+          <li><span class="bars__lbl">Faded markings</span><span class="bars__track"><i class="bars__fill bars__fill--mark" style="--w:58%"></i></span><b>11.5%</b></li>
+          <li><span class="bars__lbl">Sharp curve</span><span class="bars__track"><i class="bars__fill bars__fill--geo" style="--w:49%"></i></span><b>9.6%</b></li>
+          <li><span class="bars__lbl">High speed</span><span class="bars__track"><i class="bars__fill" style="--w:32%"></i></span><b>6.4%</b></li>
+          <li><span class="bars__lbl">Construction</span><span class="bars__track"><i class="bars__fill" style="--w:29%"></i></span><b>5.7%</b></li>
+          <li><span class="bars__lbl">Sun glare</span><span class="bars__track"><i class="bars__fill" style="--w:28%"></i></span><b>5.5%</b></li>
+          <li><span class="bars__lbl">Road surface</span><span class="bars__track"><i class="bars__fill" style="--w:26%"></i></span><b>5.2%</b></li>
+        </ul>
+        <p class="legend"><i class="sw sw--mark"></i> Seeing the line &nbsp; <i class="sw sw--geo"></i> Road geometry &nbsp; <i class="sw"></i> Other</p>
+        <p class="panel__note">Under the four line-visibility conditions, the typical worst drift per route rises above 0.5 m (median 95th percentile 0.52 to 0.56 m).</p>
+      </div>
+      <div class="panel">
+        <h3>How much room is there in a lane?</h3>
+        <p class="panel__sub">A 12-foot lane and a typical car, seen from above. Markers show the drifts measured in the dataset.</p>
+        <div class="ruler" id="ruler">
+          <svg viewBox="0 0 360 200" role="img" aria-labelledby="ruler-title">
+            <title id="ruler-title">Top-down lane diagram: a 3.66 m lane with a 1.9 m car. A scale below the lane marks how far the car's center has drifted: 0.25 m noticeable, 0.5 m typical worst drift under poor markings, 0.65 m critical, 0.88 m tire on the line, 1.2 m sharp-curve case.</title>
+            <rect x="30" y="14" width="300" height="104" fill="#f1f5f9"/>
+            <line x1="30" y1="14" x2="30" y2="118" stroke="#f1c40f" stroke-width="4"/>
+            <line x1="330" y1="14" x2="330" y2="118" stroke="#fff" stroke-width="4" stroke-dasharray="18 12"/>
+            <line x1="180" y1="14" x2="180" y2="118" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 4"/>
+            <g class="ruler__car" id="ruler-car"><rect x="102" y="36" width="156" height="60" rx="12" fill="#0a8f62" opacity=".9"/><rect x="118" y="48" width="124" height="36" rx="6" fill="#e6f4ee"/><line x1="180" y1="36" x2="180" y2="96" stroke="#003e2a" stroke-width="1.5" stroke-dasharray="3 3"/></g>
+            <g font-family="Inter, sans-serif" font-size="8" fill="#334155">
+              <line x1="180" y1="134" x2="330" y2="134" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="180" y1="128" x2="180" y2="140" stroke="#94a3b8" stroke-width="1"/><text x="180" y="152" text-anchor="middle" fill="#64748b">0</text>
+              <line x1="200.5" y1="126" x2="200.5" y2="142" stroke="#0a8f62" stroke-width="2"/><text x="200.5" y="152" text-anchor="middle" fill="#0a8f62" font-weight="700">0.25</text>
+              <line x1="221" y1="126" x2="221" y2="142" stroke="#2563eb" stroke-width="2"/><text x="221" y="164" text-anchor="middle" fill="#2563eb" font-weight="700">0.5</text>
+              <line x1="233.3" y1="126" x2="233.3" y2="142" stroke="#c2410c" stroke-width="2"/><text x="236" y="152" text-anchor="start" fill="#c2410c" font-weight="700">0.65</text>
+              <line x1="252.2" y1="126" x2="252.2" y2="142" stroke="#b91c1c" stroke-width="2"/><text x="252.2" y="164" text-anchor="middle" fill="#b91c1c" font-weight="700">0.88</text>
+              <line x1="278.4" y1="126" x2="278.4" y2="142" stroke="#7c3aed" stroke-width="2"/><text x="278.4" y="152" text-anchor="middle" fill="#7c3aed" font-weight="700">1.2</text>
+              <text x="330" y="152" text-anchor="end" fill="#64748b">m</text>
+              <text x="180" y="182" text-anchor="start" fill="#64748b">drift of the car's center from the lane center (m)</text>
+              <text x="34" y="196" font-size="7.5" fill="#64748b">3.66 m (12 ft) lane · 1.9 m car · about 0.9 m of margin to each line</text>
+            </g>
+          </svg>
+        </div>
+        <p class="legend"><i class="sw sw--geo"></i> 0.25 m noticeable &nbsp; <i class="sw sw--eu"></i> 0.5 m typical worst drift under poor markings &nbsp; <i class="sw sw--mark"></i> 0.65 m critical &nbsp; <i class="sw" style="background:#b91c1c"></i> 0.88 m tire on the line &nbsp; <i class="sw sw--ca"></i> 1.2 m sharp-curve case</p>
+        <p class="panel__note">About 0.9 m (3 ft) separates a centered car from the line. Under poor markings the typical worst drift uses more than half of it. The worst cases in the dataset put a tire on the line.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-head reveal">Four failure patterns, one case each</h3>
+    <div class="mech">
+      <article class="mcard reveal" style="--i:0">
+        <img src="static/images/olka_fail_perception.jpg" width="1600" height="904" alt="Camera frames and lane-deviation trace: white lines on pale concrete beside a truck; lane-line detection drops and the car drifts about 0.8 m toward the truck" loading="lazy" decoding="async" data-zoom>
+        <div class="mcard__body"><span class="badge badge--crit">Perception · 0.8 m beside a truck</span><h4>The camera could not separate white paint from white concrete</h4><p>With a truck alongside, the detector's confidence dropped and the car drifted about 0.8 m (2.6 ft) toward the truck.</p><p class="lever"><b>Road lever:</b> contrast between paint and pavement.</p></div>
+      </article>
+      <article class="mcard reveal" style="--i:1">
+        <img src="static/images/olka_fail_planning.jpg" width="1600" height="794" alt="Two drives at lane transitions: a Hyundai Ioniq 5 loses the line at a merge, drifts and disengages, while a Ford Mustang Mach-E stays stable at a diverge" loading="lazy" decoding="async" data-zoom>
+        <div class="mcard__body"><span class="badge badge--warn">Planning · merge and diverge</span><h4>Where lines split, the car has to guess which line is its lane</h4><p>One Ioniq 5 lost the right line at a merge, drifted and switched itself off. A Mustang Mach-E held the lane at a diverge. One event each, not a ranking of brands.</p><p class="lever"><b>Road lever:</b> continuous, unambiguous markings through merges and diverges.</p></div>
+      </article>
+      <article class="mcard reveal" style="--i:2">
+        <img src="static/images/olka_fail_control.jpg" width="1600" height="743" alt="A Hyundai Ioniq 5 on a sharp curve: lane deviation reaches about 1.2 m while lateral acceleration saturates below what the curve demands" loading="lazy" decoding="async" data-zoom>
+        <div class="mcard__body"><span class="badge badge--crit">Control · 1.2 m on a sharp curve</span><h4>The camera saw the line; the steering could not follow it</h4><p>On a sharp two-lane curve the car drifted 1.2 m (3.9 ft) toward the outside while both lines stayed detected. The system's lateral authority ran out before the curve did.</p><p class="lever"><b>Road lever:</b> curve signing, advisory speeds and geometry that production systems can follow.</p></div>
+      </article>
+      <article class="mcard reveal" style="--i:3">
+        <img src="static/images/olka_fail_compound.jpg" width="1600" height="749" alt="Three drives where conditions stack: a sharp curve with worn paint, a lane transition with worn paint, and heavy rain at a transition; drifts of about 1.2, 0.8 and 0.7 m" loading="lazy" decoding="async" data-zoom>
+        <div class="mcard__body"><span class="badge badge--warn">Compounding · 0.7 to 1.2 m</span><h4>When conditions stack, drifts grow</h4><p>Worn paint on a curve, worn paint at a transition, rain at a transition: three drives, drifts of about 1.2, 0.8 and 0.7 m. Two ordinary problems in the same place behave like one big one.</p><p class="lever"><b>Road lever:</b> fix markings first where geometry is already demanding.</p></div>
+      </article>
+    </div>
+
+    <div class="curve reveal">
+      <div class="curve__widget">
+        <h3>Sharper curve, bigger outward drift</h3>
+        <p class="panel__sub">In the sharp-curve runs we analysed, drift grew roughly in step with curvature. Curvature is 1 divided by the curve radius. Move the slider.</p>
+        <label class="curve__label" for="cw-r">Curve radius: <output id="cw-r-out" for="cw-r">100 m</output></label>
+        <input id="cw-r" type="range" min="10" max="300" step="1" value="100" aria-describedby="cw-help">
+        <div class="curve__read" aria-live="polite">
+          <div><span>Curvature</span><b id="cw-k">0.010 1/m</b></div>
+          <div><span>Curvature-related drift</span><b id="cw-d">0.08 m (0.3 ft)</b></div>
+          <div><span>Band</span><b id="cw-band" class="badge badge--ok">within the normal band</b></div>
+        </div>
+        <svg class="curve__lane" viewBox="0 0 360 132" aria-hidden="true">
+          <rect x="30" y="10" width="300" height="100" fill="#f1f5f9"/>
+          <line x1="30" y1="10" x2="30" y2="110" stroke="#f1c40f" stroke-width="4"/>
+          <line x1="330" y1="10" x2="330" y2="110" stroke="#fff" stroke-width="4" stroke-dasharray="18 12"/>
+          <line x1="180" y1="10" x2="180" y2="110" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+          <g id="cw-car" style="transform:translateX(7px)"><rect x="102" y="30" width="156" height="60" rx="12" fill="#0a8f62" opacity=".9"/><rect x="118" y="42" width="124" height="36" rx="6" fill="#e6f4ee"/></g>
+          <text x="34" y="126" font-size="8" fill="#64748b" font-family="Inter, sans-serif">outward drift, drawn to scale in a 3.66 m lane</text>
+        </svg>
+        <p id="cw-help" class="panel__note">Fit from the dataset's curve segments: lane deviation ≈ −8.33 × curvature + 0.21 m (R² = 0.67, so curvature explains about two thirds of the variation). The slider shows the curvature term only, and stays inside the fitted range (radius 10 m and up). The sign only tells the direction: toward the outside of the curve. Other roads and speeds will differ.</p>
+      </div>
+      <figure class="curve__fig">
+        <img src="static/images/olka_curve_fit.jpg" width="1200" height="880" alt="Scatter plot of lane deviation against curvature with a fitted line of slope minus 8.327 and R squared 0.673" loading="lazy" decoding="async" data-zoom>
+        <figcaption>Measured drift versus curvature across the sharp-curve runs. Each color is one vehicle; the line is the fit.</figcaption>
+      </figure>
+    </div>
+
+    <figure class="wide-fig reveal">
+      <img src="static/images/olka_oem_normal.jpg" width="1600" height="840" alt="Violin plots of lane position for human drivers and eight automakers under normal conditions; the automated systems show a tighter spread than human drivers" loading="lazy" decoding="async" data-zoom>
+      <figcaption>Normal conditions, human drivers versus eight automakers (1,087 samples). The systems hold a tighter line than people when the road is clear: spread 0.107 m versus 0.140 m.</figcaption>
+    </figure>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> Three of the four failure patterns have a road-side lever. The dataset tells you which lever applies on which kind of road.</p>
+  </div>
+</section>
+
+<!-- ============ ROAD OWNERS ============ -->
+<section class="lk-section band" id="roads" aria-labelledby="roads-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">06</span>
+      <h2 id="roads-title">What the data suggests for road owners</h2>
+      <p class="sec-lede">Three levers an agency controls, each tied to what we measured. These are associations observed in our sample, not controlled experiments.</p>
+    </div>
+    <div class="cards3">
+      <article class="card card--reco reveal" style="--i:0"><span class="reco__n">01</span><h3>Raise line-to-pavement contrast</h3><p>White paint on light concrete and faded yellow lines were behind the lowest detector confidence and some of the largest drifts in our sample. Contrast is the cheapest lever, and it helps human drivers too.</p><a href="#perception">See the low-contrast frame</a></article>
+      <article class="card card--reco reveal" style="--i:1"><span class="reco__n">02</span><h3>Make merges and diverges unambiguous</h3><p>Where lines split, the car has to pick a line. Continuous edge lines and early lane assignment through transitions give the camera one clear answer.</p><a href="#findings">See the merge case</a></article>
+      <article class="card card--reco reveal" style="--i:2"><span class="reco__n">03</span><h3>Measure before and after</h3><p>A dash-cam-sized recorder plus decoded vehicle signals shows how production lane keeping behaves on a specific road section. Run it before a project and again after, on any corridor.</p><a href="#outputs">See the method</a></article>
+    </div>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> Lane keeping is becoming standard equipment. Roads that production systems can read are a maintenance target you can set and check.</p>
+  </div>
+</section>
+
+<!-- ============ DATA ============ -->
+<section class="lk-section" id="data" aria-labelledby="data-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">07</span>
+      <h2 id="data-title">The dataset: scale and diversity</h2>
+      <p class="sec-lede">Large enough to compare automakers, local enough to matter for Florida.</p>
+    </div>
+
+    <div class="two reveal">
+      <figure class="fig">
+        <img src="static/images/olka_routes.jpg" width="1600" height="639" alt="Three maps of the Tampa test routes: I-275 through Tampa, a rural two-lane loop in Pasco County, and I-75 to Temple Terrace" loading="lazy" decoding="async" data-zoom>
+        <figcaption>The Tampa campaign: I-275, a rural two-lane loop and I-75, driven repeatedly from late 2023 through 2025 by four lab drivers. 323.0 hours, 127 unique routes.</figcaption>
+      </figure>
+      <figure class="fig">
+        <img src="static/images/olka_geo.jpg" width="1600" height="456" alt="World map of recording locations and a bar chart of hours by region: United States 349.1 hours, then Europe, Canada, Taiwan and other regions" loading="lazy" decoding="async" data-zoom>
+        <figcaption>Community drives add 66.1 hours from 49 drivers across 30+ states and provinces, including Canada, Europe and Taiwan.</figcaption>
+      </figure>
+    </div>
+
+    <div class="two reveal">
+      <div class="panel">
+        <h3>Hours by region</h3>
+        <div class="stack" role="img" aria-label="Hours by region: United States 349.1 hours or 89.7 percent, Europe 11.5, Canada 10.4, Taiwan 6.7, other 11.4">
+          <i style="--w:89.7%" class="st st--us"><span>US 349.1 h</span></i><i style="--w:3.0%" class="st st--eu"></i><i style="--w:2.7%" class="st st--ca"></i><i style="--w:1.7%" class="st st--tw"></i><i style="--w:2.9%" class="st st--ot"></i>
+        </div>
+        <p class="legend"><i class="sw sw--us"></i> United States 349.1 h (89.7%) &nbsp; <i class="sw sw--eu"></i> Europe 11.5 h &nbsp; <i class="sw sw--ca"></i> Canada 10.4 h &nbsp; <i class="sw sw--tw"></i> Taiwan 6.7 h &nbsp; <i class="sw sw--ot"></i> Other 11.4 h</p>
+        <h3 class="mt">Hours by source</h3>
+        <div class="stack" role="img" aria-label="Hours by source: Tampa lab tests 323.0 hours or 83 percent, community 66.1 hours or 17 percent"><i style="--w:83%" class="st st--us"><span>Tampa lab tests 323.0 h (83%)</span></i><i style="--w:17%" class="st st--eu"><span>17%</span></i></div>
+        <p class="legend"><i class="sw sw--us"></i> Tampa lab tests 323.0 h, 4 drivers, 127 routes &nbsp; <i class="sw sw--eu"></i> Community 66.1 h, 49 drivers, 195 routes</p>
+      </div>
+      <div class="panel">
+        <h3>Hours by vehicle model</h3>
+        <ul class="bars bars--thin" aria-label="Hours by vehicle model">
+          <li><span class="bars__lbl">Hyundai Ioniq 5 (two configurations)</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:100%"></i></span><b>89.7 h</b></li>
+          <li><span class="bars__lbl">Kia Niro EV</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:54%"></i></span><b>48.3 h</b></li>
+          <li><span class="bars__lbl">Tesla Model 3</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:53%"></i></span><b>47.8 h</b></li>
+          <li><span class="bars__lbl">Kia EV6 (two entries)</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:57%"></i></span><b>51.3 h</b></li>
+          <li><span class="bars__lbl">Toyota Camry (two configurations)</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:46%"></i></span><b>41.2 h</b></li>
+          <li><span class="bars__lbl">Ford Mustang Mach-E</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:34%"></i></span><b>30.3 h</b></li>
+          <li><span class="bars__lbl">Honda Accord Hybrid</span><span class="bars__track"><i class="bars__fill bars__fill--us" style="--w:21%"></i></span><b>19.0 h</b></li>
+          <li><span class="bars__lbl">Other models</span><span class="bars__track"><i class="bars__fill" style="--w:69%"></i></span><b>61.6 h</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two reveal">
+      <div class="panel">
+        <h3>What is in a recording</h3>
+        <table class="tbl">
+          <tbody>
+            <tr><th>Video</th><td>Forward camera at 526 × 330 for every drive; 1928 × 1208 HD and a wide fisheye view for the lab's own drives. Faces and plates blurred.</td></tr>
+            <tr><th>Vehicle signals</th><td>CAN bus logs at 10 and 100 Hz, decoded: lane keeping and cruise status, steering angle and torque, speed, acceleration, pedals.</td></tr>
+            <tr><th>Lane geometry</th><td>Left and right line distance, road edge and curvature from the on-device lane model, checked against LiDAR ground truth.</td></tr>
+            <tr><th>Scene labels</th><td>Ten categories (weather, light, marking quality, construction, curves and more) from a vision-language model, checked against 2,000+ hand labels.</td></tr>
+          </tbody>
+        </table>
         
-        </div></div>
+      </div>
+      <div class="panel">
+        <h3>How it compares</h3>
+        <p class="panel__sub">Hours of driving in public datasets. OpenLKA is the only one that pairs video with decoded vehicle signals and scene labels for lane keeping.</p>
+        <table class="tbl tbl--num">
+          <thead><tr><th>Dataset</th><th>Hours</th><th>LKA focus</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>OpenLKA</td><td>389</td><td>video + vehicle signals + scene labels</td></tr>
+            <tr><td>nuScenes, BDD100K</td><td>about 1,200</td><td>no</td></tr>
+            <tr><td>Waymo Open</td><td>570+</td><td>no</td></tr>
+            <tr><td>HDD</td><td>104</td><td>no</td></tr>
+            <tr><td>BDD-X</td><td>77</td><td>no</td></tr>
+            <tr><td>comma2k19</td><td>33</td><td>no</td></tr>
+            <tr><td>KITTI</td><td>1.5</td><td>no</td></tr>
+          </tbody>
+        </table>
+        <h3 class="mt">Subsets you can download</h3>
+        <ul class="subsets">
+          <li><b>Main</b> 389.1 h, 62 models, all modalities</li>
+          <li><b>Normal</b> clear-road driving, the human-versus-LKA baseline (350 samples, 2.9 h)</li>
+          <li><b>Failure</b> large deviations and disengagements with scene labels</li>
+          <li><b>Alert</b> the LKAlert subset for warning research</li>
+        </ul>
+        <a class="btn btn--primary" href="https://github.com/OpenLKA/OpenLKA" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>Download on GitHub</a>
       </div>
     </div>
-  </section>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> Most of the hours are on Florida roads, so the statistics describe the state's own markings, weather and traffic.</p>
+  </div>
+</section>
 
-  <!-- Abstract -->
-  <section class="section hero is-light reveal">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3 section-title-accent">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              OpenLKA is the first open, large-scale dataset for evaluating Lane Keeping Assist (LKA). It comprises roughly
-              389 hours of LKA-steered driving from 62 production vehicle models, collected through systematic road testing
-              in Tampa, Florida and augmented with open-source community contributions. Each drive pairs reverse-engineered
-              CAN-bus logs — which expose otherwise-hidden LKA operating signals — with synchronized 1080p / 20&nbsp;fps
-              front-camera video and scenario annotations spanning degraded lane markings, complex road geometries, adverse
-              weather, and varied traffic. Our analysis reveals common LKA failure modes across perception, planning, and
-              control, with marked performance degradation near merges and diverges and under poor lane markings. The dataset
-              is released under the MIT License to support reproducible research on real-world driver-assistance safety.
-            </p>
-          </div>
-        </div>
-      </div>
+<!-- ============ OUR WORK ============ -->
+<section class="lk-section band" id="outputs" aria-labelledby="out-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">08</span>
+      <h2 id="out-title">Our work and outputs</h2>
+      <p class="sec-lede">One Tampa campaign grew into an open dataset, peer-reviewed papers and a family of six sibling datasets built on the same recording method.</p>
     </div>
-  </section>
 
-  <!-- Image carousel -->
-  <section class="hero is-small reveal">
-    <div class="hero-body">
-      <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item">
-            <img src="static/images/openlka_fleet.png" alt="Vehicle fleet" loading="lazy"/>
-            <h2 class="subtitle has-text-centered">A fleet of 62 production vehicle models spanning many makes and model years.</h2>
-          </div>
-          <div class="item">
-            <img src="static/images/openlka_comma.png" alt="Data collection device" loading="lazy"/>
-            <h2 class="subtitle has-text-centered">Data collection with a comma device to decode CAN-bus LKA signals alongside video.</h2>
-          </div>
-          <div class="item">
-            <img src="static/images/openlka_perception.png" alt="Perception analysis" loading="lazy"/>
-            <h2 class="subtitle has-text-centered">Perception analysis of lane detection quality across scenarios.</h2>
-          </div>
-          <div class="item">
-            <img src="static/images/openlka_lkalert.png" alt="LKAlert model" loading="lazy"/>
-            <h2 class="subtitle has-text-centered">LKAlert: an end-to-end pipeline predicting real-world lane-keeping safety.</h2>
-          </div>
-        </div>
-      </div>
+    <div class="stat-band stat-band--tight reveal">
+      <div class="stat"><div class="num" data-count="389.1" data-decimals="1" data-suffix=" h">389.1 h</div><div class="lbl">decoded and time-aligned</div></div>
+      <div class="stat"><div class="num" data-count="7">7</div><div class="lbl">automakers with verified signal decoding</div></div>
+      <div class="stat"><div class="num" data-count="2000" data-suffix="+">2000+</div><div class="lbl">hand-checked scene labels</div></div>
+      <div class="stat"><div class="num" data-count="6">6</div><div class="lbl">sibling datasets</div></div>
     </div>
-  </section>
 
-  <!-- Failure scenario gallery -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">LKA Failure Scenarios</span></h2>
-      <p class="has-text-centered content">Real captured moments where production LKA degrades or disengages.</p>
-      <div class="gif-grid">
-        <div class="gif-card"><img src="static/images/olka_fail_glare.gif" alt="Sun glare failure" loading="lazy"/><div class="cap">Sun glare washing out lane markings.</div></div>
-        <div class="gif-card"><img src="static/images/olka_fail_night.gif" alt="Night failure" loading="lazy"/><div class="cap">Low-light nighttime driving.</div></div>
-        <div class="gif-card"><img src="static/images/olka_fail_edge.gif" alt="Road edge failure" loading="lazy"/><div class="cap">Ambiguous road edges and geometry.</div></div>
-        <div class="gif-card"><img src="static/images/olka_fail_faded.gif" alt="Faded markings failure" loading="lazy"/><div class="cap">Faded or worn lane markings.</div></div>
-      </div>
+    <div class="trust reveal">
+      <figure class="fig"><img src="static/images/olka_lidar.jpg" width="1600" height="571" alt="Four scenes comparing the camera-based lane lines with LiDAR ground truth: a curve, an occluded line, night and a diverge" loading="lazy" decoding="async" data-zoom><figcaption><b>Checked against LiDAR.</b> Lane position error 0.135 m, line-distance error 0.281 m on the OpenLane benchmark.</figcaption></figure>
+      <figure class="fig"><img src="static/images/olka_can_pipeline.jpg" width="1400" height="734" alt="Four-step pipeline for decoding vehicle signals: public signal definitions, bit-level parsing, checks against video and other signals, verified definitions" loading="lazy" decoding="async" data-zoom><figcaption><b>Decoded, not guessed.</b> Every vehicle signal is consolidated from public definitions and checked against the video and other signals.</figcaption></figure>
+      <figure class="fig"><img src="static/images/olka_vlm.jpg" width="1400" height="771" alt="Annotation pipeline: three consecutive frames go to a vision-language model with a structured prompt and return scene labels" loading="lazy" decoding="async" data-zoom><figcaption><b>Labeled at scale, checked by people.</b> Ten scene categories from a vision-language model, 2,000+ labels verified by hand.</figcaption></figure>
     </div>
-  </section>
 
-  <!-- BibTeX -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="bibtex-header">
-        <h2 class="title">BibTeX</h2>
-        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button>
-      </div>
-      <pre id="bibtex-code"><code>@inproceedings{wang2025openlka,
+    <ol class="timeline reveal">
+      <li><span class="tl__d">Late 2023</span><div><b>Tampa road tests begin.</b> Lab recorders ride in rental cars on I-275, I-75 and rural roads.</div></li>
+      <li><span class="tl__d">2024</span><div><b>The fleet grows to the models above.</b> Repeated passes in all weather, through the 2024 hurricane season.</div></li>
+      <li><span class="tl__d">May 2025</span><div><b>Preprint.</b> arXiv 2505.09092 describes the dataset and first findings.</div></li>
+      <li><span class="tl__d">Jun 2025</span><div><b>Accepted at IEEE ITSC 2025.</b></div></li>
+      <li><span class="tl__d">Jul 2025</span><div><b>From OpenLKA to LKAlert.</b> Abstract accepted at INFORMS 2025, Atlanta.</div></li>
+      <li><span class="tl__d">2025 to 2026</span><div><b>Journal extension under review</b> at Accident Analysis &amp; Prevention: human-driving baseline, cross-automaker benchmark, LiDAR validation.</div></li>
+      <li><span class="tl__d">2026</span><div><b>A dataset family on the same pipeline.</b> ADAS-TO, BATON, DriveDNA, DriveMotion, VLAlert and TriDrive.</div></li>
+    </ol>
+
+    <h3 class="sub-head reveal">The dataset family</h3>
+    <div class="family">
+      <a class="fam reveal" style="--i:0" href="/adasto/"><img src="/images/th_adasto.jpg" width="620" height="388" alt="" loading="lazy" decoding="async"><div><span class="fam__v">IEEE ITSC 2026</span><h4>ADAS-TO</h4><p>16,446 takeover-centered clips from 364 drivers. The fleet clips on this page come from it.</p></div></a>
+      <a class="fam reveal" style="--i:1" href="/baton/"><img src="/images/th_baton.jpg" width="620" height="388" alt="" loading="lazy" decoding="async"><div><span class="fam__v">Preprint 2026</span><h4>BATON</h4><p>136.6 h of bidirectional human and automation control transitions with video, CAN, radar and GPS.</p></div></a>
+      <a class="fam reveal" style="--i:2" href="/drivedna/"><img src="/images/th_drivedna.jpg" width="620" height="388" alt="" loading="lazy" decoding="async"><div><span class="fam__v">Preprint 2026</span><h4>DriveDNA</h4><p>Driving-style identification: 4,121 drives from 465 drivers, 975 h.</p></div></a>
+      <a class="fam reveal" style="--i:3" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" width="620" height="388" alt="" loading="lazy" decoding="async"><div><span class="fam__v">Dataset 2026</span><h4>DriveMotion</h4><p>400 h of privacy-reduced in-cabin body motion for driver-motion forecasting.</p></div></a>
+      <a class="fam reveal" style="--i:4" href="/vlalert/"><img src="/images/th_vlalert.jpg" width="620" height="388" alt="" loading="lazy" decoding="async"><div><span class="fam__v">CoRL 2026</span><h4>VLAlert</h4><p>Observe before you alert: a vision-language framework for adaptive driver alerting, with a 192,892-tick benchmark.</p></div></a>
+      <a class="fam reveal" style="--i:5" href="/tridrive/"><img src="/images/th_tridrive.jpg" width="620" height="388" alt="" loading="lazy" decoding="async"><div><span class="fam__v">arXiv 2026</span><h4>TriDrive</h4><p>A world model that forecasts driver, vehicle and road demands in real time on a dash-mounted device.</p></div></a>
+    </div>
+    <p class="fdot reveal"><b>Why it matters for FDOT.</b> The team has run this recording method for two years on Florida roads. The pipeline, the people and the fleet are in place.</p>
+  </div>
+</section>
+
+<!-- ============ CITE ============ -->
+<section class="lk-section" id="cite" aria-labelledby="cite-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">09</span>
+      <h2 id="cite-title">Get the data, read the paper</h2>
+      <p class="sec-lede">Everything is open under the MIT license. For Florida agencies: we can run the same method on your corridors.</p>
+    </div>
+    <div class="cta reveal">
+      <a class="btn btn--primary" href="https://github.com/OpenLKA/OpenLKA" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+      <a class="btn" href="https://openlka.github.io/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg>Data portal</a>
+      <a class="btn" href="https://ieeexplore.ieee.org/document/11423194/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pdf"/></svg>IEEE ITSC 2025</a>
+      <a class="btn" href="https://arxiv.org/abs/2505.09092" target="_blank" rel="noopener"><span class="arxiv-mark" aria-hidden="true">arXiv</span>2505.09092</a>
+    </div>
+    <div class="bib reveal">
+      <div class="bib__head"><h3>BibTeX</h3><button class="copy-bibtex-btn btn btn--sm" id="copy-bib" type="button"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div>
+<pre id="bibtex-code"><code>@inproceedings{wang2025openlka,
   title     = {OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions},
   author    = {Wang, Yuhang and Alhuraish, Abdulaziz and Yuan, Shengming and Zhou, Hao},
   booktitle = {IEEE International Conference on Intelligent Transportation Systems (ITSC)},
   year      = {2025}
 }</code></pre>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>
-              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-              You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-            </p>
-          </div>
-        </div>
+</main>
+
+<footer class="lk-foot">
+  <div class="wrap lk-foot__in">
+    <img src="static/images/olka_motif.png" width="862" height="216" alt="MOTIF-Lab, University of South Florida" class="lk-foot__logo" loading="lazy" decoding="async">
+    <p>OpenLKA · MOTIF-Lab, Department of Civil and Environmental Engineering, University of South Florida, Tampa. Dataset released under the MIT license. Page content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
+    <p class="lk-foot__links"><a href="/">Home</a> · <a href="/projects/">Projects</a> · <a href="/publications/">Publications</a> · <a href="https://github.com/OpenLKA/OpenLKA" target="_blank" rel="noopener">GitHub</a> · <a href="https://openlka.github.io/" target="_blank" rel="noopener">Portal</a></p>
+  </div>
+</footer>
+
+<button class="totop" id="totop" type="button" aria-label="Back to top" hidden><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg></button>
+
+<!-- ============ VIDEO MODAL ============ -->
+<div class="lk-modal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vm-title" hidden>
+  <div class="lk-modal__backdrop" data-close></div>
+  <div class="lk-modal__panel">
+    <div class="lk-modal__head">
+      <h3 id="vm-title">Vehicle</h3>
+      <div class="lk-modal__nav">
+        <button type="button" class="iconbtn" id="vm-prev" aria-label="Previous vehicle"><svg class="ic" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+        <button type="button" class="iconbtn" id="vm-next" aria-label="Next vehicle"><svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+        <button type="button" class="iconbtn" id="vm-close" aria-label="Close" data-close><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
       </div>
     </div>
-  </footer>
-  </main>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+    <div class="lk-modal__media" id="vm-media"></div>
+    <div class="lk-modal__bar" id="vm-bar" aria-hidden="true"><i id="vm-prog"></i><span class="tick" id="vm-tick"><em>driver takes over</em></span></div>
+    <div class="lk-modal__toggle" id="vm-toggle" hidden>
+      <button type="button" class="chip" data-clip="1" aria-pressed="true">Clip 1</button>
+      <button type="button" class="chip" data-clip="2" aria-pressed="false">Clip 2</button>
+    </div>
+    <dl class="lk-modal__caps">
+      <div><dt>Assist state</dt><dd id="vm-system"></dd></div>
+      <div><dt>Where</dt><dd id="vm-where"></dd></div>
+      <div><dt>Clip</dt><dd id="vm-caption"></dd></div>
+    </dl>
+  </div>
+</div>
 
-      function countUp(el) {
-        var target = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0),
-            suf = el.dataset.suffix || "", dur = 1400, t0 = null;
-        function fmt(v) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString(); }
-        function step(t) {
-          if (!t0) t0 = t;
-          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(target * eased) + suf;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var io2 = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
-      }, { threshold: 0.4 });
-      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
-    });
-  </script>
-<script type="module" src="/assets/dark/hero-bg.js"></script>
+<!-- ============ LIGHTBOX ============ -->
+<div class="lk-modal lk-lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged figure" hidden>
+  <div class="lk-modal__backdrop" data-close></div>
+  <div class="lk-lightbox__panel">
+    <button type="button" class="iconbtn lk-lightbox__close" aria-label="Close" data-close><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <img id="lb-img" src="" alt="">
+    <p id="lb-cap"></p>
+  </div>
+</div>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-pdf" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+  <symbol id="i-arrows" viewBox="0 0 24 24"><polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+</svg>
+
+<script defer src="static/openlka.js"></script>
 </body>
 </html>
