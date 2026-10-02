@@ -207,7 +207,7 @@
       this.scrub = el('input', 'pj-sc__scrub'); this.scrub.type = 'range'; this.scrub.min = '0'; this.scrub.max = '100'; this.scrub.step = '1'; this.scrub.value = '0'; this.scrub.setAttribute('aria-label', 'Clip position'); stripsBox.appendChild(this.scrub);
       var row = el('div', 'pj-sc__row'); this.legend = el('p', 'pj-legend'); row.appendChild(this.legend);
       this.winBtn = el('button', 'chip chip--sm', 'Full clip'); this.winBtn.type = 'button'; this.winBtn.setAttribute('aria-pressed', 'false'); row.appendChild(this.winBtn); stripsBox.appendChild(row);
-      this.winBtn.addEventListener('click', function () { self.st.full = !self.st.full; self.winBtn.setAttribute('aria-pressed', String(self.st.full)); root.classList.toggle('is-full', self.st.full); self.st.dirty = true; self.kick(); });
+      this.winBtn.addEventListener('click', function () { self.st.full = !self.st.full; self.winBtn.setAttribute('aria-pressed', String(self.st.full)); self.winBtn.textContent = self.st.full ? 'Zoom · 20 s' : 'Full clip'; root.classList.toggle('is-full', self.st.full); self.st.dirty = true; self.kick(); });
       this.scrub.addEventListener('input', function () { self.st.scrubbing = true; self.seek(+self.scrub.value / 10, 'scrub'); });
       this.scrub.addEventListener('change', function () { self.st.scrubbing = false; self.st.userStarted = true; self.seek(+self.scrub.value / 10); });
       this.tabs = $('.pj-sc__tabs', root); if (!this.tabs) { this.tabs = el('div', 'pj-sc__tabs'); this.tabs.setAttribute('role', 'tablist'); body.insertBefore(this.tabs, body.firstChild); }
@@ -275,7 +275,7 @@
     if (!this.authoredStrips) this.autoStrips(sig);
     st.ranges = {}; this.strips.forEach(function (s) { if (s.col) st.ranges[s.col] = self.rangeOf(s); if (s.col2) st.ranges[s.col2] = st.ranges[s.col]; });
     st.shade = (sig.shade || []).map(function (sh) { return { runs: self.runs(sh.col), color: tok(sh.color || 'accent', self.root), alpha: sh.alpha || 0.12, label: sh.label || sh.col }; });
-    st.bandId = sig.bands && sig.bands.length ? this.bandGroup(sig.bands[0]) : null; st.full = this.hero || st.dur <= 30; if (this.winBtn) { this.winBtn.hidden = st.dur <= 30; this.winBtn.setAttribute('aria-pressed', String(st.full)); } this.root.classList.toggle('is-full', st.full);
+    st.bandId = sig.bands && sig.bands.length ? this.bandGroup(sig.bands[0]) : null; st.full = this.hero || st.dur <= 120; if (this.winBtn) { this.winBtn.hidden = st.dur <= 30; this.winBtn.textContent = st.full ? 'Zoom · 20 s' : 'Full clip'; this.winBtn.setAttribute('aria-pressed', String(st.full)); } this.root.classList.toggle('is-full', st.full);
     if (this.media && sig.media && !this.video && sig.media.poster) { var im = $('img.pj-sc__poster', this.media) || el('img', 'pj-sc__poster'); im.alt = ''; im.src = sig.media.poster; if (!im.parentNode) this.media.insertBefore(im, this.media.firstChild); if (sig.media.aspect) this.media.style.setProperty('--ar', sig.media.aspect); }
     if (this.scrub) { this.scrub.max = String(Math.max(1, Math.round(st.dur * 10))); this.scrub.value = '0'; }
     this.buildEvents(); this.buildBandChips(); this.buildLegend(); this.buildTwin(); this.ok();

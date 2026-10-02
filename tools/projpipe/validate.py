@@ -109,7 +109,7 @@ def check_shape(o, kind=None):
         for i, b in enumerate(o.get("bands") or []):
             if arr(b.get("t"), None, f"bands[{i}].t"):
                 for q, a in (b.get("q") or {}).items(): arr(a, len(b["t"]), f"bands[{i}].q.{q}")
-    elif kind in ("hf_meta", "numbers", "composition", "media"): pass
+    elif kind in ("hf_meta", "numbers", "composition", "media", "table"): pass
     else: P.append(f"unknown kind {kind}")
     return P
 

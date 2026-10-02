@@ -76,4 +76,9 @@ baton:
   t2_auprc:          {value: 0.335, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, note: BATON-WM sample AUPRC; event .171}
   t3d_auprc:         {value: 0.514, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, note: event .413}
   t3a_auprc:         {value: 0.070, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, note: event .040; base rate .035}
+  fa_recall_t3d_pct: {value: 28, fmt: "0", unit: "%", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.3, note: event recall at 1 FA/h}
+  fa_recall_t2_pct:  {value: 7, fmt: "0", unit: "%", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.3}
+  op_predictor_auprc: {value: 0.293, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.4, note: openpilot deployed predictor, sample AUPRC T3-D on 26 covered routes; event .101}
+  tabular_same_rows_auprc: {value: 0.771, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.4}
+  wm_gain_pct:       {value: 42, fmt: "0", unit: "%", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.2}
   stale_v1_hours:    {value: 136.6, fmt: "0.0", unit: h, source: arxiv:2604.07263v1, tag: in the paper, note: arXiv listing abstract (stale); 127 drivers · 380 routes}
