@@ -45,7 +45,11 @@ html = html.replace('content="%s/openlka/static/images/olka_og.jpg"' % personal,
 html = html.replace('"url":"%s/openlka/"' % personal, '"url":"%s/"' % mirror)
 html = html.replace('"license":"%s/openlka/#access-terms"' % personal, '"license":"%s/#access-terms"' % mirror)
 
-# 3. buttons that pointed at the portal now point back at the personal project page
+# 3. the mirror is the dataset's own site: brand reads "OpenLKA" and jumps to the top of this page
+html = html.replace('<a class="lk-brand" href="%s/">Yuhang <b>Wang</b></a>' % personal,
+                    '<a class="lk-brand" href="#top">Open<b>LKA</b></a>')
+
+# 4. buttons that pointed at the portal now point back at the personal project page
 html = html.replace(
     '<a class="btn" href="%s/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg>Data portal</a>' % mirror,
     '<a class="btn" href="%s/openlka/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg>Project page</a>' % personal)
