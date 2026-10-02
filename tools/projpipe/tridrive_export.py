@@ -9,7 +9,7 @@ recorder (checked here against the uid, stored as a boolean). Usage: tridrive_ex
 import argparse, glob, json, os, re, shutil, subprocess, sys
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import (PATHS, CAPS, CABIN_ALLOW, write_json, num, nums, resample, read_csv, first_col, signals_from_baton_csv, hstack, fit_cap, poster, lqip, jpeg_fit, ffprobe, sha256_file, entry_hash, Ledger)
+from common import (PATHS, CAPS, CABIN_ALLOW, write_json, carry_review, num, nums, resample, read_csv, first_col, signals_from_baton_csv, hstack, fit_cap, poster, lqip, jpeg_fit, ffprobe, sha256_file, entry_hash, Ledger)
 
 D = PATHS["drive"]; REPO = PATHS["repo"]; PAGE = os.path.join(REPO, "tridrive"); DATA = os.path.join(PAGE, "static", "data"); MEDIA = os.path.join(PAGE, "static", "media")
 WORK = os.path.join(PATHS["work"], "tridrive"); os.makedirs(DATA, exist_ok=True); os.makedirs(MEDIA, exist_ok=True); os.makedirs(WORK, exist_ok=True)
@@ -208,7 +208,7 @@ put("preview", "preview.json", preview, first_view=True)
 first = sum(f["bytes"] for f in files.values() if f.get("first_view")) + sum(it["bytes"]["poster"] for it in items if it["kind"] == "clip" and it["first_view"]) + sum(it["bytes"].get("image", 0) for it in items if it["kind"] == "figure" and it["first_view"])
 total = sum(os.path.getsize(p) for p in glob.glob(os.path.join(MEDIA, "*")))
 manifest = {"schema": "manifest/1", "page": "tridrive", "generated": TODAY, "pipeline_version": "1", "budget": {"first_view_bytes": CAPS["first_view_bytes"], "total_media_bytes": CAPS["total_media_bytes"], "used_first_view": first, "used_total": total},
-            "files": {k: {kk: vv for kk, vv in v.items() if kk != "first_view"} for k, v in files.items()}, "items": items}
+            "files": {k: {kk: vv for kk, vv in v.items() if kk != "first_view"} for k, v in files.items()}, "items": carry_review(items, os.path.join(DATA, "manifest.json"))}
 mp = os.path.join(DATA, "manifest.json"); write_json(mp, manifest); print(f"manifest: {len(files)} files · {len(items)} items · media {total/1e6:.1f} MB · first-view data+posters {first/1e6:.2f} MB")
 with open(os.path.join(PAGE, "static", "SHA256SUMS"), "w") as fh:
     for p in sorted(glob.glob(os.path.join(DATA, "*.json")) + glob.glob(os.path.join(MEDIA, "*"))): fh.write(f"{sha256_file(p)}  {os.path.relpath(p, os.path.join(PAGE, 'static'))}\n")

@@ -105,7 +105,11 @@ def check_shape(o, kind=None):
     elif kind == "clips":
         for i, c in enumerate(o.get("clips") or []):
             if not c.get("id") or not (c.get("src") or c.get("signals")): P.append(f"clips[{i}] needs id and src")
-    elif kind in ("hf_meta", "numbers"): pass
+    elif kind == "bands":
+        for i, b in enumerate(o.get("bands") or []):
+            if arr(b.get("t"), None, f"bands[{i}].t"):
+                for q, a in (b.get("q") or {}).items(): arr(a, len(b["t"]), f"bands[{i}].q.{q}")
+    elif kind in ("hf_meta", "numbers", "composition"): pass
     else: P.append(f"unknown kind {kind}")
     return P
 

@@ -14,7 +14,7 @@ Static gates for a kit-based project page (<page>/index.html):
 import argparse, html, json, os, re, sys, urllib.request
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 PAGES = ["tridrive", "adasto", "drivedna", "drivemotion", "baton"]
-VENUE_RX = re.compile(r"\b(KDD|WACV|ICLR|NeurIPS|CVPR|anonymous|anonymized|double-blind|submission|submitted to)\b", re.I)
+VENUE_RX = re.compile(r"\b(KDD|WACV|ICLR|NeurIPS|CVPR|anonymous authors?|anonymi[sz]ed for review|double-blind|under submission|submitted to)\b", re.I)
 SUPERLATIVE_RX = re.compile(r"\b(the first|the only|state[- ]of[- ]the[- ]art|SOTA|the largest|the best|unprecedented|novel)\b", re.I)
 MOTION_RX = re.compile(r"\b\d+(?:\.\d+)?m?s\b(?=[^<]*[;\"])|cubic-bezier\(")
 

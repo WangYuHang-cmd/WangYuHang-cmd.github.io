@@ -380,3 +380,15 @@ def entry_hash(entry, *source_paths):
     for p in source_paths:
         if p and os.path.exists(p): st = os.stat(p); h.update(f"{p}|{st.st_size}|{int(st.st_mtime)}".encode())
     return h.hexdigest()
+
+
+def carry_review(items, manifest_path):
+    """Keep manual_review decisions from the previous manifest for items whose id and entry_hash are unchanged."""
+    if not os.path.exists(manifest_path): return items
+    try: old = {it["id"]: it for it in json.load(open(manifest_path)).get("items", [])}
+    except Exception: return items
+    for it in items:
+        o = old.get(it["id"])
+        if o and o.get("entry_hash") == it.get("entry_hash") and (o.get("privacy") or {}).get("manual_review") in ("ok", "rejected"):
+            it["privacy"].update({k: o["privacy"].get(k) for k in ("manual_review", "reviewed_by", "reviewed_at")})
+    return items

@@ -1,256 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="title" content="ADAS-TO: A Large-Scale Multimodal Dataset of Human Takeovers during ADAS Engagement">
-  <meta name="description" content="ADAS-TO captures 15,000+ real-world ADAS takeover events from 327 drivers across 22 vehicle brands, syncing front-camera video with vehicle logs to characterize when and why drivers reclaim control.">
-  <meta name="keywords" content="ADAS, takeover, driving automation, naturalistic driving, dataset, human factors, vision-language model, driving safety">
-  <meta name="author" content="Yuhang Wang, Yiyao Xu, Jingran Sun, Hao Zhou">
-  <meta name="robots" content="index, follow">
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
-  <meta property="og:title" content="ADAS-TO: A Large-Scale Multimodal Dataset of Human Takeovers during ADAS Engagement">
-  <meta property="og:description" content="15,000+ real-world takeover events capturing the moment drivers reclaim control from automated driving systems.">
-  <meta property="og:url" content="https://wangyuhang-cmd.github.io/adasto/">
-  <meta property="og:image" content="https://wangyuhang-cmd.github.io/adasto/static/images/adasto_stats.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ADAS-TO: Human Takeovers during ADAS Engagement">
-  <meta name="twitter:description" content="15,000+ real-world takeover events capturing the moment drivers reclaim control from automated driving systems.">
-  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/adasto/static/images/adasto_stats.png">
-
-  <meta name="citation_title" content="ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement">
-  <meta name="citation_author" content="Wang, Yuhang">
-  <meta name="citation_author" content="Xu, Yiyao">
-  <meta name="citation_author" content="Sun, Jingran">
-  <meta name="citation_author" content="Zhou, Hao">
-  <meta name="citation_publication_date" content="2026">
-  <meta name="citation_conference_title" content="IEEE International Conference on Intelligent Transportation Systems (ITSC)">
-
-  <title>ADAS-TO · Human Takeovers during ADAS Engagement</title>
-
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
-  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
-  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
-  <script defer src="/projectpage-lib/js/index.js"></script>
-  <style>
-    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
-    .home-link:hover{background:#1d4ed8;color:#fff}
-    /* ---- cinematic dark hero ---- */
-    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
-    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
-    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
-    .hero-dark .publication-authors a{color:#7fb0ff}
-    .hero-dark .publication-authors a:hover{color:#fff}
-    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
-    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
-    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
-    /* filmstrip of live takeover moments */
-    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
-    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transform:translateY(0);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14)}
-    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
-    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
-    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
-    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em}
-    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
-    .hero-tagline b{color:#fff}
-    /* animated stat band on dark */
-    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
-    .stat{text-align:center;min-width:130px}
-    .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
-    .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-    /* section polish */
-    .section-title-accent{position:relative;display:inline-block}
-    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
-    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
-    .gif-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10);transition:transform .22s ease,box-shadow .22s ease}
-    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
-    .gif-card img{display:block;width:100%;height:auto}
-    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
-    /* scroll reveal */
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-    .reveal.on{opacity:1;transform:none}
-    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADAS-TO · A Large-Scale Multimodal Naturalistic Dataset of Human Takeovers during ADAS Engagement</title>
+<meta name="description" content="ADAS-TO: 15,659 twenty-second clips of drivers taking back control from ADAS, 327 drivers, 22 brands, front video synchronized with vehicle logs; 285 safety-critical cases with visual cues at least three seconds ahead in roughly 60 %.">
+<meta name="keywords" content="ADAS takeover, driver takeover dataset, human-automation handover, openpilot, naturalistic driving, time-to-collision, vision-language annotation, ITSC 2026">
+<meta name="author" content="Yuhang Wang, Yiyao Xu, Jingran Sun, Hao Zhou">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wangyuhang-cmd.github.io/adasto/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+<meta property="og:title" content="ADAS-TO: Human Takeovers during ADAS Engagement">
+<meta property="og:description" content="Anatomy of a takeover: 15,659 clips aligned at the moment control comes back to the driver — 327 drivers, 22 brands, video + vehicle logs.">
+<meta property="og:url" content="https://wangyuhang-cmd.github.io/adasto/">
+<meta property="og:image" content="https://wangyuhang-cmd.github.io/adasto/static/media/fig_dataset_overview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADAS-TO: Human Takeovers during ADAS Engagement">
+<meta name="twitter:description" content="15,659 takeover clips, 327 drivers, 22 brands — the moment control comes back to the driver, in video and vehicle logs.">
+<meta name="twitter:image" content="https://wangyuhang-cmd.github.io/adasto/static/media/fig_dataset_overview.jpg">
+<meta name="citation_title" content="ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement">
+<meta name="citation_author" content="Wang, Yuhang"><meta name="citation_author" content="Xu, Yiyao"><meta name="citation_author" content="Sun, Jingran"><meta name="citation_author" content="Zhou, Hao">
+<meta name="citation_publication_date" content="2026"><meta name="citation_conference_title" content="IEEE International Conference on Intelligent Transportation Systems (ITSC)"><meta name="citation_arxiv_id" content="2603.06986">
+<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+<link rel="preload" href="/assets/proj/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/proj/proj.css">
+<script defer src="/assets/proj/proj.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"ADAS-TO","description":"15,659 twenty-second clips of human takeovers from ADAS, 327 drivers, 22 brands; front video synchronized with vehicle logs; release v2 on Hugging Face has 16,446 clips.","url":"https://wangyuhang-cmd.github.io/adasto/","sameAs":["https://arxiv.org/abs/2603.06986","https://huggingface.co/datasets/HenryYHW/ADAS-TO","https://github.com/OpenLKA/ADAS-TO"],"license":"https://creativecommons.org/licenses/by-nc/4.0/","creator":{"@type":"Organization","name":"University of South Florida · MOTIF-Lab"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","contentUrl":"https://huggingface.co/datasets/HenryYHW/ADAS-TO","encodingFormat":"video/mp4, text/csv"}]}</script>
 </head>
-<body>
-  <div id="site-nav"></div>
-  <script defer src="/assets/dark/nav.js"></script>
-  <noscript><a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a></noscript>
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+<body data-proj="adasto" data-manifest="static/data/manifest.json" data-sources="key:sources">
+<a class="pj-skip" href="#main">Skip to content</a>
+<div class="pj-bg" aria-hidden="true"></div><div class="pj-stars" aria-hidden="true"></div>
 
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
-      <div class="works-list">
-        <a href="/tridrive/" class="work-item"><div class="work-info"><h5>TriDrive</h5><p>Joint driver, vehicle and road modeling for human-centered driving.</p><span class="work-venue">Under review 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/openlka/" class="work-item"><div class="work-info"><h5>OpenLKA</h5><p>Open dataset of Lane Keeping Assist from 62 production vehicles.</p><span class="work-venue">IEEE ITSC 2025</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/drivedna/" class="work-item"><div class="work-info"><h5>DriveDNA</h5><p>Driving-style identification from naturalistic driving.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+<header class="pj-nav" id="nav">
+  <div class="pj-nav__in">
+    <a class="pj-brand" href="/">Yuhang <b>Wang</b></a>
+    <nav class="pj-menu" aria-label="Page">
+      <ul class="pj-anchors">
+        <li><a href="#top">ADAS-TO</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Anatomy</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
+      </ul>
+      <ul>
+        <li class="pj-site-extra"><a href="/">Home</a></li><li class="pj-site-extra"><a href="/projects/">Projects</a></li>
+        <li class="pj-dd"><button class="pj-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">More works <svg class="ic ic-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="pj-dd__menu"><a href="/openlka/"><b>OpenLKA</b><span>Lane keeping on real roads · ITSC 2025</span></a><a href="/tridrive/"><b>TriDrive</b><span>Joint driver–vehicle–road modeling · arXiv 2026</span></a><a href="/drivedna/"><b>DriveDNA</b><span>Driver re-identification benchmark · arXiv 2026</span></a><a href="/drivemotion/"><b>DriveMotion</b><span>Driver body-motion forecasting · arXiv 2026</span></a><a href="/baton/"><b>BATON</b><span>Bidirectional control transitions · arXiv 2026</span></a><a href="/vlalert/"><b>VLAlert</b><span>Observe before you alert · CoRL 2026</span></a></div></li>
+        <li><a class="btn btn--sm" href="https://arxiv.org/abs/2603.06986" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> 2603.06986</a></li>
+      </ul>
+    </nav>
+    <button class="pj-burger" type="button" aria-expanded="false" aria-label="Open menu" aria-controls="nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <div class="pj-progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+<!-- ================= hero ================= -->
+<section class="pj-hero" id="top">
+  <div class="pj-wrap">
+    <div class="pj-hero__grid">
+      <div class="pj-hero__text">
+        <p class="pj-eyebrow">Dataset · human–ADAS transitions · IEEE ITSC 2026</p>
+        <h1 class="pj-h1"><span class="pj-wordmark">ADAS-TO</span><span class="pj-title">A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement</span></h1>
+        <p class="pj-thesis"><span data-claim="arxiv-abs">The <b>first</b> large-scale naturalistic dataset dedicated to ADAS-to-manual transitions</span>: <b>15,659</b> twenty-second clips aligned at the moment control comes back to the driver, from <b>327 drivers</b> and <b>22 brands</b>.</p>
+        <p class="pj-lede">Every clip pairs the front camera with the vehicle's logs around one takeover. Trigger, driver intent, kinematics and vision-language cues are labeled, so the question "what did the driver see, and how early?" can be asked at scale.</p>
+        <div class="pj-pills"><span class="pj-pill pj-pill--accent">IEEE ITSC 2026 · accepted · arXiv 2603.06986</span><span class="pj-pill">front video + logs · 10 / 100 Hz</span><span class="pj-pill">release v2 on Hugging Face · 16,446 clips</span></div>
+        <div class="pj-cta">
+          <a class="btn btn--primary" href="#signature">Open the anatomy</a>
+          <a class="btn" href="https://arxiv.org/abs/2603.06986" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> Paper</a>
+          <a class="btn" href="https://huggingface.co/datasets/HenryYHW/ADAS-TO" target="_blank" rel="noopener">Dataset</a>
+          <a class="btn" href="https://github.com/OpenLKA/ADAS-TO" target="_blank" rel="noopener">Code</a>
+        </div>
+        <p class="pj-authors"><a href="/">Yuhang Wang</a><sup>1</sup><span class="sep">·</span>Yiyao Xu<sup>1</sup><span class="sep">·</span>Jingran Sun<sup>1</sup><span class="sep">·</span><a href="https://sites.google.com/view/haozhou-cv" target="_blank" rel="noopener">Hao Zhou</a><sup>1</sup></p>
+        <p class="pj-affil"><sup>1</sup>University of South Florida · MOTIF-Lab</p>
       </div>
+      <a class="pj-hero__stage" href="#signature" aria-label="Open the takeover anatomy at this moment">
+        <div data-widget="scrubber" data-mode="hero" data-sync="to" data-src="key:hero" data-eager data-label="Hero: eighty speed traces around the takeover with one clip as the clock">
+          <div class="pj-sc__media" style="--ar:526/330"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/clip_brake.jpg" src="static/media/clip_brake.mp4" width="526" height="330"></video></div>
+          <div class="pj-sc__strips"><canvas class="pj-strip" data-label="speed · 80 takeovers, t = 0 is the takeover" data-unit="m/s" data-min="0" data-max="40" data-color="accent" data-layers="series:*" style="--h:96px"></canvas></div>
+          <figure class="pj-fallback"><img src="static/media/clip_brake.jpg" alt="Front-camera frame at the moment of a brake takeover" width="526" height="330"></figure>
+        </div>
+        <div class="pj-stage__cap"><span>live · <b>release v2 clips</b> · 10 Hz</span><span class="pj-pill pj-pill--live">80 traces · 4 triggers</span></div>
+      </a>
+    </div>
+    <div class="pj-stats pj-stats--5">
+      <a class="stat" href="#f-clips"><span class="num" data-count="15659">15,659</span><span class="lbl">takeover clips <data class="n" value="15659" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-clips"><span class="num" data-count="87" data-decimals="1" data-suffix=" h">87.0 h</span><span class="lbl">of video around takeovers <data class="n" value="87.0" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-clips"><span class="num" data-count="327">327</span><span class="lbl">drivers <data class="n" value="327" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-clips"><span class="num" data-count="22">22</span><span class="lbl">vehicle brands · 163 models <data class="n" value="22" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-critical"><span class="num" data-count="285">285</span><span class="lbl">safety-critical cases <data class="n" value="285" data-src="arxiv-critical">(paper)</data></span></a>
+    </div>
+    <p class="stat-foot">Release v2 on Hugging Face (2026): <data class="n" value="16446" data-src="hf-adasto">16,446</data> clips · <data class="n" value="364" data-src="hf-adasto">364</data> drivers · <data class="n" value="179" data-src="hf-adasto">179</data> models · <data class="n" value="2585" data-src="hf-adasto">2,585</data> routes. Paper numbers are from the ITSC camera-ready; the release grew after the camera-ready.</p>
+  </div>
+</section>
+
+<!-- ================= overview ================= -->
+<section class="pj-section" id="overview">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">01 · OVERVIEW</span><h2>The handover, observed in the wild</h2><p class="sec-lede">The abstract, verbatim, beside what you need to know at a glance.</p></div>
+    <div class="pj-overview">
+      <div class="pj-abstract reveal" data-claim="arxiv-abs"><p>ADAS-TO characterizes transitions from Advanced Driver Assistance Systems (ADAS) back to manual control. It comprises <data class="n" value="15659" data-src="arxiv-abs">15,659</data> twenty-second clips from <data class="n" value="327" data-src="arxiv-abs">327</data> drivers across <data class="n" value="22" data-src="arxiv-abs">22</data> vehicle brands, each synchronizing front-camera video with vehicle logs. Takeovers are categorized by trigger — brake, steering, accelerator, combinations, and system disengagement — and by whether they were driver-initiated or forced. Our analysis identifies <data class="n" value="285" data-src="arxiv-critical">285</data> safety-critical cases and, by combining vehicle kinematics with vision-language-model annotations, finds that actionable visual cues emerge at least three seconds before takeover in roughly 60% of critical events. ADAS-TO provides a rich, multimodal foundation for studying human–automation handover and building predictive take-over warning systems.</p></div>
+      <aside class="pj-glance reveal" style="--i:1"><dl>
+        <div><dt>Venue</dt><dd>IEEE ITSC 2026 · accepted · arXiv 2603.06986 v1 · 7 Mar 2026</dd></div>
+        <div><dt>Links</dt><dd><a href="https://arxiv.org/abs/2603.06986" target="_blank" rel="noopener">arXiv</a><a href="https://huggingface.co/datasets/HenryYHW/ADAS-TO" target="_blank" rel="noopener">Dataset</a><a href="https://github.com/OpenLKA/ADAS-TO" target="_blank" rel="noopener">Code</a><a href="#cite">BibTeX</a></dd></div>
+        <div><dt>Each clip</dt><dd class="mono">20 s · takeover at 10 s · 526×330 front video · 15 log files (carState, controlsState, radarState, …)</dd></div>
+        <div><dt>Logs</dt><dd class="mono">61.7 % at 10 Hz (qlog) · 38.3 % at 100 Hz (rlog) · Dec 2019 – Feb 2026</dd></div>
+        <div><dt>License</dt><dd>CC BY-NC 4.0 · <span data-hf="HenryYHW/ADAS-TO">gated, manual approval</span></dd></div>
+        <div><dt>Privacy</dt><dd>Driver and route identifiers are anonymized; clip signal files contain no GPS coordinates; front camera only — no cabin video.</dd></div>
+      </dl></aside>
     </div>
   </div>
+</section>
 
-  <main id="main-content">
-  <section class="hero hero-dark">
-    <div data-hero-bg data-mode="contained" hidden></div>
-    <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement</h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a>,</span>
-              <span class="author-block">Yiyao Xu,</span>
-              <span class="author-block">Jingran Sun,</span>
-              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a></span>
-            </div>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">University of South Florida · MOTIF-Lab</span><br>
-              <span class="venue-pill">IEEE ITSC 2026</span>
-            </div>
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <span class="link-block"><a href="https://arxiv.org/abs/2603.06986" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
-                <span class="link-block"><a href="https://arxiv.org/abs/2603.06986" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
-                <span class="link-block"><a href="https://github.com/OpenLKA/ADAS-TO" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
-                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/ADAS-TO" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
-              </div>
-            </div>
-
-            <div class="filmstrip">
-              <div class="film-card"><span class="rec">● REC</span><img src="static/images/to_cutin_truck.gif" alt="Truck cut-in takeover"/><div class="tag-cap">Truck cut-in &rarr; driver takes over</div></div>
-              <div class="film-card"><span class="rec">● REC</span><img src="static/images/to_high_severity.gif" alt="Safety-critical takeover"/><div class="tag-cap">Safety-critical event</div></div>
-              <div class="film-card"><span class="rec">● REC</span><img src="static/images/to_ttc_drop.gif" alt="TTC drop takeover"/><div class="tag-cap">Sudden time-to-collision drop</div></div>
-            </div>
-
-            <p class="hero-tagline"><b>15,000+ real-world takeover events</b> capturing the exact moment drivers reclaim control from automated driving &mdash; synchronized video, CAN, and system state.</p>
-            <div class="stat-band">
-              <div class="stat"><div class="num" data-count="15659">0</div><div class="lbl">20-s clips</div></div>
-              <div class="stat"><div class="num" data-count="327">0</div><div class="lbl">drivers</div></div>
-              <div class="stat"><div class="num" data-count="22">0</div><div class="lbl">vehicle brands</div></div>
-              <div class="stat"><div class="num" data-count="285">0</div><div class="lbl">safety-critical</div></div>
-            </div>
-          </div>
-        </div>
+<!-- ================= signature ================= -->
+<section class="pj-section pj-section--band" id="signature">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">02 · ANATOMY OF A TAKEOVER</span><h2>Ten seconds before, ten seconds after</h2><p class="sec-lede">One clip plays while its own signals draw in white over quantile bands of thousands of takeovers of the same kind. Switch the trigger and the bands morph. The vertical rule at t = 0 is the moment control came back to the driver.</p></div>
+    <div data-widget="scrubber" data-sync="to" data-src="key:clips" data-bands="key:bands" data-hud='[{"col":"vEgo","fmt":"mph"},{"col":"cc_enabled","fmt":"bool","label":"ADAS"},{"col":"ttc","label":"TTC"}]' data-ribbon="<b>Bands:</b> p10–p90 and p25–p75 of the cover-takeover clips with complete −10…+10 s kinematics in release v2 (6,218 clips; brake 1,012 · gas 783 · steering 563 · mixed 84 — 'none' and 'non-isolatable' clips are in 'all' only). TTC is capped at 30 s and drawn hatched where capped." data-label="Takeover anatomy">
+      <div class="pj-sc__media" style="--ar:526/330"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/clip_brake.jpg" width="526" height="330"></video></div>
+      <div class="pj-sc__strips">
+        <canvas class="pj-strip" data-col="vEgo" data-label="speed" data-unit="m/s" data-min="0" data-max="40" data-color="white" data-layers="bands:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="aEgo" data-label="acceleration" data-unit="m/s²" data-sym data-color="white" data-layers="bands:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="ttc" data-label="time to collision" data-unit="s" data-min="0" data-max="30" data-color="white" data-layers="bands:*;thresholds:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="steer_rate" data-label="steering rate" data-unit="deg/s" data-sym data-color="white" data-layers="bands:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="lane_dev" data-label="lane deviation" data-unit="m" data-sym data-color="white" data-layers="bands:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="act_brake" data-label="brake action" data-min="0" data-max="1" data-color="white" data-layers="bands:*;shade:*"></canvas>
       </div>
+      <figure class="pj-fallback"><img src="static/media/fig_kinematic_signatures.jpg" alt="Kinematic signatures of takeovers by trigger, from the paper" width="2000" height="1000" data-zoom><figcaption><b>Static view.</b> Kinematic signatures by trigger (paper figure); the live anatomy needs JavaScript.</figcaption></figure>
     </div>
-  </section>
+    <p class="pj-note reveal"><b>What you are looking at.</b> Three release-v2 sample clips (brake, steering and gas takeovers; two pseudonymous drivers) with openpilot's logs at 10 Hz. White is this clip; the coloured bands are the population. Shading marks when the assistance system was engaged. Lane deviation and lane confidence come from the lane model; TTC and THW from the radar lead.</p>
+  </div>
+</section>
 
-  <section class="section hero is-light reveal">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3 section-title-accent">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              ADAS-TO characterizes transitions from Advanced Driver Assistance Systems (ADAS) back to manual control.
-              It comprises 15,659 twenty-second clips from 327 drivers across 22 vehicle brands, each synchronizing
-              front-camera video with vehicle logs. Takeovers are categorized by trigger — brake, steering, accelerator,
-              combinations, and system disengagement — and by whether they were driver-initiated or forced. Our analysis
-              identifies 285 safety-critical cases and, by combining vehicle kinematics with vision-language-model
-              annotations, finds that actionable visual cues emerge at least three seconds before takeover in roughly 60%
-              of critical events. ADAS-TO provides a rich, multimodal foundation for studying human–automation handover
-              and building predictive take-over warning systems.
-            </p>
-          </div>
-        </div>
-      </div>
+<!-- ================= evidence ================= -->
+<section class="pj-section" id="evidence">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">03 · EVIDENCE</span><h2>What the numbers rest on</h2></div>
+    <div class="findings">
+      <article class="finding finding--wide reveal" id="f-critical"><span class="finding__n">285 <small>critical = 173 low-TTC + 127 low-THW − 15 both</small></span><p class="finding__claim">The long tail: most takeovers are calm; a few hundred are not.</p><p>Each point is a cover-takeover clip from release v2 with a valid lead: minimum TTC against minimum THW inside the 20 s (log scales, capped at 30 s and 10 s). Dashed thresholds at TTC 3.0 s and THW 0.8 s define "critical" in the paper. Colour by criticality or by trigger.</p>
+        <div data-widget="scatter" data-src="key:longtail" data-color="critical" data-label="Min TTC vs min THW per clip"><figure class="pj-fallback"><img src="static/media/fig_ttc_thw_scatter.jpg" alt="Scatter of minimum TTC against minimum THW per clip, from the paper" width="2000" height="1400" data-zoom><figcaption>TTC–THW scatter (paper figure).</figcaption></figure></div>
+        <p class="finding__foot">Two definitions, both shown: <b>285</b> kinematic-threshold cases on the paper's 15,659 clips <data class="n" value="285" data-src="arxiv-critical">(paper)</data>; <b>749</b> manually reviewed safety-critical clips in release v2 (16,446 clips) <data class="n" value="749" data-src="rel-tables">(release)</data>. Release-v2 lead-valid population: 4,786 clips — 77 below both thresholds, 739 low-TTC only, 432 low-THW only.</p></article>
+      <article class="finding reveal tilt" id="f-cues"><span class="finding__n">59.3 % <small>of critical cases</small></span><p class="finding__claim">Visual cues at least three seconds before the takeover.</p><p>Vision-language annotations of the 285 critical cases: 63.7 % traffic dynamics, 47.4 % infrastructure degradation, 37.5 % adverse environment — categories overlap. In the paper's words, cues emerge ≥ 3 s ahead in <data class="n" value="59.3" data-src="arxiv-cues">59.3 %</data> ("roughly 60 %").</p>
+        <figure class="pj-fig"><img src="static/media/fig_early_warning_advantage.jpg" alt="Early-warning advantage: when visual cues appear relative to the takeover" width="2000" height="1200" loading="lazy" data-zoom><figcaption><b>Lead time of visual cues</b> before the kinematic takeover (paper figure).</figcaption></figure></article>
+      <article class="finding reveal tilt" id="f-actions" style="--i:1"><span class="finding__n">39.6 % <small>brake-first takeovers</small></span><p class="finding__claim">How drivers take back control.</p><p>First action in the paper's 15,659 clips: brake 39.6 %, steering 25.3 %, system disengagement 13.7 %, gas 13.5 %, mixed 7.9 %. A lead vehicle was present in 49.8 % of clips; mean speed 54.9 ± 30.8 km/h.</p>
+        <div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>First action</th><th>Share</th></tr></thead><tbody><tr class="hl"><td>Brake</td><td>39.6 %</td></tr><tr><td>Steering</td><td>25.3 %</td></tr><tr><td>System disengagement</td><td>13.7 %</td></tr><tr><td>Gas</td><td>13.5 %</td></tr><tr><td>Mixed</td><td>7.9 %</td></tr></tbody></table></div></article>
+      <article class="finding reveal tilt" id="f-clips" style="--i:2"><span class="finding__n">16,446 <small>clips in release v2</small></span><p class="finding__claim">Labelled by what the clip actually is.</p><p>Release-v2 annotation table: cover (brake / steer / gas takeover), lane change, stop, turn, other. 364 pseudonymous drivers, 179 models, 2,585 routes; 9,992 clips with 10 Hz logs and 6,454 with 100 Hz logs.</p>
+        <div data-widget="bars" data-src="key:bars_labels" data-label="Clip labels in release v2"><figure class="pj-fallback"><figcaption>Label counts in the release table.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-audit" style="--i:3"><span class="finding__n">84.0 % <small>agreement · 500 clips</small></span><p class="finding__claim">The ego / non-ego partition was audited by four experts.</p><p>Agreement 84.0 % (420 of 500 clips); ego precision / recall 90.2 / 81.5 %, non-ego 77.1 / 87.5 %. The paper calls the partition and hazard labelling "intentionally lightweight" — we quote it rather than oversell it.</p>
+        <figure class="pj-fig"><img src="static/media/fig_semantic_clustering.jpg" alt="Semantic clustering of takeover contexts from vision-language annotations" width="2000" height="1200" loading="lazy" data-zoom><figcaption><b>Semantic clusters</b> of takeover contexts (paper figure).</figcaption></figure></article>
     </div>
-  </section>
+    <p class="pj-note pj-note--warn reveal"><b>Journal extension (under review).</b> A longitudinal-control follow-up on release v2 (16,446 clips, 364 drivers) finds 6,329 confirmed manoeuvre-filtered events; 65.6 % of first actions precede the logged disengagement, and the next five seconds carry a 78.5 % lower minimum TTC. Numbers will be pinned here once that paper is public.</p>
+  </div>
+</section>
 
-  <section class="hero is-small reveal">
-    <div class="hero-body">
-      <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item"><img src="static/images/adasto_stats.png" alt="Dataset overview" loading="lazy"/><h2 class="subtitle has-text-centered">Dataset composition at a glance: sources, triggers, and coverage.</h2></div>
-          <div class="item"><img src="static/images/adasto_clip_structure.png" alt="Clip structure" loading="lazy"/><h2 class="subtitle has-text-centered">Structure of a 20-second takeover clip with synchronized multimodal streams.</h2></div>
-          <div class="item"><img src="static/images/adasto_geo.png" alt="Geographic distribution" loading="lazy"/><h2 class="subtitle has-text-centered">Geographic and environmental distribution of the collected takeovers.</h2></div>
-          <div class="item"><img src="static/images/adasto_kinematic.png" alt="Kinematic profiles" loading="lazy"/><h2 class="subtitle has-text-centered">Kinematic profiles of driver take-over actions.</h2></div>
-          <div class="item"><img src="static/images/adasto_ttc_thw.png" alt="TTC and THW distributions" loading="lazy"/><h2 class="subtitle has-text-centered">Time-to-collision and time-headway distributions across events.</h2></div>
-        </div>
-      </div>
+<!-- ================= method ================= -->
+<section class="pj-section pj-section--band" id="method">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">04 · METHOD</span><h2>From a disengagement to a labelled clip</h2><p class="sec-lede">Every openpilot disengagement in the source logs becomes a 20-second window centred on the takeover; the front video and the logs are cut together, then labelled by trigger, driver action and visual context.</p></div>
+    <figure class="pj-fig reveal"><img src="static/media/fig_dataset_overview.jpg" alt="Dataset overview: sources, clip construction, labels and statistics" width="2000" height="500" loading="lazy" data-zoom><figcaption><b>Overview.</b> Sources, clip construction, labelling and headline statistics (paper figure).</figcaption></figure>
+    <div class="grid-2" style="margin-top:24px">
+      <figure class="pj-fig reveal"><img src="static/media/fig_clip_structure.jpg" alt="Clip structure: twenty seconds of video and logs aligned at the takeover" width="2000" height="1000" loading="lazy" data-zoom><figcaption><b>Clip structure.</b> −10…+10 s around the takeover, video and logs on one clock.</figcaption></figure>
+      <figure class="pj-fig reveal" style="--i:1"><img src="static/media/fig_geo_distribution.jpg" alt="Geographic distribution of the recordings" width="2000" height="1000" loading="lazy" data-zoom><figcaption><b>Where.</b> Recordings span U.S. states and several countries; coordinates are not released with the clips.</figcaption></figure>
     </div>
-  </section>
-
-  <section class="section reveal">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">Take-over Scenarios</span></h2>
-      <p class="has-text-centered content">Representative real-world moments where drivers reclaim control.</p>
-      <div class="gif-grid">
-        <div class="gif-card"><img src="static/images/to_cutin_truck.gif" alt="Truck cut-in" loading="lazy"/><div class="cap">A truck cutting in ahead.</div></div>
-        <div class="gif-card"><img src="static/images/to_rapid_closing.gif" alt="Rapid closing" loading="lazy"/><div class="cap">Rapidly closing on a slower lead vehicle.</div></div>
-        <div class="gif-card"><img src="static/images/to_high_severity.gif" alt="High severity" loading="lazy"/><div class="cap">A high-severity safety-critical event.</div></div>
-        <div class="gif-card"><img src="static/images/to_ttc_drop.gif" alt="TTC drop" loading="lazy"/><div class="cap">A sudden drop in time-to-collision.</div></div>
-        <div class="gif-card"><img src="static/images/to_jeep_cutin.gif" alt="Jeep cut-in" loading="lazy"/><div class="cap">An adjacent vehicle merging abruptly.</div></div>
-        <div class="gif-card"><img src="static/images/to_close_vehicle.gif" alt="Close vehicle" loading="lazy"/><div class="cap">Close following in dense traffic.</div></div>
-      </div>
+    <h3 class="sub-head">Takeover scenarios</h3>
+    <div class="pj-strip reveal">
+      <figure class="pj-media" style="--ar:16/10"><video muted playsinline loop preload="none" poster="static/media/to_close_vehicle.jpg" src="static/media/to_close_vehicle.mp4" width="800" height="500" data-autoplay></video><figcaption>Close vehicle ahead</figcaption></figure>
+      <figure class="pj-media" style="--ar:16/10"><video muted playsinline loop preload="none" poster="static/media/to_cutin_truck.jpg" src="static/media/to_cutin_truck.mp4" width="800" height="500"></video><figcaption>Truck cut-in</figcaption></figure>
+      <figure class="pj-media" style="--ar:16/10"><video muted playsinline loop preload="none" poster="static/media/to_high_severity.jpg" src="static/media/to_high_severity.mp4" width="800" height="500"></video><figcaption>High-severity case</figcaption></figure>
+      <figure class="pj-media" style="--ar:16/10"><video muted playsinline loop preload="none" poster="static/media/to_jeep_cutin.jpg" src="static/media/to_jeep_cutin.mp4" width="800" height="500"></video><figcaption>Cut-in from the right</figcaption></figure>
+      <figure class="pj-media" style="--ar:16/10"><video muted playsinline loop preload="none" poster="static/media/to_rapid_closing.jpg" src="static/media/to_rapid_closing.mp4" width="800" height="500"></video><figcaption>Rapid closing</figcaption></figure>
+      <figure class="pj-media" style="--ar:16/10"><video muted playsinline loop preload="none" poster="static/media/to_ttc_drop.jpg" src="static/media/to_ttc_drop.mp4" width="800" height="500"></video><figcaption>TTC drop</figcaption></figure>
     </div>
-  </section>
+    <figure class="pj-fig reveal" style="margin-top:24px"><img src="static/media/fig_action_sequence.jpg" alt="Sequence of driver actions around the takeover" width="2000" height="900" loading="lazy" data-zoom><figcaption><b>Action sequence.</b> Which pedal or the wheel moves first, and when (paper figure).</figcaption></figure>
+  </div>
+</section>
 
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
-      <pre id="bibtex-code"><code>@inproceedings{wang2026adasto,
+<!-- ================= results ================= -->
+<section class="pj-section" id="results">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">05 · RESULTS</span><h2>Tables from the paper</h2></div>
+    <div class="tabs reveal">
+      <div class="tabs__list" role="tablist"><button role="tab" aria-selected="true" aria-controls="tab-comp" id="t-comp" type="button">Composition</button><button role="tab" aria-selected="false" aria-controls="tab-crit" id="t-crit" tabindex="-1" type="button">Critical cases</button><button role="tab" aria-selected="false" aria-controls="tab-cues" id="t-cues" tabindex="-1" type="button">Visual cues</button></div>
+      <div class="tabs__panel" id="tab-comp" role="tabpanel" aria-labelledby="t-comp"><p class="tbl-cap">Table II · ITSC 2026 (paper) and release v2 (Hugging Face, 2026)</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th></th><th>Paper</th><th>Release v2</th></tr></thead><tbody><tr><td>Clips</td><td><data class="n" value="15659" data-src="arxiv-abs">15,659</data></td><td><data class="n" value="16446" data-src="hf-adasto">16,446</data></td></tr><tr><td>Hours of video</td><td><data class="n" value="87.0" data-src="arxiv-abs">87.0</data></td><td>—</td></tr><tr><td>Drivers</td><td><data class="n" value="327" data-src="arxiv-abs">327</data></td><td><data class="n" value="364" data-src="hf-adasto">364</data></td></tr><tr><td>Models / brands</td><td><data class="n" value="163" data-src="arxiv-abs">163</data> / <data class="n" value="22" data-src="arxiv-abs">22</data></td><td><data class="n" value="179" data-src="hf-adasto">179</data> / —</td></tr><tr><td>Routes</td><td>—</td><td><data class="n" value="2585" data-src="hf-adasto">2,585</data></td></tr><tr><td>Log rate</td><td>61.7 % at 10 Hz · 38.3 % at 100 Hz</td><td>9,992 at 10 Hz · 6,454 at 100 Hz</td></tr><tr><td>Speed</td><td>54.9 ± 30.8 km/h</td><td>53.8 km/h mean (10 s before)</td></tr><tr><td>Lead vehicle present</td><td>49.8 %</td><td>48.8 %</td></tr></tbody></table></div></div>
+      <div class="tabs__panel" id="tab-crit" role="tabpanel" aria-labelledby="t-crit" hidden><p class="tbl-cap">Safety-critical cases · paper</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Definition</th><th>Clips</th></tr></thead><tbody><tr><td>Low TTC (&lt; 3.0 s)</td><td>173</td></tr><tr><td>Low THW (&lt; 0.8 s)</td><td>127</td></tr><tr><td>Both</td><td>15</td></tr><tr class="hl"><td>Critical (union)</td><td><data class="n" value="285" data-src="arxiv-critical">285</data></td></tr><tr><td>Hazard source among critical: traffic / infrastructure / environment</td><td>78.2 % / 13.3 % / 8.4 %</td></tr><tr><td>Manually reviewed safety-critical set, release v2</td><td><data class="n" value="749" data-src="rel-tables">749</data></td></tr></tbody></table></div></div>
+      <div class="tabs__panel" id="tab-cues" role="tabpanel" aria-labelledby="t-cues" hidden><p class="tbl-cap">Early visual cues (≥ 3 s before takeover) among the 285 critical cases · paper</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Cue category</th><th>Share of critical cases</th></tr></thead><tbody><tr><td>Traffic dynamics</td><td>63.7 %</td></tr><tr><td>Infrastructure degradation</td><td>47.4 %</td></tr><tr><td>Adverse environment</td><td>37.5 %</td></tr><tr class="hl"><td>Any cue ≥ 3 s ahead</td><td><data class="n" value="59.3" data-src="arxiv-cues">59.3 %</data></td></tr><tr><td>Ego / non-ego audit (500 clips, four experts)</td><td>84.0 % agreement</td></tr></tbody></table></div></div>
+    </div>
+    <details class="sources reveal"><summary>Sources &amp; notes</summary><ol data-auto></ol></details>
+  </div>
+</section>
+
+<!-- ================= data & access ================= -->
+<section class="pj-section pj-section--band" id="data">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">06 · DATA &amp; ACCESS</span><h2>Get the clips</h2></div>
+    <div class="tiers">
+      <div class="tier tier--hi reveal"><span class="badge badge--warn">On request</span><h3>ADAS-TO · full release</h3><p>16,446 clips, ~41 GB, 15 files per clip; CC BY-NC 4.0. Gated with manual approval — share your contact information on Hugging Face.</p><p class="mono" data-hf="HenryYHW/ADAS-TO">as of 2026-10-02 · gated: manual · CC BY-NC 4.0</p><div class="pj-cta"><a class="btn btn--primary btn--sm" href="https://huggingface.co/datasets/HenryYHW/ADAS-TO" target="_blank" rel="noopener">Request access</a></div></div>
+      <div class="tier reveal" style="--i:1"><span class="badge badge--warn">On request</span><h3>Samples</h3><p>ADAS-TO-Sample (1,342 clips, 6 drivers) and ADAS-TO-Critical (491 clips from the reviewed set) — same layout, smaller downloads.</p><p class="mono" data-hf="HenryYHW/ADAS-TO-Sample">as of 2026-10-02 · gated: manual</p><div class="pj-cta"><a class="btn btn--sm" href="https://huggingface.co/datasets/HenryYHW/ADAS-TO-Sample" target="_blank" rel="noopener">Sample</a><a class="btn btn--sm" href="https://huggingface.co/datasets/HenryYHW/ADAS-TO-Critical" target="_blank" rel="noopener">Critical</a></div></div>
+      <div class="tier reveal" style="--i:2"><span class="badge badge--ok">Open</span><h3>Code &amp; longitudinal tables</h3><p>Clip construction, labelling and analysis code on GitHub; the longitudinal-control tables as a separate MIT-licensed dataset.</p><p class="mono" data-hf="HenryYHW/ADAS-TO_longitudinal">as of 2026-10-02 · gated: manual · MIT</p><div class="pj-cta"><a class="btn btn--sm" href="https://github.com/OpenLKA/ADAS-TO" target="_blank" rel="noopener">GitHub</a><a class="btn btn--sm" href="https://huggingface.co/datasets/HenryYHW/ADAS-TO_longitudinal" target="_blank" rel="noopener">Longitudinal</a></div></div>
+    </div>
+    <blockquote class="quote reveal">“Driver and route identifiers are anonymized.” · “Clip signal files contain no GPS coordinates.”<cite>Hugging Face dataset card · fetched 2026-10-02</cite></blockquote>
+    <p class="pj-note reveal"><b>Terms.</b> Non-commercial research use; no re-identification attempts; cite the ITSC paper; redistribute derived tables under the same terms, not the raw video.</p>
+  </div>
+</section>
+
+<!-- ================= cite ================= -->
+<section class="pj-section" id="cite">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">07 · CITE</span><h2>Read the paper, cite the data</h2></div>
+    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@inproceedings{wang2026adasto,
   title     = {ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement},
   author    = {Wang, Yuhang and Xu, Yiyao and Sun, Jingran and Zhou, Hao},
   booktitle = {IEEE International Conference on Intelligent Transportation Systems (ITSC)},
-  year      = {2026}
-}</code></pre>
+  year      = {2026},
+  note      = {arXiv:2603.06986}
+}</pre></div>
+    <h3 class="sub-head">Related work from the lab</h3>
+    <div class="family reveal">
+      <a class="fam" href="/openlka/"><img src="/images/th_openlka.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Dataset · ITSC 2025</span><h4>OpenLKA</h4><p>Lane keeping on real roads — the same recordings, before the takeover.</p></div></a>
+      <a class="fam" href="/baton/"><img src="/images/th_baton.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>BATON</h4><p>Both directions of the control transition, with the cabin camera.</p></div></a>
+      <a class="fam" href="/tridrive/"><img src="/images/th_tridrive.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">arXiv 2026</span><h4>TriDrive</h4><p>Forecasting driver, vehicle and road together — in the car at 5 Hz.</p></div></a>
     </div>
-  </section>
+  </div>
+</section>
+</main>
 
-  <footer class="footer">
-    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
-      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-    </div></div></div></div>
-  </footer>
-  </main>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-
-      function countUp(el) {
-        var target = +el.dataset.count, dur = 1400, t0 = null;
-        function step(t) {
-          if (!t0) t0 = t;
-          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * eased).toLocaleString();
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var io2 = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
-      }, { threshold: 0.4 });
-      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
-    });
-  </script>
-<script type="module" src="/assets/dark/hero-bg.js"></script>
+<footer class="pj-foot"><div class="pj-wrap"><b>Yuhang Wang</b> · University of South Florida · MOTIF-Lab<div class="pj-foot__links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a><a href="mailto:yuhangw@usf.edu">yuhangw@usf.edu</a></div></div></footer>
+<button class="totop" type="button" aria-label="Back to top" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 </body>
 </html>
