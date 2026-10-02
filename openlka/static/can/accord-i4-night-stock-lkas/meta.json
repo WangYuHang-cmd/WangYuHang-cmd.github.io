@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "66d2227fd9f3",
- "generated": "2026-10-01T19:16:15-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "fb62949c6a74",
+ "generated": "2026-10-01T20:07:39-0400",
  "id": "accord-i4-night-stock-lkas",
  "title": "Honda Accord Hybrid \u00b7 stock LKAS at night on I-4",
  "make": "Honda",
@@ -67,7 +67,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -82,7 +82,7 @@
     "n_rows": 5999,
     "n_cols": 88,
     "seg": 31,
-    "seconds": 3.9
+    "seconds": 4.0
    },
    {
     "file_prefix": "OPandCAN--HONDA_ACCORD_HYBRID_2018--dongle--bdda168c0c35fad7--route--2024-06-01--20-56-33--32",
@@ -184,7 +184,7 @@
   ],
   "n_columns": 88,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -241,7 +241,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -353,9 +353,9 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/HONDA_ACCORD_HYBRID_2018/bdda168c0c35fad7/2024-06-01--20-24-24/30--qcamera.ts",
-   "/data/datasets/raw/Dataset/HONDA_ACCORD_HYBRID_2018/bdda168c0c35fad7/2024-06-01--20-24-24/31--qcamera.ts",
-   "/data/datasets/raw/Dataset/HONDA_ACCORD_HYBRID_2018/bdda168c0c35fad7/2024-06-01--20-24-24/32--qcamera.ts"
+   "30--qcamera.ts",
+   "31--qcamera.ts",
+   "32--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -369,8 +369,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:17:00-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -382,16 +382,16 @@
  "bytes": {
   "video": 1731008,
   "poster": 9279,
-  "signals": 96995,
+  "signals": 97274,
   "track": 4453,
-  "frames": 88938
+  "frames": 78998
  },
  "sha256": {
   "video": "ad4de93ce1a56934825fcb073b3040264582f5c671bea4f61aae52e481f60a70",
   "poster": "c8c330100b7d95d0cf6b9090563ca163df8d34dd64b717dc7791a8c6c90e43a6",
-  "signals": "984228db8bd47fe6c8791c2d6fe56a12bae43f5f8f3fa20c8afba83f5e460bc5",
+  "signals": "4050662002d09337ce082b1583e453fe7b0add6ea2d11e7af97a8c235b7ff011",
   "track": "37de69152fec16fd539cd880e1c2980f421753ab4d9700c1687951b3fb7e9388",
-  "frames": "9e5a7f7f0c09f6e76d9d7d3b0e0d0d47e17cbc79c2c6694b65e0b4d7a2a16cb0"
+  "frames": "96791378e65aaf0a6f6822d6311fc164a604098b79231c115f09a9f79c2f8270"
  },
- "build_seconds": 24.2
+ "build_seconds": 30.4
 }

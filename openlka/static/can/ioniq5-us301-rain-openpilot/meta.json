@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "dfecacb82618",
- "generated": "2026-10-01T19:17:00-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "55e775de2658",
+ "generated": "2026-10-01T20:08:30-0400",
  "id": "ioniq5-us301-rain-openpilot",
  "title": "Hyundai Ioniq 5 \u00b7 night rain on US 301 (openpilot steering)",
  "make": "Hyundai",
@@ -65,7 +65,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -80,7 +80,7 @@
     "n_rows": 6001,
     "n_cols": 89,
     "seg": 28,
-    "seconds": 4.9
+    "seconds": 5.5
    }
   ],
   "columns": [
@@ -176,7 +176,7 @@
   ],
   "n_columns": 89,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -242,7 +242,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -341,8 +341,8 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/HYUNDAI_IONIQ_5/530075d26cad58e4/2024-09-05--20-13-29/27--qcamera.ts",
-   "/data/datasets/raw/Dataset/HYUNDAI_IONIQ_5/530075d26cad58e4/2024-09-05--20-13-29/28--qcamera.ts"
+   "27--qcamera.ts",
+   "28--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -356,8 +356,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:17:00-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -369,16 +369,16 @@
  "bytes": {
   "video": 1250093,
   "poster": 5270,
-  "signals": 73962,
+  "signals": 73543,
   "track": 4465,
-  "frames": 88980
+  "frames": 78905
  },
  "sha256": {
   "video": "8901a60eb9e3228dbc0e300f18e45110e699d93e777359a63b830fcfc6e60913",
   "poster": "1e8a5bb97d6b22956608c8065211dbe444dff2284a31307d995262cc75f77cf8",
-  "signals": "05cbcbbff47d92ea92e66ac1e406dfaab5e99f2b6cfe9acc9ecf905cb4a3f26c",
+  "signals": "912e55ef29f47618cc29b701e0ce0fb0c45a50b827061d63a5a313a87ab813c6",
   "track": "2a1a930def66544e1de6455698e1babc6ad241b50577d530e361283d16a08c0c",
-  "frames": "5d60a9ff3472df42c5d53e464420ea4b0cbd7f1af54075a4cae7652d92fa972e"
+  "frames": "10ae2a69ceb37c10d04a69ce5c7e2161032537a6ae289a19e8f83b758918b3b3"
  },
- "build_seconds": 23.5
+ "build_seconds": 25.9
 }

@@ -1,0 +1,10 @@
+# Python bytecode from the OpenLKA showcase pipeline (openlka/pipeline/)
+__pycache__/
+*.pyc
+
+# Local dev fixtures for the Signal Explorer (never ship)
+openlka/static/can-fixture
+openlka/static/can-dev/
+
+# Editor / OS noise
+.DS_Store

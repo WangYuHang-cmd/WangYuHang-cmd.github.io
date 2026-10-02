@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "7dac2294f807",
- "generated": "2026-10-01T19:18:27-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "f90e8f2c19e1",
+ "generated": "2026-10-01T20:07:46-0400",
  "id": "camry-i275-stock-lta",
  "title": "Toyota Camry (TSS 2.5+) \u00b7 stock LTA on I-275",
  "make": "Toyota",
@@ -67,7 +67,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -82,14 +82,14 @@
     "n_rows": 6000,
     "n_cols": 85,
     "seg": 9,
-    "seconds": 4.0
+    "seconds": 4.1
    },
    {
     "file_prefix": "OPandCAN--TOYOTA_CAMRY_TSS2--dongle--bdda168c0c35fad7--route--2024-07-08--13-00-09--10",
     "n_rows": 6000,
     "n_cols": 85,
     "seg": 10,
-    "seconds": 4.0
+    "seconds": 4.4
    }
   ],
   "columns": [
@@ -181,7 +181,7 @@
   ],
   "n_columns": 85,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -246,7 +246,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -356,9 +356,9 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71/8--qcamera.ts",
-   "/data/datasets/raw/Dataset/TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71/9--qcamera.ts",
-   "/data/datasets/raw/Dataset/TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71/10--qcamera.ts"
+   "8--qcamera.ts",
+   "9--qcamera.ts",
+   "10--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -372,8 +372,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:18:27-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -385,16 +385,16 @@
  "bytes": {
   "video": 1990119,
   "poster": 9134,
-  "signals": 78992,
+  "signals": 79443,
   "track": 4549,
-  "frames": 88914
+  "frames": 78908
  },
  "sha256": {
   "video": "bff02da61f358485b7c87aa8c2ef54840edaf69e3434e3f7921986e7fdceabc2",
   "poster": "7450b061a7dc36b293ab24d2863f93f75cb628726bdef86f508fdb64d1f68b26",
-  "signals": "c47827acd9a88306b3ae061f9f56e000ab282f6184323763ff645fd07d288ff1",
+  "signals": "87194b4ad62ddad80ae3f391661dd1a7d95e7810bc95d3d6b6c3988a1a2f2623",
   "track": "9fe896a5d2240b9d4d9794e06cc20f317b91b0dc98fc51a12d2ac94ef2f89cc9",
-  "frames": "28e45138e92141ee17b960b98eab9a244240f19b68cc3675ad154c8e82cd3196"
+  "frames": "c1e2e43b727cd5e379a6411aa8ac909e7a952adb8cc8e41d8bdcb8a480b1fecf"
  },
- "build_seconds": 24.4
+ "build_seconds": 37.5
 }

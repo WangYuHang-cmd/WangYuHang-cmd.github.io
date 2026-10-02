@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "7773061e2dc1",
- "generated": "2026-10-01T19:16:43-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "a52185924b3d",
+ "generated": "2026-10-01T20:08:16-0400",
  "id": "rav4-i75-lda-pulses",
  "title": "Toyota RAV4 (TSS 2.5+) \u00b7 lane-departure steering pulses on I-75",
  "make": "Toyota",
@@ -67,7 +67,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -75,21 +75,21 @@
     "n_rows": 5999,
     "n_cols": 83,
     "seg": 19,
-    "seconds": 4.3
+    "seconds": 4.6
    },
    {
     "file_prefix": "OPandCAN--TOYOTA_RAV4_TSS2_2023--dongle--bdda168c0c35fad7--route--2024-09-22--14-15-37--20",
     "n_rows": 6000,
     "n_cols": 83,
     "seg": 20,
-    "seconds": 4.4
+    "seconds": 5.0
    },
    {
     "file_prefix": "OPandCAN--TOYOTA_RAV4_TSS2_2023--dongle--bdda168c0c35fad7--route--2024-09-22--14-16-37--21",
     "n_rows": 6000,
     "n_cols": 83,
     "seg": 21,
-    "seconds": 4.4
+    "seconds": 4.6
    }
   ],
   "columns": [
@@ -179,7 +179,7 @@
   ],
   "n_columns": 83,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -244,7 +244,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -354,9 +354,9 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/TOYOTA_RAV4_TSS2_2023/bdda168c0c35fad7/00000004--1d07fcd6fe/19--qcamera.ts",
-   "/data/datasets/raw/Dataset/TOYOTA_RAV4_TSS2_2023/bdda168c0c35fad7/00000004--1d07fcd6fe/20--qcamera.ts",
-   "/data/datasets/raw/Dataset/TOYOTA_RAV4_TSS2_2023/bdda168c0c35fad7/00000004--1d07fcd6fe/21--qcamera.ts"
+   "19--qcamera.ts",
+   "20--qcamera.ts",
+   "21--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -370,8 +370,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:17:00-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -383,16 +383,16 @@
  "bytes": {
   "video": 2312825,
   "poster": 11736,
-  "signals": 80121,
+  "signals": 80286,
   "track": 4348,
-  "frames": 88929
+  "frames": 78883
  },
  "sha256": {
   "video": "497112e53b0e7a1250dace34467c9f2726607989fcab2f4c4aeaded3b7fa4f4c",
   "poster": "3b6db9596245189d30634265d55ca98c1bac3306d4f0729b3f948e69d31b8f99",
-  "signals": "242526ec93e42bc43cac698fd41eac94e0f255a549035d78e032c3ff36dab510",
+  "signals": "91956b603b4e3ec7e641c1c5603cec69907a870c0f06f3632a806df320be6a39",
   "track": "07b7b5cfe0aa1b2245eb40e0405e428c0d3bebbed7093bb3a2965c05dc677b69",
-  "frames": "d0b765e9ef6bc15590874b609e7cc2672963d6a9e66fe6fec316a127287cfe67"
+  "frames": "16fc49c540a40a8f04e0c33fad932d8b850b6aa8d357f860023b21f538c7e285"
  },
- "build_seconds": 25.9
+ "build_seconds": 29.3
 }

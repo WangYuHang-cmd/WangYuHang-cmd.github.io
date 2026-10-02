@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "09d5b821d9ca",
- "generated": "2026-10-01T19:16:48-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "9c9d46c3dad4",
+ "generated": "2026-10-01T20:08:20-0400",
  "id": "niro-i75-ramp-curve-torque",
  "title": "Kia Niro \u00b7 stock LFA on a sharp interchange ramp",
  "make": "Kia",
@@ -67,7 +67,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -75,21 +75,21 @@
     "n_rows": 6001,
     "n_cols": 78,
     "seg": 13,
-    "seconds": 4.2
+    "seconds": 4.7
    },
    {
     "file_prefix": "OPandCAN--KIA_NIRO_EV_2ND_GEN--dongle--530075d26cad58e4--route--2023-11-21--16-24-51--14",
     "n_rows": 5999,
     "n_cols": 78,
     "seg": 14,
-    "seconds": 4.2
+    "seconds": 4.4
    },
    {
     "file_prefix": "OPandCAN--KIA_NIRO_EV_2ND_GEN--dongle--530075d26cad58e4--route--2023-11-21--16-25-54--15",
     "n_rows": 6001,
     "n_cols": 78,
     "seg": 15,
-    "seconds": 4.3
+    "seconds": 4.6
    }
   ],
   "columns": [
@@ -174,7 +174,7 @@
   ],
   "n_columns": 78,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -227,7 +227,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -335,9 +335,9 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/KiaNiro2023/bdda168c0c35fad7/00000001--2091941497/13--qcamera.ts",
-   "/data/datasets/raw/Dataset/KiaNiro2023/bdda168c0c35fad7/00000001--2091941497/14--qcamera.ts",
-   "/data/datasets/raw/Dataset/KiaNiro2023/bdda168c0c35fad7/00000001--2091941497/15--qcamera.ts"
+   "13--qcamera.ts",
+   "14--qcamera.ts",
+   "15--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -351,8 +351,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:17:00-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -364,16 +364,16 @@
  "bytes": {
   "video": 2528697,
   "poster": 9347,
-  "signals": 80536,
+  "signals": 80663,
   "track": 4467,
-  "frames": 88945
+  "frames": 78956
  },
  "sha256": {
   "video": "dc17ed3a34bb7437f3c54a8a5d3bf0be042b2f57bf73d049f691fae273bcb566",
   "poster": "11dc1aa9b40b6705de2bc9a1106ad4071c2fd16ff909e230af24397df1a7f860",
-  "signals": "3a25e4074d2146dbf0b37475a30bab1073fec4005f9c2a64c63574eecf85d551",
+  "signals": "9cf185bef538f4c0f533af2503a53355480f345368dcdc1e361649d8cadc75c7",
   "track": "a8e2b76f96e6fc5ce788d3d46b0908cc3347f7dbb3d646bf827c4614ff6d0fb7",
-  "frames": "00ce9d1a36ff332b83a1e665492d784b16aedc951e21ae9752193c9f753d2a97"
+  "frames": "0c23ce752bd0af6982aff70a756487c3557a9f005ed51aafecf6d82073693f7f"
  },
- "build_seconds": 26.6
+ "build_seconds": 31.3
 }

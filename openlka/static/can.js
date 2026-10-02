@@ -2,8 +2,10 @@
    Loaded after openlka.js, which already binds .reveal, [data-count], [data-zoom], .tabs, .vcard,
    .tile--video and the two modals; nothing here touches those. The only global is window.OpenLKACan.
    Data contract: static/can/index.json → clips[].files.{video,poster,signals,track,frames}, dongles.json,
-   routes_map.json, hero-trace.json (see openlka/pipeline). Nothing is fetched until #can is near the viewport,
-   except the ≤ 8 KB hero trace, which loads in an idle callback after the page has loaded. */
+   routes_map.json, hero-trace.json (see openlka/pipeline); an explicit null for dongles/route_map means "not published".
+   Nothing is fetched until #can is near the viewport, except the ≤ 8 KB hero trace, which loads in an idle callback
+   after the page has loaded. Clip files are cached per clip as promises (a failed or aborted fetch evicts itself).
+   CSS hooks owned here: #sx gets .is-js at init, .is-loading / .is-live / .is-playing / .is-full / .is-error as state. */
 (function () {
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -26,6 +28,10 @@
   }
   function onIdle(fn) { if ('requestIdleCallback' in window) window.requestIdleCallback(fn, { timeout: 2500 }); else setTimeout(fn, 800); }
   function afterLoad(fn) { if (document.readyState === 'complete') fn(); else window.addEventListener('load', fn, { once: true }); }
+  /* openlka.js toggles [hidden] on the two modals; the hero scope and the Explorer both stand down while one is open */
+  var MODALS = ['#vmodal', '#lightbox'];
+  function modalOpen() { return MODALS.some(function (s) { var m = $(s); return !!m && !m.hidden; }); }
+  function onModalToggle(fn) { if (!('MutationObserver' in window)) return; MODALS.forEach(function (s) { var m = $(s); if (m) new MutationObserver(fn).observe(m, { attributes: true, attributeFilter: ['hidden'] }); }); }
   /* first index whose key is > t (array sorted by key) */
   function upperBound(arr, t, key) { var lo = 0, hi = arr.length; while (lo < hi) { var mid = (lo + hi) >> 1; if (key(arr[mid]) <= t) lo = mid + 1; else hi = mid; } return lo; }
   function haversine(la1, lo1, la2, lo2) {
@@ -70,8 +76,12 @@
   var indexSrc = srcOverride || (sx && sx.getAttribute('data-src')) || 'static/can/index.json';
   var base = indexSrc.replace(/[^\/]*$/, ''), indexP = null;
   function url(p) { return /^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(p) ? p : base + p; }
-  function loadIndex() {
-    if (!indexP) indexP = fetchJSON(indexSrc).then(function (idx) { if (!idx || !Array.isArray(idx.clips) || !idx.clips.length) throw new Error('index.json has no clips[]'); return idx; });
+  function loadIndex() { // memoised while pending/fulfilled; a rejection is dropped so the next caller retries instead of inheriting the failure
+    if (!indexP) {
+      var p = fetchJSON(indexSrc).then(function (idx) { if (!idx || !Array.isArray(idx.clips) || !idx.clips.length) throw new Error('index.json has no clips[]'); return idx; })
+        .catch(function (e) { if (indexP === p) indexP = null; throw e; });
+      indexP = p;
+    }
     return indexP;
   }
 
@@ -202,9 +212,11 @@
       var clip = r.idx.clips.filter(function (c) { return c.id === (r.tr.clip || r.idx['default']); })[0] || r.idx.clips[0];
       if (tag && clip) tag.textContent = 'live · decoded CAN · ' + ([clip.make, clip.model].filter(Boolean).join(' ') || 'lab fleet') + ' · 100 Hz';
       hero.classList.add('scope-on');
-      var ctx = cv.getContext('2d'), box = sizeCanvas(cv, 1200, 420), running = false, raf = 0, t0 = performance.now(), vis = true;
+      var ctx = cv.getContext('2d'), box = sizeCanvas(cv, 1200, 420), running = false, raf = 0, t0 = performance.now(), stopAt = t0, last = -Infinity, vis = true;
       function frame(now) {
         raf = 0; if (!running) return;
+        raf = requestAnimationFrame(frame);
+        if (now - last < 30) return; last = now; // ~30 fps cap: a 10 Hz trace scrolling 30 px/s gains nothing from 60/120 Hz redraws
         var W = box.w, H = box.h; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, W, H);
         ctx.strokeStyle = 'rgba(100,116,139,.28)'; ctx.lineWidth = 1; ctx.beginPath();
         for (var gx = 40.5; gx < W; gx += 80) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
@@ -218,12 +230,16 @@
             return isNum(v) ? top + (s.hi - v) / (s.hi - s.lo) * hgt : null;
           }, jStart, jEnd, s.color, 1.5);
         });
-        raf = requestAnimationFrame(frame);
       }
-      function run() { running = vis && !document.hidden; if (running && !raf) raf = requestAnimationFrame(frame); }
+      function run() { // runs only while the hero is on screen, the tab is visible and no modal is open; the phase is frozen across pauses so the trace resumes where it stopped
+        var want = vis && !document.hidden && !modalOpen(); if (want === running) return;
+        running = want; var now = performance.now();
+        if (running) { t0 += now - stopAt; if (!raf) raf = requestAnimationFrame(frame); } else stopAt = now;
+      }
       if ('ResizeObserver' in window) { var rt = 0; new ResizeObserver(function () { clearTimeout(rt); rt = setTimeout(function () { box = sizeCanvas(cv, 1200, 420); }, 120); }).observe(cv); }
       if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[es.length - 1].isIntersecting; run(); }, { threshold: 0 }).observe(hero);
       document.addEventListener('visibilitychange', run);
+      onModalToggle(run);
       run();
     }
   }
@@ -243,17 +259,23 @@
 
   function initExplorer(root) {
     var video = $('#sx-video', root); if (!video) return null;
+    root.classList.add('is-js'); // can.css hides the static placeholder under .sx.is-js and brings it back under .sx.is-error, so it never flips once data lands
     var playBtn = $('#sx-play', root), picker = $('#sx-picker', root), tip = $('#sx-tip', root), scrub = $('#sx-scrub', root);
     var lka = $('#sx-lka', root), codeL = $('#sx-codeL', root), codeR = $('#sx-codeR', root), speedEl = $('#sx-speed', root);
-    var lineL = $('#sx-lineL', root), lineR = $('#sx-lineR', root), car = $('#sx-car', root), devTxt = $('#sx-dev-txt', root);
+    var lineL = $('#sx-lineL', root), lineR = $('#sx-lineR', root), road = $('.sx__road', root), car = $('#sx-car', root), devTxt = $('#sx-dev-txt', root);
     var wheel = $('#sx-wheel', root), angleEl = $('#sx-angle', root), optx = $('#sx-optx', root), winBtn = $('#sx-window', root);
     var evList = $('#sx-events', root), tickRows = $('#sx-tick-rows', root), statusEl = $('#sx-status', root), errEl = $('#sx-error', root);
+    var ticker = $('#sx-ticker', root), framesDet = $('#sx-frames', root), videoBox = video.closest ? video.closest('.sx__video') || video : video;
     var routeFig = $('#sx-route', root), routeAll = $('#sx-route-all', root), routeDone = $('#sx-route-done', root), routeDot = $('#sx-route-dot', root);
     var routeScale = $('#sx-route-scale', root), routeCap = $('#sx-route-cap', root), blurb = $('#sx-blurb', root), framesTbody = $('#sx-frames-table tbody', root);
+    var ROUTE_CAP = routeCap ? routeCap.textContent : '';
     var meta = { dongle: $('#sx-m-dongle', root), car: $('#sx-m-car', root), route: $('#sx-m-route', root), system: $('#sx-m-system', root), decoder: $('#sx-m-decoder', root) };
+    /* st.userStarted: the pending/last playback change came from the user (play button, Space/K, event button, scrub) → the live region may speak;
+       autoplay, scroll-away/tab-hidden/modal pauses and clip switches clear it so they stay silent */
     var st = { index: null, clip: null, sig: null, track: null, frames: null, t: 0, playing: false, visible: false, visible50: false, dirty: true,
       cache: new Map(), abort: null, hz: 10, n: 0, t0: 0, dur: 0, lkaRuns: [], txRuns: [], hasTx: false, events: [], ranges: {}, colors: {},
-      hover: null, drag: null, fi: -1, tickT: -Infinity, userPaused: false, scrubbing: false, lastText: 0, prevT: 0, vfcOn: false, route: null, moment: null };
+      hover: null, drag: null, fi: -1, tickT: -Infinity, userPaused: false, userStarted: false, scrubbing: false, lastText: 0, prevT: 0, vfcOn: false, route: null, moment: null, laneHalf: 0 };
+    if (playBtn) playBtn.removeAttribute('aria-pressed'); // play/pause is a state swap of the accessible name, not a toggle button; .sx.is-playing drives the icon
     var strips = $$('canvas.sx__strip', root).map(function (c) { var spec = STRIPS[c.getAttribute('data-sig')]; return spec && c.getContext ? { el: c, spec: spec, ctx: c.getContext('2d'), w: 0, h: 0 } : null; }).filter(Boolean);
     var tabs = [], evButtons = [], tickRowEls = [], raf = 0, vfcId = 0, annT = 0;
 
@@ -345,7 +367,8 @@
     /* ----- lane widget, wheel, HUD text ----- */
     function updateLane(t) {
       var dev = lerpAt('lane_dev_m', t), w = lerpAt('lane_width_m', t), ang = lerpAt('steer_angle_deg', t), i = idxAt(t);
-      var half = (isNum(w) ? clamp(w, 2.5, 4.5) : DEFAULT_LANE_W) / 2 * PX_PER_M;
+      var half = (isNum(w) ? clamp(w, 2.5, 4.3) : DEFAULT_LANE_W) / 2 * PX_PER_M; // ≤ 4.3 m keeps both lines (and their 4 px stroke) inside the 360-unit viewBox
+      if (road && half !== st.laneHalf) { st.laneHalf = half; road.setAttribute('x', (LANE_CX - half).toFixed(1)); road.setAttribute('width', (2 * half).toFixed(1)); } // asphalt edges follow the lines
       [[lineL, LANE_CX - half, 'op_prob_l', 'line_code_l'], [lineR, LANE_CX + half, 'op_prob_r', 'line_code_r']].forEach(function (d) {
         var el = d[0]; if (!el) return; var x = d[1].toFixed(1); el.setAttribute('x1', x); el.setAttribute('x2', x);
         var p = at(d[2], i), code = at(d[3], i), faded = isNum(p) && p < 0.3;
@@ -359,10 +382,11 @@
     }
     var LEVEL_BY_LABEL = { solid: 'good', faded: 'mid', departure: 'bad', orange: 'bad', none: 'none', 'not detected': 'none' }, LEVEL_BY_CODE = { 0: 'none', 1: 'good', 2: 'mid', 3: 'bad' };
     function codeLabel(code) { var names = st.sig && st.sig.codes && st.sig.codes.line_code; return (names && names[String(code)]) || String(code); }
-    function levelOf(code) { // make-aware severity: codes.line_code_level, else by label, else the paper's numeric convention; 'na' when the make has no codes
-      if (!isNum(code) || code < 0) return 'na';
-      var lv = st.sig && st.sig.codes && st.sig.codes.line_code_level, v = lv && lv[String(code)];
+    function levelOf(code) { // make-aware severity: codes.line_code_level (every signals.json ships it), else by label, else the paper's numeric convention
+      if (!isNum(code) || code < 0) return 'na'; // null column (Honda, Ford, VW, Tesla…) → 'na' → "L line —"
+      var codes = (st.sig && st.sig.codes) || {}, lv = codes.line_code_level, v = lv && lv[String(code)];
       if (v) return String(v);
+      if (codes.line_code === null && lv == null) return 'na'; // the make publishes no line code at all: a stray number means nothing
       return LEVEL_BY_LABEL[String(codeLabel(code)).toLowerCase()] || LEVEL_BY_CODE[code] || 'none';
     }
     function codeText(el, side, code) {
@@ -422,34 +446,54 @@
       });
     }
 
-    /* ----- GPS track: grey path, bright share by cumulative distance, dot via getPointAtLength ----- */
-    function applyTrack(track) {
-      st.route = null; if (routeDot) { routeDot.setAttribute('cx', -10); routeDot.setAttribute('cy', -10); } if (routeScale) routeScale.innerHTML = '';
+    /* ----- GPS track: grey path, bright share by cumulative distance, dot interpolated along the projected polyline (no per-frame layout reads) ----- */
+    function resetTrack() { // clip switch: wipe the old route but leave the figure in layout (can.css hides it under .sx.is-loading); hidden only once a clip is known to have no track
+      st.route = null;
+      if (routeAll) routeAll.setAttribute('d', ''); if (routeDone) { routeDone.setAttribute('d', ''); routeDone.style.strokeDasharray = ''; routeDone.style.strokeDashoffset = ''; }
+      if (routeDot) { routeDot.setAttribute('cx', -10); routeDot.setAttribute('cy', -10); } if (routeScale) routeScale.innerHTML = '';
+      if (routeCap) setText(routeCap, ROUTE_CAP);
+    }
+    function applyTrack(track) { // track.json → pts [[t, lat, lon, …], …]; null = this clip definitively has no track
+      resetTrack();
       var pts = track && Array.isArray(track.pts) ? track.pts.filter(function (p) { return p && isNum(p[1]) && isNum(p[2]); }) : [];
       if (!routeFig || !routeAll || !routeDone || pts.length < 2) { if (routeFig) routeFig.hidden = true; return; }
       routeFig.hidden = false;
       var pr = projector(track.bbox && track.bbox.length === 4 ? track.bbox : bboxOf(pts.map(function (p) { return [p[2], p[1]]; })), 300, 200, 0.08);
-      var d = pathD(pts.map(function (p) { return pr.xy(p[2], p[1]); })); routeAll.setAttribute('d', d); routeDone.setAttribute('d', d);
-      var L = 0; try { L = routeDone.getTotalLength(); } catch (e) { /* not rendered */ } L = L || 1;
-      routeDone.style.strokeDasharray = L + ' ' + L;
-      var cum = [0]; for (var i = 1; i < pts.length; i++) cum.push(cum[i - 1] + haversine(pts[i - 1][1], pts[i - 1][2], pts[i][1], pts[i][2]));
-      var total = cum[cum.length - 1] || 1, tArr = pts.map(function (p, k) { return isNum(p[0]) ? p[0] : k; });
+      var xy = pts.map(function (p) { var q = pr.xy(p[2], p[1]); return [Math.round(q[0] * 10) / 10, Math.round(q[1] * 10) / 10]; }); // same 0.1 px rounding as pathD → polyline maths match the drawn path
+      var d = pathD(xy); routeAll.setAttribute('d', d); routeDone.setAttribute('d', d);
+      var plen = [0], cum = [0]; // plen: pixel length along the path (what stroke-dasharray sees); cum: metres driven (what the clock maps to)
+      for (var i = 1; i < pts.length; i++) {
+        plen.push(plen[i - 1] + Math.hypot(xy[i][0] - xy[i - 1][0], xy[i][1] - xy[i - 1][1]));
+        cum.push(cum[i - 1] + haversine(pts[i - 1][1], pts[i - 1][2], pts[i][1], pts[i][2]));
+      }
+      var L = plen[plen.length - 1] || 1, total = cum[cum.length - 1] || 1, tArr = pts.map(function (p, k) { return isNum(p[0]) ? p[0] : k; });
+      routeDone.style.strokeDasharray = L.toFixed(1) + ' ' + L.toFixed(1);
       if (routeScale) { var bar = 500 / pr.mPerPx; if (bar >= 24 && bar <= 180) { routeScale.appendChild(svgEl('line', { x1: 12, y1: 190, x2: (12 + bar).toFixed(1), y2: 190 })); var tx = svgEl('text', { x: 12, y: 184 }); tx.textContent = '500 m'; routeScale.appendChild(tx); } }
-      st.route = { L: L, total: total, distAt: function (t) { var k = upperBound(tArr, t, function (x) { return x; }); if (k <= 0) return 0; if (k >= tArr.length) return total; var a = tArr[k - 1], b = tArr[k]; return cum[k - 1] + (cum[k] - cum[k - 1]) * (b > a ? (t - a) / (b - a) : 0); } };
+      var id = function (x) { return x; };
+      st.route = {
+        L: L, total: total,
+        distAt: function (t) { var k = upperBound(tArr, t, id); if (k <= 0) return 0; if (k >= tArr.length) return total; var a = tArr[k - 1], b = tArr[k]; return cum[k - 1] + (cum[k] - cum[k - 1]) * (b > a ? (t - a) / (b - a) : 0); },
+        pointAt: function (frac) { // point at frac of the pixel length, i.e. exactly where the bright dash ends
+          var s = frac * L, k = upperBound(plen, s, id); if (k <= 0) return xy[0]; if (k >= plen.length) return xy[xy.length - 1];
+          var a = plen[k - 1], b = plen[k], u = b > a ? (s - a) / (b - a) : 0, p = xy[k - 1], q = xy[k];
+          return [p[0] + (q[0] - p[0]) * u, p[1] + (q[1] - p[1]) * u];
+        }
+      };
     }
     function routeAt(t) {
-      var r = st.route; if (!r) return; var frac = clamp(r.distAt(t) / r.total, 0, 1);
+      var r = st.route; if (!r) return; var frac = clamp(r.distAt(t) / r.total, 0, 1), p = r.pointAt(frac);
       routeDone.style.strokeDashoffset = (r.L * (1 - frac)).toFixed(1);
-      if (routeDot) { try { var p = routeDone.getPointAtLength(r.L * frac); routeDot.setAttribute('cx', p.x.toFixed(1)); routeDot.setAttribute('cy', p.y.toFixed(1)); } catch (e) { /* not rendered */ } }
+      if (routeDot) { routeDot.setAttribute('cx', p[0].toFixed(1)); routeDot.setAttribute('cy', p[1].toFixed(1)); }
     }
 
     /* ----- render + sync loop (requestVideoFrameCallback when available, rAF otherwise) ----- */
-    function render(now) {
+    function render(now) { // all DOM work here is writes (canvas, attributes, text); the only layout read of the loop (getPointAtLength) is gone
       var t = st.t, win = windowAt(t);
       strips.forEach(function (s) { drawStrip(s, t, win); });
       var lane = updateLane(t); tickerAt(t); routeAt(t);
       if (!st.playing || now - st.lastText >= 100) { st.lastText = now; updateText(t, lane); }
-      if (st.playing) st.events.forEach(function (ev) { if (st.prevT < ev.t && ev.t <= t) announce(ev.label || ev.kind); });
+      // event crossings are spoken only during user-started playback; a loop wrap (t < prevT) just moves the baseline without replaying the list
+      if (st.playing && st.userStarted && t >= st.prevT) st.events.forEach(function (ev) { if (st.prevT < ev.t && ev.t <= t) announce(ev.label || ev.kind); });
       st.prevT = t;
     }
     function tick(now) {
@@ -464,31 +508,36 @@
       (function req() { vfcId = video.requestVideoFrameCallback(function (now, m) { vfcId = 0; st.t = m.mediaTime; st.dirty = true; kick(); if (st.playing) req(); else st.vfcOn = false; }); })();
     }
     function stopVFC() { if (vfcId && video.cancelVideoFrameCallback) video.cancelVideoFrameCallback(vfcId); vfcId = 0; st.vfcOn = false; }
-    function announce(msg) { if (!statusEl) return; clearTimeout(annT); annT = setTimeout(function () { statusEl.textContent = msg; }, 150); }
+    function announce(msg) { if (!statusEl) return; clearTimeout(annT); annT = setTimeout(function () { statusEl.textContent = msg; }, 150); } // debounced; callers decide whether the cause was the user's
     function setPlaying(on) {
-      if (st.playing === on) return; st.playing = on; root.classList.toggle('is-playing', on);
+      if (st.playing === on) return; st.playing = on; root.classList.toggle('is-playing', on); // .sx.is-playing swaps the play/pause glyph and docks the button
       if (car) car.style.transition = on ? 'none' : ''; // per-frame updates while playing; the stylesheet's .25 s glide only for seeks when paused
-      if (playBtn) { playBtn.setAttribute('aria-pressed', String(on)); playBtn.setAttribute('aria-label', on ? 'Pause clip' : 'Play clip'); }
-      if (on) { startVFC(); kick(); announce('Playing' + (st.clip && st.clip.title ? ': ' + st.clip.title : '')); }
-      else { stopVFC(); st.t = video.currentTime || st.t; st.dirty = true; kick(); announce('Paused at ' + st.t.toFixed(1) + ' s'); }
+      if (playBtn) playBtn.setAttribute('aria-label', on ? 'Pause clip' : 'Play clip');
+      if (on) { startVFC(); kick(); } else { stopVFC(); st.t = video.currentTime || st.t; st.dirty = true; kick(); }
+      if (st.userStarted) announce(on ? 'Playing' + (st.clip && st.clip.title ? ': ' + st.clip.title : '') : 'Paused at ' + st.t.toFixed(1) + ' s');
     }
-    function modalOpen() { return ['#vmodal', '#lightbox'].some(function (s) { var m = $(s); return m && !m.hidden; }); }
+    function autoPause() { if (st.playing) { st.userStarted = false; video.pause(); } } // scroll-away / tab hidden / modal: silent
     function play() {
-      if (!video.getAttribute('src')) return; video.muted = true;
+      if (modalOpen() || !video.getAttribute('src')) return; video.muted = true;
       var p = null; try { p = video.play(); } catch (e) { /* old API */ }
-      if (p && p.catch) p.catch(function (e) { dbg('play() blocked:', e && e.name); setPlaying(false); });
+      if (p && p.catch) p.catch(function (e) { dbg('play() blocked:', e && e.name); if (video.paused) setPlaying(false); }); // a stale rejection (clip switched mid-load) must not undo a newer play
     }
-    function toggle() { if (st.playing) { st.userPaused = true; video.pause(); } else { st.userPaused = false; play(); } }
+    function toggle() { // play button, Space/K
+      if (modalOpen()) return; st.userStarted = true;
+      if (st.playing) { st.userPaused = true; video.pause(); } else { st.userPaused = false; play(); }
+    }
     function maybeAutoplay() {
       if (st.playing || st.userPaused || !st.sig || !st.visible50 || reduce || document.hidden || window.innerWidth < 768 || (navigator.connection && navigator.connection.saveData) || modalOpen()) return;
-      play();
+      st.userStarted = false; play();
     }
+    /* from: undefined = a discrete user action (event button, click on a strip, scrub `change`, OpenLKACan.seek) → spoken;
+       'scrub' = slider `input` (the slider's own aria-valuetext covers it); 'drag' = pointer drag on a strip (spoken once on release) */
     function seek(t, from) {
       t = clamp(+t || 0, 0, st.dur || video.duration || 0);
       try { video.currentTime = t; } catch (e) { /* no metadata yet: Chrome keeps it as the start position */ }
-      st.t = t; st.dirty = true; kick();
+      st.t = t; st.prevT = t; st.dirty = true; kick(); // prevT moves with the seek so the events jumped over are not announced
       if (from !== 'scrub' && scrub) scrub.value = String(Math.round(t * 10));
-      announce('Seeked to ' + t.toFixed(1) + ' s');
+      if (!from) announce('Seeked to ' + t.toFixed(1) + ' s');
     }
 
     /* ----- picker, events list, meta ----- */
@@ -518,7 +567,7 @@
         var li = document.createElement('li'), b = document.createElement('button'); b.type = 'button'; b.className = 'sx__ev'; b.setAttribute('data-t', String(ev.t)); b.setAttribute('data-kind', ev.kind || 'custom');
         var tm = document.createElement('time'); tm.className = 'sx__ev-t'; tm.textContent = fmtClock(ev.t);
         var l = document.createElement('span'); l.className = 'sx__ev-l'; l.textContent = ev.label || ev.kind || 'event';
-        b.appendChild(tm); b.appendChild(l); b.addEventListener('click', function () { seek(ev.t); });
+        b.appendChild(tm); b.appendChild(l); b.addEventListener('click', function () { st.userStarted = true; seek(ev.t); }); // user action: spoken
         li.appendChild(b); evList.appendChild(li); evButtons.push(b);
       });
     }
@@ -546,50 +595,54 @@
       if (scrub) { scrub.max = String(Math.max(1, Math.round(st.dur * 10))); scrub.step = '1'; scrub.value = '0'; }
       st.dirty = true; kick();
     }
-    function applyFrames(fr) {
+    function resetFrames() { // clip switch: empty the ticker rows and the table (their :empty states read as "loading") without collapsing the layout
+      st.frames = null; st.moment = null; st.fi = -1; st.tickT = -Infinity;
+      if (tickRows) { tickRows.innerHTML = ''; tickRowEls = []; }
+      fillFramesTable(null);
+    }
+    function applyFrames(fr) { // frames.json; null = this clip definitively has no frames → ticker and table are hidden
+      resetFrames();
       st.frames = fr && Array.isArray(fr.frames) ? fr.frames.filter(function (f) { return f && isNum(f.t); }).sort(function (a, b) { return a.t - b.t; }) : null;
-      st.moment = fr && fr.moment && isNum(fr.moment.t) ? fr.moment.t : null; st.fi = -1; st.tickT = -Infinity;
-      var has = !!(st.frames && st.frames.length), ticker = $('#sx-ticker', root), det = $('#sx-frames', root);
-      if (tickRows) { if (has) buildTicker(); else { tickRows.innerHTML = ''; tickRowEls = []; } }
+      st.moment = fr && fr.moment && isNum(fr.moment.t) ? fr.moment.t : null;
+      var has = !!(st.frames && st.frames.length);
+      if (tickRows && has) buildTicker();
       if (ticker) { // frames.json is dense around the key moment and sparse elsewhere; say so once
         ticker.hidden = !has;
         if (has && !$('.tick__cap', ticker)) { var cap = document.createElement('p'); cap.className = 'tick__cap'; cap.textContent = 'raw CAN · dense at the key moment, sampled elsewhere'; ticker.appendChild(cap); var head = $('.tick__head', ticker); if (head) head.title = cap.textContent; }
       }
-      if (det) det.hidden = !has;
+      if (framesDet) framesDet.hidden = !has;
       fillFramesTable(st.frames); st.dirty = true; kick();
     }
-    function loadClipData(clip, signal) {
-      var f = clip.files || {}; if (!f.signals) return Promise.reject(new Error('clip ' + clip.id + ' has no signals file'));
-      var soft = function (e) { if (!e || e.name !== 'AbortError') dbg('optional file skipped:', e && e.message); return null; };
-      var trP = f.track ? fetchJSON(url(f.track), signal).catch(soft) : Promise.resolve(null);
-      var frP = f.frames ? fetchJSON(url(f.frames), signal).catch(soft) : Promise.resolve(null);
-      return fetchJSON(url(f.signals), signal).then(function (sig) { // render as soon as the signals land; track and frames fill in when they arrive
-        var data = { sig: sig, track: null, frames: null };
-        trP.then(function (tr) { data.track = tr; if (st.clip === clip && tr) applyTrack(tr); });
-        frP.then(function (fr) { data.frames = fr; if (st.clip === clip && fr) applyFrames(fr); });
-        return data;
-      });
+    /* per-clip cache of *promises*, one per file: {signals, track, frames}. A rejected fetch evicts itself so the next visit retries, which is what
+       keeps an abort (or a transient error) from being remembered as "this clip has no track". Only signals.json is tied to the abort controller. */
+    function clipFile(clip, key, signal) {
+      var f = clip.files || {}; if (!f[key]) return Promise.resolve(null); // not published for this clip
+      var c = st.cache.get(clip.id); if (!c) { c = {}; st.cache.set(clip.id, c); }
+      if (!c[key]) { var p = fetchJSON(url(f[key]), signal).catch(function (e) { if (c[key] === p) delete c[key]; throw e; }); c[key] = p; }
+      return c[key];
+    }
+    function loadOptional(clip, key, apply) { // track/frames: never aborted (small, and they complete the cache for the next visit); applied only if the clip is still selected
+      clipFile(clip, key).then(function (d) { if (st.clip === clip) apply(d); }, function (e) { dbg('optional file skipped:', e && e.message); if (st.clip === clip) apply(null); });
     }
     function selectClip(id) {
       var clip = (st.index && st.index.clips.filter(function (c) { return c.id === id; })[0]) || (st.index && st.index.clips[0]);
       if (!clip || clip === st.clip) return;
       if (st.abort) st.abort.abort();
-      var ac = st.abort = window.AbortController ? new AbortController() : null, resume = st.playing && !st.userPaused, f = clip.files || {};
-      st.clip = clip; st.userPaused = false; markTab(clip.id); stopVFC(); video.pause();
+      var ac = st.abort = window.AbortController ? new AbortController() : null, resume = st.playing && !st.userPaused, user = st.userStarted, f = clip.files || {};
+      st.clip = clip; st.userPaused = false; st.userStarted = false; markTab(clip.id); stopVFC(); video.pause(); // the switch's own pause is not announced
       if (f.poster) video.poster = url(f.poster); else video.removeAttribute('poster');
       if (f.video) video.src = url(f.video); else { video.removeAttribute('src'); try { video.load(); } catch (e) { /* ignore */ } }
       st.t = 0; st.prevT = 0; st.hover = null; if (tip) tip.hidden = true;
-      fillMeta(clip); applySignals(null); applyTrack(null); applyFrames(null);
+      fillMeta(clip); applySignals(null); resetTrack(); resetFrames(); // nothing is hidden here: .sx.is-loading veils the route/frames while they load
       root.classList.add('is-loading'); if (errEl) errEl.hidden = true;
-      var cached = st.cache.get(clip.id);
-      (cached ? Promise.resolve(cached) : loadClipData(clip, ac && ac.signal)).then(function (data) {
-        if (st.clip !== clip) return; st.cache.set(clip.id, data); root.classList.remove('is-loading');
-        applySignals(data.sig); if (data.track) applyTrack(data.track); if (data.frames) applyFrames(data.frames);
+      if (!f.signals) { fail1(new Error('clip ' + clip.id + ' has no signals file')); return; }
+      loadOptional(clip, 'track', applyTrack); loadOptional(clip, 'frames', applyFrames);
+      clipFile(clip, 'signals', ac && ac.signal).then(function (sig) {
+        if (st.clip !== clip) return; root.classList.remove('is-loading');
+        applySignals(sig); st.userStarted = user && resume; // a user-started playback that survives the switch keeps its voice
         if (resume) play(); else maybeAutoplay();
-      }).catch(function (e) {
-        if ((e && e.name === 'AbortError') || st.clip !== clip) return;
-        dbg('clip data unavailable:', e && e.message); root.classList.remove('is-loading'); if (errEl) errEl.hidden = false; st.dirty = true; kick();
-      });
+      }).catch(function (e) { if ((e && e.name === 'AbortError') || st.clip !== clip) return; fail1(e); });
+      function fail1(e) { dbg('clip data unavailable:', e && e.message); root.classList.remove('is-loading'); if (errEl) errEl.hidden = false; st.dirty = true; kick(); }
     }
     function start(idx) { st.index = idx; root.classList.remove('is-error'); buildPicker(idx); st.clip = null; selectClip(idx['default'] || idx.clips[0].id); }
     function fail(e) { dbg('Signal Explorer disabled:', e && e.message); root.classList.remove('is-loading'); root.classList.add('is-error'); if (picker) picker.hidden = true; }
@@ -598,17 +651,23 @@
     /* ----- interaction ----- */
     function bindStrip(s) {
       var el = s.el;
-      function tAt(ev) { var r = el.getBoundingClientRect(), win = windowAt(st.t); return clamp(win[0] + (ev.clientX - r.left) / (r.width || 1) * (win[1] - win[0]), 0, st.dur || 0); }
+      function tAt(ev, r) { r = r || el.getBoundingClientRect(); var win = windowAt(st.t); return clamp(win[0] + (ev.clientX - r.left) / (r.width || 1) * (win[1] - win[0]), 0, st.dur || 0); }
       el.addEventListener('pointerdown', function (ev) {
         if (ev.pointerType === 'mouse' && ev.button !== 0) return; ev.preventDefault();
-        st.drag = { win: windowAt(st.t) }; try { el.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ } seek(tAt(ev));
+        st.drag = { win: windowAt(st.t) }; try { el.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ } seek(tAt(ev), 'drag');
       });
       el.addEventListener('pointermove', function (ev) {
-        if (st.drag) { seek(tAt(ev)); return; } if (ev.pointerType !== 'mouse') return;
-        var ht = tAt(ev); st.hover = ht; st.dirty = true; kick();
-        if (tip) { var pr = (tip.parentNode || el).getBoundingClientRect(); tip.hidden = false; tip.style.setProperty('--x', (clamp((ev.clientX - pr.left) / (pr.width || 1), 0, 1) * 100).toFixed(2) + '%'); tip.style.setProperty('--y', el.offsetTop + 'px'); tip.textContent = fmtClock(ht) + '.' + Math.floor((ht % 1) * 10) + ' · ' + valueText(s.spec, ht); }
+        if (st.drag) { seek(tAt(ev), 'drag'); return; } if (ev.pointerType !== 'mouse') return;
+        var r = el.getBoundingClientRect(), pr = tip ? (tip.parentNode || el).getBoundingClientRect() : r, top = tip ? el.offsetTop : 0; // layout reads first…
+        var ht = tAt(ev, r); st.hover = ht; st.dirty = true; kick();
+        if (tip) { // …writes after. --x: % across .sx__charts (can.css clamps it to the box); --y: the hovered strip's top edge + 6 px, so the tip sits inside that strip
+          tip.hidden = false;
+          tip.style.setProperty('--x', (clamp((ev.clientX - pr.left) / (pr.width || 1), 0, 1) * 100).toFixed(2) + '%'); tip.style.setProperty('--y', (top + 6) + 'px');
+          tip.textContent = fmtClock(ht) + '.' + Math.floor((ht % 1) * 10) + ' · ' + valueText(s.spec, ht);
+        }
       });
-      var end = function () { st.drag = null; }; el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+      var end = function () { if (!st.drag) return; st.drag = null; announce('Seeked to ' + st.t.toFixed(1) + ' s'); }; // one announcement per click or drag, on release
+      el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
       el.addEventListener('pointerleave', function () { if (st.drag) return; st.hover = null; if (tip) tip.hidden = true; st.dirty = true; kick(); });
     }
     strips.forEach(bindStrip); sizeStrips();
@@ -618,25 +677,32 @@
     video.addEventListener('play', function () { setPlaying(true); });
     video.addEventListener('pause', function () { setPlaying(false); });
     video.addEventListener('seeked', function () { st.t = video.currentTime; st.dirty = true; kick(); });
+    ['durationchange', 'loadedmetadata'].forEach(function (type) { // signals.json missing: the clock comes from the video, whose duration is NaN until metadata loads (preload=none)
+      video.addEventListener(type, function () {
+        if (st.sig || !isNum(video.duration) || video.duration === st.dur) return;
+        st.dur = video.duration; if (scrub) scrub.max = String(Math.max(1, Math.round(st.dur * 10))); st.dirty = true; kick(); // the render refreshes aria-valuetext
+      });
+    });
     video.addEventListener('error', function () { dbg('video element error', video.error && video.error.code); });
     if (playBtn) playBtn.addEventListener('click', toggle);
     if (winBtn) winBtn.addEventListener('click', function () { var on = winBtn.getAttribute('aria-pressed') !== 'true'; winBtn.setAttribute('aria-pressed', String(on)); root.classList.toggle('is-full', on); st.dirty = true; kick(); });
-    if (scrub) { scrub.addEventListener('input', function () { st.scrubbing = true; seek(parseInt(scrub.value, 10) / 10, 'scrub'); }); scrub.addEventListener('change', function () { st.scrubbing = false; }); }
-    root.addEventListener('keydown', function (ev) { // Space / K toggle playback anywhere inside the Explorer (Space keeps its native meaning on controls)
+    if (scrub) {
+      scrub.addEventListener('input', function () { st.scrubbing = true; seek(parseInt(scrub.value, 10) / 10, 'scrub'); }); // silent while sliding: aria-valuetext speaks
+      scrub.addEventListener('change', function () { st.scrubbing = false; st.userStarted = true; seek(parseInt(scrub.value, 10) / 10); }); // one "Seeked to" on release
+    }
+    var CONTROLS = '[role="button"], [tabindex], button, a, input, summary, select, textarea, [contenteditable]';
+    root.addEventListener('keydown', function (ev) { // Space / K toggle playback inside the Explorer; focused controls keep their native keys, open modals keep theirs
+      if (ev.defaultPrevented || ev.altKey || ev.ctrlKey || ev.metaKey || modalOpen()) return;
       if (ev.key !== ' ' && ev.key !== 'k' && ev.key !== 'K') return;
-      if (ev.key === ' ' && ev.target && ev.target.closest && ev.target.closest('button, a, input, summary, select, textarea')) return;
+      var tg = ev.target; if (tg && tg !== root && tg.closest && tg.closest(CONTROLS)) return;
       ev.preventDefault(); toggle();
     });
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        var e = es[es.length - 1]; st.visible = e.isIntersecting; st.visible50 = e.intersectionRatio >= 0.5;
-        if (!e.isIntersecting && st.playing) video.pause(); else if (st.visible50) maybeAutoplay();
-      }, { threshold: [0, 0.5] }).observe(root);
+      new IntersectionObserver(function (es) { st.visible = es[es.length - 1].isIntersecting; if (!st.visible) autoPause(); }, { threshold: 0 }).observe(root); // pause once the whole Explorer has left the viewport
+      new IntersectionObserver(function (es) { st.visible50 = es[es.length - 1].intersectionRatio >= 0.5; if (st.visible50) maybeAutoplay(); }, { threshold: [0, 0.5] }).observe(videoBox); // autoplay gate: half the video box on screen
     } else st.visible = st.visible50 = true;
-    document.addEventListener('visibilitychange', function () { if (document.hidden && st.playing) video.pause(); });
-    if ('MutationObserver' in window) ['#vmodal', '#lightbox'].forEach(function (sel) { // openlka.js toggles [hidden] on the modals
-      var m = $(sel); if (m) new MutationObserver(function () { if (!m.hidden && st.playing) video.pause(); }).observe(m, { attributes: true, attributeFilter: ['hidden'] });
-    });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) autoPause(); });
+    onModalToggle(function () { if (modalOpen()) autoPause(); });
     return { boot: boot, seek: seek, reset: function () { if (st.abort) st.abort.abort(); st.cache.clear(); st.clip = null; st.index = null; } };
   }
 
@@ -645,11 +711,14 @@
   function startCanLab() {
     if (canStarted) return; canStarted = true;
     if (explorer) explorer.boot();
-    loadIndex().then(function (idx) { return [idx.dongles ? url(idx.dongles) : null, idx.route_map ? url(idx.route_map) : null]; })
-      .catch(function () { return [null, null]; })
+    /* index.json `dongles` / `route_map`: a string is a path relative to the index; an explicit null means "not published" (no fallback);
+       an absent key (older index) or an unreadable index falls back to the data-src attributes on #rec-grid / #recmap */
+    var pick = function (v, el) { return v === null ? null : typeof v === 'string' && v ? url(v) : (el && el.getAttribute('data-src')) || null; };
+    loadIndex().then(function (idx) { return [pick(idx.dongles, recGrid), pick(idx.route_map, recmap)]; }, function () { return [pick(undefined, recGrid), pick(undefined, recmap)]; })
       .then(function (u) {
-        var dU = u[0] || (recGrid && recGrid.getAttribute('data-src')), mU = u[1] || (recmap && recmap.getAttribute('data-src'));
+        var dU = u[0], mU = u[1];
         if (dU && recGrid) fetchJSON(dU).then(fillDongles).catch(function (e) { dbg('dongles.json skipped:', e && e.message); });
+        // #recmap ships with [hidden]; drawRecmap() removes it only once at least one route is drawable
         if (recmap) { if (mU) fetchJSON(mU).then(drawRecmap).catch(function (e) { dbg('routes_map.json skipped:', e && e.message); recmap.hidden = true; }); else recmap.hidden = true; }
       });
   }

@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "41d938eff0e6",
- "generated": "2026-10-01T19:16:21-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "f1c9dc6195e1",
+ "generated": "2026-10-01T20:07:48-0400",
  "id": "mache-i4-stock-latctl",
  "title": "Ford Mustang Mach-E \u00b7 stock Lane Centering on I-4",
  "make": "Ford",
@@ -69,7 +69,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -84,14 +84,14 @@
     "n_rows": 6000,
     "n_cols": 79,
     "seg": 23,
-    "seconds": 5.0
+    "seconds": 4.9
    },
    {
     "file_prefix": "OPandCAN--FORD_MUSTANG_MACH_E_MK1--dongle--530075d26cad58e4--route--2024-07-22--14-12-12--24",
     "n_rows": 6000,
     "n_cols": 79,
     "seg": 24,
-    "seconds": 5.7
+    "seconds": 6.0
    }
   ],
   "columns": [
@@ -177,7 +177,7 @@
   ],
   "n_columns": 79,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -230,7 +230,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -342,9 +342,9 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/FORD_MUSTANG_MACH_E_MK1/530075d26cad58e4/00000024--6b3e0ce182/22--qcamera.ts",
-   "/data/datasets/raw/Dataset/FORD_MUSTANG_MACH_E_MK1/530075d26cad58e4/00000024--6b3e0ce182/23--qcamera.ts",
-   "/data/datasets/raw/Dataset/FORD_MUSTANG_MACH_E_MK1/530075d26cad58e4/00000024--6b3e0ce182/24--qcamera.ts"
+   "22--qcamera.ts",
+   "23--qcamera.ts",
+   "24--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -358,8 +358,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:17:00-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -371,16 +371,16 @@
  "bytes": {
   "video": 2115601,
   "poster": 9846,
-  "signals": 90382,
+  "signals": 90424,
   "track": 4475,
-  "frames": 88950
+  "frames": 78835
  },
  "sha256": {
   "video": "5cbde4289d6df9adc6858216942be1f5c7ad715bd3f0f5b2713f43d8acebf6b9",
   "poster": "293c6732f4a96a975bb3c1f2947ea391900ee833fdc5f751e0e21aa3f62a9480",
-  "signals": "32d96a8accc8e0badbfa8505670e5b3f27db367f51008da2a753aca120031852",
+  "signals": "3a3b83db5cb4d01437f2bcc74439ea1cb3d788c70bc1126ca28e823525968dab",
   "track": "4e49aa2c039579aae41507e37cb8ce3d59967ba2391db18cf7307504368d0f0c",
-  "frames": "233bab066c8cc3e2137e58c593c34055fffbffa8d678cd5cbe6b90e17074f56c"
+  "frames": "bf869cac814f67c089c18fb6cc22e5fe4fe8e73686f549cb08200723adac4f24"
  },
- "build_seconds": 30.6
+ "build_seconds": 39.5
 }

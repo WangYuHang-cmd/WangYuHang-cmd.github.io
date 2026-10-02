@@ -1,8 +1,8 @@
 {
  "version": 1,
- "pipeline_version": "0.1.2",
- "entry_hash": "81f3142de393",
- "generated": "2026-10-01T19:16:49-0400",
+ "pipeline_version": "0.1.3",
+ "entry_hash": "fcfe7ec2db3e",
+ "generated": "2026-10-01T20:08:25-0400",
  "id": "ev6-i275-stock-lfa",
  "title": "Kia EV6 \u00b7 stock LFA on I-275 (recorder d5a6fb2f1b849a62)",
  "make": "Kia",
@@ -67,7 +67,7 @@
   "reader": [
    "ReadRlogOpAttr.read_route_log_into_df"
   ],
-  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "dir": "OP_CAN_DataProcessing",
   "repo_commit": "89a0da8",
   "per_segment": [
    {
@@ -75,21 +75,21 @@
     "n_rows": 6000,
     "n_cols": 84,
     "seg": 60,
-    "seconds": 5.3
+    "seconds": 5.8
    },
    {
     "file_prefix": "OPandCAN--KIA_EV6--dongle--d5a6fb2f1b849a62--route--2023-11-21--17-20-40--61",
     "n_rows": 6000,
     "n_cols": 84,
     "seg": 61,
-    "seconds": 5.4
+    "seconds": 5.5
    },
    {
     "file_prefix": "OPandCAN--KIA_EV6--dongle--d5a6fb2f1b849a62--route--2023-11-21--17-21-40--62",
     "n_rows": 6000,
     "n_cols": 84,
     "seg": 62,
-    "seconds": 5.4
+    "seconds": 6.3
    }
   ],
   "columns": [
@@ -180,7 +180,7 @@
   ],
   "n_columns": 84,
   "warnings_printed": 0,
-  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+  "openpilot_dir": "openpilot"
  },
  "dbc": [
   {
@@ -233,7 +233,7 @@
   "op_prob_r": "modelV2.laneLineProbs[2]",
   "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
   "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
-  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "curvature_1pm": "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)",
   "brake": "carState.brakePressed (lab decoder)",
   "gas": "carState.gasPressed (lab decoder)",
   "steering_pressed": "carState.steeringPressed (lab decoder)",
@@ -341,9 +341,9 @@
   },
   "sof_to_pts_s": 0.0148,
   "source": [
-   "/data/datasets/raw/Dataset/KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9/60--qcamera.ts",
-   "/data/datasets/raw/Dataset/KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9/61--qcamera.ts",
-   "/data/datasets/raw/Dataset/KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9/62--qcamera.ts"
+   "60--qcamera.ts",
+   "61--qcamera.ts",
+   "62--qcamera.ts"
   ]
  },
  "key_moment": {
@@ -357,8 +357,8 @@
   "manual_review": "ok",
   "notes": "highway window; review poster + sampled frames by eye before publishing",
   "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
-  "reviewed_at": "2026-10-01T19:17:00-0400",
-  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+  "reviewed_at": "2026-10-01T20:08:31-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330; windows unchanged since the visual check"
  },
  "files": {
   "video": "clip.mp4",
@@ -370,16 +370,16 @@
  "bytes": {
   "video": 2226239,
   "poster": 10487,
-  "signals": 79344,
+  "signals": 79685,
   "track": 4369,
-  "frames": 88869
+  "frames": 78798
  },
  "sha256": {
   "video": "26e6483bce49537ea114e1087dc06ccbaf6134cbf8bd94180e3566f51d597e4b",
   "poster": "91b9d5d2971298cda2a3a25303030960035168a3a59487401b10a5b2ed3736cb",
-  "signals": "99935b7157e5fc828647b3ac8119c377fb70872d1d6c670c5d32ead6c303cf10",
+  "signals": "cd46104bdf64f8cd1911d93290cc3dc1a0634d3eadd2bfaa6a3bc2f2662c8991",
   "track": "beb5373d44bc88560b7d0a629a916aabc72315bcece13fdecf89994cad6a5d2e",
-  "frames": "d9f8c2dffc06c0e41a767706213b6a016d556f3fa1d533ab58207f5741ba98ba"
+  "frames": "508835a92ee4eb2f587f38e0bba1909b5463d2017575cd73141afda56d4e29ba"
  },
- "build_seconds": 27.2
+ "build_seconds": 34.4
 }
