@@ -72,7 +72,17 @@ openlka/pipeline/publish.sh pull
   *list* (it iterates twice). If `startedMonoTime` is absent, `ReadRlogOpAttr_new.read_route_log_into_df_new`
   is used. The lab column that mirrors the stock state (`lka_active` for Hyundai/Kia) is compared with the
   spec-decoded `lka_on` in `meta.lab_crosscheck`.
-* **JSON.** `null` never `NaN`; floats 3 dp, probabilities 2 dp; columnar `cols` exactly as the schema.
+* **Curvature sign.** openpilot's `controlsState.curvature` is + right (planner frame); it is negated on export so
+  `curvature_1pm` is + left like `steer_angle_deg`, and the validator requires corr(steer_angle_deg, curvature_1pm) > 0.
+* **JSON.** `null` never `NaN`; floats 3 dp, probabilities 2 dp; columnar `cols` exactly as the schema (+ make-specific
+  `extra` columns). `frames.json`: dense block (+/-0.08 s at the key moment) + 1 Hz background (3 stock-spec frames per
+  second), <= 600 frames / <= 80 KB (`common.CAPS`, shared by exporter and validator).
+* **Publishing gates.** Only clips with `privacy.manual_review == "ok"` enter `index.json`, the totals and `SHA256SUMS`
+  (`build_index.py --allow-pending` is for local development only; the default clip must be reviewed). "stock" clips must
+  have `op_tx_pct == 0`, `openpilot_steering` clips must have echoes. `meta.json` carries no server paths (basenames only).
+  `publish.sh pull` rsyncs into a temp dir, verifies SHA256SUMS (fatal) and the 30 MB gate, then swaps it in.
+* **Paths** come from env vars with the lab defaults: `OPENLKA_OP_DIR`, `OPENLKA_LAB_DIR`, `OPENLKA_RAW_DIR`,
+  `OPENLKA_ROUTE_MASTER`, `OPENLKA_WORK_DIR`.
 * **Privacy.** Source video is not blurred; windows are highway-only; `meta.privacy.manual_review` stays
   `"pending"` until a person has looked at the poster and sampled frames.
 

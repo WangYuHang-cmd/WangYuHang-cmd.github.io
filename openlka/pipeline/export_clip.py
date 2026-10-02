@@ -133,7 +133,8 @@ def col_out(arr, kind):
 
 
 # ----------------------------------------------------------------------------- events
-def detect_events(cols, hz, dur):
+def detect_events(cols, hz, dur, sig="stock lateral signal"):
+    """Auto events; `sig` is the make's stock lateral-active signal name (STOCK_SPEC stock_lka_signal) used in labels."""
     import numpy as np
 
     ev = []
@@ -157,13 +158,13 @@ def detect_events(cols, hz, dur):
     for k in range(1, n):
         if not (np.isnan(lka[k]) or np.isnan(lka[k - 1])) and lka[k] != lka[k - 1]:
             if lka[k] == 1:
-                ev.append({"t": t[k], "kind": "lka_on", "label": "Stock lane keeping active (LKA_ACTIVE 0→1)"})
+                ev.append({"t": t[k], "kind": "lka_on", "label": f"Stock lane keeping active ({sig} → active)"})
             else:
                 w = slice(max(0, k - int(0.5 * hz)), min(n, k + int(0.5 * hz) + 1))
                 if np.nanmax(pressed[w]) == 1 if not np.all(np.isnan(pressed[w])) else False:
-                    ev.append({"t": t[k], "kind": "takeover", "label": "Driver takes over: steering pressed, LKA_ACTIVE 1→0"})
+                    ev.append({"t": t[k], "kind": "takeover", "label": f"Driver takes over: steering pressed, {sig} → inactive"})
                 else:
-                    ev.append({"t": t[k], "kind": "lka_off", "label": "Stock lane keeping disengages (LKA_ACTIVE 1→0)"})
+                    ev.append({"t": t[k], "kind": "lka_off", "label": f"Stock lane keeping disengages ({sig} → inactive)"})
     pl, pr = arr("op_prob_l"), arr("op_prob_r")
     pm = np.fmin(pl, pr)
     lost = pm < 0.3
@@ -483,7 +484,9 @@ def export(entry, out_root, hz, force, log=None):
     cols["lane_dev_m"] = col_out(dev, "f"); cols["lane_width_m"] = col_out(width, "f")
     src_map["lane_dev_m"] = "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3"
     src_map["lane_width_m"] = "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3"
-    cols["curvature_1pm"] = col_out(lab_col("op_curvature_actual"), "f"); src_map["curvature_1pm"] = "controlsState.curvature (lab decoder)"
+    # openpilot's controlsState.curvature is + right (planner frame); the schema documents + left, so negate
+    cols["curvature_1pm"] = col_out(-lab_col("op_curvature_actual"), "f")
+    src_map["curvature_1pm"] = "-controlsState.curvature (lab decoder op_curvature_actual; openpilot curvature is + right, negated to + left)"
     cols["brake"] = col_out(lab_col("state_brake"), "int"); src_map["brake"] = "carState.brakePressed (lab decoder)"
     cols["gas"] = col_out(lab_col("state_gas_pressed"), "int"); src_map["gas"] = "carState.gasPressed (lab decoder)"
     cols["steering_pressed"] = col_out(lab_col("op_steeringPressed"), "int"); src_map["steering_pressed"] = "carState.steeringPressed (lab decoder)"
@@ -515,7 +518,8 @@ def export(entry, out_root, hz, force, log=None):
                   "n_compared": int(both.sum())}
 
     # ---- events / stats -----------------------------------------------------------------------
-    events = detect_events(cols, hz, dur) if entry.get("auto_events", True) else []
+    sig_short = spec["stock_lka_signal"].split(" == ")[0].split(" in ")[0]
+    events = detect_events(cols, hz, dur, sig=sig_short) if entry.get("auto_events", True) else []
     for e in entry.get("events", []) or []:
         tt = round(float(e["t"]) - t_a, 2)
         if 0 <= tt <= dur:
@@ -716,8 +720,8 @@ def export(entry, out_root, hz, force, log=None):
         "scene": entry.get("scene", []), "extra_cols": extra,
         "system_label": system_label, "stock_lka_signal": spec["stock_lka_signal"], "blurb": entry.get("blurb"), "default": bool(entry.get("default", False)),
         "decoder": {"module": "CAN_decoder_functions", "function": lab_infos[0]["decoder"], "ext_dict": lab_infos[0]["ext_dict"], "reader": sorted({i["reader"] for i in lab_infos}),
-                    "dir": C.LAB_DIR, "repo_commit": C.decoder_commit(), "per_segment": [{k: v for k, v in i.items() if k in ("seg", "n_rows", "n_cols", "seconds", "file_prefix")} for i in lab_infos],
-                    "columns": lab_cols, "n_columns": len(lab_cols), "warnings_printed": lab_warn, "openpilot_dir": C.OP_DIR},
+                    "dir": os.path.basename(C.LAB_DIR.rstrip("/")), "repo_commit": C.decoder_commit(), "per_segment": [{k: v for k, v in i.items() if k in ("seg", "n_rows", "n_cols", "seconds", "file_prefix")} for i in lab_infos],
+                    "columns": lab_cols, "n_columns": len(lab_cols), "warnings_printed": lab_warn, "openpilot_dir": os.path.basename(C.OP_DIR.rstrip("/"))},
         "dbc": [C.dbc_info(spec["dbc"])], "stock_spec_verified": spec.get("verified", False),
         "can": {"stock_bus": {f"0x{a:03X}": s for a, s in bus_of.items()}, "bus_table": {f"0x{a:03X}": {str(s): c for s, c in d.items()} for a, d in bus_table.items()},
                 "echo_counts": {f"0x{a:03X}": c for a, c in echoes.items()}, "n_echo_frames": len(echo_ts), "spec_addrs_decoded": [f"0x{a:03X}" for a in sorted(dec)]},
@@ -725,7 +729,7 @@ def export(entry, out_root, hz, force, log=None):
         "video": {"fps": C.VIDEO_FPS, "width": probe["width"], "height": probe["height"], "codec": "libx264", "crf": crf, "attempts": attempts, "bytes": os.path.getsize(mp4),
                   "nb_frames": probe["nb_frames"], "duration_s": round(probe["duration"], 3), "t_video0_first_seg": round(v0, 4), "first_frame_offset": k0,
                   "snap_shift_s": round(t_a - t_req_a, 4), "alignment": align, "alignment_err_s": round(align_err, 4), "segment_seams_s": seams, "cut_check": cut_check,
-                  "sof_to_pts_s": C.SOF_TO_PTS_S, "source": [s["files"]["qcamera"] for s in vsegs]},
+                  "sof_to_pts_s": C.SOF_TO_PTS_S, "source": [os.path.basename(s["files"]["qcamera"]) for s in vsegs]},
         "key_moment": key, "n_events": len(events),
         "privacy": {"source_blurred": False, "resolution": f"{C.VIDEO_W}x{C.VIDEO_H}", "manual_review": "pending", "notes": "highway window; review poster + sampled frames by eye before publishing"},
         "files": files, "bytes": {}, "sha256": {}, "build_seconds": round(time.time() - T0, 1),

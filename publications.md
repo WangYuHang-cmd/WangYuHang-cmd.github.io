@@ -14,7 +14,7 @@ title: Publications
 
 - [ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement](/adasto/)<br>Yuhang Wang, Yiyao Xu, Jingran Sun, Hao Zhou<br>IEEE Intelligent Transportation Systems Conference (ITSC 2026)<br>
 
-- [OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions](/openlka/)<br>Yuhang Wang, Abdulaziz Alhuraish, Shengming Yuan, Hao Zhou<br>IEEE Intelligent Transportation Systems Conference (ITSC 2025) <br>Gold Coast, Australia. November, 2025. Journal extension under review at *Accident Analysis & Prevention*.<br>
+- [OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions](/openlka/)<br>Yuhang Wang, Abdulaziz Alhuraish, Shengming Yuan, Hao Zhou<br>IEEE Intelligent Transportation Systems Conference (ITSC 2025) <br>Gold Coast, Australia. November, 2025. Journal extension under review at *Accident Analysis & Prevention*. [[Data access]](/openlka/#access)<br>
 
 - Empirical Characterization of Electric Vehicle Acceleration: Implications for Lane Changes and Traffic Bottleneck Capacity<br>Ruqing (Kara) Huang, Yuhang Wang, Lee D. Han, Hao Zhou<br>TRB Annual Meeting 2026 <br>Washington, D.C., United States. January, 2026.<br>
 

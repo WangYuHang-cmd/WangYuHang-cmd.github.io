@@ -12,7 +12,8 @@ clips:
   # --- bdda168c0c35fad7 · Hyundai Ioniq 5 · stock LFA (default clip) -------------------------------------------
   # stage B + timeline.py --segments 7-9: steady LFA at 25-31 m/s, right lane change 526.8-533.8 s (blinker,
   # laneChangeState 2->3, probs dip to 0.11), 0.6 s LKA_ACTIVE blip at 535.3 s, right line fades (code 3->1,
-  # prob 0.27) and LFA drops out 554.7-556.9 s while the driver steers. No openpilot echoes in the whole route.
+  # prob 0.27), the driver steers (steeringPressed from 553.1 s, column torque -606 at 554.0 s) and LFA drops out
+  # 554.7-556.9 s. No openpilot echoes in the whole route.
   - id: ioniq5-i4-stock-lfa
     title: "Hyundai Ioniq 5 · stock LFA on I-4"
     car_dir: HYUNDAI_IONIQ_5
@@ -23,8 +24,8 @@ clips:
     where: "I-4 eastbound, Polk County FL (Plant City to Lakeland)"
     scene: [highway, clear, daylight, stock_lca, lane_change, line_fade]
     blurb: >-
-      Hyundai LFA read off the MDPS/LFA frames on I-4: a lane change makes the lane model lose both lines,
-      then a fading right marking drops LFA for two seconds and the driver steers. openpilot recording only.
+      Hyundai LFA read off the MDPS/LFA frames on I-4: a lane change makes the lane model lose both lines; later the
+      right marking fades, the driver steers and LFA drops out for two seconds. openpilot recording only.
     default: true
 
   # --- 530075d26cad58e4 · Ford Mustang Mach-E · stock Lane Centering ----------------------------------------------

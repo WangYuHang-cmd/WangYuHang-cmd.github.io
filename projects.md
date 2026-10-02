@@ -57,11 +57,12 @@ Below is the full set of projects. Explore more of my work on
     <div class="body">
       <div class="venue">IEEE ITSC 2025</div>
       <h3><a href="/openlka/">OpenLKA</a></h3>
-      <p class="blurb">The first large-scale open dataset of Lane Keeping Assist from 62 production vehicle models under real-world driving, pairing decoded CAN-bus logs with synchronized 1080p video.</p>
+      <p class="blurb">The first large-scale open dataset of Lane Keeping Assist from 62 production vehicle models under real-world driving, pairing decoded CAN-bus logs (verified decoders for seven makes) with synchronized video.</p>
       <div class="badges">
         <a class="primary" href="/openlka/">Project Page →</a>
         <a href="https://ieeexplore.ieee.org/document/11423194/" target="_blank">Paper</a>
         <a href="https://github.com/OpenLKA/OpenLKA" target="_blank">GitHub</a>
+        <a href="/openlka/#access">Request data</a>
       </div>
     </div>
   </div>

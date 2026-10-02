@@ -30,16 +30,22 @@ GPS_CSV = os.path.join(C.CACHE_DIR, "gps_1hz.csv")
 
 
 def read_jsonl(path):
-    out = []
+    """Ledger rows, deduplicated by (rel_path, seg) keeping the LAST row (the same rule as scan_rlogs_can.load_ledger);
+    rows without a seg (route_done markers) are kept as they are."""
     if not os.path.exists(path):
-        return out
+        return []
+    by_key, others = {}, []
     with open(path) as f:
         for line in f:
             try:
-                out.append(json.loads(line))
+                r = json.loads(line)
             except Exception:
-                pass
-    return out
+                continue
+            if "rel_path" in r and "seg" in r:
+                by_key[(r["rel_path"], r["seg"])] = r
+            else:
+                others.append(r)
+    return list(by_key.values()) + others
 
 
 # ----------------------------------------------------------------------------- dongles

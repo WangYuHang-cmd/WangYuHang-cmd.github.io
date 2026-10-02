@@ -20,15 +20,15 @@ import subprocess
 import sys
 import zoneinfo
 
-PIPELINE_VERSION = "0.1.2"  # 0.1.1 half-frame cut boundaries; 0.1.2 frames.json background sampling, make-aware line codes, GPS time, blinker events, camera-drop snapping
+PIPELINE_VERSION = "0.1.3"  # 0.1.1 half-frame cut; 0.1.2 frames background sampling, make-aware line codes, GPS time; 0.1.3 curvature sign (+left), make-named events, no local paths in meta
 
-# ----------------------------------------------------------------------------- paths
-OP_DIR = "/home/henry/Desktop/Drive/openpilot"
-LAB_DIR = "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing"
+# ----------------------------------------------------------------------------- paths (override with env vars)
+OP_DIR = os.environ.get("OPENLKA_OP_DIR", "/home/henry/Desktop/Drive/openpilot")
+LAB_DIR = os.environ.get("OPENLKA_LAB_DIR", "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing")
 DBC_DIR = os.path.join(LAB_DIR, "DBC_files")
-RAW_DIR = "/data/datasets/raw/Dataset"
-ROUTE_MASTER = "/data/datasets/raw/OverView/csv/route_master.csv"
-WORK_DIR = "/data/datasets/temporary/web_showcase"
+RAW_DIR = os.environ.get("OPENLKA_RAW_DIR", "/data/datasets/raw/Dataset")
+ROUTE_MASTER = os.environ.get("OPENLKA_ROUTE_MASTER", "/data/datasets/raw/OverView/csv/route_master.csv")
+WORK_DIR = os.environ.get("OPENLKA_WORK_DIR", "/data/datasets/temporary/web_showcase")
 CACHE_DIR = os.path.join(WORK_DIR, "cache")
 CLIPS_DIR = os.path.join(WORK_DIR, "clips")
 SITE_DIR = os.path.join(WORK_DIR, "site")
@@ -50,8 +50,8 @@ CAPS = {
     "video": 3_000_000,
     "signals": 250_000,
     "track": 10_000,
-    "frames": 90_000,
-    "frames_n": 700,
+    "frames": 80_000,   # plan cap; the exporter trims dense non-spec frames (then background density) to fit
+    "frames_n": 600,    # one constant for exporter and validator
     "index": 6_000,
     "hero_trace": 8_000,
     "total": 30_000_000,
@@ -315,7 +315,7 @@ CODES = {
 }
 SIGN = {
     "steer_angle_deg": "+left",
-    "curvature_1pm": "+left",
+    "curvature_1pm": "+left (controlsState.curvature is + right in openpilot's planner frame; negated on export)",
     "lane_dev_m": "+ = car left of lane centre (modelV2 +y right)",
 }
 SIGNAL_COLS = ["t", "v_ego_mps", "steer_angle_deg", "steer_torque", "driver_torque", "lka_on", "op_on", "op_tx", "acc_on",
