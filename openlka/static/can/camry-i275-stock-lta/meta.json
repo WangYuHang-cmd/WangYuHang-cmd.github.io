@@ -1,0 +1,400 @@
+{
+ "version": 1,
+ "pipeline_version": "0.1.2",
+ "entry_hash": "7dac2294f807",
+ "generated": "2026-10-01T19:18:27-0400",
+ "id": "camry-i275-stock-lta",
+ "title": "Toyota Camry (TSS 2.5+) \u00b7 stock LTA on I-275",
+ "make": "Toyota",
+ "model": "Camry (TSS 2.5+)",
+ "make_key": "toyota",
+ "car_dir": "TOYOTA_CAMRY_TSS2",
+ "fingerprint": [
+  "TOYOTA_CAMRY_TSS2"
+ ],
+ "dongle": "bdda168c0c35fad7",
+ "route": "00000008--b630783a71",
+ "rel_path": "TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71",
+ "segments": [
+  8,
+  9,
+  10
+ ],
+ "segments_decoded": [
+  8,
+  9,
+  10
+ ],
+ "t_route": [
+  530.001,
+  620.001
+ ],
+ "t_route_requested": [
+  530.0,
+  620.0
+ ],
+ "duration_s": 90.0,
+ "hz": 10,
+ "n": 900,
+ "start_eastern": "2024-07-08 12:58:51",
+ "time_source": "gpsLocation.unixTimestampMillis",
+ "start_eastern_wall_clock": "2024-07-08 12:58:52",
+ "where": "I-275 southbound, north Tampa FL",
+ "where_latlon": [
+  28.118761,
+  -82.421761
+ ],
+ "scene": [
+  "highway",
+  "clear",
+  "daylight",
+  "stock_lca",
+  "hand_back"
+ ],
+ "extra_cols": [
+  "lka_status",
+  "lda_alert",
+  "steer_torque_eps"
+ ],
+ "system_label": "Stock Toyota LTA (Lane Tracing Assist) active 96.3% of the clip; openpilot not transmitting",
+ "stock_lka_signal": "LTA_RELATED 0x371 LTA_STEER_REQUEST",
+ "blurb": "Toyota Lane Tracing Assist on I-275 at 30.5 m/s: LTA_STEER_REQUEST blinks off for a second, then the driver steers off-centre and LTA stays off for 24 s before re-engaging. Line codes from LKAS_HUD. No openpilot frames.",
+ "default": false,
+ "decoder": {
+  "module": "CAN_decoder_functions",
+  "function": "toyota_can_decoder",
+  "ext_dict": "TOYOTA_msg_dict",
+  "reader": [
+   "ReadRlogOpAttr.read_route_log_into_df"
+  ],
+  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "repo_commit": "89a0da8",
+  "per_segment": [
+   {
+    "file_prefix": "OPandCAN--TOYOTA_CAMRY_TSS2--dongle--bdda168c0c35fad7--route--2024-07-08--12-58-13--8",
+    "n_rows": 6000,
+    "n_cols": 85,
+    "seg": 8,
+    "seconds": 4.6
+   },
+   {
+    "file_prefix": "OPandCAN--TOYOTA_CAMRY_TSS2--dongle--bdda168c0c35fad7--route--2024-07-08--12-59-08--9",
+    "n_rows": 6000,
+    "n_cols": 85,
+    "seg": 9,
+    "seconds": 4.0
+   },
+   {
+    "file_prefix": "OPandCAN--TOYOTA_CAMRY_TSS2--dongle--bdda168c0c35fad7--route--2024-07-08--13-00-09--10",
+    "n_rows": 6000,
+    "n_cols": 85,
+    "seg": 10,
+    "seconds": 4.0
+   }
+  ],
+  "columns": [
+   "aEgo",
+   "aReq",
+   "aTarget",
+   "acc_enable",
+   "acc_set_speed",
+   "accel_net",
+   "act_ctrl_accel",
+   "act_ctrl_brake",
+   "act_ctrl_gas",
+   "body_pitch_angle",
+   "body_roll",
+   "body_roll_angle",
+   "body_yaw_angle",
+   "can_mono_time",
+   "e2e_position_t",
+   "e2e_position_x",
+   "e2e_position_y",
+   "e2e_position_z",
+   "easternTime",
+   "has_lead",
+   "lane_sway_warning",
+   "latOutput",
+   "lda_alert",
+   "lead1_spacing",
+   "lead2_spacing",
+   "left_lane_line",
+   "lka_status",
+   "long_plan_source",
+   "op_curvature_actual",
+   "op_curvature_desired",
+   "op_enable",
+   "op_lane_change_state",
+   "op_lane_left_depart",
+   "op_lane_left_prob",
+   "op_lane_left_visible",
+   "op_lane_right_depart",
+   "op_lane_right_prob",
+   "op_lane_right_visible",
+   "op_laneline_t",
+   "op_lanes_visible",
+   "op_lat_enable",
+   "op_left_laneline",
+   "op_left_roadedge",
+   "op_left_turn_light",
+   "op_ll_left_prob",
+   "op_ll_right_prob",
+   "op_long_enable",
+   "op_right_laneline",
+   "op_right_roadedge",
+   "op_right_turn_light",
+   "op_state_steer_angle",
+   "op_state_steer_torque",
+   "op_steeringPressed",
+   "op_v_3d_x",
+   "op_v_3d_y",
+   "op_v_3d_z",
+   "plan_accel",
+   "right_lane_line",
+   "state_brake",
+   "state_gas_pos",
+   "state_gas_pressed",
+   "state_regen_break_enable",
+   "steer_angle_lta",
+   "steer_angle_rate",
+   "steer_angle_torque_sensor",
+   "steer_override",
+   "steer_pressed",
+   "steer_request",
+   "steer_torque",
+   "steer_torque_cmd",
+   "steer_torque_driver",
+   "uFAccelCmd",
+   "uFTorque",
+   "uIAccelCmd",
+   "uITorque",
+   "uPAccelCmd",
+   "uPTorque",
+   "unix_time",
+   "vEgo",
+   "vLead1",
+   "vLead2",
+   "vision_dist",
+   "vision_vLead",
+   "wallTimeCentiseconds",
+   "yaw_rate"
+  ],
+  "n_columns": 85,
+  "warnings_printed": 0,
+  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+ },
+ "dbc": [
+  {
+   "file": "final_toyota_canfd.dbc",
+   "sha256": "01973a055e0a7492b2747624dc7a014fdca4874620852a939c13a75d6a59e891",
+   "bytes": 16165
+  }
+ ],
+ "stock_spec_verified": false,
+ "can": {
+  "stock_bus": {
+   "0x025": 2,
+   "0x2E4": 2,
+   "0x260": 2,
+   "0x371": 2,
+   "0x412": 2
+  },
+  "bus_table": {
+   "0x025": {
+    "2": 18000,
+    "0": 18000
+   },
+   "0x2E4": {
+    "2": 7500,
+    "0": 7500
+   },
+   "0x260": {
+    "2": 9003,
+    "0": 9003
+   },
+   "0x371": {
+    "2": 940,
+    "0": 940
+   },
+   "0x412": {
+    "2": 186,
+    "0": 186
+   }
+  },
+  "echo_counts": {},
+  "n_echo_frames": 0,
+  "spec_addrs_decoded": [
+   "0x025",
+   "0x260",
+   "0x2E4",
+   "0x371",
+   "0x412"
+  ]
+ },
+ "column_sources": {
+  "v_ego_mps": "carState.vEgo (lab decoder)",
+  "steer_angle_deg": "carState.steeringAngleDeg (lab decoder)",
+  "steer_torque": "0x2E4 STEERING_LKA.STEER_TORQUE_CMD (stock bus 2)",
+  "driver_torque": "0x260 STEER_TORQUE_SENSOR.STEER_TORQUE_DRIVER (stock bus 2)",
+  "lka_on": "LTA_RELATED 0x371 LTA_STEER_REQUEST == [1]",
+  "op_on": "controlsState.enabled",
+  "op_tx": "openpilot tx echo (src>=128) of ['0x2e4'] within \u00b10.15 s",
+  "acc_on": "carState.cruiseState.enabled (lab decoder)",
+  "line_code_l": "0x412 LKAS_HUD.LEFT_LINE (stock bus 2)",
+  "line_code_r": "0x412 LKAS_HUD.RIGHT_LINE (stock bus 2)",
+  "op_prob_l": "modelV2.laneLineProbs[1]",
+  "op_prob_r": "modelV2.laneLineProbs[2]",
+  "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
+  "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
+  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "brake": "carState.brakePressed (lab decoder)",
+  "gas": "carState.gasPressed (lab decoder)",
+  "steering_pressed": "carState.steeringPressed (lab decoder)",
+  "blinker": "carState.leftBlinker/rightBlinker",
+  "lane_change_state": "modelV2.meta.laneChangeState",
+  "lka_status": "0x412 LKAS_HUD.LKAS_STATUS (stock bus 2)",
+  "lda_alert": "0x412 LKAS_HUD.LDA_ALERT (stock bus 2)",
+  "steer_torque_eps": "0x260 STEER_TORQUE_SENSOR.STEER_TORQUE_EPS (stock bus 2)"
+ },
+ "availability_pct": {
+  "v_ego_mps": 100.0,
+  "steer_angle_deg": 100.0,
+  "steer_torque": 100.0,
+  "driver_torque": 100.0,
+  "lka_on": 100.0,
+  "op_on": 100.0,
+  "op_tx": 100.0,
+  "acc_on": 100.0,
+  "line_code_l": 100.0,
+  "line_code_r": 100.0,
+  "op_prob_l": 100.0,
+  "op_prob_r": 100.0,
+  "lane_dev_m": 100.0,
+  "lane_width_m": 100.0,
+  "curvature_1pm": 100.0,
+  "brake": 100.0,
+  "gas": 100.0,
+  "steering_pressed": 100.0,
+  "blinker": 100.0,
+  "lane_change_state": 100.0,
+  "lka_status": 100.0,
+  "lda_alert": 100.0,
+  "steer_torque_eps": 100.0
+ },
+ "stats": {
+  "v_max_mps": 30.6,
+  "v_mean_mps": 30.5,
+  "v_min_mps": 30.4,
+  "dev_abs_max_m": 0.7,
+  "lka_active_pct": 96.3,
+  "op_tx_pct": 0.0,
+  "op_on_pct": 0.0,
+  "acc_on_pct": 100.0
+ },
+ "lab_crosscheck": {
+  "lab_col": "steer_request",
+  "agreement_pct": 100.0,
+  "n_compared": 900
+ },
+ "video": {
+  "fps": 20,
+  "width": 526,
+  "height": 330,
+  "codec": "libx264",
+  "crf": 28,
+  "attempts": [
+   {
+    "crf": 28,
+    "bytes": 1990119
+   }
+  ],
+  "bytes": 1990119,
+  "nb_frames": 1800,
+  "duration_s": 90.0,
+  "t_video0_first_seg": 481.9507,
+  "first_frame_offset": 961,
+  "snap_shift_s": 0.0007,
+  "alignment": [
+   {
+    "seg": 8,
+    "ffprobe_start_time": 529.8155,
+    "sof_s": 529.8007,
+    "err_s": -0.0,
+    "src_duration": 60.0006,
+    "src_frames": null
+   },
+   {
+    "seg": 9,
+    "ffprobe_start_time": 589.8159,
+    "sof_s": 589.8011,
+    "err_s": -0.0001,
+    "src_duration": 60.0004,
+    "src_frames": null
+   },
+   {
+    "seg": 10,
+    "ffprobe_start_time": 649.8162,
+    "sof_s": 649.8015,
+    "err_s": -0.0001,
+    "src_duration": 60.0002,
+    "src_frames": null
+   }
+  ],
+  "alignment_err_s": 0.0001,
+  "segment_seams_s": [
+   0.0004,
+   0.0004
+  ],
+  "cut_check": {
+   "first_frame_pts_rel": 48.0505,
+   "first_frame_index": 961,
+   "trim_start": 48.025,
+   "trim_end": 138.025,
+   "expected_frames": 1800,
+   "frame_count_delta": 0,
+   "dropped_frames": 0
+  },
+  "sof_to_pts_s": 0.0148,
+  "source": [
+   "/data/datasets/raw/Dataset/TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71/8--qcamera.ts",
+   "/data/datasets/raw/Dataset/TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71/9--qcamera.ts",
+   "/data/datasets/raw/Dataset/TOYOTA_CAMRY_TSS2/bdda168c0c35fad7/00000008--b630783a71/10--qcamera.ts"
+  ]
+ },
+ "key_moment": {
+  "t": 67.0,
+  "label": "takeover"
+ },
+ "n_events": 5,
+ "privacy": {
+  "source_blurred": false,
+  "resolution": "526x330",
+  "manual_review": "ok",
+  "notes": "highway window; review poster + sampled frames by eye before publishing",
+  "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
+  "reviewed_at": "2026-10-01T19:18:27-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+ },
+ "files": {
+  "video": "clip.mp4",
+  "poster": "poster.jpg",
+  "signals": "signals.json",
+  "track": "track.json",
+  "frames": "frames.json"
+ },
+ "bytes": {
+  "video": 1990119,
+  "poster": 9134,
+  "signals": 78992,
+  "track": 4549,
+  "frames": 88914
+ },
+ "sha256": {
+  "video": "bff02da61f358485b7c87aa8c2ef54840edaf69e3434e3f7921986e7fdceabc2",
+  "poster": "7450b061a7dc36b293ab24d2863f93f75cb628726bdef86f508fdb64d1f68b26",
+  "signals": "c47827acd9a88306b3ae061f9f56e000ab282f6184323763ff645fd07d288ff1",
+  "track": "9fe896a5d2240b9d4d9794e06cc20f317b91b0dc98fc51a12d2ac94ef2f89cc9",
+  "frames": "28e45138e92141ee17b960b98eab9a244240f19b68cc3675ad154c8e82cd3196"
+ },
+ "build_seconds": 24.4
+}

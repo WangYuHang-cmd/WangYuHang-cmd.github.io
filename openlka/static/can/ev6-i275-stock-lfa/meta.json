@@ -1,0 +1,385 @@
+{
+ "version": 1,
+ "pipeline_version": "0.1.2",
+ "entry_hash": "81f3142de393",
+ "generated": "2026-10-01T19:16:49-0400",
+ "id": "ev6-i275-stock-lfa",
+ "title": "Kia EV6 \u00b7 stock LFA on I-275 (recorder d5a6fb2f1b849a62)",
+ "make": "Kia",
+ "model": "EV6",
+ "make_key": "kia_ev6",
+ "car_dir": "KIA_EV6",
+ "fingerprint": [
+  "KIA_EV6"
+ ],
+ "dongle": "d5a6fb2f1b849a62",
+ "route": "00000007--9d21e47ec9",
+ "rel_path": "KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9",
+ "segments": [
+  60,
+  61,
+  62
+ ],
+ "segments_decoded": [
+  60,
+  61,
+  62
+ ],
+ "t_route": [
+  3670.028,
+  3760.028
+ ],
+ "t_route_requested": [
+  3670.0,
+  3760.0
+ ],
+ "duration_s": 90.0,
+ "hz": 10,
+ "n": 900,
+ "start_eastern": "2024-07-23 14:05:44",
+ "time_source": "gpsLocation.unixTimestampMillis",
+ "start_eastern_wall_clock": "2023-11-21 17:20:36",
+ "where": "I-275 northbound, Lutz FL",
+ "where_latlon": [
+  28.186901,
+  -82.386968
+ ],
+ "scene": [
+  "highway",
+  "clear",
+  "daylight",
+  "stock_lca",
+  "line_fade",
+  "lane_change"
+ ],
+ "extra_cols": [
+  "lka_icon",
+  "lka_fault"
+ ],
+ "system_label": "Stock Kia LFA (Lane Following Assist) active 86.7% of the clip; openpilot not transmitting",
+ "stock_lka_signal": "MDPS 0x0EA LKA_ACTIVE",
+ "blurb": "The third recorder's Kia EV6 on I-275: the left line fades, the car drifts a metre and LFA lets go for six seconds; later a lane change blanks the lane model. The EV6 bus carries no 0x2A4 line codes. No openpilot frames.",
+ "default": false,
+ "decoder": {
+  "module": "CAN_decoder_functions",
+  "function": "kia_ev6_can_decoder",
+  "ext_dict": "EV6_can_msg_dict",
+  "reader": [
+   "ReadRlogOpAttr.read_route_log_into_df"
+  ],
+  "dir": "/home/henry/Zhouhaoseu Dropbox/Yuhang Wang/OP_CAN_DataProcessing",
+  "repo_commit": "89a0da8",
+  "per_segment": [
+   {
+    "file_prefix": "OPandCAN--KIA_EV6--dongle--d5a6fb2f1b849a62--route--2023-11-21--17-19-40--60",
+    "n_rows": 6000,
+    "n_cols": 84,
+    "seg": 60,
+    "seconds": 5.3
+   },
+   {
+    "file_prefix": "OPandCAN--KIA_EV6--dongle--d5a6fb2f1b849a62--route--2023-11-21--17-20-40--61",
+    "n_rows": 6000,
+    "n_cols": 84,
+    "seg": 61,
+    "seconds": 5.4
+   },
+   {
+    "file_prefix": "OPandCAN--KIA_EV6--dongle--d5a6fb2f1b849a62--route--2023-11-21--17-21-40--62",
+    "n_rows": 6000,
+    "n_cols": 84,
+    "seg": 62,
+    "seconds": 5.4
+   }
+  ],
+  "columns": [
+   "aEgo",
+   "aTarget",
+   "a_req_raw",
+   "a_req_value",
+   "acc_enable",
+   "acc_set_speed",
+   "act_ctrl_accel",
+   "act_ctrl_brake",
+   "act_ctrl_gas",
+   "body_pitch_angle",
+   "body_roll",
+   "body_roll_angle",
+   "body_yaw_angle",
+   "brake_pos",
+   "brake_pressed",
+   "brake_pressed2",
+   "brake_pressure",
+   "can_mono_time",
+   "e2e_position_t",
+   "e2e_position_x",
+   "e2e_position_y",
+   "e2e_position_z",
+   "easternTime",
+   "has_lead",
+   "jerk_lower_limit",
+   "jerk_upper_limit",
+   "latOutput",
+   "lead1_spacing",
+   "lead2_spacing",
+   "lka_active",
+   "lka_fault",
+   "long_plan_source",
+   "op_curvature_actual",
+   "op_curvature_desired",
+   "op_enable",
+   "op_lane_change_state",
+   "op_lane_left_depart",
+   "op_lane_left_prob",
+   "op_lane_left_visible",
+   "op_lane_right_depart",
+   "op_lane_right_prob",
+   "op_lane_right_visible",
+   "op_laneline_t",
+   "op_lanes_visible",
+   "op_lat_enable",
+   "op_left_laneline",
+   "op_left_laneline_model",
+   "op_left_roadedge",
+   "op_left_turn_light",
+   "op_ll_left_prob",
+   "op_ll_right_prob",
+   "op_long_enable",
+   "op_right_laneline",
+   "op_right_laneline_model",
+   "op_right_roadedge",
+   "op_right_turn_light",
+   "op_state_steer_angle",
+   "op_state_steer_torque",
+   "op_steeringPressed",
+   "op_v_3d_x",
+   "op_v_3d_y",
+   "op_v_3d_z",
+   "plan_accel",
+   "scc_dist",
+   "scc_speed",
+   "state_brake",
+   "state_gas_pos",
+   "state_gas_pressed",
+   "state_regen_break_enable",
+   "steering_angle",
+   "steering_angle2",
+   "uFAccelCmd",
+   "uFTorque",
+   "uIAccelCmd",
+   "uITorque",
+   "uPAccelCmd",
+   "uPTorque",
+   "unix_time",
+   "vEgo",
+   "vLead1",
+   "vLead2",
+   "vision_dist",
+   "vision_vLead",
+   "wallTimeCentiseconds"
+  ],
+  "n_columns": 84,
+  "warnings_printed": 0,
+  "openpilot_dir": "/home/henry/Desktop/Drive/openpilot"
+ },
+ "dbc": [
+  {
+   "file": "hyundai_canfd.dbc",
+   "sha256": "e6e3d5d093a56bbb6ebde1998d1d768777c6ec856faac9d6d919a99c612edcf4",
+   "bytes": 21076
+  }
+ ],
+ "stock_spec_verified": true,
+ "can": {
+  "stock_bus": {
+   "0x125": 2,
+   "0x0EA": 2,
+   "0x12A": 2
+  },
+  "bus_table": {
+   "0x125": {
+    "0": 17898,
+    "2": 17898
+   },
+   "0x0EA": {
+    "0": 17999,
+    "2": 17999
+   },
+   "0x12A": {
+    "0": 17996,
+    "2": 17996
+   }
+  },
+  "echo_counts": {},
+  "n_echo_frames": 0,
+  "spec_addrs_decoded": [
+   "0x0EA",
+   "0x125",
+   "0x12A"
+  ]
+ },
+ "column_sources": {
+  "v_ego_mps": "carState.vEgo (lab decoder)",
+  "steer_angle_deg": "carState.steeringAngleDeg (lab decoder)",
+  "steer_torque": "0x12A LFA.TORQUE_REQUEST (stock bus 2)",
+  "driver_torque": "0xEA MDPS.STEERING_COL_TORQUE (stock bus 2)",
+  "lka_on": "MDPS 0x0EA LKA_ACTIVE == [1]",
+  "op_on": "controlsState.enabled",
+  "op_tx": "openpilot tx echo (src>=128) of ['0x12a', '0x50'] within \u00b10.15 s",
+  "acc_on": "carState.cruiseState.enabled (lab decoder)",
+  "line_code_l": null,
+  "line_code_r": null,
+  "op_prob_l": "modelV2.laneLineProbs[1]",
+  "op_prob_r": "modelV2.laneLineProbs[2]",
+  "lane_dev_m": "(modelV2.laneLines[1].y[0] + laneLines[2].y[0]) / 2; null when min(prob_l, prob_r) < 0.3",
+  "lane_width_m": "modelV2.laneLines[2].y[0] - laneLines[1].y[0]; null when min(prob) < 0.3",
+  "curvature_1pm": "controlsState.curvature (lab decoder)",
+  "brake": "carState.brakePressed (lab decoder)",
+  "gas": "carState.gasPressed (lab decoder)",
+  "steering_pressed": "carState.steeringPressed (lab decoder)",
+  "blinker": "carState.leftBlinker/rightBlinker",
+  "lane_change_state": "modelV2.meta.laneChangeState",
+  "lka_icon": "0x12A LFA.LKA_ICON (stock bus 2)",
+  "lka_fault": "0xEA MDPS.LKA_FAULT (stock bus 2)"
+ },
+ "availability_pct": {
+  "v_ego_mps": 100.0,
+  "steer_angle_deg": 100.0,
+  "steer_torque": 100.0,
+  "driver_torque": 100.0,
+  "lka_on": 100.0,
+  "op_on": 100.0,
+  "op_tx": 100.0,
+  "acc_on": 100.0,
+  "line_code_l": 0.0,
+  "line_code_r": 0.0,
+  "op_prob_l": 100.0,
+  "op_prob_r": 100.0,
+  "lane_dev_m": 97.1,
+  "lane_width_m": 97.1,
+  "curvature_1pm": 100.0,
+  "brake": 100.0,
+  "gas": 100.0,
+  "steering_pressed": 100.0,
+  "blinker": 100.0,
+  "lane_change_state": 100.0,
+  "lka_icon": 100.0,
+  "lka_fault": 100.0
+ },
+ "stats": {
+  "v_max_mps": 30.7,
+  "v_mean_mps": 27.9,
+  "v_min_mps": 26.2,
+  "dev_abs_max_m": 1.32,
+  "lka_active_pct": 86.7,
+  "op_tx_pct": 0.0,
+  "op_on_pct": 100.0,
+  "acc_on_pct": 100.0
+ },
+ "lab_crosscheck": {
+  "lab_col": "lka_active",
+  "agreement_pct": 99.89,
+  "n_compared": 900
+ },
+ "video": {
+  "fps": 20,
+  "width": 526,
+  "height": 330,
+  "codec": "libx264",
+  "crf": 28,
+  "attempts": [
+   {
+    "crf": 28,
+    "bytes": 2226239
+   }
+  ],
+  "bytes": 2226239,
+  "nb_frames": 1800,
+  "duration_s": 90.0,
+  "t_video0_first_seg": 3610.3283,
+  "first_frame_offset": 1194,
+  "snap_shift_s": 0.0283,
+  "alignment": [
+   {
+    "seg": 60,
+    "ffprobe_start_time": 4159.2911,
+    "sof_s": 4159.2763,
+    "err_s": -0.0001,
+    "src_duration": 60.0014,
+    "src_frames": null
+   },
+   {
+    "seg": 61,
+    "ffprobe_start_time": 4219.2923,
+    "sof_s": 4219.2776,
+    "err_s": -0.0001,
+    "src_duration": 60.0012,
+    "src_frames": null
+   },
+   {
+    "seg": 62,
+    "ffprobe_start_time": 4279.2942,
+    "sof_s": 4279.2788,
+    "err_s": 0.0006,
+    "src_duration": 60.0004,
+    "src_frames": null
+   }
+  ],
+  "alignment_err_s": 0.0006,
+  "segment_seams_s": [
+   0.0012,
+   0.0013
+  ],
+  "cut_check": {
+   "first_frame_pts_rel": 59.7012,
+   "first_frame_index": 1194,
+   "trim_start": 59.675,
+   "trim_end": 149.675,
+   "expected_frames": 1800,
+   "frame_count_delta": 0,
+   "dropped_frames": 0
+  },
+  "sof_to_pts_s": 0.0148,
+  "source": [
+   "/data/datasets/raw/Dataset/KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9/60--qcamera.ts",
+   "/data/datasets/raw/Dataset/KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9/61--qcamera.ts",
+   "/data/datasets/raw/Dataset/KIA_EV6/d5a6fb2f1b849a62/00000007--9d21e47ec9/62--qcamera.ts"
+  ]
+ },
+ "key_moment": {
+  "t": 13.2,
+  "label": "takeover"
+ },
+ "n_events": 10,
+ "privacy": {
+  "source_blurred": false,
+  "resolution": "526x330",
+  "manual_review": "ok",
+  "notes": "highway window; review poster + sampled frames by eye before publishing",
+  "reviewed_by": "Claude agent (visual check of poster + frames at 15/50/85 % of each clip) for Yuhang Wang",
+  "reviewed_at": "2026-10-01T19:17:00-0400",
+  "review_note": "highway/interstate windows; no pedestrians; plates not resolvable at 526x330"
+ },
+ "files": {
+  "video": "clip.mp4",
+  "poster": "poster.jpg",
+  "signals": "signals.json",
+  "track": "track.json",
+  "frames": "frames.json"
+ },
+ "bytes": {
+  "video": 2226239,
+  "poster": 10487,
+  "signals": 79344,
+  "track": 4369,
+  "frames": 88869
+ },
+ "sha256": {
+  "video": "26e6483bce49537ea114e1087dc06ccbaf6134cbf8bd94180e3566f51d597e4b",
+  "poster": "91b9d5d2971298cda2a3a25303030960035168a3a59487401b10a5b2ed3736cb",
+  "signals": "99935b7157e5fc828647b3ac8119c377fb70872d1d6c670c5d32ead6c303cf10",
+  "track": "beb5373d44bc88560b7d0a629a916aabc72315bcece13fdecf89994cad6a5d2e",
+  "frames": "d9f8c2dffc06c0e41a767706213b6a016d556f3fa1d533ab58207f5741ba98ba"
+ },
+ "build_seconds": 27.2
+}

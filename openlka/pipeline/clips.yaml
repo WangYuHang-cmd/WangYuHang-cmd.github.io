@@ -1,0 +1,169 @@
+# Hand-picked showcase clips for the OpenLKA "CAN lab" (stage C output, human-edited).
+# Times are ROUTE seconds (same clock as the decoder index: logMonoTime - deviceState.startedMonoTime).
+# export_clip.py snaps t_a to the next video frame boundary so that clip frame k <-> t_a + k/20 exactly.
+# A clip is rebuilt only when its entry changes (hash) or with --force. blurb <= 220 chars (validator).
+version: 1
+defaults:
+  hz: 10
+  crf: 28
+  auto_events: true
+
+clips:
+  # --- bdda168c0c35fad7 · Hyundai Ioniq 5 · stock LFA (default clip) -------------------------------------------
+  # stage B + timeline.py --segments 7-9: steady LFA at 25-31 m/s, right lane change 526.8-533.8 s (blinker,
+  # laneChangeState 2->3, probs dip to 0.11), 0.6 s LKA_ACTIVE blip at 535.3 s, right line fades (code 3->1,
+  # prob 0.27) and LFA drops out 554.7-556.9 s while the driver steers. No openpilot echoes in the whole route.
+  - id: ioniq5-i4-stock-lfa
+    title: "Hyundai Ioniq 5 · stock LFA on I-4"
+    car_dir: HYUNDAI_IONIQ_5
+    dongle: bdda168c0c35fad7
+    route: 0000003e--b9aaff0805
+    t_a: 470.0
+    t_b: 560.0
+    where: "I-4 eastbound, Polk County FL (Plant City to Lakeland)"
+    scene: [highway, clear, daylight, stock_lca, lane_change, line_fade]
+    blurb: >-
+      Hyundai LFA read off the MDPS/LFA frames on I-4: a lane change makes the lane model lose both lines,
+      then a fading right marking drops LFA for two seconds and the driver steers. openpilot recording only.
+    default: true
+
+  # --- 530075d26cad58e4 · Ford Mustang Mach-E · stock Lane Centering ----------------------------------------------
+  # route 00000024 (GPS time 2024-07-22 14:09 ET; this recorder's wall clock is often the device default).
+  # timeline segs 21-24: LatCtl_D2_Rq=1 at 26-32 m/s, right lane change 1380-1385 s with a 1.4 s drop-out,
+  # steady, driver takes over at 1451.7 s (LatCtl off), lane-departure aid (LkaActvStats) fires 1460-1462 s.
+  - id: mache-i4-stock-latctl
+    title: "Ford Mustang Mach-E · stock Lane Centering on I-4"
+    car_dir: FORD_MUSTANG_MACH_E_MK1
+    dongle: 530075d26cad58e4
+    route: 00000024--6b3e0ce182
+    t_a: 1372.0
+    t_b: 1462.0
+    where: "I-4 eastbound, Orient Park, Tampa FL"
+    scene: [highway, clear, daylight, stock_lca, lane_change, takeover]
+    blurb: >-
+      Ford Lane Centering (LatCtl_D2_Rq) on I-4 at 30 m/s: a right lane change, a brief drop-out, then the
+      driver takes over and the lane-departure aid fires. Ford's own lane offset is decoded. No openpilot frames.
+
+  # --- bdda168c0c35fad7 · Honda Accord Hybrid · stock LKAS at night ----------------------------------------------
+  # the only Accord route without openpilot echoes (2024-06-01 20:24-21:48 ET). segs 30-32: steady at 30-36 m/s,
+  # LKAS off 1915.2-1921.2 s during a lane change (blinker 4 s, dev 1.35 m), then active again.
+  - id: accord-i4-night-stock-lkas
+    title: "Honda Accord Hybrid · stock LKAS at night on I-4"
+    car_dir: HONDA_ACCORD_HYBRID_2018
+    dongle: bdda168c0c35fad7
+    route: 2024-06-01--20-24-24
+    t_a: 1850.0
+    t_b: 1940.0
+    where: "I-4 westbound, Polk County FL (Davenport)"
+    scene: [highway, night, stock_lca, lane_change]
+    blurb: >-
+      Honda LKAS at night on I-4: steady centering at 32 m/s until a lane change hands control back for six
+      seconds. The Honda camera's own line probability and offset are decoded. The only echo-free Accord route.
+
+  # --- bdda168c0c35fad7 · Toyota Camry TSS 2.5+ · stock LTA -------------------------------------------------------
+  # route 00000008 (2024-07-08 12:56 ET), no echoes anywhere in the route. segs 8-10 at a constant 30.5 m/s:
+  # LTA_STEER_REQUEST drops for ~1 s at 544 s; at 597 s the driver steers off-centre (-0.65 m) and LTA stays off
+  # for ~24 s before re-engaging at 622 s. LKAS_HUD (1 Hz) carries the line codes (1 = solid) and LKAS_STATUS.
+  - id: camry-i275-stock-lta
+    title: "Toyota Camry (TSS 2.5+) · stock LTA on I-275"
+    car_dir: TOYOTA_CAMRY_TSS2
+    dongle: bdda168c0c35fad7
+    route: 00000008--b630783a71
+    t_a: 530.0
+    t_b: 620.0
+    where: "I-275 southbound, north Tampa FL"
+    scene: [highway, clear, daylight, stock_lca, hand_back]
+    blurb: >-
+      Toyota Lane Tracing Assist on I-275 at 30.5 m/s: LTA_STEER_REQUEST blinks off for a second, then the driver
+      steers off-centre and LTA stays off for 24 s before re-engaging. Line codes from LKAS_HUD. No openpilot frames.
+
+  # --- bdda168c0c35fad7 · Volkswagen Tiguan Mk2 · stock Lane Assist (HCA) ---------------------------------------------
+  # route 00000013 (2024-09-29 16:01 ET), no echoes. EPS_HCA_Status is 5 (active) but drops to 3 (ready) for tens of ms
+  # whenever the driver's hands add torque, and for seconds during lane changes. segs 30-31: lane change at 1809-1813 s
+  # (blinker, both lines lost, dev -0.63 m), HCA back at 1815 s, then active at 33-37 m/s with short hands-on drops.
+  # LDW_02 adds VW's own distance/time-to-line-crossing columns.
+  - id: tiguan-i4-stock-hca
+    title: "Volkswagen Tiguan · stock Lane Assist (HCA) on I-4"
+    car_dir: VOLKSWAGEN_TIGUAN_MK2
+    dongle: bdda168c0c35fad7
+    route: 00000013--d7b4fa1f50
+    t_a: 1800.0
+    t_b: 1890.0
+    where: "I-4 eastbound, Plant City FL"
+    scene: [highway, clear, daylight, stock_lca, lane_change]
+    blurb: >-
+      VW Lane Assist read from LH_EPS_03 and HCA_01 on I-4: a lane change drops HCA to ready, it re-engages and holds
+      the lane at 35 m/s, letting go whenever the driver's hands add torque. LDW_02 distance-to-line decoded.
+
+  # --- bdda168c0c35fad7 · Toyota RAV4 TSS 2.5+ · LDA steering pulses (LTA on standby) --------------------------------
+  # no echo-free RAV4 TSS2 route has sustained LTA_STEER_REQUEST (<= 8.9 % at speed); the driver steers with LTA on
+  # standby (LKAS_STATUS 1) and the Lane Departure Alert applies 1-4 s steering pulses when drifting to a line.
+  # route 00000004 (2024-09-22 14:15 ET) segs 19-21 at 28-32 m/s: pulses at 1219.97-1223.76 s (+0.52 m) and 1258.6 s.
+  - id: rav4-i75-lda-pulses
+    title: "Toyota RAV4 (TSS 2.5+) · lane-departure steering pulses on I-75"
+    car_dir: TOYOTA_RAV4_TSS2_2023
+    dongle: bdda168c0c35fad7
+    route: 00000004--1d07fcd6fe
+    t_a: 1190.0
+    t_b: 1280.0
+    where: "I-75 northbound, Dade City area, Pasco County FL"
+    scene: [highway, clear, daylight, lda_intervention, manual_driving]
+    system_label: "Toyota LTA on standby, driver steering; two Lane Departure Alert steering pulses (LTA_STEER_REQUEST); openpilot not transmitting"
+    blurb: >-
+      The driver steers the RAV4 at 30 m/s with LTA on standby (LKAS_STATUS 1). Twice the car drifts toward a line
+      and Lane Departure Alert applies a short steering pulse: LTA_STEER_REQUEST plus camera torque. No openpilot.
+
+  # --- bdda168c0c35fad7 · Kia Niro 2023 · sharp curve, LFA torque at its limit -------------------------------------------
+  # route 00000001 (GPS time 2024-07-16 15:52 ET; wall clock bogus), no echoes. segs 13-15: steady LFA at 26 m/s, then the
+  # I-75/I-4 interchange ramp: curvature 0.0068 1/m at 17-24 m/s, steering angle 8-16 deg, LFA TORQUE_REQUEST peaks at 304
+  # (this route's maximum), deviation drifts to +1.05 m (car left of centre) with a 0.6 s LKA_ACTIVE drop at 876.3 s.
+  - id: niro-i75-ramp-curve-torque
+    title: "Kia Niro · stock LFA on a sharp interchange ramp"
+    car_dir: KiaNiro2023
+    dongle: bdda168c0c35fad7
+    route: 00000001--2091941497
+    t_a: 820.0
+    t_b: 910.0
+    where: "I-75 / I-4 interchange ramp, Mango FL"
+    scene: [highway_ramp, sharp_curve, clear, daylight, stock_lca, torque_limit]
+    blurb: >-
+      Kia LFA on the I-75/I-4 interchange ramp: as curvature reaches 0.007 1/m the LFA torque request climbs to the
+      route maximum, the car drifts a metre toward the outside line and LKA_ACTIVE blinks off. No openpilot frames.
+    events:
+      - {t: 852.0, kind: custom, label: "Left bend at 24 m/s: steering angle -8 deg, LFA torque rising"}
+      - {t: 884.0, kind: custom, label: "Ramp apex: curvature 0.007 1/m at 17 m/s, LFA TORQUE_REQUEST at the route maximum (304)"}
+
+  # --- d5a6fb2f1b849a62 · Kia EV6 · stock LFA (third recorder) ---------------------------------------------------------
+  # route 00000007 (GPS time 2024-07-23 14:06 ET; wall clock bogus on this recorder), no echoes anywhere in the route
+  # (route 0000000a of the same recorder DOES carry LFA echoes = openpilot steering). segs 61-63: left line fades at
+  # 3674-3682 s (prob 0.47, drift to -0.96 m), LFA drops out 3684-3690 s, then a lane change at 3740 s and steady 32 m/s.
+  - id: ev6-i275-stock-lfa
+    title: "Kia EV6 · stock LFA on I-275 (recorder d5a6fb2f1b849a62)"
+    car_dir: KIA_EV6
+    dongle: d5a6fb2f1b849a62
+    route: 00000007--9d21e47ec9
+    t_a: 3670.0
+    t_b: 3760.0
+    where: "I-275 northbound, Lutz FL"
+    scene: [highway, clear, daylight, stock_lca, line_fade, lane_change]
+    blurb: >-
+      The third recorder's Kia EV6 on I-275: the left line fades, the car drifts a metre and LFA lets go for six seconds;
+      later a lane change blanks the lane model. The EV6 bus carries no 0x2A4 line codes. No openpilot frames.
+
+  # --- 530075d26cad58e4 · Hyundai Ioniq 5 · night rain, openpilot steering ----------------------------------------
+  # route 2024-09-05--20-13-29: rain confirmed on video; every segment carries LFA echoes (src>=128) ->
+  # openpilot was steering; MDPS LKA_ACTIVE is 1 because the MDPS applies the requested torque either way.
+  # timeline segs 26-28: engaged at 1630 s, five lane changes 1636-1708 s (lane model loses both lines each time,
+  # deviation swings to -1.5 m), driver brakes and takes over at 1718 s.
+  - id: ioniq5-us301-rain-openpilot
+    title: "Hyundai Ioniq 5 · night rain on US 301 (openpilot steering)"
+    car_dir: HYUNDAI_IONIQ_5
+    dongle: 530075d26cad58e4
+    route: 2024-09-05--20-13-29
+    t_a: 1628.0
+    t_b: 1718.0
+    where: "US 301 northbound, Thonotosassa, Hillsborough County FL"
+    scene: [rural_highway, rain, night, openpilot_steering, lane_change, takeover]
+    blurb: >-
+      Night rain on US 301 with openpilot steering through Hyundai's MDPS (its LFA frames are echoed on the bus).
+      Five lane changes make the lane model lose both lines each time; the driver brakes and takes over at the end.
