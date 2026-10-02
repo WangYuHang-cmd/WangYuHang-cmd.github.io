@@ -8,6 +8,8 @@ tridrive:
   baton_hours:       {value: 197.2, fmt: "0.0", unit: h, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
   prauc_steer_eng:   {value: 0.463, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: "+0.084"}
   prauc_steer_man:   {value: 0.774, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: "+0.030"}
+  prauc_steer_gain_eng: {value: 0.084, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
+  prauc_steer_gain_man: {value: 0.030, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper}
   prauc_ttc_gain_eng: {value: 0.286, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
   prauc_ttc_gain_man: {value: 0.206, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper}
   latency_p95:       {value: 177, fmt: "0", unit: ms, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}

@@ -1,257 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring">
-  <meta name="description" content="TriDrive is a world-model-based driver-monitoring system that jointly forecasts driver kinematics, vehicle dynamics and road demands, runs in real time on comma four hardware, and is validated in a 14-participant on-road study.">
-  <meta name="keywords" content="driver monitoring, world model, driver motion forecasting, vehicle dynamics, road demand, human-centered driving, ADAS, comma four, openpilot, real-time">
-  <meta name="author" content="Yuhang Wang, Jingxin Yang, Chuheng Wei, Yuechen Guo, Jinghan Xu, Zhao Han, Hao Zhou">
-  <meta name="robots" content="index, follow">
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
-  <meta property="og:title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring">
-  <meta property="og:description" content="A world model for the cockpit: jointly forecasting driver kinematics, vehicle dynamics and road demands — in real time on comma four.">
-  <meta property="og:url" content="https://wangyuhang-cmd.github.io/tridrive/">
-  <meta property="og:image" content="https://wangyuhang-cmd.github.io/tridrive/static/images/tridrive_poster.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling">
-  <meta name="twitter:description" content="A world model for the cockpit: jointly forecasting driver kinematics, vehicle dynamics and road demands — in real time on comma four.">
-  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/tridrive/static/images/tridrive_poster.jpg">
-
-  <meta name="citation_title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring">
-  <meta name="citation_author" content="Wang, Yuhang">
-  <meta name="citation_author" content="Yang, Jingxin">
-  <meta name="citation_author" content="Wei, Chuheng">
-  <meta name="citation_author" content="Guo, Yuechen">
-  <meta name="citation_author" content="Xu, Jinghan">
-  <meta name="citation_author" content="Han, Zhao">
-  <meta name="citation_author" content="Zhou, Hao">
-  <meta name="citation_publication_date" content="2026">
-
-  <title>TriDrive · Joint Driver, Vehicle, and Road Modeling</title>
-
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
-  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
-  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
-  <script defer src="/projectpage-lib/js/index.js"></script>
-  <style>
-    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
-    .home-link:hover{background:#1d4ed8;color:#fff}
-    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
-    .stat{text-align:center;min-width:120px}
-    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
-    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
-    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
-    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
-    .gif-card img{display:block;width:100%;height:auto}
-    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
-  
-    /* ---- cinematic dark hero (design system v2) ---- */
-    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
-    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
-    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
-    .hero-dark .publication-authors a{color:#7fb0ff}
-    .hero-dark .publication-authors a:hover{color:#fff}
-    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
-    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
-    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
-    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
-    .filmstrip.single{grid-template-columns:minmax(0,860px);justify-content:center}
-    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14);background:#fff}
-    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
-    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
-    .filmstrip.single .film-card img{aspect-ratio:auto;object-fit:contain}
-    /* centred hero video */
-    .filmstrip.single.video{grid-template-columns:minmax(0,1040px)}
-    .filmstrip.video .film-card{background:#000}
-    .filmstrip.video .film-card:hover{transform:none;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-    .film-card video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
-    .video-cap{color:#9fb2d6;font-size:.85rem;text-align:center;margin:.6rem auto 0;max-width:1040px;position:relative;z-index:2}
-    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
-    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em;z-index:2}
-    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
-    .hero-tagline b{color:#fff}
-    .hero-dark .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
-    .hero-dark .stat{text-align:center;min-width:130px}
-    .hero-dark .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
-    .hero-dark .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-    .section-title-accent{position:relative;display:inline-block}
-    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
-    .gif-card{transition:transform .22s ease,box-shadow .22s ease}
-    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-    .reveal.on{opacity:1;transform:none}
-    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}.filmstrip.single{grid-template-columns:1fr}}
-  </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TriDrive · Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring</title>
+<meta name="description" content="TriDrive jointly forecasts driver kinematics, vehicle dynamics and road demands from one automation-conditioned transition model, runs at 5 Hz on a comma four, and was validated in a 14-participant on-road study.">
+<meta name="keywords" content="driver monitoring, world model, driver motion forecasting, vehicle dynamics, road demand, human-centered driving, ADAS, comma four, openpilot, real-time">
+<meta name="author" content="Yuhang Wang, Jingxin Yang, Chuheng Wei, Yuechen Guo, Jinghan Xu, Zhao Han, Hao Zhou">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wangyuhang-cmd.github.io/tridrive/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+<meta property="og:title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring">
+<meta property="og:description" content="Three streams, one forecast: driver kinematics, vehicle dynamics and road demands modeled jointly — in the car at 5 Hz, validated with 14 drivers on the road.">
+<meta property="og:url" content="https://wangyuhang-cmd.github.io/tridrive/">
+<meta property="og:image" content="https://wangyuhang-cmd.github.io/tridrive/static/media/fig_teaser.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling">
+<meta name="twitter:description" content="Three streams, one forecast — a world model for the cockpit running at 5 Hz on a comma four.">
+<meta name="twitter:image" content="https://wangyuhang-cmd.github.io/tridrive/static/media/fig_teaser.jpg">
+<meta name="citation_title" content="TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring">
+<meta name="citation_author" content="Wang, Yuhang"><meta name="citation_author" content="Yang, Jingxin"><meta name="citation_author" content="Wei, Chuheng"><meta name="citation_author" content="Guo, Yuechen"><meta name="citation_author" content="Xu, Jinghan"><meta name="citation_author" content="Han, Zhao"><meta name="citation_author" content="Zhou, Hao">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_arxiv_id" content="2609.33000">
+<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+<link rel="preload" href="/assets/proj/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="static/media/ex01.jpg" as="image" fetchpriority="high">
+<link rel="stylesheet" href="/assets/proj/proj.css">
+<script defer src="/assets/proj/proj.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring","author":[{"@type":"Person","name":"Yuhang Wang"},{"@type":"Person","name":"Jingxin Yang"},{"@type":"Person","name":"Chuheng Wei"},{"@type":"Person","name":"Yuechen Guo"},{"@type":"Person","name":"Jinghan Xu"},{"@type":"Person","name":"Zhao Han"},{"@type":"Person","name":"Hao Zhou"}],"datePublished":"2026-09-26","url":"https://wangyuhang-cmd.github.io/tridrive/","sameAs":"https://arxiv.org/abs/2609.33000","image":"https://wangyuhang-cmd.github.io/tridrive/static/media/fig_teaser.jpg","publisher":{"@type":"Organization","name":"University of South Florida · MOTIF-Lab"}}</script>
 </head>
-<body>
-  <div id="site-nav"></div>
-  <script defer src="/assets/dark/nav.js"></script>
-  <noscript><a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a></noscript>
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+<body data-proj="tridrive" data-manifest="static/data/manifest.json" data-sources="key:sources">
+<a class="pj-skip" href="#main">Skip to content</a>
+<div class="pj-bg" aria-hidden="true"></div><div class="pj-stars" aria-hidden="true"></div>
 
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
-      <div class="works-list">
-        <a href="/vlalert/" class="work-item"><div class="work-info"><h5>VLAlert</h5><p>Observe Before You Alert: adaptive driver alerting with VLMs.</p><span class="work-venue">CoRL 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/drivemotion/" class="work-item"><div class="work-info"><h5>DriveMotion</h5><p>Driver body-motion forecasting benchmark.</p><span class="work-venue">Dataset 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+<header class="pj-nav" id="nav">
+  <div class="pj-nav__in">
+    <a class="pj-brand" href="/">Yuhang <b>Wang</b></a>
+    <nav class="pj-menu" aria-label="Page">
+      <ul class="pj-anchors">
+        <li><a href="#top">TriDrive</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Forecast</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
+      </ul>
+      <ul>
+        <li class="pj-site-extra"><a href="/">Home</a></li><li class="pj-site-extra"><a href="/projects/">Projects</a></li>
+        <li class="pj-dd"><button class="pj-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">More works <svg class="ic ic-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="pj-dd__menu"><a href="/openlka/"><b>OpenLKA</b><span>Lane keeping on real roads · ITSC 2025</span></a><a href="/adasto/"><b>ADAS-TO</b><span>Human–ADAS takeover transitions · ITSC 2026</span></a><a href="/drivedna/"><b>DriveDNA</b><span>Driver re-identification benchmark · arXiv 2026</span></a><a href="/drivemotion/"><b>DriveMotion</b><span>Driver body-motion forecasting · arXiv 2026</span></a><a href="/baton/"><b>BATON</b><span>Bidirectional control transitions · arXiv 2026</span></a><a href="/vlalert/"><b>VLAlert</b><span>Observe before you alert · CoRL 2026</span></a></div></li>
+        <li><a class="btn btn--sm" href="https://arxiv.org/abs/2609.33000" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> 2609.33000</a></li>
+      </ul>
+    </nav>
+    <button class="pj-burger" type="button" aria-expanded="false" aria-label="Open menu" aria-controls="nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <div class="pj-progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+<!-- ================= hero ================= -->
+<section class="pj-hero" id="top">
+  <div class="pj-wrap">
+    <div class="pj-hero__grid">
+      <div class="pj-hero__text">
+        <p class="pj-eyebrow">Driver monitoring · world model · real time</p>
+        <h1 class="pj-h1"><span class="pj-wordmark">TriDrive</span><span class="pj-title">Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring</span></h1>
+        <p class="pj-thesis"><span data-claim="arxiv-abs">To our knowledge the <b>first</b> unified framework</span> that jointly forecasts <b>driver kinematics</b>, <b>vehicle dynamics</b> and <b>road demands</b> through one automation-conditioned transition model — and it runs in the car at 5 Hz.</p>
+        <p class="pj-lede">Three streams enter one latent state: the driver's anchored kinematics, causal CAN-bus dynamics, and frozen V-JEPA 2 road latents with structured road margins. Directed residual connections let the driver and the road refine the vehicle forecast; a lightweight probe turns the current state into a warning.</p>
+        <div class="pj-pills"><span class="pj-pill pj-pill--accent">arXiv 2609.33000 · 2026 · under review</span><span class="pj-pill">comma four + 8 GB GPU · 5 Hz probe</span><span class="pj-pill">AIDE · BATON · on-road study</span></div>
+        <div class="pj-cta">
+          <a class="btn btn--primary" href="#signature">Explore the forecast</a>
+          <button class="btn" type="button" data-video="static/videos/tridrive_demo.mp4" data-poster="static/images/tridrive_poster.jpg" data-title="TriDrive · narrated demo (2:02)" data-caption="System overview, real-time deployment on comma four, and the on-road user study." data-ar="16/9"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg>Watch the 2-min demo</button>
+          <a class="btn" href="https://arxiv.org/abs/2609.33000" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> Paper</a>
+          <a class="btn" href="https://huggingface.co/HenryYHW/TriDrive" target="_blank" rel="noopener">Code &amp; model</a>
+        </div>
+        <p class="pj-authors"><a href="/">Yuhang Wang</a><sup>1</sup><span class="sep">·</span>Jingxin Yang<sup>2</sup><span class="sep">·</span>Chuheng Wei<sup>3</sup><span class="sep">·</span>Yuechen Guo<sup>1</sup><span class="sep">·</span>Jinghan Xu<sup>4</sup><span class="sep">·</span>Zhao Han<sup>1</sup><span class="sep">·</span><a href="https://sites.google.com/view/haozhou-cv" target="_blank" rel="noopener">Hao Zhou</a><sup>1</sup></p>
+        <p class="pj-affil"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>NVIDIA &nbsp; <sup>3</sup>Purdue University &nbsp; <sup>4</sup>Hunan University</p>
       </div>
+      <a class="pj-hero__stage" href="#signature" aria-label="Open the full three-stream explorer at this moment">
+        <div data-widget="scrubber" data-mode="hero" data-sync="tri" data-src="key:signals_ex01" data-strips="risk" data-eager data-label="Hero preview: risk signal over a cabin and road clip">
+          <div class="pj-sc__media" style="--ar:960/300"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/ex01.jpg" src="static/media/ex01.mp4" width="960" height="300"></video></div>
+          <figure class="pj-fallback"><img src="static/media/ex01.jpg" alt="Cabin and road view from the lab recorder at the moment the driver picks up a phone" width="960" height="300"></figure>
+        </div>
+        <div class="pj-stage__cap"><span>live · <b>lab recorder, consented</b> · 10 Hz</span><span class="pj-pill pj-pill--live">risk + forecast fan</span></div>
+      </a>
+    </div>
+    <div class="pj-stats">
+      <a class="stat" href="#f-aide"><span class="num" data-count="48.05" data-decimals="2">48.05</span><span class="lbl">All-MPJPE on AIDE <data class="n" value="48.05" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-hours"><span class="num" data-count="197.2" data-decimals="1" data-suffix=" h">197.2 h</span><span class="lbl">naturalistic BATON driving <data class="n" value="197.2" data-src="arxiv-hours">(paper)</data></span></a>
+      <a class="stat" href="#f-latency"><span class="num" data-count="177" data-suffix=" ms">177 ms</span><span class="lbl">p95 probe latency · comma four <data class="n" value="177" data-src="arxiv-latency">(paper)</data></span></a>
+      <a class="stat" href="#f-study"><span class="num" data-count="14">14</span><span class="lbl">drivers in the paired on-road study <data class="n" value="14" data-src="arxiv-study">(paper)</data></span></a>
     </div>
   </div>
+</section>
 
-  <main id="main-content">
-  <section class="hero hero-dark">
-    <div data-hero-bg data-mode="contained" hidden></div>
-    <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring</h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a><sup>1</sup>,</span>
-              <span class="author-block">Jingxin Yang<sup>2</sup>,</span>
-              <span class="author-block">Chuheng Wei<sup>3</sup>,</span>
-              <span class="author-block">Yuechen Guo<sup>1</sup>,</span>
-              <span class="author-block">Jinghan Xu<sup>4</sup>,</span>
-              <span class="author-block">Zhao Han<sup>1</sup>,</span>
-              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a><sup>1</sup></span>
-            </div>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>Stanford University &nbsp; <sup>3</sup>Purdue University &nbsp; <sup>4</sup>Hunan University</span><br>
-              <span class="venue-pill">arXiv preprint · 2026</span>
-            </div>
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <span class="link-block"><a href="https://arxiv.org/abs/2609.33000" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
-                <span class="link-block"><a href="#demo" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-play"></i></span><span>Demo Video</span></a></span>
-                <span class="link-block"><a href="https://huggingface.co/HenryYHW/TriDrive" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Code &amp; Models</span></a></span>
-              </div>
-            </div>
-
-            <div class="filmstrip single video" id="demo">
-              <div class="film-card"><span class='rec'>● REC</span>
-                <video controls playsinline preload="metadata" poster="static/images/tridrive_poster.jpg" aria-label="TriDrive demo video">
-                  <source src="static/videos/tridrive_demo.mp4" type="video/mp4">
-                  Your browser does not support HTML5 video. <a href="static/videos/tridrive_demo.mp4">Download the demo (MP4, 14.6 MB)</a>.
-                </video>
-              </div>
-            </div>
-            <p class="video-cap">Narrated demo (2:02): system overview, real-time deployment on comma four, and the on-road user study.</p>
-
-            <p class="hero-tagline">A <b>world model for the cockpit</b>: jointly forecasting <b>driver kinematics</b>, <b>vehicle dynamics</b> and <b>road demands</b> from one automation-conditioned transition model — running in real time on a comma four.</p>
-            <div class="stat-band">
-              <div class="stat"><div class="num" data-count="48.05" data-decimals="2">0</div><div class="lbl">All-MPJPE on AIDE (SOTA)</div></div>
-              <div class="stat"><div class="num" data-count="197.2" data-decimals="1" data-suffix=" h">0</div><div class="lbl">naturalistic driving</div></div>
-              <div class="stat"><div class="num" data-count="177" data-suffix=" ms">0</div><div class="lbl">p95 latency · comma four</div></div>
-              <div class="stat"><div class="num" data-count="14">0</div><div class="lbl">drivers · on-road study</div></div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+<!-- ================= overview ================= -->
+<section class="pj-section" id="overview">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">01 · OVERVIEW</span><h2>A world model for the cockpit</h2><p class="sec-lede">The abstract, verbatim, beside what you need to know at a glance.</p></div>
+    <div class="pj-overview">
+      <div class="pj-abstract reveal" data-claim="arxiv-abs"><p>Predicting how drivers, vehicles, and road scenes interact and evolve together is central to human-centered driving. Prior work models in-cabin activity or traffic-conditioned driver motion in isolation; a framework that models all three jointly and runs in real time on vehicle hardware had not been shown. TriDrive jointly models the driver, the vehicle, and the road: to our knowledge it is the first to forecast driver kinematics, vehicle dynamics, and road demands together from an automation-conditioned transition model, with forecasting and warning as its two applications. Modality-specific encoders — an anchored kinematic representation of the driver, causal CAN-bus dynamics, and frozen V-JEPA 2 road latents with structured road margins — are connected by directed residual connections through which driver and road context refine vehicle forecasts.</p><p>On the public AIDE benchmark the kinematic encoder recipe sets a new full-set state of the art among published baselines (<data class="n" value="48.05" data-src="arxiv-abs">48.05</data> vs. <data class="n" value="71.47" data-src="arxiv-abs">71.47</data> All-MPJPE). On <data class="n" value="197.2" data-src="arxiv-hours">197.2</data> hours of naturalistic BATON driving, directed connections and road margins raise assistance-engaged PR-AUC by <data class="n" value="0.084" data-src="arxiv-prauc">0.084</data> for steering onset and <data class="n" value="0.286" data-src="arxiv-prauc">0.286</data> for time-to-collision drops. For real-time use we distill the road encoders and run TriDrive on a comma four with an external 8 GB GPU, where a lightweight current-state warning probe updates at <data class="n" value="5" data-src="arxiv-latency">5</data> Hz with <data class="n" value="177" data-src="arxiv-latency">177</data> ms p95 latency while the forecasting model runs concurrently. The probe is above an openpilot-based baseline on human-labeled manual-driving warnings (AUROC <data class="n" value="0.725" data-src="arxiv-probe">0.725</data> vs. 0.563), and in a paired on-road study <data class="n" value="14" data-src="arxiv-study">14</data> drivers rate its warnings as more appropriate (<data class="n" value="1.79" data-src="arxiv-study">+1.79</data>) and timely (<data class="n" value="2.67" data-src="arxiv-study">+2.67</data>) than those of openpilot's driver-monitoring system.</p></div>
+      <aside class="pj-glance reveal" style="--i:1"><dl>
+        <div><dt>Venue</dt><dd>arXiv 2609.33000 · v1 · 26 Sep 2026 · under review</dd></div>
+        <div><dt>Links</dt><dd><a href="https://arxiv.org/abs/2609.33000" target="_blank" rel="noopener">arXiv</a><a href="https://huggingface.co/HenryYHW/TriDrive" target="_blank" rel="noopener">Model &amp; code</a><a href="#cite">BibTeX</a></dd></div>
+        <div><dt>Model</dt><dd><span class="mono">3.50 M params</span> + 0.85 M frozen keypoint forecaster · forecasts 25 steps × 0.2 s</dd></div>
+        <div><dt>Hardware</dt><dd class="mono">comma four + RX 9060 8 GB · probe 5 Hz · 135 / 177 ms median / p95</dd></div>
+        <div><dt>License</dt><dd>CC BY-SA 4.0 (code, checkpoints) · <span data-hf="HenryYHW/TriDrive">gated, manual approval</span></dd></div>
+        <div><dt>Privacy</dt><dd>Cabin footage on this page comes only from the lab's consented recorder; study recordings are not released.</dd></div>
+      </dl></aside>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section hero is-light reveal">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3 section-title-accent">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              Predicting how drivers, vehicles, and road scenes interact and evolve together is central to human-centered
-              driving. Prior work models in-cabin activity or traffic-conditioned driver motion in isolation; a framework that
-              models all three jointly and runs in real time on vehicle hardware had not been shown. TriDrive jointly models
-              the driver, the vehicle, and the road: to our knowledge it is the first to forecast driver kinematics, vehicle
-              dynamics, and road demands together from an automation-conditioned transition model, with forecasting and
-              warning as its two applications. Modality-specific encoders — an anchored kinematic representation of the
-              driver, causal CAN-bus dynamics, and frozen V-JEPA&nbsp;2 road latents with structured road margins — are
-              connected by directed residual connections through which driver and road context refine vehicle forecasts.
-              On the public AIDE benchmark the kinematic encoder recipe sets a new full-set state of the art among published
-              baselines (48.05 vs. 71.47 All-MPJPE). On 197.2 hours of naturalistic BATON driving, directed connections and
-              road margins raise assistance-engaged PR-AUC by 0.084 for steering onset and 0.286 for time-to-collision drops.
-              For real-time use we distill the road encoders and run TriDrive on a comma four with an external 8&nbsp;GB GPU,
-              where a lightweight current-state warning probe updates at 5&nbsp;Hz with 177&nbsp;ms p95 latency while the
-              forecasting model runs concurrently. The probe is above an openpilot-based baseline on human-labeled
-              manual-driving warnings (AUROC 0.725 vs. 0.563), and in a paired on-road study 14 drivers rate its warnings as
-              more appropriate (+1.79) and timely (+2.67) than those of openpilot's driver-monitoring system.
-            </p>
-          </div>
-        </div>
+<!-- ================= signature ================= -->
+<section class="pj-section pj-section--band" id="signature">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">02 · THREE STREAMS, ONE FORECAST</span><h2>Watch the state and the forecast move together</h2><p class="sec-lede">Cabin and road from the lab recorder, time-aligned with the vehicle and the driver-monitoring signals at 10 Hz. The onset of the annotated distraction sits at 5.0 s in every clip; wedges show how an earlier forecasting model's probability of a warranted warning grows over the next five seconds from that anchor.</p></div>
+    <div data-widget="scrubber" data-sync="tri" data-src="key:clips" data-hud='[{"col":"v_ego_mps","fmt":"mph"},{"col":"is_distracted","fmt":"bool","label":"openpilot DMS","alert":true},{"col":"cc_enabled","fmt":"bool","label":"automation"},{"col":"risk","label":"risk"}]' data-ribbon="<b>Forecast fan:</b> earlier CockpitWM model, offline and illustrative. The on-road warnings came from the 5 Hz current-state probe; forecasts did not enter the warning decision (paper, Limitation). The dashed 0.5 line is an illustrative threshold, not the deployed one." data-label="Three-stream explorer">
+      <div class="pj-sc__media" style="--ar:960/300"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/ex01.jpg" width="960" height="300"></video></div>
+      <div class="pj-sc__strips">
+        <canvas class="pj-strip" data-col="risk" data-label="risk (CockpitWM)" data-min="0" data-max="1" data-color="accent" data-layers="fans:*;thresholds:*;shade:*" style="--h:84px"></canvas>
+        <canvas class="pj-strip" data-col="ttc_s" data-label="time to collision" data-unit="s" data-min="0" data-max="30" data-color="gold" data-layers="shade:*"></canvas>
+        <canvas class="pj-strip" data-col="is_distracted" data-label="openpilot DMS distraction flag" data-fmt="bool" data-binary data-color="coral" data-layers="shade:*"></canvas>
+        <canvas class="pj-strip" data-col="v_ego_mps" data-label="speed" data-unit="mph" data-fmt="mph" data-color="blue" data-layers="shade:*"></canvas>
+        <canvas class="pj-strip" data-col="steer_deg" data-label="steering angle" data-unit="deg" data-sym data-color="violet" data-layers="shade:*"></canvas>
       </div>
+      <figure class="pj-fallback"><img src="static/media/ex01.jpg" alt="Cabin and road view at the moment of a phone pickup" width="960" height="300"><figcaption><b>Static view.</b> The live explorer needs JavaScript; the clip set and signals are listed under “Data as text”.</figcaption></figure>
     </div>
-  </section>
+    <p class="pj-note reveal"><b>What you are looking at.</b> Seven clips: five phone pickups with forecast fans, and two control clips (hands off the wheel, attention off the road) with vehicle and DMS signals only. Risk and TTC come from the recorder's logged openpilot state; TTC is capped at 30 s and drawn hatched where capped. Shading marks the stretches where the driving-assistance system was engaged.</p>
+  </div>
+</section>
 
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
-      <pre id="bibtex-code"><code>@article{wang2026tridrive,
+<!-- ================= evidence ================= -->
+<section class="pj-section" id="evidence">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">03 · EVIDENCE</span><h2>What the numbers rest on</h2><p class="sec-lede">Each card is one claim, its number, and the data behind it — recomputed from the logs where we have them.</p></div>
+    <div class="findings">
+      <article class="finding reveal tilt" id="f-latency"><span class="finding__n">82.7 → 152.6 <small>ms p50 → p95, drive 1</small></span><p class="finding__claim">Real time, measured on the car — and re-derived from the device logs.</p><p>The paper's three drives are matched in the logs by time-to-first-ready and aggregated over the paper's windows: log vs paper p50/p95 are 82.7/152.6 vs 83/153, 138.5/239.2 vs 138/239 and 135.3/176.5 vs 135/177 ms. Triangles mark the paper's values; the dashed line is the 300 ms p95 target.</p>
+        <div data-widget="hist" data-src="key:latency" data-label="End-to-end probe latency per drive"><figure class="pj-fallback"><figcaption>Runtime table in the paper: 5 Hz probe, 135 / 177 ms median / p95 on comma four with an external 8 GB GPU.</figcaption></figure></div>
+        <p class="finding__foot">Tick rule: every probe tick with an end-to-end latency sample, as in the paper's analysis script. <data class="n" value="177" data-src="log-latency">Device logs</data>; the fourth row pools every other session we logged, including warm-ups.</p></article>
+      <article class="finding reveal tilt" id="f-study" style="--i:1"><span class="finding__n">+1.79 <small>appropriateness · 14 drivers</small></span><p class="finding__claim">On the road, drivers rated TriDrive's warnings as more appropriate and more timely than openpilot's.</p><p>Each line is one participant, openpilot DMS → TriDrive on a seven-point scale; coincident pairs merge with a ×n tag, unpaired cells are hollow. Annoyance is a cost and is drawn in coral. Preference overall: 7 TriDrive · 4 openpilot · 3 equal — the paper calls it inconclusive, and so do we.</p>
+        <div data-widget="paired" data-src="key:userstudy" data-label="Paired on-road ratings"><figure class="pj-fallback"><img src="static/media/fig_user_study_bars.jpg" alt="Bar chart of paired on-road ratings for TriDrive and openpilot" width="1650" height="324" data-zoom><figcaption>Paired on-road ratings (paper figure).</figcaption></figure></div>
+        <p class="finding__foot">Δ, 95 % participant-bootstrap intervals and p from the paper: +1.79 [0.86, 2.75] p = .008 · +2.67 [1.33, 4.08] p = .008 · annoyance +1.17 [0.33, 2.08] p = .031.</p></article>
+      <article class="finding reveal tilt" id="f-probe" style="--i:2"><span class="finding__n">0.725 <small>AUROC vs 0.563</small></span><p class="finding__claim">The 5 Hz probe beats an openpilot-based baseline on human-labeled manual-driving warnings — and loses when assistance is engaged.</p><p>Dumbbells run baseline → probe. The engaged row goes the other way (0.746 → 0.664); the probe's calibration error is 0.028 against 0.408 for the baseline.</p>
+        <div data-widget="paired" data-src="key:probe" data-label="Warning-probe AUROC by regime"><figure class="pj-fallback"><figcaption>AUROC manual 0.725 vs 0.563 · pooled 0.716 vs 0.637 · engaged 0.664 vs 0.746.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-aide" style="--i:3"><span class="finding__n">48.05 <small>All-MPJPE · AIDE</small></span><p class="finding__claim">The kinematic encoder recipe sets the published full-set state of the art on AIDE.</p><p>Baseline first: zero-velocity 52.89 → Driver-WM 71.47 (published) → TriDrive 48.05 ± 0.06, PCK@0.05 87.13. Lower MPJPE is better.</p>
+        <div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Method</th><th>All-MPJPE ↓</th><th>PCK@0.05 ↑</th></tr></thead><tbody><tr class="base"><td>Zero-velocity</td><td><data class="n" value="52.89" data-src="arxiv-abs">52.89</data></td><td>—</td></tr><tr><td>Driver-WM (published)</td><td><data class="n" value="71.47" data-src="arxiv-abs">71.47</data></td><td>—</td></tr><tr class="hl"><td>TriDrive (ours, 3 seeds)</td><td><data class="n" value="48.05" data-src="arxiv-abs">48.05</data> ± 0.06</td><td><data class="n" value="87.13" data-src="arxiv-abs">87.13</data></td></tr></tbody></table></div>
+        <p class="finding__foot">Controls in the appendix (3 seeds) include MotionBERT with released weights at 48.71; the zero-velocity row shows how much of the metric a static pose already explains.</p></article>
+      <article class="finding reveal tilt" id="f-baton" style="--i:4"><span class="finding__n">+0.286 <small>PR-AUC · TTC drops, engaged</small></span><p class="finding__claim">Directed connections and road margins lift forecasting when the assistance system is driving.</p><p>Steering onset PR-AUC 0.774 manual (+0.030) / 0.463 engaged (+0.084); time-to-collision drops +0.206 manual / +0.286 engaged.</p>
+        <div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Target</th><th>Manual</th><th>Engaged</th></tr></thead><tbody><tr><td>Steering onset PR-AUC</td><td><data class="n" value="0.774" data-src="arxiv-prauc">0.774</data> <small>(+0.030)</small></td><td><data class="n" value="0.463" data-src="arxiv-prauc">0.463</data> <small>(+0.084)</small></td></tr><tr><td>TTC-drop PR-AUC gain</td><td><data class="n" value="0.206" data-src="arxiv-prauc">+0.206</data></td><td><data class="n" value="0.286" data-src="arxiv-prauc">+0.286</data></td></tr></tbody></table></div></article>
+      <article class="finding reveal tilt" id="f-hours" style="--i:5"><span class="finding__n">197.2 h <small>· 162 drivers</small></span><p class="finding__claim">Trained and evaluated on naturalistic driving, not a simulator.</p><p>The BATON subset used for forecasting: 197.2 hours from 162 drivers, plus 60 further drivers (11.71 h) held out; pose pretraining on 3,410,103 frames from 440 routes. Cabin footage here is from the lab's own consented recorder only.</p>
+        <p class="finding__foot"><a href="/baton/">BATON benchmark →</a> · <a href="https://huggingface.co/datasets/HenryYHW/BATON" target="_blank" rel="noopener">dataset on Hugging Face</a></p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= method ================= -->
+<section class="pj-section pj-section--band" id="method">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">04 · METHOD</span><h2>Encode three streams, connect them with intent</h2><p class="sec-lede">An anchored kinematic representation of the driver, causal CAN-bus dynamics and frozen V-JEPA 2 road latents with structured road margins meet in one latent state. Directed residual connections carry driver and road context into the vehicle branch; an autonomy flag conditions the transition on who is driving.</p></div>
+    <figure class="pj-fig reveal"><img src="static/media/fig_arch.jpg" alt="TriDrive architecture: driver, vehicle and road encoders, joint latent state with directed residual connections, forecasting and warning heads" width="2000" height="1105" loading="lazy" data-zoom><figcaption><b>Architecture.</b> Modality-specific encoders → joint latent state → future-state forecasts (driver kinematics, vehicle dynamics, road demands) and a current-state warning head.</figcaption></figure>
+    <div class="grid-3" style="margin-top:24px">
+      <article class="card reveal"><h3>Driver</h3><p>Frozen RTMW whole-body keypoints, re-anchored to the seat and the wheel so the representation is invariant to the camera; a GRU over four seconds of kinematics with a frozen keypoint forecaster.</p></article>
+      <article class="card reveal" style="--i:1"><h3>Vehicle</h3><p>A causal TCN over four seconds of CAN signals — speed, acceleration, steering, pedals — conditioned on whether the assistance system is engaged.</p></article>
+      <article class="card reveal" style="--i:2"><h3>Road</h3><p>Frozen V-JEPA 2 latents over eight seconds of road video, with radar and lane-line margins as structured inputs; distilled into a road student for the car.</p></article>
+    </div>
+    <figure class="pj-fig reveal" style="margin-top:24px"><img src="static/media/fig_teaser.jpg" alt="Overview figure: inputs, state representations, joint modeling and the forecasting and warning heads" width="2400" height="757" loading="lazy" data-zoom><figcaption><b>From inputs to warnings.</b> Driver, vehicle and road inputs; their state representations; the joint model; and the forecast and warning heads. Cabin regions are blurred on this page.</figcaption></figure>
+    <h3 class="sub-head">In the car</h3>
+    <div class="pj-strip reveal">
+      <figure class="pj-media" style="--ar:4/3"><img src="static/media/fig_hw_experiment.jpg" alt="Recorder and external GPU box mounted in the test vehicle" width="1600" height="1200" loading="lazy"><figcaption>comma four + external 8 GB GPU in the test car</figcaption></figure>
+      <figure class="pj-media" style="--ar:4/3"><img src="static/media/fig_hw_deployment1.jpg" alt="The device showing a 'pay attention — driver distracted' warning" width="1600" height="1200" loading="lazy"><figcaption>“Pay attention” — the warning head on the device</figcaption></figure>
+      <figure class="pj-media" style="--ar:4/3"><img src="static/media/fig_hw_deployment2.jpg" alt="The device showing a 'disengage immediately' warning next to the GPU enclosure" width="1600" height="1200" loading="lazy"><figcaption>“Disengage immediately” — escalated warning</figcaption></figure>
+    </div>
+    <figure class="pj-fig reveal" style="margin-top:24px"><img src="static/media/fig_causal_cases.jpg" alt="Two deployment cases: driver, vehicle, road and probe signals ten seconds around an anchor" width="2200" height="800" loading="lazy" data-zoom><figcaption><b>Two on-road cases.</b> Driver (hands off, head turned), vehicle (response and steering onset), road (TTC drop, forward risk) and the probe score around a warning anchor; the probe threshold is 0.49. Cabin panels blurred.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================= results ================= -->
+<section class="pj-section" id="results">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">05 · RESULTS</span><h2>Tables, baseline first</h2></div>
+    <div class="tabs reveal">
+      <div class="tabs__list" role="tablist"><button role="tab" aria-selected="true" aria-controls="tab-runtime" id="t-runtime" type="button">Runtime</button><button role="tab" aria-selected="false" aria-controls="tab-warn" id="t-warn" tabindex="-1" type="button">Warning probe</button><button role="tab" aria-selected="false" aria-controls="tab-study" id="t-study" tabindex="-1" type="button">On-road study</button></div>
+      <div class="tabs__panel" id="tab-runtime" role="tabpanel" aria-labelledby="t-runtime"><p class="tbl-cap">Runtime on comma four + RX 9060 8 GB · arXiv v1</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Component</th><th>Rate</th><th>Latency (median / p95)</th></tr></thead><tbody><tr class="hl"><td>Warning probe (current state)</td><td><data class="n" value="5" data-src="arxiv-latency">5</data> Hz</td><td><data class="n" value="135" data-src="arxiv-latency">135</data> / <data class="n" value="177" data-src="arxiv-latency">177</data> ms</td></tr><tr><td>Joint forecasting backbone</td><td>2.35 Hz</td><td>—</td></tr><tr><td>Pose (RTMW)</td><td>9.38 Hz</td><td>—</td></tr><tr><td>Road student (distilled V-JEPA 2)</td><td>1.89 Hz</td><td>—</td></tr></tbody></table></div></div>
+      <div class="tabs__panel" id="tab-warn" role="tabpanel" aria-labelledby="t-warn" hidden><p class="tbl-cap">Warning probe vs openpilot-based baseline · AUROC · arXiv v1</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Regime</th><th>Baseline</th><th>TriDrive probe</th></tr></thead><tbody><tr><td>Manual driving (human-labeled)</td><td>0.563</td><td class="hl"><data class="n" value="0.725" data-src="arxiv-probe">0.725</data></td></tr><tr><td>Pooled</td><td>0.637</td><td>0.716</td></tr><tr><td>Assistance engaged</td><td>0.746</td><td>0.664</td></tr><tr><td>Calibration error</td><td>0.408</td><td>0.028</td></tr></tbody></table></div></div>
+      <div class="tabs__panel" id="tab-study" role="tabpanel" aria-labelledby="t-study" hidden><p class="tbl-cap">Paired on-road study · 14 participants · seven-point scales · arXiv v1</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Construct</th><th>Pairs</th><th>Δ (TriDrive − openpilot)</th><th>95 % CI</th><th>p</th></tr></thead><tbody><tr class="hl"><td>Appropriateness ↑</td><td>14</td><td><data class="n" value="1.79" data-src="arxiv-study">+1.79</data></td><td>[0.86, 2.75]</td><td>.008</td></tr><tr class="hl"><td>Timeliness ↑</td><td>12</td><td><data class="n" value="2.67" data-src="arxiv-study">+2.67</data></td><td>[1.33, 4.08]</td><td>.008</td></tr><tr><td>Annoyance ↓ (cost)</td><td>12</td><td><data class="n" value="1.17" data-src="arxiv-study">+1.17</data></td><td>[0.33, 2.08]</td><td>.031</td></tr><tr><td>Overall preference</td><td colspan="4">7 TriDrive · 4 openpilot · 3 equal — inconclusive</td></tr></tbody></table></div></div>
+    </div>
+    <p class="pj-note pj-note--warn reveal"><b>Honest limits.</b> Forecasts did not feed the on-road warning decision — the warning came from the current-state probe. On assistance-engaged driving the openpilot-based baseline scores higher AUROC than the probe. Overall preference in the study is inconclusive.</p>
+    <details class="sources reveal"><summary>Sources &amp; notes</summary><ol data-auto></ol></details>
+  </div>
+</section>
+
+<!-- ================= data & access ================= -->
+<section class="pj-section pj-section--band" id="data">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">06 · DATA &amp; ACCESS</span><h2>Model, code and the data behind it</h2></div>
+    <div class="tiers">
+      <div class="tier tier--hi reveal"><span class="badge badge--warn">On request</span><h3>TriDrive model &amp; code</h3><p>Checkpoints, tables and documents under CC BY-SA 4.0; access is gated with manual approval on Hugging Face.</p><p class="mono" data-hf="HenryYHW/TriDrive">as of 2026-10-02 · gated: manual · CC BY-SA 4.0</p><div class="pj-cta"><a class="btn btn--primary btn--sm" href="https://huggingface.co/HenryYHW/TriDrive" target="_blank" rel="noopener">Request access</a></div></div>
+      <div class="tier reveal" style="--i:1"><span class="badge badge--warn">On request</span><h3>BATON (naturalistic driving)</h3><p>The 197.2 h forecasting subset comes from BATON; the full dataset is released separately under CC BY-NC 4.0 with a frozen benchmark.</p><p class="mono" data-hf="HenryYHW/BATON">as of 2026-10-02 · gated: manual</p><div class="pj-cta"><a class="btn btn--sm" href="/baton/">BATON page</a><a class="btn btn--sm" href="https://huggingface.co/datasets/HenryYHW/BATON" target="_blank" rel="noopener">Hugging Face</a></div></div>
+      <div class="tier reveal" style="--i:2"><span class="badge badge--crit">Not released</span><h3>Cabin recordings &amp; study videos</h3><p>Participant recordings from the on-road study and raw cabin video are not released (consent). The clips on this page come from the lab's own consented recorder only.</p><p class="mono">AIDE is a public third-party benchmark; obtain it from its authors.</p></div>
+    </div>
+    <p class="pj-note reveal"><b>Reproduce.</b> Model and training code on Hugging Face · AIDE protocol as published · BATON forecasting splits with the dataset · runtime figures from the device logs (tick rule above).</p>
+  </div>
+</section>
+
+<!-- ================= family + cite ================= -->
+<section class="pj-section" id="cite">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">07 · CITE</span><h2>Read the paper, cite the work</h2></div>
+    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@article{wang2026tridrive,
   title   = {TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring},
   author  = {Wang, Yuhang and Yang, Jingxin and Wei, Chuheng and Guo, Yuechen and Xu, Jinghan and Han, Zhao and Zhou, Hao},
   journal = {arXiv preprint arXiv:2609.33000},
   year    = {2026},
   url     = {https://arxiv.org/abs/2609.33000}
-}</code></pre>
+}</pre></div>
+    <h3 class="sub-head">Related work from the lab</h3>
+    <div class="family reveal">
+      <a class="fam" href="/baton/"><img src="/images/th_baton.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>BATON</h4><p>Bidirectional human–automation control transitions on synchronized streams.</p></div></a>
+      <a class="fam" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>DriveMotion</h4><p>Whole-body driver motion forecasting from 133 keypoints.</p></div></a>
+      <a class="fam" href="/vlalert/"><img src="/images/th_vlalert.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">CoRL 2026</span><h4>VLAlert</h4><p>Observe before you alert: adaptive driver alerting with vision-language models.</p></div></a>
     </div>
-  </section>
+  </div>
+</section>
+</main>
 
-  <footer class="footer">
-    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
-      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-    </div></div></div></div>
-  </footer>
-  </main>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-
-      function countUp(el) {
-        var target = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0),
-            suf = el.dataset.suffix || "", dur = 1400, t0 = null;
-        function fmt(v) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString(); }
-        function step(t) {
-          if (!t0) t0 = t;
-          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(target * eased) + suf;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var io2 = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
-      }, { threshold: 0.4 });
-      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
-    });
-  </script>
-<script type="module" src="/assets/dark/hero-bg.js"></script>
+<footer class="pj-foot"><div class="pj-wrap"><b>Yuhang Wang</b> · University of South Florida · MOTIF-Lab<div class="pj-foot__links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a><a href="mailto:yuhangw@usf.edu">yuhangw@usf.edu</a></div></div></footer>
+<button class="totop" type="button" aria-label="Back to top" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 </body>
 </html>

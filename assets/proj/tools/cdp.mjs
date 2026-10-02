@@ -17,6 +17,10 @@ await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceSc
 if (flag('--reduce')) await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 if (flag('--nojs')) await send('Emulation.setScriptExecutionDisabled', { value: true });
 await send('Page.navigate', { url }); await sleep(Number(val('--wait') || 2500));
+if (flag('--scroll')) { // walk the page so IntersectionObservers (reveal, lazy widgets) fire, then return to the top
+  const h = (await send('Runtime.evaluate', { expression: 'document.documentElement.scrollHeight', returnByValue: true })).result.result.value;
+  for (let y = 0; y < h; y += Math.round(H * 0.7)) { await send('Runtime.evaluate', { expression: `window.scrollTo({top:${y},behavior:"instant"})` }); await sleep(250); }
+  await send('Runtime.evaluate', { expression: 'window.scrollTo({top:0,behavior:"instant"})' }); await sleep(1500); }
 const consoleMsgs = events.filter(e => e.method === 'Runtime.consoleAPICalled').map(e => ({ type: e.params.type, text: e.params.args.map(a => a.value ?? a.description ?? '').join(' ') }));
 const errors = events.filter(e => e.method === 'Runtime.exceptionThrown').map(e => e.params.exceptionDetails.exception?.description || e.params.exceptionDetails.text);
 const logs = events.filter(e => e.method === 'Log.entryAdded').map(e => `${e.params.entry.level}: ${e.params.entry.text}`);
@@ -24,6 +28,6 @@ const resp = events.filter(e => e.method === 'Network.responseReceived').map(e =
 const fin = events.filter(e => e.method === 'Network.loadingFinished'); const bytesByReq = Object.fromEntries(fin.map(e => [e.params.requestId, e.params.encodedDataLength]));
 const reqs = events.filter(e => e.method === 'Network.responseReceived').map(e => ({ url: e.params.response.url, status: e.params.response.status, type: e.params.type, bytes: bytesByReq[e.params.requestId] ?? 0 }));
 let evalResult = null; if (val('--eval')) { const r = await send('Runtime.evaluate', { expression: val('--eval'), returnByValue: true, awaitPromise: true }); evalResult = r.result?.result?.value ?? r.result?.exceptionDetails?.text ?? null; }
-if (val('--shot')) { const s = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true }); writeFileSync(val('--shot'), Buffer.from(s.result.data, 'base64')); }
+if (val('--shot')) { await send('Runtime.evaluate', { expression: 'document.getAnimations().forEach(a => { try { a.finish(); } catch (e) {} })' }); await sleep(100); const s = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: !flag('--viewport-only') }); writeFileSync(val('--shot'), Buffer.from(s.result.data, 'base64')); }
 console.log(JSON.stringify({ url, viewport: [W, H], console: consoleMsgs, exceptions: errors, logs: logs.filter(l => !/Autoplay|preload/.test(l)), requests: reqs, eval: evalResult }, null, 1));
 ws.close(); chrome.kill(); process.exit(0);

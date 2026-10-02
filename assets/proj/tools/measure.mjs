@@ -20,7 +20,7 @@ async function run(W, H) {
   await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceScaleFactor: 1, mobile: W < 800 });
   await send('Page.navigate', { url }); await sleep(4000); phase = 'scroll';
   const height = (await send('Runtime.evaluate', { expression: 'document.documentElement.scrollHeight', returnByValue: true })).result.result.value;
-  for (let y = 0; y < height; y += Math.round(H * 0.8)) { await send('Runtime.evaluate', { expression: `window.scrollTo(0, ${y})` }); await sleep(350); }
+  for (let y = 0; y < height; y += Math.round(H * 0.8)) { await send('Runtime.evaluate', { expression: `window.scrollTo({top:${y},behavior:"instant"})` }); await sleep(350); }
   await sleep(2500);
   const list = [...reqs.values()].filter(r => r.status < 400 || r.status === 0);
   const sum = (f) => list.filter(f).reduce((a, r) => a + (r.bytes || 0), 0);

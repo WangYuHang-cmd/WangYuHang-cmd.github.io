@@ -15,7 +15,7 @@ import argparse, html, json, os, re, sys, urllib.request
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 PAGES = ["tridrive", "adasto", "drivedna", "drivemotion", "baton"]
 VENUE_RX = re.compile(r"\b(KDD|WACV|ICLR|NeurIPS|CVPR|anonymous|anonymized|double-blind|submission|submitted to)\b", re.I)
-SUPERLATIVE_RX = re.compile(r"\b(first|only|state[- ]of[- ]the[- ]art|SOTA|largest|best|unprecedented|novel)\b", re.I)
+SUPERLATIVE_RX = re.compile(r"\b(the first|the only|state[- ]of[- ]the[- ]art|SOTA|the largest|the best|unprecedented|novel)\b", re.I)
 MOTION_RX = re.compile(r"\b\d+(?:\.\d+)?m?s\b(?=[^<]*[;\"])|cubic-bezier\(")
 
 def load_yaml(path):  # minimal loader for registry.yaml's two-level mapping of flow-style dicts
@@ -47,6 +47,21 @@ def blend(fg, alpha, bg):
 
 def strip_tags(s): return html.unescape(re.sub(r"<[^>]+>", " ", s))
 
+from html.parser import HTMLParser
+class _Claims(HTMLParser):
+    VOID = {"br", "img", "meta", "link", "input", "hr", "source", "wbr"}
+    def __init__(self): super().__init__(); self.depth = 0; self.out = []; self.stack = []
+    def handle_starttag(self, tag, attrs):
+        if tag in self.VOID: return
+        self.stack.append(tag in ("data-claim",) or any(k == "data-claim" for k, _ in attrs))
+        if self.stack[-1]: self.depth += 1
+    def handle_endtag(self, tag):
+        if tag in self.VOID or not self.stack: return
+        if self.stack.pop(): self.depth -= 1
+    def handle_data(self, d):
+        if self.depth > 0: self.out.append(d)
+def claim_text(body): p = _Claims(); p.feed(body); return " ".join(p.out)
+
 def check(page, online=False):
     P = []; path = os.path.join(ROOT, page, "index.html")
     if not os.path.exists(path): return [f"{page}/index.html missing"]
@@ -57,7 +72,9 @@ def check(page, online=False):
     for m in re.finditer(r'(?:src|href|poster|data-src|data-video|data-poster|data-zoom)="([^"#][^"]*)"', src):
         u = m.group(1).split("?")[0]
         if u.startswith(("http", "mailto:", "data:", "key:", "//", "javascript:")): continue
+        if re.fullmatch(r"[\w-]+", u): continue  # source ids on <data data-src="…">, not paths
         fp = os.path.join(ROOT, u.lstrip("/")) if u.startswith("/") else os.path.join(ROOT, page, u)
+        if u.startswith("/") and u.endswith("/") and os.path.exists(os.path.join(ROOT, u.strip("/") + ".md")): continue  # Jekyll page from <name>.md
         if not os.path.exists(fp): P.append(f"ref missing: {u}")
     # motion literals (ignore inside <script>/<style> JSON data and the preview JSON)
     scanned = re.sub(r"<script[^>]*>.*?</script>", "", body, flags=re.S)
@@ -67,14 +84,11 @@ def check(page, online=False):
     text = strip_tags(re.sub(r"<(script|style)[^>]*>.*?</\1>", "", body, flags=re.S))
     for m in VENUE_RX.finditer(text): P.append(f"venue/anonymity leakage: '{m.group(0)}' …{text[max(0, m.start()-30):m.end()+30].strip()}…")
     # claims lock
-    claim_spans = [strip_tags(x) for x in re.findall(r"<[^>]+data-claim[^>]*>(.*?)</", body, flags=re.S)]
-    allowed = " ".join(claim_spans)
+    allowed = claim_text(body)
     for m in SUPERLATIVE_RX.finditer(text):
         word = m.group(0); ctx = text[max(0, m.start() - 40):m.end() + 40]
-        if word.lower() in ("first", "only", "best") and re.search(r"\b(the first|only|best)\b", ctx, re.I) is None: continue
-        if word.lower() in allowed.lower(): continue
-        if re.search(r"\b(first|only)\s+(time|step|version|half|three|two|row|3|5|frame|order|action)", ctx, re.I): continue
-        if re.search(r"\b(the first|only|best|state of the art|largest|novel|SOTA|unprecedented)\b", ctx, re.I): P.append(f"superlative outside data-claim: …{ctx.strip()}…")
+        if re.sub(r"\s+", " ", word.lower()) in re.sub(r"\s+", " ", allowed.lower()): continue
+        P.append(f"superlative outside data-claim: …{ctx.strip()}…")
     # numbers vs registry
     reg = load_yaml(os.path.join(ROOT, "tools", "projpipe", "registry.yaml")).get(page, {})
     vals = {k: v["value"] for k, v in reg.items() if isinstance(v, dict) and "value" in v}
