@@ -546,3 +546,10 @@ body[data-motion="reduce"] .pj-bars .fill{width:var(--w);transition:none}
   a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;color:#555}
   .pj-section{padding:28px 0}
 }
+
+/* ---------- paired still frames inside a Scrubber media box (DriveDNA A | B) ---------- */
+.pj-pairframes{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000}
+.pj-pairframes figure{position:relative;margin:0;overflow:hidden}
+.pj-pairframes img{width:100%;height:100%;object-fit:cover}
+.pj-pairframes figcaption{position:absolute;left:8px;bottom:8px;padding:3px 8px;border-radius:6px;background:rgba(7,13,29,.85);border:1px solid var(--cl-border);font:700 .72rem/1.5 var(--cl-mono);color:#fff}
+.pj-pairframes figure:first-child figcaption{color:var(--cl-violet);border-color:rgba(176,124,255,.5)}

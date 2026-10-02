@@ -1,220 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="title" content="DriveDNA: A Benchmark for Driving Style Identification">
-  <meta name="description" content="DriveDNA is a large-scale multimodal naturalistic driving dataset and benchmark for driving-style identification: 4,121 drives from 465 drivers, 975 hours, with driver re-identification and route-leakage robustness.">
-  <meta name="keywords" content="driving style, driver identification, naturalistic driving, benchmark, re-identification, behavior modeling, autonomous driving">
-  <meta name="author" content="Yuhang Wang, Lingyao Li, Hao Zhou">
-  <meta name="robots" content="index, follow">
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
-  <meta property="og:title" content="DriveDNA: A Benchmark for Driving Style Identification">
-  <meta property="og:description" content="A large-scale multimodal naturalistic driving dataset and benchmark for driving-style identification.">
-  <meta property="og:url" content="https://wangyuhang-cmd.github.io/drivedna/">
-  <meta property="og:image" content="https://wangyuhang-cmd.github.io/drivedna/static/images/drivedna_teaser.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DriveDNA: Driving Style Identification">
-  <meta name="twitter:description" content="A large-scale multimodal naturalistic driving dataset and benchmark for driving-style identification.">
-  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivedna/static/images/drivedna_teaser.png">
-
-  <meta name="citation_title" content="DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification">
-  <meta name="citation_author" content="Wang, Yuhang">
-  <meta name="citation_author" content="Li, Lingyao">
-  <meta name="citation_author" content="Zhou, Hao">
-  <meta name="citation_publication_date" content="2026">
-
-  <title>DriveDNA · Benchmark for Driving Style Identification</title>
-
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
-  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
-  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
-  <script defer src="/projectpage-lib/js/index.js"></script>
-  <style>
-    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
-    .home-link:hover{background:#1d4ed8;color:#fff}
-    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
-    .stat{text-align:center;min-width:120px}
-    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
-    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
-  
-    /* ---- cinematic dark hero (design system v2) ---- */
-    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
-    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
-    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
-    .hero-dark .publication-authors a{color:#7fb0ff}
-    .hero-dark .publication-authors a:hover{color:#fff}
-    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
-    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
-    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
-    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
-    .filmstrip.single{grid-template-columns:minmax(0,860px);justify-content:center}
-    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14);background:#fff}
-    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
-    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
-    .filmstrip.single .film-card img{aspect-ratio:auto;object-fit:contain}
-    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
-    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em;z-index:2}
-    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
-    .hero-tagline b{color:#fff}
-    .hero-dark .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
-    .hero-dark .stat{text-align:center;min-width:130px}
-    .hero-dark .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
-    .hero-dark .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-    .section-title-accent{position:relative;display:inline-block}
-    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
-    .gif-card{transition:transform .22s ease,box-shadow .22s ease}
-    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-    .reveal.on{opacity:1;transform:none}
-    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}.filmstrip.single{grid-template-columns:1fr}}
-  </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DriveDNA · A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification</title>
+<meta name="description" content="DriveDNA: 4,121 drives, 465 drivers, 115 vehicle models, 975 hours at 10 Hz with forward video; a benchmark that separates driver behavior from vehicle, route and condition shortcuts — with leakage diagnostics built in.">
+<meta name="keywords" content="driving style, driver identification, re-identification, naturalistic driving, CAN bus, benchmark, shortcut learning, route leakage, condition-matched evaluation">
+<meta name="author" content="Yuhang Wang, Lingyao Li, Hao Zhou">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wangyuhang-cmd.github.io/drivedna/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+<meta property="og:title" content="DriveDNA: Driving Style Identification, Without the Shortcuts">
+<meta property="og:description" content="4,121 drives · 465 drivers · 115 models · 975 h. Learned embeddings re-identify drivers at AUROC .935 — and the benchmark shows how much of that is the car and the road.">
+<meta property="og:url" content="https://wangyuhang-cmd.github.io/drivedna/">
+<meta property="og:image" content="https://wangyuhang-cmd.github.io/drivedna/static/media/fig_teaser.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DriveDNA: Driving Style Identification, Without the Shortcuts">
+<meta name="twitter:description" content="A benchmark designed to tell driver behavior from vehicle, route and condition shortcuts.">
+<meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivedna/static/media/fig_teaser.jpg">
+<meta name="citation_title" content="DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification">
+<meta name="citation_author" content="Wang, Yuhang"><meta name="citation_author" content="Li, Lingyao"><meta name="citation_author" content="Zhou, Hao">
+<meta name="citation_publication_date" content="2026"><meta name="citation_arxiv_id" content="2607.23822">
+<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+<link rel="preload" href="/assets/proj/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/proj/proj.css">
+<script defer src="/assets/proj/proj.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"DriveDNA","description":"4,121 drives from 465 drivers across 115 vehicle models — 975 hours of human-controlled driving at 10 Hz with forward video — plus 62,674 annotated 60-second windows and 276,248 maneuver events; a benchmark for driving-style identification with leakage diagnostics.","url":"https://wangyuhang-cmd.github.io/drivedna/","sameAs":["https://arxiv.org/abs/2607.23822","https://huggingface.co/datasets/HenryYHW/DriveDNA","https://github.com/WangYuHang-cmd/DriveDNA"],"creator":{"@type":"Organization","name":"University of South Florida · MOTIF-Lab"},"distribution":[{"@type":"DataDownload","contentUrl":"https://huggingface.co/datasets/HenryYHW/DriveDNA"},{"@type":"DataDownload","contentUrl":"https://huggingface.co/datasets/HenryYHW/DriveDNA-Sample"}]}</script>
 </head>
-<body>
-  <div id="site-nav"></div>
-  <script defer src="/assets/dark/nav.js"></script>
-  <noscript><a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a></noscript>
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+<body data-proj="drivedna" data-manifest="static/data/manifest.json" data-sources="key:sources">
+<a class="pj-skip" href="#main">Skip to content</a>
+<div class="pj-bg" aria-hidden="true"></div><div class="pj-stars" aria-hidden="true"></div>
 
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
-      <div class="works-list">
-        <a href="/tridrive/" class="work-item"><div class="work-info"><h5>TriDrive</h5><p>Joint driver, vehicle and road modeling for human-centered driving.</p><span class="work-venue">Under review 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events with multimodal signals.</p><span class="work-venue">IEEE ITSC 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/drivemotion/" class="work-item"><div class="work-info"><h5>DriveMotion</h5><p>Driver body-motion forecasting benchmark.</p><span class="work-venue">Dataset 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+<header class="pj-nav" id="nav">
+  <div class="pj-nav__in">
+    <a class="pj-brand" href="/">Yuhang <b>Wang</b></a>
+    <nav class="pj-menu" aria-label="Page">
+      <ul class="pj-anchors">
+        <li><a href="#top">DriveDNA</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Signature</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
+      </ul>
+      <ul>
+        <li class="pj-site-extra"><a href="/">Home</a></li><li class="pj-site-extra"><a href="/projects/">Projects</a></li>
+        <li class="pj-dd"><button class="pj-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">More works <svg class="ic ic-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="pj-dd__menu"><a href="/openlka/"><b>OpenLKA</b><span>Lane keeping on real roads · ITSC 2025</span></a><a href="/adasto/"><b>ADAS-TO</b><span>Human–ADAS takeover transitions · ITSC 2026</span></a><a href="/tridrive/"><b>TriDrive</b><span>Joint driver–vehicle–road modeling · arXiv 2026</span></a><a href="/drivemotion/"><b>DriveMotion</b><span>Driver body-motion forecasting · arXiv 2026</span></a><a href="/baton/"><b>BATON</b><span>Bidirectional control transitions · arXiv 2026</span></a><a href="/vlalert/"><b>VLAlert</b><span>Observe before you alert · CoRL 2026</span></a></div></li>
+        <li><a class="btn btn--sm" href="https://arxiv.org/abs/2607.23822" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> 2607.23822</a></li>
+      </ul>
+    </nav>
+    <button class="pj-burger" type="button" aria-expanded="false" aria-label="Open menu" aria-controls="nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <div class="pj-progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+<!-- ================= hero ================= -->
+<section class="pj-hero" id="top">
+  <div class="pj-wrap">
+    <div class="pj-hero__grid">
+      <div class="pj-hero__text">
+        <p class="pj-eyebrow">Dataset &amp; benchmark · driving style · arXiv 2026</p>
+        <h1 class="pj-h1"><span class="pj-wordmark">DriveDNA</span><span class="pj-title">A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification</span></h1>
+        <p class="pj-thesis"><span data-claim="arxiv-abs">The <b>first</b> benchmark designed to distinguish driver behavior from vehicle, drive and driving-condition shortcuts</span> — and to show when a high re-identification score is really a route shortcut.</p>
+        <p class="pj-lede">4,121 drives from 465 drivers across 115 vehicle models, 975 hours of human-controlled driving at 10 Hz with forward video. Frozen driver-disjoint splits, condition-matched pairs and leakage probes ship with the data, so every score comes with the question "how much of this is the person?"</p>
+        <div class="pj-pills"><span class="pj-pill pj-pill--accent">arXiv 2607.23822 · 2026</span><span class="pj-pill">62,674 windows · 276,248 events</span><span class="pj-pill">30 baseline configurations</span></div>
+        <div class="pj-cta">
+          <a class="btn btn--primary" href="#signature">See the driver map</a>
+          <a class="btn" href="https://arxiv.org/abs/2607.23822" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> Paper</a>
+          <a class="btn" href="https://huggingface.co/datasets/HenryYHW/DriveDNA" target="_blank" rel="noopener">Dataset</a>
+          <a class="btn" href="https://github.com/WangYuHang-cmd/DriveDNA" target="_blank" rel="noopener">Code</a>
+        </div>
+        <p class="pj-authors"><a href="/">Yuhang Wang</a><sup>1</sup><span class="sep">·</span>Lingyao Li<sup>2</sup><span class="sep">·</span><a href="https://sites.google.com/view/haozhou-cv" target="_blank" rel="noopener">Hao Zhou</a><sup>1</sup></p>
+        <p class="pj-affil"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>University of Arizona</p>
       </div>
+      <a class="pj-hero__stage" href="#signature" aria-label="Open the driver map">
+        <div data-widget="scatter" data-mode="hero" data-pulse data-src="key:embedding" data-eager data-label="Hero: driver embedding map, representative drivers lighting up in turn">
+          <figure class="pj-fallback"><img src="static/media/fig_embedding_map.jpg" alt="t-SNE map of driving-window embeddings" width="2000" height="1500"></figure>
+        </div>
+        <div class="pj-stage__cap"><span>live · <b>14,930 windows · 428 drivers</b> · t-SNE of 128-d embeddings</span><span class="pj-pill pj-pill--live">driver map</span></div>
+      </a>
+    </div>
+    <div class="pj-stats">
+      <a class="stat" href="#f-corpus"><span class="num" data-count="4121">4,121</span><span class="lbl">drives <data class="n" value="4121" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-corpus"><span class="num" data-count="465">465</span><span class="lbl">pseudonymous drivers <data class="n" value="465" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-corpus"><span class="num" data-count="115">115</span><span class="lbl">vehicle models · 26 brands <data class="n" value="115" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-corpus"><span class="num" data-count="975" data-suffix=" h">975 h</span><span class="lbl">human-controlled driving at 10 Hz <data class="n" value="975" data-src="arxiv-abs">(paper)</data></span></a>
     </div>
   </div>
+</section>
 
-  <main id="main-content">
-  <section class="hero hero-dark">
-    <div data-hero-bg data-mode="contained" hidden></div>
-    <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification</h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a><sup>1</sup>,</span>
-              <span class="author-block">Lingyao Li<sup>2</sup>,</span>
-              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a><sup>1</sup></span>
-            </div>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>University of Arizona</span><br>
-              <span class="venue-pill">arXiv preprint · 2026</span>
-            </div>
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <span class="link-block"><a href="https://huggingface.co/papers/2607.23822" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
-                <span class="link-block"><a href="https://arxiv.org/abs/2607.23822" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
-                <span class="link-block"><a href="https://github.com/WangYuHang-cmd/DriveDNA" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
-                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/DriveDNA" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
-              </div>
-            </div>
-            <div class="filmstrip single">
-              <div class="film-card"><img src="static/images/drivedna_teaser.png" alt="Overview"/></div>
-            </div>
-
-            <p class="hero-tagline">Driving style as a consistent, driver-specific behavioral signature — isolated from vehicle, route, and environment.</p>
-            <div class="stat-band">
-              <div class="stat"><div class="num" data-count="4121">0</div><div class="lbl">drives</div></div>
-              <div class="stat"><div class="num" data-count="465">0</div><div class="lbl">drivers</div></div>
-              <div class="stat"><div class="num" data-count="975" data-suffix=" h">0</div><div class="lbl">driving @10 Hz</div></div>
-              <div class="stat"><div class="num">.935</div><div class="lbl">re-ID AUROC</div></div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+<!-- ================= overview ================= -->
+<section class="pj-section" id="overview">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">01 · OVERVIEW</span><h2>Driving style, isolated from its confounds</h2><p class="sec-lede">The abstract, verbatim, beside what you need to know at a glance.</p></div>
+    <div class="pj-overview">
+      <div class="pj-abstract reveal" data-claim="arxiv-abs"><p>DriveDNA operationalizes driving style as a consistent, driver-specific behavioral pattern in how a vehicle moves under similar conditions, and isolates it from vehicle identity, route, and environment confounds. It contains <data class="n" value="4121" data-src="arxiv-abs">4,121</data> drives from <data class="n" value="465" data-src="arxiv-abs">465</data> drivers across <data class="n" value="115" data-src="arxiv-abs">115</data> vehicle models — <data class="n" value="975" data-src="arxiv-abs">975</data> hours of human-controlled driving at 10 Hz with forward video — plus <data class="n" value="62674" data-src="hf-windows">62,674</data> annotated 60-second windows and <data class="n" value="276248" data-src="hf-windows">276,248</data> maneuver events. The benchmark defines three tasks: few-shot driver re-identification, personalized behavior prediction, and condition-matched comparison. Learned representations outperform classical descriptors on unseen drivers (AUROC <data class="n" value="0.935" data-src="arxiv-auroc">0.935</data> vs. <data class="n" value="0.707" data-src="arxiv-auroc">0.707</data>), but video-only models are vulnerable to "route leakage" — strong scores can stem from contextual shortcuts rather than genuine behavior — motivating robustness-aware evaluation with frozen splits, leakage diagnostics, and 30 baseline configurations.</p></div>
+      <aside class="pj-glance reveal" style="--i:1"><dl>
+        <div><dt>Venue</dt><dd>arXiv 2607.23822 · v1 · 26 Jul 2026</dd></div>
+        <div><dt>Links</dt><dd><a href="https://arxiv.org/abs/2607.23822" target="_blank" rel="noopener">arXiv</a><a href="https://huggingface.co/datasets/HenryYHW/DriveDNA" target="_blank" rel="noopener">Dataset</a><a href="https://huggingface.co/datasets/HenryYHW/DriveDNA-Sample" target="_blank" rel="noopener">Sample</a><a href="https://github.com/WangYuHang-cmd/DriveDNA" target="_blank" rel="noopener">Code</a><a href="#cite">BibTeX</a></dd></div>
+        <div><dt>Tasks</dt><dd>Few-shot driver re-identification · personalized behavior prediction · condition-matched comparison</dd></div>
+        <div><dt>Modalities</dt><dd class="mono">CAN kinematics at 10 Hz · forward road video (526×330) · 12 descriptors · 8 behavioral primitives · 6 scenarios</dd></div>
+        <div><dt>License</dt><dd>DriveDNA research license · <span data-hf="HenryYHW/DriveDNA">gated, manual approval</span> · sample without approval</dd></div>
+        <div><dt>Privacy</dt><dd>Sequential pseudonyms (driver_001…); VINs, device identifiers, precise timestamps and GPS removed; no cabin video or audio.</dd></div>
+      </dl></aside>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section hero is-light reveal">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3 section-title-accent">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              DriveDNA operationalizes driving style as a consistent, driver-specific behavioral pattern in how a vehicle
-              moves under similar conditions, and isolates it from vehicle identity, route, and environment confounds. It
-              contains 4,121 drives from 465 drivers across 115 vehicle models — 975 hours of human-controlled driving at
-              10&nbsp;Hz with forward video — plus 62,674 annotated 60-second windows and 276,248 maneuver events. The
-              benchmark defines three tasks: few-shot driver re-identification, personalized behavior prediction, and
-              condition-matched comparison. Learned representations outperform classical descriptors on unseen drivers
-              (AUROC 0.935 vs. 0.707), but video-only models are vulnerable to "route leakage" — strong scores can stem from
-              contextual shortcuts rather than genuine behavior — motivating robustness-aware evaluation with frozen splits,
-              leakage diagnostics, and 30 baseline configurations.
-            </p>
-          </div>
-        </div>
+<!-- ================= signature ================= -->
+<section class="pj-section pj-section--band" id="signature">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">02 · SIGNATURE</span><h2>Same car, same curve, two drivers</h2><p class="sec-lede">Driving style only means something once the car and the road are held fixed. Each pair below is two drivers in the same vehicle model entering a matched curve: A in violet, B in white, on the same axes, eight seconds either side of the anchor.</p></div>
+    <div data-widget="scrubber" data-sync="dna" data-src="key:pairs" data-label="Matched driver pairs" data-ribbon="<b>Pairs</b> come from the paper's condition-matched figure kits: same vehicle model, matched road scene (scene similarity scored on the forward video), 10 Hz CAN kinematics. Drivers are the release pseudonyms.">
+      <div class="pj-sc__media" style="--ar:526/165"><div class="pj-pairframes"><figure><img data-frame="0" src="static/media/pair_final1_A.jpg" alt="Forward camera frame for driver A at the anchor" width="526" height="330"><figcaption data-driver="0">A</figcaption></figure><figure><img data-frame="1" src="static/media/pair_final1_B.jpg" alt="Forward camera frame for driver B at the anchor" width="526" height="330"><figcaption data-driver="1">B</figcaption></figure></div></div>
+      <div class="pj-sc__strips">
+        <canvas class="pj-strip" data-col="v_A" data-col2="v_B" data-label="speed · A violet · B white" data-unit="m/s" data-color="violet" data-color2="white" data-min="0" data-max="30"></canvas>
+        <canvas class="pj-strip" data-col="a_A" data-col2="a_B" data-label="acceleration" data-unit="m/s²" data-sym data-color="violet" data-color2="white"></canvas>
+        <canvas class="pj-strip" data-col="k_A" data-col2="k_B" data-label="|curvature|" data-unit="1/m" data-min="0" data-color="violet" data-color2="white"></canvas>
       </div>
+      <figure class="pj-fallback"><img src="static/media/fig_pair_overlay.jpg" alt="Two drivers' speed, acceleration and curvature traces overlaid around a matched curve" width="1800" height="900" data-zoom><figcaption><b>Static view.</b> Overlaid traces from the paper's matched-pair figure.</figcaption></figure>
     </div>
-  </section>
+    <h3 class="sub-head">The driver map — and what it is actually reading</h3>
+    <p class="pj-lede reveal" style="max-width:none">14,930 windows (≤ 60 per driver, 428 drivers) embedded by the PatchTST + SupCon encoder and projected with t-SNE. Colour by driver, vehicle model or scenario; hover or click a point to light up its category; ←/→ walks through representative drivers. The purity chips give the k = 10 nearest-neighbour label agreement on the 128-d embeddings: if neighbours share a model or a scenario more than a driver, the embedding is reading the car or the road, not the person.</p>
+    <div data-widget="scatter" data-src="key:embedding" data-color="driver" data-label="Driver embedding map"><figure class="pj-fallback"><img src="static/media/fig_embedding_map.jpg" alt="t-SNE map of driving-window embeddings coloured by driver" width="2000" height="1500" data-zoom><figcaption>Embedding map (paper figure).</figcaption></figure></div>
+    <p class="pj-note reveal"><b>Read the purity honestly.</b> On this map neighbours agree on the <b>vehicle model</b> (0.58) more often than on the <b>driver</b> (0.49) or the scenario (0.46). That is the point of the benchmark, not an embarrassment for it: a strong re-identification score can be carried by the car and the context, which is exactly what the condition-matched task and the leakage probes measure.</p>
+  </div>
+</section>
 
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
-      <pre id="bibtex-code"><code>@article{wang2026drivedna,
+<!-- ================= evidence ================= -->
+<section class="pj-section" id="evidence">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">03 · EVIDENCE</span><h2>What the numbers rest on</h2></div>
+    <div class="findings">
+      <article class="finding finding--wide reveal" id="f-ladder"><span class="finding__n">.935 → .811 <small>AUROC, unmatched → condition-matched</small></span><p class="finding__claim">Hold the car, the scenario and the speed regime fixed, and every representation loses — the video-only probe loses most.</p><p>Each dumbbell runs from AUROC on unseen drivers (hollow) to AUROC on the 14,868 condition-matched pairs (filled). Classical descriptors fall to chance (.707 → .550). The video-only probe drops from .937 to .675, <span data-claim="arxiv-drop">the largest drop of any representation</span>; the learned CAN encoder holds at .811 ± .006 across all six scenario types.</p>
+        <div data-widget="paired" data-src="key:ladder" data-label="Leakage ladder"><figure class="pj-fallback"><img src="static/media/fig_reveal_matched.jpg" alt="AUROC before and after condition matching for every representation" width="1600" height="900" data-zoom><figcaption>Condition-matched collapse (paper figure).</figcaption></figure></div>
+        <p class="finding__foot">Story rows at full opacity; the rest dimmed. Table 3 of the paper <data class="n" value="0.935" data-src="arxiv-matched">(paper)</data>; "every zero-shot foundation model falls to chance or near it (.55–.60)".</p></article>
+      <article class="finding reveal tilt" id="f-leak"><span class="finding__n">347× <small>chance</small></span><p class="finding__claim">The video representation predicts the <em>route</em> — far better than it should if it were reading the driver.</p><p>Leakage probes: a probe on the video representation predicts the route at <data class="n" value="347" data-src="arxiv-leak">347×</data> chance (CAN: 197×) and the vehicle at 64× (CAN: 56×). Strong scores can stem from contextual shortcuts; the benchmark asks users to report leakage alongside utility.</p>
+        <figure class="pj-fig"><img src="static/media/fig_reveal_leakage.jpg" alt="Video representations predict the route far above chance" width="1600" height="900" loading="lazy" data-zoom><figcaption><b>Route leakage</b> (paper figure).</figcaption></figure></article>
+      <article class="finding reveal tilt" id="f-reid" style="--i:1"><span class="finding__n">.935 <small>vs .707 AUROC</small></span><p class="finding__claim">Learned embeddings beat classical descriptors on unseen drivers — by a margin three to six times the seed noise.</p><p>Five-minute enrollment, unseen drivers: descriptors .707; supervised contrastive PatchTST .935 ± .005 with top-1 identification at about 33× chance. Label-free pretraining closes most of the gap (masked reconstruction .907); frozen foundation models land at or below the descriptor level (MOMENT-1 .636, Qwen3-4B text .596).</p>
+        <div data-widget="bars" data-src="key:leaderboard" data-label="Re-identification leaderboard"><figure class="pj-fallback"><figcaption>Table 2 in the paper.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-corpus" style="--i:2"><span class="finding__n">62,674 <small>windows · 276,248 events</small></span><p class="finding__claim">Annotated at the window and the manoeuvre level, audited by people.</p><p>60-second windows from 428 drivers (355 in frozen folds), six scenarios, eight behavioral primitives with 93.0 % audit agreement; 276,248 manoeuvre events including 22,322 individually verified lane changes. Six 10-second audit clips below, one per class, forward camera only.</p>
+        <div class="pj-strip" id="audit-strip">
+          <figure class="pj-media" style="--ar:526/330"><video muted playsinline loop preload="none" poster="static/media/audit_lane_change.jpg" src="static/media/audit_lane_change.mp4" width="526" height="330"></video><figcaption>lane change</figcaption></figure>
+          <figure class="pj-media" style="--ar:526/330"><video muted playsinline loop preload="none" poster="static/media/audit_decel.jpg" src="static/media/audit_decel.mp4" width="526" height="330"></video><figcaption>deceleration</figcaption></figure>
+          <figure class="pj-media" style="--ar:526/330"><video muted playsinline loop preload="none" poster="static/media/audit_curve.jpg" src="static/media/audit_curve.mp4" width="526" height="330"></video><figcaption>curve</figcaption></figure>
+        </div></article>
+      <article class="finding reveal tilt" id="f-identity" style="--i:3"><span class="finding__n">+0.8 % <small>at 5 s · k = 5</small></span><p class="finding__claim">Identity translates into a small, consistent prediction gain.</p><p>Few-shot personalization improves behavior prediction on unseen drivers in all three seeds, with the gain concentrated at short horizons (positive at 1–5 s; +0.8 ± 0.5 % at the 5 s horizon with five support windows). Honest size: it is a gain, not a leap.</p>
+        <figure class="pj-fig"><img src="static/media/fig_reveal_identity.jpg" alt="Identity signal versus prediction gain" width="1600" height="900" loading="lazy" data-zoom><figcaption><b>Identity vs prediction</b> (paper figure).</figcaption></figure></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= method ================= -->
+<section class="pj-section pj-section--band" id="method">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">04 · METHOD</span><h2>How the benchmark is built</h2><p class="sec-lede">Human-controlled driving only; 60-second windows tagged with scenario and primitives; driver-disjoint frozen folds; condition-matched pairs on vehicle model, scenario and speed regime; leakage probes for route and vehicle.</p></div>
+    <figure class="pj-fig reveal"><img src="static/media/fig_teaser.jpg" alt="DriveDNA overview: corpus, windows, tasks and leakage diagnostics" width="2400" height="1200" loading="lazy" data-zoom><figcaption><b>Overview.</b> Corpus → windows → three tasks → diagnostics (release figure).</figcaption></figure>
+    <div class="grid-2" style="margin-top:24px">
+      <figure class="pj-fig reveal"><img src="static/media/fig_split_schematic.jpg" alt="Split schematic: driver-disjoint folds and the condition-matched protocol" width="2000" height="1000" loading="lazy" data-zoom><figcaption><b>Splits.</b> Driver-disjoint frozen folds; matched pairs hold the vehicle model, scenario and speed regime fixed.</figcaption></figure>
+      <article class="card reveal" style="--i:1"><h3>Three tasks</h3><p><b>Re-identification</b> — k-minute enrollment → identity (Top-k, AUROC, EER). <b>Personalized prediction</b> — 5-s history → 1–5-s future motion (RMSE, personalization gain). <b>Condition-matched comparison</b> — same model, scenario and speed: is it the same driver?</p><p>Thirty baseline configurations: descriptors, zero-shot foundation models, label-free SSL, CLIP-aligned CAN, video-only probes, supervised contrastive encoders — with three-seed error bars.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= results ================= -->
+<section class="pj-section" id="results">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">05 · RESULTS</span><h2>Tables, baseline first</h2></div>
+    <div class="tabs reveal">
+      <div class="tabs__list" role="tablist"><button role="tab" aria-selected="true" aria-controls="tab-t2" id="t-t2" type="button">Re-identification (Table 2)</button><button role="tab" aria-selected="false" aria-controls="tab-t3" id="t-t3" tabindex="-1" type="button">Condition-matched (Table 3)</button></div>
+      <div class="tabs__panel" id="tab-t2" role="tabpanel" aria-labelledby="t-t2"><p class="tbl-cap">Driver re-identification with 5-minute enrollment on unseen drivers · arXiv v1</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Representation</th><th>AUROC ↑</th><th>EER ↓</th><th>Top-1 ↑</th></tr></thead><tbody>
+        <tr class="base"><td>Descriptors (anchor)</td><td><data class="n" value="0.707" data-src="arxiv-auroc">.707</data></td><td>.349</td><td>.09</td></tr><tr><td>Qwen3-4B text encoder (zero-shot)</td><td>.596</td><td>.431</td><td>.05</td></tr><tr><td>Llama-3.2-3B text encoder (zero-shot)</td><td>.598</td><td>.428</td><td>.05</td></tr><tr><td>MOMENT-1 (zero-shot)</td><td>.636</td><td>.408</td><td>.08</td></tr>
+        <tr><td>CLIP-aligned CAN (no labels)</td><td>.831</td><td>.244</td><td>.21</td></tr><tr><td>JEPA-style SSL + probe</td><td>.878</td><td>.197</td><td>.20</td></tr><tr><td>Masked-TS SSL + probe</td><td>.907</td><td>.166</td><td>.29</td></tr>
+        <tr><td>iTransformer + SupCon</td><td>.877 ± .008</td><td>.192</td><td>.23</td></tr><tr><td>ArcFace</td><td>.902 ± .005</td><td>.174</td><td>.39</td></tr><tr><td>PatchTST-CI + SupCon</td><td>.932 ± .002</td><td>.127</td><td>.32</td></tr><tr class="hl"><td>PatchTST + SupCon</td><td><data class="n" value="0.935" data-src="arxiv-auroc">.935</data> ± .005</td><td>.127</td><td>.44</td></tr></tbody></table></div></div>
+      <div class="tabs__panel" id="tab-t3" role="tabpanel" aria-labelledby="t-t3" hidden><p class="tbl-cap">Representation AUROC before and after condition matching on unseen drivers · arXiv v1</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Representation</th><th>Unmatched</th><th>Matched</th><th>Δ</th></tr></thead><tbody>
+        <tr class="base"><td>Descriptors (anchor)</td><td>.707</td><td>.550</td><td>−.157</td></tr><tr><td>Qwen3-4B text (zero-shot)</td><td>.596</td><td>.551</td><td>−.045</td></tr><tr><td>MOMENT-1 (zero-shot)</td><td>.636</td><td>.596</td><td>−.040</td></tr>
+        <tr><td>Video-only probe</td><td>.937</td><td>.675</td><td><b>−.262</b></td></tr><tr><td>CLIP-aligned CAN</td><td>.831</td><td>.683</td><td>−.148</td></tr><tr><td>JEPA-style SSL</td><td>.878</td><td>.735</td><td>−.143</td></tr><tr><td>Masked-TS SSL</td><td>.907</td><td>.740</td><td>−.167</td></tr>
+        <tr><td>iTransformer + SupCon</td><td>.877</td><td>.762 ± .001</td><td>−.115</td></tr><tr><td>PatchTST-CI + SupCon</td><td>.932</td><td>.777 ± .004</td><td>−.155</td></tr><tr><td>ArcFace</td><td>.902</td><td>.807 ± .006</td><td>−.095</td></tr><tr class="hl"><td>PatchTST + SupCon</td><td>.935</td><td>.811 ± .006</td><td>−.124</td></tr></tbody></table></div></div>
+    </div>
+    <p class="pj-note pj-note--warn reveal"><b>Honest limits.</b> Matching holds the vehicle <em>model</em> fixed, not the physical vehicle; residual vehicle effects are evaluated through cross-vehicle verification in the appendix. On this page's map, model purity exceeds driver purity. Personalization gains are small (+0.8 % at 5 s).</p>
+    <details class="sources reveal"><summary>Sources &amp; notes</summary><ol data-auto></ol></details>
+  </div>
+</section>
+
+<!-- ================= data & access ================= -->
+<section class="pj-section pj-section--band" id="data">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">06 · DATA &amp; ACCESS</span><h2>Get the data, keep the rules</h2></div>
+    <div class="tiers">
+      <div class="tier reveal"><span class="badge badge--ok">No approval needed</span><h3>DriveDNA-Sample</h3><p>63 drives · 56.2 h · 14 models, same layout as the full release; gated with automatic approval.</p><p class="mono" data-hf="HenryYHW/DriveDNA-Sample">as of 2026-10-02 · gated: auto</p><div class="pj-cta"><a class="btn btn--sm" href="https://huggingface.co/datasets/HenryYHW/DriveDNA-Sample" target="_blank" rel="noopener">Open the sample</a></div></div>
+      <div class="tier tier--hi reveal" style="--i:1"><span class="badge badge--warn">On request</span><h3>DriveDNA · full release</h3><p>~325 GB: CAN at 10 Hz, forward video, windows, events, frozen splits and leakage probes. Research-only license, manual approval.</p><p class="mono" data-hf="HenryYHW/DriveDNA">as of 2026-10-02 · gated: manual · DriveDNA research license</p><div class="pj-cta"><a class="btn btn--primary btn--sm" href="https://huggingface.co/datasets/HenryYHW/DriveDNA" target="_blank" rel="noopener">Request access</a></div></div>
+      <div class="tier reveal" style="--i:2"><span class="badge badge--ok">Open</span><h3>Code &amp; protocol</h3><p>Baselines, splits, matching and leakage probes; reproduce every table with three-seed error bars.</p><div class="pj-cta"><a class="btn btn--sm" href="https://github.com/WangYuHang-cmd/DriveDNA" target="_blank" rel="noopener">GitHub</a></div></div>
+    </div>
+    <blockquote class="quote reveal">“Prohibited: re-identification attempts; insurance, employment, or law-enforcement scoring of individuals.” · “VINs, device identifiers, precise timestamps, and GPS coordinates removed.”<cite>Hugging Face dataset card · fetched 2026-10-02</cite></blockquote>
+    <p class="pj-note reveal"><b>Governance.</b> Sequential pseudonyms (driver_001 / drive_001) with the raw-ID mapping withheld by the authors; forward road video is exterior-only and low-resolution; a takedown contact lets any driver request removal.</p>
+  </div>
+</section>
+
+<!-- ================= cite ================= -->
+<section class="pj-section" id="cite">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">07 · CITE</span><h2>Read the paper, cite the benchmark</h2></div>
+    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@article{wang2026drivedna,
   title   = {DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification},
   author  = {Wang, Yuhang and Li, Lingyao and Zhou, Hao},
   journal = {arXiv preprint arXiv:2607.23822},
   year    = {2026}
-}</code></pre>
+}</pre></div>
+    <h3 class="sub-head">Related work from the lab</h3>
+    <div class="family reveal">
+      <a class="fam" href="/baton/"><img src="/images/th_baton.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>BATON</h4><p>Control transitions in both directions — the same drivers handing over and taking back.</p></div></a>
+      <a class="fam" href="/adasto/"><img src="/images/th_adasto.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Dataset · ITSC 2026</span><h4>ADAS-TO</h4><p>The takeover moment, in video and logs.</p></div></a>
+      <a class="fam" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>DriveMotion</h4><p>Whole-body driver motion forecasting.</p></div></a>
     </div>
-  </section>
+  </div>
+</section>
+</main>
 
-  <footer class="footer">
-    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
-      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-    </div></div></div></div>
-  </footer>
-  </main>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-
-      function countUp(el) {
-        var target = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0),
-            suf = el.dataset.suffix || "", dur = 1400, t0 = null;
-        function fmt(v) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString(); }
-        function step(t) {
-          if (!t0) t0 = t;
-          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(target * eased) + suf;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var io2 = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
-      }, { threshold: 0.4 });
-      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
-    });
-  </script>
-<script type="module" src="/assets/dark/hero-bg.js"></script>
+<footer class="pj-foot"><div class="pj-wrap"><b>Yuhang Wang</b> · University of South Florida · MOTIF-Lab<div class="pj-foot__links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a><a href="mailto:yuhangw@usf.edu">yuhangw@usf.edu</a></div></div></footer>
+<button class="totop" type="button" aria-label="Back to top" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 </body>
 </html>
