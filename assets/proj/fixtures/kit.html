@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Project-page kit · styleguide</title>
+<link rel="stylesheet" href="../proj.css">
+<script defer src="../proj.js"></script>
+<style>
+  /* styleguide-only chrome */
+  .kit-bar{position:sticky;top:var(--nav-h);z-index:45;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 20px;background:rgba(7,13,29,.9);border-bottom:1px solid var(--cl-border);font-size:.8rem;color:var(--cl-text-mute)}
+  .kit-bar .chips{gap:6px}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+  .sw-card{padding:12px;border:1px solid var(--cl-border);border-radius:12px;background:var(--cl-surface);font:600 .72rem/1.4 var(--cl-mono)}
+  .sw-card i{display:block;height:36px;border-radius:8px;margin-bottom:8px;background:var(--c)}
+  .type-scale p{margin:.2rem 0;color:#fff}
+  .kit-h{margin:64px 0 16px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pj-accent-2);font-family:var(--cl-mono)}
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  @media (max-width:900px){.demo-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-proj="tridrive" data-manifest="data/synth_manifest.json">
+<a class="pj-skip" href="#main">Skip to content</a>
+<div class="pj-bg" aria-hidden="true"></div><div class="pj-stars" aria-hidden="true"></div>
+
+<header class="pj-nav" id="nav">
+  <div class="pj-nav__in">
+    <a class="pj-brand" href="/">Yuhang <b>Wang</b></a>
+    <nav class="pj-menu" aria-label="Page">
+      <ul class="pj-anchors">
+        <li><a href="#hero">Hero</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Signature</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
+      </ul>
+      <ul>
+        <li class="pj-site-extra"><a href="/">Home</a></li>
+        <li class="pj-dd"><button class="pj-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">More works <svg class="ic ic-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="pj-dd__menu"><a href="/openlka/"><b>OpenLKA</b><span>Lane keeping on real roads · ITSC 2025</span></a><a href="/adasto/"><b>ADAS-TO</b><span>Human–ADAS takeover transitions · ITSC 2026</span></a><a href="/drivedna/"><b>DriveDNA</b><span>Driver re-identification benchmark · arXiv 2026</span></a><a href="/drivemotion/"><b>DriveMotion</b><span>Driver body-motion forecasting · arXiv 2026</span></a><a href="/baton/"><b>BATON</b><span>Bidirectional control transitions · arXiv 2026</span></a><a href="/vlalert/"><b>VLAlert</b><span>Observe before you alert · CoRL 2026</span></a></div></li>
+        <li><a class="btn btn--sm" href="https://arxiv.org/abs/2609.33000" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span></a></li>
+      </ul>
+    </nav>
+    <button class="pj-burger" type="button" aria-expanded="false" aria-label="Open menu" aria-controls="nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <div class="pj-progress" aria-hidden="true"></div>
+</header>
+
+<div class="kit-bar" role="region" aria-label="Styleguide controls">
+  <span>accent</span>
+  <div class="chips" id="accents"><button class="chip chip--sm" type="button" data-p="tridrive" aria-pressed="true">tridrive</button><button class="chip chip--sm" type="button" data-p="adasto">adasto</button><button class="chip chip--sm" type="button" data-p="drivedna">drivedna</button><button class="chip chip--sm" type="button" data-p="drivemotion">drivemotion</button><button class="chip chip--sm" type="button" data-p="baton">baton</button></div>
+  <span>· motion</span><button class="chip chip--sm" type="button" id="motion" aria-pressed="false">reduce</button>
+  <span>· fixtures are synthetic (<code>data/synth_*.json</code>)</span>
+</div>
+
+<main id="main">
+<!-- ============ hero ============ -->
+<section class="pj-hero" id="hero">
+  <div class="pj-wrap">
+    <div class="pj-hero__grid">
+      <div class="pj-hero__text">
+        <p class="pj-eyebrow">Kit styleguide · every component on synthetic data</p>
+        <h1 class="pj-h1"><span class="pj-wordmark">TriDrive</span><span class="pj-title">Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring</span></h1>
+        <p class="pj-thesis">To our knowledge the <b>first unified framework</b> that jointly forecasts driver kinematics, vehicle dynamics and road demands through an automation-conditioned transition model — running in the car at 5 Hz.</p>
+        <p class="pj-lede">The hero's right column is the page's signature widget in hero mode: no controls, muted, paused off-screen. Click it to jump to the full version at the same instant.</p>
+        <div class="pj-pills"><span class="pj-pill pj-pill--accent">arXiv 2609.33000 · 2026 · under review</span><span class="pj-pill">comma four · 5 Hz</span><span class="pj-pill pj-pill--live">live · lab recorder, consented · 10 Hz</span></div>
+        <div class="pj-cta"><a class="btn btn--primary" href="#signature">Explore the forecast</a><button class="btn" type="button" data-video="data/synth_clip.mp4" data-poster="data/synth_clip.jpg" data-title="Demo (synthetic test pattern)" data-caption="Video modal: focus trapped, Esc closes, autoplay only without reduced motion." data-ar="526/330"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg>Watch the demo</button><a class="btn" href="https://huggingface.co/HenryYHW/TriDrive" target="_blank" rel="noopener">Model on Hugging Face</a></div>
+        <p class="pj-authors"><a href="/">Yuhang Wang</a><sup>1</sup><span class="sep">·</span>Jingxin Yang<sup>2</sup><span class="sep">·</span>Chuheng Wei<sup>3</sup><span class="sep">·</span>Yuechen Guo<sup>1</sup><span class="sep">·</span>Jinghan Xu<sup>4</sup><span class="sep">·</span>Zhao Han<sup>1</sup><span class="sep">·</span><a href="https://sites.google.com/view/haozhou-cv" target="_blank" rel="noopener">Hao Zhou</a><sup>1</sup></p>
+        <p class="pj-affil"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>NVIDIA &nbsp; <sup>3</sup>Purdue University &nbsp; <sup>4</sup>Hunan University</p>
+      </div>
+      <a class="pj-hero__stage" href="#signature" aria-label="Open the full signal explorer">
+        <div data-widget="scrubber" data-mode="hero" data-sync="demo" data-src="data/synth_signals_b.json" data-strips="risk" data-eager data-label="Hero preview of the risk signal">
+          <div class="pj-sc__media" style="--ar:526/330"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="data/synth_clip.jpg" src="data/synth_clip.mp4" width="526" height="330"></video></div>
+          <figure class="pj-fallback"><img src="data/synth_clip.jpg" alt="Static poster of the demo clip" width="526" height="330"></figure>
+        </div>
+        <div class="pj-stage__cap"><span>live · <b>synthetic clip</b> · 10 Hz</span><span class="pj-pill pj-pill--live">risk</span></div>
+      </a>
+    </div>
+    <div class="pj-stats">
+      <a class="stat" href="#f-aide"><span class="num" data-count="48.05" data-decimals="2">48.05</span><span class="lbl">All-MPJPE on AIDE <data class="n" value="48.05" data-src="arxiv-demo">[P]</data></span></a>
+      <a class="stat" href="#f-hours"><span class="num" data-count="197.2" data-decimals="1" data-suffix=" h">197.2 h</span><span class="lbl">naturalistic driving</span></a>
+      <a class="stat" href="#f-latency"><span class="num" data-count="177" data-suffix=" ms">177 ms</span><span class="lbl">p95 latency · comma four</span></a>
+      <a class="stat" href="#f-study"><span class="num" data-count="14">14</span><span class="lbl">drivers · on-road study</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ overview ============ -->
+<section class="pj-section" id="overview">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">01 · OVERVIEW</span><h2>Abstract + glance card</h2><p class="sec-lede">Verbatim abstract (68ch measure) beside a sticky glance card with venue, identifiers, links, license and the privacy line.</p></div>
+    <div class="pj-overview">
+      <div class="pj-abstract reveal"><p>Predicting how drivers, vehicles, and road scenes interact and evolve together is central to human-centered driving. Prior work models in-cabin activity or traffic-conditioned driver motion in isolation; a framework that models all three jointly and runs in real time on vehicle hardware had not been shown.</p><p>On the public AIDE benchmark the kinematic encoder recipe sets a new full-set state of the art among published baselines (<data class="n" value="48.05" data-src="arxiv-demo">48.05</data> vs. 71.47 All-MPJPE). Provenance chips: <data class="n" value="4.0" data-src="hf-demo">CC BY-SA 4.0</data> from the release card, <data class="n" value="152.6" data-src="log-demo">152.6 ms</data> from a device log.</p></div>
+      <aside class="pj-glance reveal" style="--i:1"><dl><div><dt>Venue</dt><dd>arXiv 2609.33000 · v1 · 26 Sep 2026 · under review</dd></div><div><dt>Links</dt><dd><a href="https://arxiv.org/abs/2609.33000">arXiv</a><a href="https://huggingface.co/HenryYHW/TriDrive">Model</a><a href="#cite">BibTeX</a></dd></div><div><dt>License</dt><dd>CC BY-SA 4.0 (model) · gated, manual approval</dd></div><div><dt>Hardware</dt><dd class="mono">comma four + RX 9060 8 GB · 5 Hz probe</dd></div><div><dt>Privacy</dt><dd>Cabin footage only from the lab's consented recorder; study recordings are not released.</dd></div></dl></aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ signature (band) ============ -->
+<section class="pj-section pj-section--band" id="signature">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">02 · SIGNATURE</span><h2>Scrubber — video clock, clips, HUD, events</h2><p class="sec-lede">Same group <code>demo</code> as the hero stage and the timeline below: one playhead, one hover cursor. Keys: Space/K, ←/→, J/L, [ ], , . Home/End, 1–9, Shift+click snaps to an event.</p></div>
+    <div data-widget="scrubber" data-sync="demo" data-side data-src="data/synth_clips.json" data-strips="risk,v_ego_mps,is_distracted" data-hud='[{"col":"v_ego_mps","fmt":"mph"},{"col":"is_distracted","fmt":"bool","label":"DMS","alert":true},{"col":"risk","label":"risk","bars":["pi_dis","pi_gaze","pi_hands"]}]' data-ribbon="<b>Forecast fan:</b> earlier CockpitWM model, offline and illustrative. The on-road warnings came from the 5 Hz current-state probe." data-label="Signal explorer">
+      <div class="pj-sc__media" style="--ar:526/330"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="data/synth_clip.jpg" width="526" height="330"></video></div>
+      <div class="pj-sc__strips">
+        <canvas class="pj-strip" data-col="risk" data-label="risk" data-min="0" data-max="1" data-color="accent" data-layers="thresholds:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="v_ego_mps" data-label="speed" data-unit="mph" data-fmt="mph" data-color="blue" data-layers="shade:*"></canvas>
+        <canvas class="pj-strip" data-col="is_distracted" data-label="DMS distraction" data-fmt="bool" data-binary data-color="gold" data-layers="shade:*"></canvas>
+      </div>
+      <figure class="pj-fallback"><img src="data/synth_clip.jpg" alt="Static figure shown when the live data is unavailable" width="526" height="330"><figcaption>Fallback figure.</figcaption></figure>
+    </div>
+    <h3 class="sub-head">Timeline (synced)</h3>
+    <div data-widget="timeline" data-sync="demo" data-src="data/synth_timeline.json" data-label="Automation timeline"><figure class="pj-fallback"><figcaption>Timeline unavailable.</figcaption></figure></div>
+    <h3 class="sub-head">Scrubber — clock-driven layers: quantile bands (morph on switch), forecast fans, window-score series, caps hatch, negative t₀</h3>
+    <div data-widget="scrubber" data-src="data/synth_signals_layers.json" data-label="Layered strips">
+      <div class="pj-sc__strips">
+        <canvas class="pj-strip" data-col="v_ego_mps" data-label="speed" data-unit="m/s" data-color="white" data-layers="bands:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="risk" data-label="risk" data-min="0" data-max="1" data-color="accent" data-layers="fans:*;thresholds:*;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="ttc_s" data-label="TTC" data-unit="s" data-min="0" data-max="30" data-color="gold" data-layers="shade:*"></canvas>
+        <canvas class="pj-strip" data-label="window score" data-min="0" data-max="1" data-color="violet" data-layers="series:wm;shade:*"></canvas>
+        <canvas class="pj-strip" data-col="lane_change_state" data-label="lane change" data-fmt="code" data-min="0" data-max="3" data-color="mint"></canvas>
+      </div>
+      <figure class="pj-fallback"><figcaption>Fallback for the layered strips.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ evidence ============ -->
+<section class="pj-section" id="evidence">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">03 · EVIDENCE</span><h2>Finding cards with native charts</h2></div>
+    <div class="findings">
+      <article class="finding reveal tilt" id="f-aide"><span class="finding__n">48.05 <small>All-MPJPE</small></span><p class="finding__claim">A new full-set state of the art on AIDE among published baselines.</p><p>Bars with an emphasised row, lower-is-better note, v2 column; fills draw in on reveal.</p><div data-widget="bars" data-lower-better data-src="data/synth_bars.json" data-label="Leaderboard"><figure class="pj-fallback"><figcaption>Table in the paper.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-latency" style="--i:1"><span class="finding__n">177 <small>ms p95</small></span><p class="finding__claim">Latency per drive, log ▸ paper.</p><p>Histogram rows: 2-ms bins, p50/p95 markers, paper reference triangles, target line.</p><div data-widget="hist" data-src="data/synth_hist.json" data-label="Latency histograms"><figure class="pj-fallback"><figcaption>Latency table in the paper.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-study" style="--i:2"><span class="finding__n">+1.79</span><p class="finding__claim">Paired on-road study — slope chart.</p><p>14 participants baseline → ours; coincident pairs merge with width ∝ count and a ×n tag; unpaired cells are hollow; a cost endpoint draws in coral.</p><div data-widget="paired" data-src="data/synth_paired_slope.json" data-label="Paired ratings"><figure class="pj-fallback"><figcaption>Figure in the paper.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-hours" style="--i:3"><span class="finding__n">.935 → .811</span><p class="finding__claim">Leakage ladder — dumbbells.</p><p>Unseen-driver → matched-context AUROC per row; story rows at full opacity, the rest dimmed; dashed chance line.</p><div data-widget="paired" data-src="data/synth_paired_dumbbell.json" data-label="Leakage ladder"><figure class="pj-fallback"><figcaption>Table in the paper.</figcaption></figure></div></article>
+      <article class="finding finding--wide reveal" style="--i:4"><span class="finding__n">Error state</span><p class="finding__claim">A 404 shows the author's fallback figure and a discreet note — never a blank box.</p><div data-widget="bars" data-src="data/missing.json" data-label="Broken source demo"><figure class="pj-fallback"><img src="data/synth_clip.jpg" alt="Fallback figure" width="526" height="330" data-zoom><figcaption><b>Fallback.</b> Click to open the lightbox.</figcaption></figure></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ method (band): scatter + skeleton ============ -->
+<section class="pj-section pj-section--band" id="method">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">04 · METHOD</span><h2>Scatter and Skeleton</h2><p class="sec-lede">Scatter: int16 points rasterised once per colour mode; hover/click highlights a category; ←/→ cycles representative drivers; purity readouts. Skeleton: 133 COCO-WholeBody keypoints, confidence alpha, trails, +1 s ground-truth ghost, head gizmo, part LEDs, CAN strip.</p></div>
+    <div class="demo-grid">
+      <div data-widget="scatter" data-src="data/synth_embedding.json" data-label="Driver embedding map"><figure class="pj-fallback"><figcaption>Embedding figure in the paper.</figcaption></figure></div>
+      <div data-widget="scatter" data-mode="hero" data-pulse data-src="data/synth_embedding.json" data-label="Hero pulse mode"><figure class="pj-fallback"><figcaption>Embedding figure.</figcaption></figure></div>
+    </div>
+    <h3 class="sub-head">Skeleton player</h3>
+    <div class="demo-grid">
+      <div data-widget="skeleton" data-src="data/synth_kpts.json" data-label="Skeleton player"><figure class="pj-fallback"><figcaption>Skeleton render.</figcaption></figure></div>
+      <div data-widget="skeleton" data-mode="hero" data-src="data/synth_kpts.json" data-label="Skeleton hero"><figure class="pj-fallback"><figcaption>Skeleton render.</figcaption></figure></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ results ============ -->
+<section class="pj-section" id="results">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">05 · RESULTS</span><h2>Tables, tabs, sources</h2></div>
+    <div class="tabs reveal">
+      <div class="tabs__list" role="tablist"><button role="tab" aria-selected="true" aria-controls="tab-a" id="t-a" type="button">AIDE</button><button role="tab" aria-selected="false" aria-controls="tab-b" id="t-b" tabindex="-1" type="button">BATON</button></div>
+      <div class="tabs__panel" id="tab-a" role="tabpanel" aria-labelledby="t-a"><p class="tbl-cap">Table 1 · arXiv v1 · baseline-first, our row in accent</p><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Method</th><th>All-MPJPE ↓</th><th>PCK@0.05 ↑</th></tr></thead><tbody><tr class="base"><td>zero-velocity</td><td>52.89</td><td>—</td></tr><tr><td>Driver-WM (published)</td><td>71.47</td><td>—</td></tr><tr class="hl"><td>TriDrive (ours)</td><td>48.05 ± 0.06</td><td>87.13</td></tr></tbody></table></div></div>
+      <div class="tabs__panel" id="tab-b" role="tabpanel" aria-labelledby="t-b" hidden><div class="tbl-wrap"><table class="tbl tbl--num"><thead><tr><th>Target</th><th>Manual</th><th>Engaged</th></tr></thead><tbody><tr><td>Steering onset PR-AUC</td><td>0.774 <small>(+0.030)</small></td><td>0.463 <small>(+0.084)</small></td></tr><tr><td>TTC-drop PR-AUC</td><td>+0.206</td><td>+0.286</td></tr></tbody></table></div></div>
+    </div>
+    <details class="sources reveal"><summary>Sources &amp; notes</summary><ol data-auto></ol></details>
+  </div>
+</section>
+
+<!-- ============ data (band) ============ -->
+<section class="pj-section pj-section--band" id="data">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">06 · DATA &amp; ACCESS</span><h2>Tiers, quote, badges</h2></div>
+    <div class="tiers">
+      <div class="tier reveal"><span class="badge badge--ok">Available now</span><h3>Sample</h3><p>Auto-approved gated sample with the same layout as the full release.</p><p class="mono">as of 2026-10-02 · gated: auto</p><div class="pj-cta"><a class="btn btn--sm" href="#">Open sample</a></div></div>
+      <div class="tier tier--hi reveal" style="--i:1"><span class="badge badge--warn">On request</span><h3>Full dataset</h3><p>Manual approval; license CC BY-NC 4.0.</p><p class="mono">as of 2026-10-02 · gated: manual</p><div class="pj-cta"><a class="btn btn--primary btn--sm" href="#">Request access</a></div></div>
+      <div class="tier reveal" style="--i:2"><span class="badge badge--crit">Not released</span><h3>Cabin recordings</h3><p>Study recordings and raw cabin video are not released (consent).</p></div>
+    </div>
+    <blockquote class="quote reveal">“Prohibited: re-identification attempts; insurance, employment, or law-enforcement scoring.”<cite>Hugging Face dataset card · fetched 2026-10-02</cite></blockquote>
+    <p class="pj-note pj-note--warn reveal"><b>Note style.</b> Used for honesty lines: what is illustrative, what was not retained, what the paper hedges.</p>
+  </div>
+</section>
+
+<!-- ============ cite ============ -->
+<section class="pj-section" id="cite">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">07 · CITE</span><h2>Family cards, BibTeX, tokens</h2></div>
+    <div class="family reveal">
+      <a class="fam" href="/openlka/"><img src="/images/th_openlka.jpg" alt="" width="620" height="388" loading="lazy" onerror="this.style.display='none'"><div><span class="fam__v">Dataset · ITSC 2025</span><h4>OpenLKA</h4><p>Lane keeping on real roads.</p></div></a>
+      <a class="fam" href="/baton/"><img src="/images/th_baton.jpg" alt="" width="620" height="388" loading="lazy" onerror="this.style.display='none'"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>BATON</h4><p>Bidirectional control transitions.</p></div></a>
+      <a class="fam" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" alt="" width="620" height="388" loading="lazy" onerror="this.style.display='none'"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>DriveMotion</h4><p>Driver body-motion forecasting.</p></div></a>
+    </div>
+    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@article{wang2026tridrive,
+  title   = {TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring},
+  author  = {Wang, Yuhang and Yang, Jingxin and Wei, Chuheng and Guo, Yuechen and Xu, Jinghan and Han, Zhao and Zhou, Hao},
+  journal = {arXiv preprint arXiv:2609.33000}, year = {2026}
+}</pre></div>
+
+    <p class="kit-h">Tokens</p>
+    <div class="swatches">
+      <div class="sw-card"><i style="--c:var(--pj-accent)"></i>--pj-accent</div><div class="sw-card"><i style="--c:var(--pj-accent-2)"></i>--pj-accent-2</div><div class="sw-card"><i style="--c:var(--cl-blue)"></i>--cl-blue</div><div class="sw-card"><i style="--c:var(--cl-violet)"></i>--cl-violet</div><div class="sw-card"><i style="--c:var(--cl-gold)"></i>--cl-gold</div><div class="sw-card"><i style="--c:var(--cl-mint)"></i>--cl-mint</div><div class="sw-card"><i style="--c:var(--cl-coral)"></i>--cl-coral</div><div class="sw-card"><i style="--c:var(--cl-text-mute)"></i>--cl-text-mute</div>
+    </div>
+    <p class="kit-h">Type scale (1.25)</p>
+    <div class="type-scale"><p style="font-size:var(--fs-7);font-weight:800;letter-spacing:-.03em">Display 61</p><p style="font-size:var(--fs-5);font-weight:800">Heading 39</p><p style="font-size:var(--fs-3);font-weight:700">Subhead 25</p><p style="font-size:var(--fs-2);font-weight:600">Title 20</p><p style="font-size:var(--fs-1)">Body 16 — Inter, self-hosted, tabular numerals 0123456789</p><p style="font-size:var(--fs-0);font-family:var(--cl-mono)">mono 13 · ids, signal names, code</p></div>
+    <p class="kit-h">Buttons · chips · badges · pills</p>
+    <p class="pj-cta"><a class="btn btn--primary" href="#">Primary</a><a class="btn" href="#">Default</a><a class="btn btn--sm" href="#">Small</a><button class="chip" type="button" aria-pressed="true">chip on</button><button class="chip" type="button">chip</button><span class="badge">badge</span><span class="badge badge--ok">ok</span><span class="badge badge--warn">warn</span><span class="badge badge--crit">crit</span><span class="pj-pill">pill</span><span class="pj-pill pj-pill--accent">accent pill</span></p>
+    <p class="kit-h">Figure on white + lightbox</p>
+    <div class="grid-2"><figure class="pj-fig"><img src="data/synth_clip.jpg" alt="Test pattern standing in for a paper figure" width="526" height="330" data-zoom><figcaption><b>Figure.</b> Paper figures sit on white cards; click to enlarge.</figcaption></figure><figure class="pj-media" style="--ar:526/330"><span class="rec">● REC</span><img src="data/synth_clip.jpg" alt="" width="526" height="330"><figcaption>Media card with native aspect ratio</figcaption></figure></div>
+  </div>
+</section>
+</main>
+
+<footer class="pj-foot"><div class="pj-wrap"><b>Yuhang Wang</b> · University of South Florida · MOTIF-Lab<div class="pj-foot__links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a><a href="mailto:yuhangw@usf.edu">yuhangw@usf.edu</a></div></div></footer>
+<button class="totop" type="button" aria-label="Back to top" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+
+<script type="application/json" id="sources-json">{"schema":"sources/1","sources":[{"id":"arxiv-demo","kind":"arxiv","url":"https://arxiv.org/abs/2609.33000v1","version":"v1","date":"2026-09-26","locator":"Abstract","quote":"48.05 vs. 71.47 All-MPJPE"},{"id":"hf-demo","kind":"hf-card","url":"https://huggingface.co/HenryYHW/TriDrive","date":"2026-10-02","locator":"README","quote":"CC BY-SA 4.0"},{"id":"log-demo","kind":"log","url":null,"date":"2026-10-02","locator":"pred_log.jsonl × 50 sessions","quote":"p95 152.6 ms"}]}</script>
+<script>
+  document.querySelectorAll('#accents .chip').forEach(function (b) { b.addEventListener('click', function () { document.body.setAttribute('data-proj', b.getAttribute('data-p')); document.querySelectorAll('#accents .chip').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); }); });
+  var mb = document.getElementById('motion'); mb.addEventListener('click', function () { var on = mb.getAttribute('aria-pressed') !== 'true'; mb.setAttribute('aria-pressed', String(on)); if (on) document.body.setAttribute('data-motion', 'reduce'); else document.body.removeAttribute('data-motion'); });
+  var q = new URLSearchParams(location.search); if (q.get('proj')) document.body.setAttribute('data-proj', q.get('proj')); if (q.get('motion') === 'reduce') { document.body.setAttribute('data-motion', 'reduce'); mb.setAttribute('aria-pressed', 'true'); }
+</script>
+</body>
+</html>

@@ -8,3 +8,7 @@ openlka/static/can-dev/
 
 # Editor / OS noise
 .DS_Store
+
+# Project-page kit: fixture data + local pipeline work dirs (never ship)
+assets/proj/fixtures/data/
+tools/projpipe/work/
