@@ -1,0 +1,116 @@
+{
+ "schema": "hf_meta/1",
+ "fetched": "2026-10-02",
+ "repos": {
+  "HenryYHW/ADAS-TO": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "cc-by-nc-4.0",
+   "license_name": "CC BY-NC 4.0",
+   "lastModified": "2026-08-02T06:44:15.000Z",
+   "sha": "7696e8364ed81428a843dd21afb9cf2130ae9d0b",
+   "downloads": 39,
+   "private": false
+  },
+  "HenryYHW/ADAS-TO-Sample": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "cc-by-nc-4.0",
+   "license_name": "CC BY-NC 4.0",
+   "lastModified": "2026-09-19T23:57:30.000Z",
+   "sha": "cdcbbf4bd9f3cf9bd4038464450dee0f2247b7aa",
+   "downloads": 158,
+   "private": false
+  },
+  "HenryYHW/ADAS-TO-Critical": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "cc-by-nc-4.0",
+   "license_name": "CC BY-NC 4.0",
+   "lastModified": "2026-08-02T07:01:25.000Z",
+   "sha": "b8f9971a5ae3b38141e01ccc5ab64dcdeaa0a40d",
+   "downloads": 20,
+   "private": false
+  },
+  "HenryYHW/ADAS-TO_longitudinal": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "mit",
+   "license_name": "MIT",
+   "lastModified": "2026-09-10T00:51:53.000Z",
+   "sha": "29f4a33a9a9751670e8439115f283a527dcb1944",
+   "downloads": 40,
+   "private": false
+  },
+  "HenryYHW/BATON": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "cc-by-nc-4.0",
+   "license_name": "CC BY-NC 4.0",
+   "lastModified": "2026-06-05T08:09:04.000Z",
+   "sha": "807fc09a8ebcd190cd9c5529423b939e06f70797",
+   "downloads": 15,
+   "private": false
+  },
+  "HenryYHW/BATON-Sample": {
+   "type": "dataset",
+   "gated": "auto",
+   "license": "cc-by-nc-4.0",
+   "license_name": "CC BY-NC 4.0",
+   "lastModified": "2026-07-31T00:36:36.000Z",
+   "sha": "0bc180af1910fc7c53b78388bf10fffbbddec657",
+   "downloads": 160,
+   "private": false
+  },
+  "HenryYHW/DriveDNA": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "other",
+   "license_name": "drivedna-research-license",
+   "lastModified": "2026-08-20T19:09:09.000Z",
+   "sha": "1f9c67170db726c977686ebe6ca86284f2aed444",
+   "downloads": 80,
+   "private": false
+  },
+  "HenryYHW/DriveDNA-Sample": {
+   "type": "dataset",
+   "gated": "auto",
+   "license": "other",
+   "license_name": "drivedna-research-license",
+   "lastModified": "2026-08-10T15:08:33.000Z",
+   "sha": "c8cb05426abdc332749cee89d333680223142c2a",
+   "downloads": 126,
+   "private": false
+  },
+  "HenryYHW/DriveMotion": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "cc-by-4.0",
+   "license_name": "CC BY 4.0",
+   "lastModified": "2026-09-23T18:13:17.000Z",
+   "sha": "de0b3dba4e9eea5924caa691318f395c63734a97",
+   "downloads": 77,
+   "private": false
+  },
+  "HenryYHW/VLAlert": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "cc-by-4.0",
+   "license_name": "CC BY 4.0",
+   "lastModified": "2026-05-29T06:48:14.000Z",
+   "sha": "d93a0967370675d23a69619debb389e32f82b851",
+   "downloads": 17,
+   "private": false
+  },
+  "HenryYHW/TriDrive": {
+   "type": "model",
+   "gated": "manual",
+   "license": "cc-by-sa-4.0",
+   "license_name": "CC BY-SA 4.0",
+   "lastModified": "2026-09-27T13:55:14.000Z",
+   "sha": "42015175e29b78358d749f2de464f9b183bb01ab",
+   "downloads": 0,
+   "private": false
+  }
+ }
+}

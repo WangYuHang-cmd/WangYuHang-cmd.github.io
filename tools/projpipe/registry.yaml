@@ -1,0 +1,74 @@
+# Single source of truth for every number published on the five project pages (dev-time; check_pages.py compares page HTML against it).
+# source: arxiv:<id>v<N> | hf:<repo>#README | hf-api:<repo> | log:<what> ; tag: in the paper | latest release ; pinned 2026-10-02.
+tridrive:
+  aide_mpjpe:        {value: 48.05, fmt: "0.00", unit: All-MPJPE, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
+  aide_mpjpe_prev:   {value: 71.47, fmt: "0.00", unit: All-MPJPE, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract, note: Driver-WM published}
+  aide_zero_vel:     {value: 52.89, fmt: "0.00", unit: All-MPJPE, source: arxiv:2609.33000v1, tag: in the paper, locator: AIDE table}
+  aide_pck:          {value: 87.13, fmt: "0.00", unit: PCK@0.05, source: arxiv:2609.33000v1, tag: in the paper}
+  baton_hours:       {value: 197.2, fmt: "0.0", unit: h, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
+  prauc_steer_eng:   {value: 0.463, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: "+0.084"}
+  prauc_steer_man:   {value: 0.774, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: "+0.030"}
+  prauc_ttc_gain_eng: {value: 0.286, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
+  prauc_ttc_gain_man: {value: 0.206, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper}
+  latency_p95:       {value: 177, fmt: "0", unit: ms, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
+  latency_p50:       {value: 135, fmt: "0", unit: ms, source: arxiv:2609.33000v1, tag: in the paper}
+  probe_hz:          {value: 5, fmt: "0", unit: Hz, source: arxiv:2609.33000v1, tag: in the paper}
+  auroc_manual:      {value: 0.725, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: baseline 0.563}
+  auroc_pooled:      {value: 0.716, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: baseline 0.637}
+  auroc_engaged:     {value: 0.664, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: baseline 0.746 (baseline better)}
+  calib_err:         {value: 0.028, fmt: ".000", source: arxiv:2609.33000v1, tag: in the paper, note: baseline 0.408}
+  study_n:           {value: 14, fmt: "0", unit: drivers, source: arxiv:2609.33000v1, tag: in the paper, locator: Abstract}
+  study_appropriate: {value: 1.79, fmt: "+0.00", source: arxiv:2609.33000v1, tag: in the paper, note: "CI [0.86, 2.75] p=.008 n=14"}
+  study_timely:      {value: 2.67, fmt: "+0.00", source: arxiv:2609.33000v1, tag: in the paper, note: "CI [1.33, 4.08] p=.008 n=12"}
+  study_annoy:       {value: 1.17, fmt: "+0.00", source: arxiv:2609.33000v1, tag: in the paper, note: "CI [.33, 2.08] p=.031 n=12 (cost)"}
+  params_m:          {value: 3.50, fmt: "0.00", unit: M params, source: arxiv:2609.33000v1, tag: in the paper}
+adasto:
+  clips:             {value: 15659, fmt: "0,0", source: arxiv:2603.06986v1, tag: in the paper, locator: Abstract}
+  hours:             {value: 87.0, fmt: "0.0", unit: h, source: arxiv:2603.06986v1, tag: in the paper, locator: Table II}
+  drivers:           {value: 327, fmt: "0", source: arxiv:2603.06986v1, tag: in the paper}
+  models:            {value: 163, fmt: "0", source: arxiv:2603.06986v1, tag: in the paper}
+  brands:            {value: 22, fmt: "0", source: arxiv:2603.06986v1, tag: in the paper}
+  critical:          {value: 285, fmt: "0", source: arxiv:2603.06986v1, tag: in the paper, note: 173 low-TTC + 127 low-THW − 15 both}
+  early_cue_pct:     {value: 59.3, fmt: "0.0", unit: "%", source: arxiv:2603.06986v1, tag: in the paper}
+  v2_clips:          {value: 16446, fmt: "0,0", source: hf:HenryYHW/ADAS-TO#README, tag: latest release}
+  v2_drivers:        {value: 364, fmt: "0", source: hf:HenryYHW/ADAS-TO#README, tag: latest release}
+  v2_models:         {value: 179, fmt: "0", source: hf:HenryYHW/ADAS-TO#README, tag: latest release}
+  v2_routes:         {value: 2585, fmt: "0,0", source: hf:HenryYHW/ADAS-TO#README, tag: latest release}
+  reviewed_critical: {value: 749, fmt: "0", source: hf:HenryYHW/ADAS-TO#README, tag: latest release}
+drivedna:
+  drives:            {value: 4121, fmt: "0,0", source: arxiv:2607.23822v1, tag: in the paper, locator: Abstract}
+  drivers:           {value: 465, fmt: "0", source: arxiv:2607.23822v1, tag: in the paper}
+  models:            {value: 115, fmt: "0", source: arxiv:2607.23822v1, tag: in the paper}
+  hours:             {value: 975, fmt: "0", unit: h, source: arxiv:2607.23822v1, tag: in the paper}
+  windows:           {value: 62674, fmt: "0,0", source: arxiv:2607.23822v1, tag: in the paper}
+  events:            {value: 276248, fmt: "0,0", source: arxiv:2607.23822v1, tag: in the paper}
+  lane_changes:      {value: 22322, fmt: "0,0", source: arxiv:2607.23822v1, tag: in the paper}
+  auroc_best:        {value: 0.935, fmt: ".000", source: arxiv:2607.23822v1, tag: in the paper, note: PatchTST+SupCon}
+  auroc_desc:        {value: 0.707, fmt: ".000", source: arxiv:2607.23822v1, tag: in the paper, note: descriptors}
+  route_x_chance:    {value: 347, fmt: "0", unit: ×, source: arxiv:2607.23822v1, tag: in the paper, note: CAN 197×}
+  sample_drives:     {value: 63, fmt: "0", source: hf:HenryYHW/DriveDNA-Sample#README, tag: latest release, note: 56.2 h · 14 models}
+drivemotion:
+  hours_release:     {value: 400, fmt: "0", unit: h, source: hf:HenryYHW/DriveMotion#README, tag: latest release}
+  hours_paper:       {value: 393, fmt: "0", unit: h, source: arxiv:2609.08117v1, tag: in the paper, locator: Abstract}
+  keypoints:         {value: 133, fmt: "0", source: arxiv:2609.08117v1, tag: in the paper}
+  sequences_release: {value: 9010, fmt: "0,0", source: hf:HenryYHW/DriveMotion#README, tag: latest release}
+  sequences_paper:   {value: 4367, fmt: "0,0", source: arxiv:2609.08117v1, tag: in the paper, note: excludes 2,898 AIDE clips}
+  drivers:           {value: 360, fmt: "0", source: arxiv:2609.08117v1, tag: in the paper}
+  windows:           {value: 680082, fmt: "0,0", source: arxiv:2609.08117v1, tag: in the paper}
+  maneuvers:         {value: 76026, fmt: "0,0", source: arxiv:2609.08117v1, tag: in the paper}
+  arm_ratio:         {value: 3.4, fmt: "0.0", unit: ×, source: arxiv:2609.08117v1, tag: in the paper}
+  zero_motion_mpjpe: {value: 7.75, fmt: "0.00", source: arxiv:2609.08117v1, tag: in the paper}
+  transformer_l_mpjpe: {value: 6.63, fmt: "0.00", source: arxiv:2609.08117v1, tag: in the paper}
+baton:
+  hours:             {value: 204.9, fmt: "0.0", unit: h, source: arxiv:2604.07263v2, tag: in the paper, locator: v2 body}
+  drivers:           {value: 173, fmt: "0", source: arxiv:2604.07263v2, tag: in the paper}
+  routes:            {value: 781, fmt: "0", source: arxiv:2604.07263v2, tag: in the paper}
+  models:            {value: 108, fmt: "0", source: arxiv:2604.07263v2, tag: in the paper, note: 22 manufacturers}
+  bench_routes:      {value: 565, fmt: "0", source: hf:HenryYHW/BATON#README, tag: latest release}
+  bench_hours:       {value: 162.1, fmt: "0.0", unit: h, source: hf:HenryYHW/BATON#README, tag: latest release}
+  bench_drivers:     {value: 150, fmt: "0", source: hf:HenryYHW/BATON#README, tag: latest release}
+  bench_events:      {value: 3593, fmt: "0,0", source: hf:HenryYHW/BATON#README, tag: latest release, note: 1,800 handovers / 1,793 takeovers}
+  t2_auprc:          {value: 0.335, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, note: BATON-WM sample AUPRC; event .171}
+  t3d_auprc:         {value: 0.514, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, note: event .413}
+  t3a_auprc:         {value: 0.070, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, note: event .040; base rate .035}
+  stale_v1_hours:    {value: 136.6, fmt: "0.0", unit: h, source: arxiv:2604.07263v1, tag: in the paper, note: arXiv listing abstract (stale); 127 drivers · 380 routes}

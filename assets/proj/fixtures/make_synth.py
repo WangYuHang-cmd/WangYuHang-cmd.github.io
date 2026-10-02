@@ -61,7 +61,7 @@ def clipsig(cid, phase):
       "thresholds": [{"col": "risk", "v": .5, "label": "illustrative threshold", "color": "coral", "style": "dash"}],
       "media": {"video": "data/synth_clip.mp4", "poster": "data/synth_clip.jpg", "t0_video_s": 0.0, "aspect": "526/330"}, "meta": dict(SYN)}
 reg("signals_b", "synth_signals_b.json", clipsig("synth_b", 0)); reg("signals_c", "synth_signals_c.json", clipsig("synth_c", 1.3))
-write("synth_clips.json", {"default": "b", "clips": [{"id": "b", "title": "Clip B", "sub": "synthetic", "src": "data/synth_signals_b.json", "video": "data/synth_clip.mp4", "poster": "data/synth_clip.jpg"},
+write("synth_clips.json", {"schema": "clips/1", "default": "b", "clips": [{"id": "b", "title": "Clip B", "sub": "synthetic", "src": "data/synth_signals_b.json", "video": "data/synth_clip.mp4", "poster": "data/synth_clip.jpg"},
                                                    {"id": "c", "title": "Clip C", "sub": "synthetic", "src": "data/synth_signals_c.json", "video": "data/synth_clip.mp4", "poster": "data/synth_clip.jpg"}]})
 mp4 = os.path.join(OUT, "synth_clip.mp4")
 if not os.path.exists(mp4):
@@ -145,7 +145,7 @@ reg("hist", "synth_hist.json", {"schema": "hist/1", "bin_w": 2, "x0": 0, "unit":
 
 # ---------- sources ----------
 reg("sources", "synth_sources.json", {"schema": "sources/1", "sources": [
-  {"id": "arxiv-demo", "kind": "arxiv", "url": "https://arxiv.org/abs/2609.33000v1", "version": "v1", "date": "2026-09-26", "locator": "Abstract", "quote": "48.05 vs. 71.47 All-MPJPE"},
+  {"id": "arxiv-demo", "kind": "arxiv", "url": "https://arxiv.org/abs/2609.33000v1", "version": "v1", "date": "2026-09-26", "locator": "Abstract", "quote": "48.05 versus 71.47 All-MPJPE"},
   {"id": "hf-demo", "kind": "hf-card", "url": "https://huggingface.co/HenryYHW/TriDrive", "date": "2026-10-02", "locator": "README", "quote": "CC BY-SA 4.0"},
   {"id": "log-demo", "kind": "log", "url": None, "date": "2026-10-02", "locator": "pred_log.jsonl × 50 sessions", "quote": "p95 152.6 ms"}]})
 

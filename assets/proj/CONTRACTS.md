@@ -49,6 +49,11 @@ Invariants: `n ≥ 2`, `cols.t` present and monotonic with step `1/hz` (± 1e-3)
 `events[].t` inside the clip, `series[].t.length == series[].v.length`, each `bands[].q.*` length == `bands[].t.length`,
 `fans[].p.length == round(horizon_s/step_s)`.
 
+## clips/1 — clip index for a Scrubber with a picker
+```jsonc
+{ "schema":"clips/1", "default":"b", "clips":[ { "id":"b", "title":"Clip B", "sub":"phone · 37 s", "src":"static/data/signals_b.json", "video":"static/media/b.mp4", "poster":"static/media/b.jpg" } ] }
+```
+
 ## timeline/1 — lanes of states + marks (Timeline; hero ribbon)
 ```jsonc
 { "schema":"timeline/1", "span":[0, 120.0],

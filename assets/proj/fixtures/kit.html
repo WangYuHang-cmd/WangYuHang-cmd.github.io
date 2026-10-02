@@ -29,7 +29,7 @@
     <a class="pj-brand" href="/">Yuhang <b>Wang</b></a>
     <nav class="pj-menu" aria-label="Page">
       <ul class="pj-anchors">
-        <li><a href="#hero">Hero</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Signature</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
+        <li><a href="#hero">Hero</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Signature</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#real">Real data</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
       </ul>
       <ul>
         <li class="pj-site-extra"><a href="/">Home</a></li>
@@ -152,6 +152,31 @@
   </div>
 </section>
 
+
+<!-- ============ real-data fixtures (step 1.5) ============ -->
+<section class="pj-section pj-section--band" id="real">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">R · REAL DATA</span><h2>Real-data fixtures (step 1.5)</h2><p class="sec-lede">Same widgets on the exported fixtures: skeleton-only ODMS sequences, one consented-recorder BATON route window (10 Hz CSV signals, no video), the user-study table, three device latency logs, and the DriveDNA t-SNE map produced on the server.</p></div>
+    <h3 class="sub-head">Scrubber (clock-driven, 100 s) + synced timeline — recorder route window</h3>
+    <div data-widget="scrubber" data-sync="real" data-src="data/signals_baton5300.json" data-strips="v_ego_mps,steer_deg,is_distracted,lead_d_rel,lane_change_state" data-label="Route window signals"><figure class="pj-fallback"><figcaption>Route signals unavailable.</figcaption></figure></div>
+    <div data-widget="timeline" data-sync="real" data-src="data/timeline_baton5300.json" data-label="Route timeline"><figure class="pj-fallback"><figcaption>Timeline unavailable.</figcaption></figure></div>
+    <h3 class="sub-head">Skeletons — BATON cabin (40 s, with CAN) · AIDE 0829 (12 s, labels, tracker-jump filter)</h3>
+    <div class="demo-grid">
+      <div data-widget="skeleton" data-src="data/kpts_baton_civic.json" data-label="BATON skeleton"><figure class="pj-fallback"><figcaption>Skeleton render.</figcaption></figure></div>
+      <div data-widget="skeleton" data-src="data/kpts_aide_0829.json" data-label="AIDE skeleton"><figure class="pj-fallback"><figcaption>Skeleton render.</figcaption></figure></div>
+    </div>
+    <h3 class="sub-head">DriveDNA driver map — 14,930 windows · 428 drivers · k-NN purity</h3>
+    <div class="demo-grid">
+      <div data-widget="scatter" data-src="data/embedding_drivedna.json" data-label="DriveDNA embedding map"><figure class="pj-fallback"><figcaption>Embedding figure.</figcaption></figure></div>
+      <div data-widget="scatter" data-mode="hero" data-pulse data-src="data/embedding_drivedna.json" data-label="DriveDNA hero pulse"><figure class="pj-fallback"><figcaption>Embedding figure.</figcaption></figure></div>
+    </div>
+    <h3 class="sub-head">User study (paper appendix table) · device latency logs</h3>
+    <div class="demo-grid">
+      <div data-widget="paired" data-src="data/paired_userstudy.json" data-label="User study"><figure class="pj-fallback"><figcaption>Figure in the paper.</figcaption></figure></div>
+      <div data-widget="hist" data-src="data/hist_latency.json" data-label="Latency logs"><figure class="pj-fallback"><figcaption>Latency table.</figcaption></figure></div>
+    </div>
+  </div>
+</section>
 <!-- ============ results ============ -->
 <section class="pj-section" id="results">
   <div class="pj-wrap">
@@ -211,7 +236,7 @@
 <footer class="pj-foot"><div class="pj-wrap"><b>Yuhang Wang</b> · University of South Florida · MOTIF-Lab<div class="pj-foot__links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a><a href="mailto:yuhangw@usf.edu">yuhangw@usf.edu</a></div></div></footer>
 <button class="totop" type="button" aria-label="Back to top" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 
-<script type="application/json" id="sources-json">{"schema":"sources/1","sources":[{"id":"arxiv-demo","kind":"arxiv","url":"https://arxiv.org/abs/2609.33000v1","version":"v1","date":"2026-09-26","locator":"Abstract","quote":"48.05 vs. 71.47 All-MPJPE"},{"id":"hf-demo","kind":"hf-card","url":"https://huggingface.co/HenryYHW/TriDrive","date":"2026-10-02","locator":"README","quote":"CC BY-SA 4.0"},{"id":"log-demo","kind":"log","url":null,"date":"2026-10-02","locator":"pred_log.jsonl × 50 sessions","quote":"p95 152.6 ms"}]}</script>
+<script type="application/json" id="sources-json">{"schema":"sources/1","sources":[{"id":"arxiv-demo","kind":"arxiv","url":"https://arxiv.org/abs/2609.33000v1","version":"v1","date":"2026-09-26","locator":"Abstract","quote":"48.05 versus 71.47 All-MPJPE"},{"id":"hf-demo","kind":"hf-card","url":"https://huggingface.co/HenryYHW/TriDrive","date":"2026-10-02","locator":"README","quote":"CC BY-SA 4.0"},{"id":"log-demo","kind":"log","url":null,"date":"2026-10-02","locator":"pred_log.jsonl × 50 sessions","quote":"p95 152.6 ms"}]}</script>
 <script>
   document.querySelectorAll('#accents .chip').forEach(function (b) { b.addEventListener('click', function () { document.body.setAttribute('data-proj', b.getAttribute('data-p')); document.querySelectorAll('#accents .chip').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); }); });
   var mb = document.getElementById('motion'); mb.addEventListener('click', function () { var on = mb.getAttribute('aria-pressed') !== 'true'; mb.setAttribute('aria-pressed', String(on)); if (on) document.body.setAttribute('data-motion', 'reduce'); else document.body.removeAttribute('data-motion'); });
