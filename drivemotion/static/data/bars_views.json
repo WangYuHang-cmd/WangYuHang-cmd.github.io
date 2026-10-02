@@ -1,0 +1,1 @@
+{"schema":"bars/1","unit":"sequences","max":null,"rows":[{"label":"web side","v":3092,"emph":false},{"label":"aide incar","v":2898,"emph":false},{"label":"cabin fisheye","v":1347,"emph":false},{"label":"web front","v":1024,"emph":false},{"label":"web back","v":649,"emph":false}],"meta":{"source":"release manifest · camera-view types"}}

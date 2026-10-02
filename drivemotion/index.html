@@ -1,283 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="title" content="DriveMotion: A Benchmark for Driver Motion Sequence Forecasting">
-  <meta name="description" content="DriveMotion is a large-scale multi-source benchmark for driver body-motion forecasting: 400 hours of in-cabin skeleton motion, 133 keypoints per frame, 9,010 sequences from 360 drivers.">
-  <meta name="keywords" content="driver monitoring, motion forecasting, skeleton, in-cabin, benchmark, human motion, autonomous driving, privacy">
-  <meta name="author" content="Yuhang Wang, Chuheng Wei, Jingxin Yang, Xishun Liao, Hao Zhou">
-  <meta name="robots" content="index, follow">
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
-  <meta property="og:title" content="DriveMotion: Driver Motion Sequence Forecasting">
-  <meta property="og:description" content="A skeleton-based benchmark for forecasting in-cabin driver body motion a few seconds ahead.">
-  <meta property="og:url" content="https://wangyuhang-cmd.github.io/drivemotion/">
-  <meta property="og:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/images/dm_teaser.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DriveMotion: Driver Motion Forecasting">
-  <meta name="twitter:description" content="A skeleton-based benchmark for forecasting in-cabin driver body motion a few seconds ahead.">
-  <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/images/dm_teaser.jpg">
-
-  <meta name="citation_title" content="DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting">
-  <meta name="citation_author" content="Wang, Yuhang">
-  <meta name="citation_author" content="Wei, Chuheng">
-  <meta name="citation_author" content="Yang, Jingxin">
-  <meta name="citation_author" content="Liao, Xishun">
-  <meta name="citation_author" content="Zhou, Hao">
-  <meta name="citation_publication_date" content="2026">
-  <meta name="citation_arxiv_id" content="2609.08117">
-
-  <title>DriveMotion · Driver Motion Sequence Forecasting</title>
-
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-  <link rel="stylesheet" href="/projectpage-lib/css/bulma.min.css">
-  <link rel="stylesheet" href="/projectpage-lib/css/index.css">
-  <link rel="preload" href="/projectpage-lib/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/projectpage-lib/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="/projectpage-lib/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="/projectpage-lib/js/fontawesome.all.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-carousel.min.js"></script>
-  <script defer src="/projectpage-lib/js/bulma-slider.min.js"></script>
-  <script defer src="/projectpage-lib/js/index.js"></script>
-  <style>
-    .home-link{position:fixed;top:16px;left:16px;z-index:40;background:#2563eb;color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.15);text-decoration:none}
-    .home-link:hover{background:#1d4ed8;color:#fff}
-    .teaser-img{display:block;margin:0 auto;max-width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-    .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.2rem;margin:1.5rem 0 .5rem}
-    .stat{text-align:center;min-width:120px}
-    .stat .num{font-size:2.1rem;font-weight:800;color:#2563eb;line-height:1.1}
-    .stat .lbl{font-size:.85rem;color:#4a4a4a;text-transform:uppercase;letter-spacing:.03em}
-    .gif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.2rem}
-    .gif-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.10)}
-    .gif-card img{display:block;width:100%;height:auto}
-    .gif-card .cap{padding:.6rem .8rem;font-size:.9rem;color:#363636}
-  
-    /* ---- cinematic dark hero (design system v2) ---- */
-    .hero-dark{background:radial-gradient(1200px 500px at 70% -10%,rgba(37,99,235,.35),transparent 60%),linear-gradient(160deg,#0a1428 0%,#0f2044 55%,#0a1428 100%);color:#fff;position:relative;overflow:hidden}
-    .hero-dark::after{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="%23ffffff09" stroke-width="1"/></svg>');pointer-events:none}
-    .hero-dark .publication-title{color:#fff!important;-webkit-text-fill-color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-    .hero-dark .publication-authors,.hero-dark .publication-authors .author-block{color:#c7d5ef}
-    .hero-dark .publication-authors a{color:#7fb0ff}
-    .hero-dark .publication-authors a:hover{color:#fff}
-    .venue-pill{display:inline-block;margin-top:.7rem;padding:.35rem 1.1rem;border:1px solid rgba(127,176,255,.45);border-radius:999px;color:#9ec2ff;font-weight:600;font-size:.95rem;letter-spacing:.02em;background:rgba(37,99,235,.12)}
-    .hero-dark .button.is-dark{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
-    .hero-dark .button.is-dark:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,99,235,.45)}
-    .filmstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:2.2rem auto .4rem;position:relative;z-index:2}
-    .filmstrip.single{grid-template-columns:minmax(0,860px);justify-content:center}
-    .film-card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .25s ease,box-shadow .25s ease;border:1px solid rgba(255,255,255,.14);background:#fff}
-    .film-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(37,99,235,.35)}
-    .film-card img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
-    .filmstrip.single .film-card img{aspect-ratio:auto;object-fit:contain}
-    .film-card .tag-cap{position:absolute;left:0;right:0;bottom:0;padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.75));letter-spacing:.02em}
-    .film-card .rec{position:absolute;top:.55rem;left:.7rem;font-size:.7rem;font-weight:700;color:#fff;background:rgba(220,38,38,.92);border-radius:6px;padding:.15rem .5rem;letter-spacing:.06em;z-index:2}
-    .hero-tagline{color:#c7d5ef;font-size:1.12rem;max-width:760px;margin:1.4rem auto 0;text-align:center}
-    .hero-tagline b{color:#fff}
-    .hero-dark .stat-band{display:flex;flex-wrap:wrap;justify-content:center;gap:2.6rem;margin:1.8rem 0 .6rem;position:relative;z-index:2}
-    .hero-dark .stat{text-align:center;min-width:130px}
-    .hero-dark .stat .num{font-size:2.5rem;font-weight:800;color:#7fb0ff;line-height:1.1;font-variant-numeric:tabular-nums}
-    .hero-dark .stat .lbl{font-size:.82rem;color:#9fb2d6;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-    .section-title-accent{position:relative;display:inline-block}
-    .section-title-accent::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7fb0ff);margin:.5rem auto 0}
-    .gif-card{transition:transform .22s ease,box-shadow .22s ease}
-    .gif-card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,32,68,.18)}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-    .reveal.on{opacity:1;transform:none}
-    @media (max-width:768px){.filmstrip{grid-template-columns:1fr 1fr}.filmstrip .film-card:nth-child(3){display:none}.filmstrip.single{grid-template-columns:1fr}}
-  </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DriveMotion · A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</title>
+<meta name="description" content="DriveMotion: 400 hours of in-cabin driver motion as 133-keypoint skeletons at 10 Hz from 360 drivers and three sources (fleet, web, AIDE), with a dynamics-anchored forecasting benchmark. Released skeleton-only.">
+<meta name="keywords" content="driver motion forecasting, whole-body keypoints, in-cabin, skeleton, benchmark, BATON, AIDE, human motion prediction, driver monitoring">
+<meta name="author" content="Yuhang Wang, Chuheng Wei, Jingxin Yang, Xishun Liao, Hao Zhou">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wangyuhang-cmd.github.io/drivemotion/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="University of South Florida · MOTIF-Lab">
+<meta property="og:title" content="DriveMotion: Forecasting the Driver's Whole Body">
+<meta property="og:description" content="133 keypoints at 10 Hz, 400 hours, 360 drivers, three sources — a skeleton-only benchmark anchored on real manoeuvres.">
+<meta property="og:url" content="https://wangyuhang-cmd.github.io/drivemotion/">
+<meta property="og:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/media/render_baton.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DriveMotion: Forecasting the Driver's Whole Body">
+<meta name="twitter:description" content="A skeleton-only, multi-source benchmark for driver motion forecasting, anchored on real manoeuvres.">
+<meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/media/render_baton.jpg">
+<meta name="citation_title" content="DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting">
+<meta name="citation_author" content="Wang, Yuhang"><meta name="citation_author" content="Wei, Chuheng"><meta name="citation_author" content="Yang, Jingxin"><meta name="citation_author" content="Liao, Xishun"><meta name="citation_author" content="Zhou, Hao">
+<meta name="citation_publication_date" content="2026"><meta name="citation_arxiv_id" content="2609.08117">
+<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+<link rel="preload" href="/assets/proj/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/proj/proj.css">
+<script defer src="/assets/proj/proj.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"DriveMotion","description":"400 hours of in-cabin driver motion as 133-keypoint skeleton sequences at 10 Hz from 360 drivers (fleet, web, AIDE), with a dynamics-anchored forecasting benchmark; released skeleton-only under CC BY 4.0.","url":"https://wangyuhang-cmd.github.io/drivemotion/","sameAs":["https://arxiv.org/abs/2609.08117","https://huggingface.co/datasets/HenryYHW/DriveMotion"],"license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"University of South Florida · MOTIF-Lab"},"distribution":[{"@type":"DataDownload","contentUrl":"https://huggingface.co/datasets/HenryYHW/DriveMotion"}]}</script>
 </head>
-<body>
-  <div id="site-nav"></div>
-  <script defer src="/assets/dark/nav.js"></script>
-  <noscript><a class="home-link" href="/"><i class="fas fa-arrow-left"></i>&nbsp; Yuhang Wang</a></noscript>
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+<body data-proj="drivemotion" data-manifest="static/data/manifest.json" data-sources="key:sources">
+<a class="pj-skip" href="#main">Skip to content</a>
+<div class="pj-bg" aria-hidden="true"></div><div class="pj-stars" aria-hidden="true"></div>
 
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works"><i class="fas fa-flask"></i> More Works <i class="fas fa-chevron-down dropdown-arrow"></i></button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header"><h4>More Works</h4><button class="close-btn" onclick="toggleMoreWorks()"><i class="fas fa-times"></i></button></div>
-      <div class="works-list">
-        <a href="/tridrive/" class="work-item"><div class="work-info"><h5>TriDrive</h5><p>Joint driver, vehicle and road modeling for human-centered driving.</p><span class="work-venue">Under review 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/baton/" class="work-item"><div class="work-info"><h5>BATON</h5><p>Benchmark for bidirectional human–automation control transitions.</p><span class="work-venue">Preprint 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/vlalert/" class="work-item"><div class="work-info"><h5>VLAlert</h5><p>Unified benchmark for driving-alert decisions.</p><span class="work-venue">CoRL 2026</span></div><i class="fas fa-external-link-alt"></i></a>
-        <a href="/adasto/" class="work-item"><div class="work-info"><h5>ADAS-TO</h5><p>15k+ real-world ADAS takeover events.</p><span class="work-venue">IEEE ITSC 2026</span></div><i class="fas fa-external-link-alt"></i></a>
+<header class="pj-nav" id="nav">
+  <div class="pj-nav__in">
+    <a class="pj-brand" href="/">Yuhang <b>Wang</b></a>
+    <nav class="pj-menu" aria-label="Page">
+      <ul class="pj-anchors">
+        <li><a href="#top">DriveMotion</a></li><li><a href="#overview">Overview</a></li><li><a href="#signature">Player</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#data">Data</a></li><li><a href="#cite">Cite</a></li>
+      </ul>
+      <ul>
+        <li class="pj-site-extra"><a href="/">Home</a></li><li class="pj-site-extra"><a href="/projects/">Projects</a></li>
+        <li class="pj-dd"><button class="pj-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">More works <svg class="ic ic-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="pj-dd__menu"><a href="/openlka/"><b>OpenLKA</b><span>Lane keeping on real roads · ITSC 2025</span></a><a href="/adasto/"><b>ADAS-TO</b><span>Human–ADAS takeover transitions · ITSC 2026</span></a><a href="/tridrive/"><b>TriDrive</b><span>Joint driver–vehicle–road modeling · arXiv 2026</span></a><a href="/drivedna/"><b>DriveDNA</b><span>Driver re-identification benchmark · arXiv 2026</span></a><a href="/baton/"><b>BATON</b><span>Bidirectional control transitions · arXiv 2026</span></a><a href="/vlalert/"><b>VLAlert</b><span>Observe before you alert · CoRL 2026</span></a></div></li>
+        <li><a class="btn btn--sm" href="https://arxiv.org/abs/2609.08117" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> 2609.08117</a></li>
+      </ul>
+    </nav>
+    <button class="pj-burger" type="button" aria-expanded="false" aria-label="Open menu" aria-controls="nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <div class="pj-progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+<!-- ================= hero ================= -->
+<section class="pj-hero" id="top">
+  <div class="pj-wrap">
+    <div class="pj-hero__grid">
+      <div class="pj-hero__text">
+        <p class="pj-eyebrow">Dataset &amp; benchmark · driver motion · arXiv 2026</p>
+        <h1 class="pj-h1"><span class="pj-wordmark">DriveMotion</span><span class="pj-title">A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</span></h1>
+        <p class="pj-thesis">A multi-source, <b>skeleton-only</b> benchmark that forecasts the driver's whole body — <b>133 keypoints at 10 Hz</b> — seconds ahead, anchored on real manoeuvres rather than on moments when nothing happens.</p>
+        <p class="pj-lede">Three sources through one extraction trunk: a continuous fleet (time-aligned CAN, device head pose), a curated web corpus (front / side / back views, five visibility levels) and the AIDE clips (behaviour and emotion labels). Every sequence is released as a privacy-reduced skeleton video plus a standardized keypoint tensor — the behaviour is kept, the appearance is not.</p>
+        <div class="pj-pills"><span class="pj-pill pj-pill--accent">arXiv 2609.08117 · 2026</span><span class="pj-pill">400 h · 9,010 sequences · 360 drivers (release)</span><span class="pj-pill">CC BY 4.0 · skeleton-derived</span></div>
+        <div class="pj-cta">
+          <a class="btn btn--primary" href="#signature">Open the player</a>
+          <a class="btn" href="https://arxiv.org/abs/2609.08117" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> Paper</a>
+          <a class="btn" href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank" rel="noopener">Dataset</a>
+        </div>
+        <p class="pj-authors"><a href="/">Yuhang Wang</a><sup>1</sup><span class="sep">·</span>Chuheng Wei<sup>2</sup><span class="sep">·</span>Jingxin Yang<sup>3</sup><span class="sep">·</span>Xishun Liao<sup>4</sup><span class="sep">·</span><a href="https://sites.google.com/view/haozhou-cv" target="_blank" rel="noopener">Hao Zhou</a><sup>1</sup></p>
+        <p class="pj-affil"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>Purdue University &nbsp; <sup>3</sup>Stanford University &nbsp; <sup>4</sup>University of Central Florida</p>
+      </div>
+      <a class="pj-hero__stage" href="#signature" aria-label="Open the skeleton player">
+        <div data-widget="skeleton" data-mode="hero" data-src="key:kpts_baton" data-eager data-label="Hero: a fleet driver's skeleton with wrist and head trails">
+          <figure class="pj-fallback"><img src="static/media/render_baton.jpg" alt="Skeleton-only render of a driver in the fleet cabin camera" width="956" height="720"></figure>
+        </div>
+        <div class="pj-stage__cap"><span>live · <b>fleet cabin camera → 133 keypoints</b> · 10 Hz</span><span class="pj-pill pj-pill--live">skeleton only</span></div>
+      </a>
+    </div>
+    <div class="pj-stats">
+      <a class="stat" href="#f-composition"><span class="num" data-count="400" data-suffix=" h">400 h</span><span class="lbl">of driver motion <data class="n" value="400" data-src="hf-card">(release)</data> · 393 h in the paper <data class="n" value="393" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-composition"><span class="num" data-count="133">133</span><span class="lbl">whole-body keypoints at 10 Hz <data class="n" value="133" data-src="arxiv-abs">(paper)</data></span></a>
+      <a class="stat" href="#f-composition"><span class="num" data-count="9010">9,010</span><span class="lbl">sequences · 680,082 windows <data class="n" value="9010" data-src="hf-card">(release)</data></span></a>
+      <a class="stat" href="#f-composition"><span class="num" data-count="360">360</span><span class="lbl">drivers · 3 sources · 5 view types <data class="n" value="360" data-src="arxiv-abs">(paper)</data></span></a>
+    </div>
+    <p class="stat-foot">Release (HF card, 23 Sep 2026): 400 h; 9,010 sequences = BATON 1,347 routes (320 h) + web 4,765 spans (78 h) + AIDE 2,898 clips (2.4 h). arXiv v1 (8 Sep 2026): 393 h; 4,367 forecasting sequences = 1,329 BATON routes (319 h) + 3,038 web spans (71.7 h), plus the 2,898 AIDE clips — the paper's sequence count excludes AIDE. Both: 360 drivers, 680,082 windows, 76,026 CAN-mined manoeuvre initiations.</p>
+  </div>
+</section>
+
+<!-- ================= overview ================= -->
+<section class="pj-section" id="overview">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">01 · OVERVIEW</span><h2>Forecast the body, not the face</h2><p class="sec-lede">What the benchmark is, in the paper's own words, beside what you need to know at a glance.</p></div>
+    <div class="pj-overview">
+      <div class="pj-abstract reveal" data-claim="arxiv-abs"><p>DriveMotion is a multi-source benchmark for continuous driver motion forecasting. It contains <data class="n" value="393" data-src="arxiv-abs">393</data> hours of <data class="n" value="133" data-src="arxiv-abs">133</data>-keypoint motion sequences at 10 Hz from <data class="n" value="360" data-src="arxiv-abs">360</data> drivers, integrating naturalistic driving data, curated public in-cabin videos, and the AIDE dataset into one skeleton representation. The primary protocol anchors evaluation on vehicle-dynamics transitions mined from CAN signals without providing CAN to the model at inference. Arm motion in pre-maneuver windows is <data class="n" value="3.4" data-src="arxiv-arm">3.4×</data> greater than in route-matched stable-driving controls. On these anchored windows, learned forecasters beat persistence by up to 15 %, while maneuver-enriched training improves forecast-derived Part-State F1 by <data class="n" value="44" data-src="arxiv-gain">44 %</data> over the zero-motion reference. Training on the full multi-source corpus further reduces forecasting error on held-out web drivers by <data class="n" value="38" data-src="arxiv-web">38 %</data> compared with BATON-only training.</p><p class="pj-w__cap">Condensed from the arXiv v1 abstract; sentences quoted verbatim carry a source chip.</p></div>
+      <aside class="pj-glance reveal" style="--i:1"><dl>
+        <div><dt>Venue</dt><dd>arXiv 2609.08117 · v1 · 8 Sep 2026 · dataset &amp; benchmark</dd></div>
+        <div><dt>Links</dt><dd><a href="https://arxiv.org/abs/2609.08117" target="_blank" rel="noopener">arXiv</a><a href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank" rel="noopener">Dataset</a><a href="#cite">BibTeX</a></dd></div>
+        <div><dt>Representation</dt><dd class="mono">COCO-WholeBody 133 keypoints · 10 Hz · per-joint confidence · part validity · head pose · CAN where available</dd></div>
+        <div><dt>Protocols</dt><dd>A — dynamics-anchored forecasting (pre-manoeuvre / post / stable strata) · B — robustness under observation shift</dd></div>
+        <div><dt>License</dt><dd>CC BY 4.0 for skeleton-derived artifacts · <span data-hf="HenryYHW/DriveMotion">gated, manual approval</span></dd></div>
+        <div><dt>Privacy</dt><dd>Skeleton only: no face, no cabin pixels on this page or in the release; web sources retain their own terms.</dd></div>
+      </dl></aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= signature ================= -->
+<section class="pj-section pj-section--band" id="signature">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">02 · SKELETON PLAYER</span><h2>One sequence format, three very different sources</h2><p class="sec-lede">Confidence sets the alpha of each joint; wrists and nose leave two-second trails; the ghost one second ahead is the ground truth the forecaster has to reach. Part LEDs show which body parts the extractor tracked; the CAN strip appears only where the fleet recorder had it.</p></div>
+    <div class="tabs reveal">
+      <div class="tabs__list" role="tablist"><button role="tab" aria-selected="true" aria-controls="tab-baton" id="t-baton" type="button">BATON fleet</button><button role="tab" aria-selected="false" aria-controls="tab-aide" id="t-aide" tabindex="-1" type="button">AIDE</button><button role="tab" aria-selected="false" aria-controls="tab-web" id="t-web" tabindex="-1" type="button">Web corpus</button><button role="tab" aria-selected="false" aria-controls="tab-fc" id="t-fc" tabindex="-1" type="button">Forecast vs ground truth</button></div>
+      <div class="tabs__panel" id="tab-baton" role="tabpanel" aria-labelledby="t-baton">
+        <div data-widget="skeleton" data-src="key:kpts_baton" data-label="BATON fleet skeleton player"><figure class="pj-fallback"><img src="static/media/render_baton.jpg" alt="Skeleton render of a fleet driver" width="956" height="720"><figcaption>Skeleton-only render (fleet cabin).</figcaption></figure></div>
+        <p class="pj-w__cap" style="margin-top:10px">Fleet cabin fisheye, 40-s window chosen by brake and steering activity; six tracked parts; speed, steering and brake from the time-aligned CAN. The "this clip" meter divides the last two seconds of wrist speed by this clip's median — it is a live reading, not the paper's 3.4× statistic.</p>
+      </div>
+      <div class="tabs__panel" id="tab-aide" role="tabpanel" aria-labelledby="t-aide" hidden>
+        <div data-widget="skeleton" data-src="key:kpts_aide_0829" data-label="AIDE skeleton player"><figure class="pj-fallback"><img src="static/media/render_aide.jpg" alt="Skeleton render of an AIDE clip" width="956" height="720"><figcaption>Skeleton-only render (AIDE).</figcaption></figure></div>
+        <p class="pj-w__cap" style="margin-top:10px">AIDE in-car view re-extracted into the same format; labels travel with the sequence (behaviour · emotion · scene). Frames masked by the tracker-jump filter are listed under "Data as text".</p>
+      </div>
+      <div class="tabs__panel" id="tab-web" role="tabpanel" aria-labelledby="t-web" hidden>
+        <div data-widget="skeleton" data-src="key:kpts_web" data-label="Web corpus skeleton player"><figure class="pj-fallback"><video muted playsinline loop preload="none" poster="static/media/demo_web.jpg" src="static/media/demo_web.mp4" width="800" height="450"></video><figcaption>Skeleton-only demo of a web-corpus span.</figcaption></figure></div>
+        <p class="pj-w__cap" style="margin-top:10px">Creator videos add viewpoint and cabin diversity; only the skeleton is released, never the source footage.</p>
+      </div>
+      <div class="tabs__panel" id="tab-fc" role="tabpanel" aria-labelledby="t-fc" hidden>
+        <div class="grid-2">
+          <figure class="pj-media" style="--ar:16/9"><video muted playsinline loop preload="none" poster="static/media/pred_vs_gt_0.jpg" src="static/media/pred_vs_gt_0.mp4" width="800" height="450"></video><figcaption>Forecast (colour) vs ground truth — example 1</figcaption></figure>
+          <figure class="pj-media" style="--ar:16/9"><video muted playsinline loop preload="none" poster="static/media/pred_vs_gt_1.jpg" src="static/media/pred_vs_gt_1.mp4" width="800" height="450"></video><figcaption>Forecast (colour) vs ground truth — example 2</figcaption></figure>
+        </div>
+        <p class="pj-note pj-note--warn" style="margin-top:14px"><b>Honesty note.</b> These renders come from the paper's Transformer (+ context, enriched) run; per-frame prediction arrays were not retained, so this view cannot be scrubbed or recomputed — the players above play ground truth only.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <main id="main-content">
-  <section class="hero hero-dark">
-    <div data-hero-bg data-mode="contained" hidden></div>
-    <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling &amp; Forecasting</h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><a href="https://wangyuhang-cmd.github.io/" target="_blank">Yuhang Wang</a><sup>1</sup>,</span>
-              <span class="author-block">Chuheng Wei<sup>2</sup>,</span>
-              <span class="author-block">Jingxin Yang<sup>3</sup>,</span>
-              <span class="author-block">Xishun Liao<sup>4</sup>,</span>
-              <span class="author-block"><a href="https://sites.google.com/view/haozhou-cv" target="_blank">Hao Zhou</a><sup>1</sup></span>
-            </div>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>University of South Florida · MOTIF-Lab &nbsp; <sup>2</sup>Purdue University &nbsp; <sup>3</sup>Stanford University &nbsp; <sup>4</sup>University of Central Florida</span><br>
-              <span class="venue-pill">Dataset &amp; Benchmark · 2026</span>
-            </div>
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <span class="link-block"><a href="https://arxiv.org/abs/2609.08117" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
-                <span class="link-block"><a href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank" class="external-link button is-normal is-rounded is-dark"><span class="icon">🤗</span><span>Dataset</span></a></span>
-              </div>
-            </div>
-            <div class="filmstrip">
-              <div class="film-card"><img src="static/images/dm_motion_baton.gif" alt="Fleet cabin skeleton motion"/><div class="tag-cap">Fleet cabin skeleton motion</div></div>
-              <div class="film-card"><img src="static/images/dm_overlay.gif" alt="Pose extraction overlay"/><div class="tag-cap">Pose extraction overlay</div></div>
-              <div class="film-card"><img src="static/images/dm_motion_aide.gif" alt="AIDE semantic clips"/><div class="tag-cap">AIDE semantic clips</div></div>
-            </div>
-
-            <p class="hero-tagline">A skeleton-based benchmark for forecasting in-cabin driver body motion a few seconds ahead.</p>
-            <div class="stat-band">
-              <div class="stat"><div class="num" data-count="400" data-suffix=" h">0</div><div class="lbl">in-cabin motion</div></div>
-              <div class="stat"><div class="num" data-count="133">0</div><div class="lbl">keypoints/frame</div></div>
-              <div class="stat"><div class="num" data-count="9010">0</div><div class="lbl">sequences</div></div>
-              <div class="stat"><div class="num" data-count="360">0</div><div class="lbl">drivers</div></div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+<!-- ================= evidence ================= -->
+<section class="pj-section" id="evidence">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">03 · EVIDENCE</span><h2>What the numbers rest on</h2></div>
+    <div class="findings">
+      <article class="finding reveal tilt" id="f-arm"><span class="finding__n">3.4× <small>arm motion before a manoeuvre</small></span><p class="finding__claim">The body moves before the car does.</p><p>Arm amplitude in pre-manoeuvre windows is 3.4× that of route-matched stable-driving controls (parked excluded), measured on ground truth over 76,026 CAN-mined manoeuvre initiations from 1,395 routes — which is why the benchmark anchors its primary protocol on these moments instead of random windows.</p>
+        <figure class="pj-fig"><img src="static/media/fig_motion_energy.jpg" alt="Motion energy around manoeuvre initiations" width="1600" height="900" loading="lazy" data-zoom><figcaption><b>Motion energy</b> around manoeuvre onsets (paper figure).</figcaption></figure></article>
+      <article class="finding reveal tilt" id="f-board" style="--i:1"><span class="finding__n">6.63 <small>MPJPE@4 s · Transformer-L</small></span><p class="finding__claim">Learned forecasters beat persistence — by up to 15 % — and enrichment lifts action-state F1 by 44 %.</p><p>Anchored board, zero-motion first: MPJPE at 4 s (bar, lower is better) and Part-State F1 at 2 s (second value, higher is better). The autoregressive token model has the highest F1 (.458) while the Transformer-L has the lowest MPJPE (6.63) — geometric and behavioural accuracy do not move together.</p>
+        <div data-widget="bars" data-lower-better data-src="key:leaderboard" data-label="Anchored forecasting board"><figure class="pj-fallback"><figcaption>Anchored board in the paper.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-web" style="--i:2"><span class="finding__n">−38 % <small>error on held-out web drivers</small></span><p class="finding__claim">Training on all three sources generalizes where fleet-only training does not.</p><p>Protocol B — robustness under observation shift: the full multi-source corpus reduces forecasting error on held-out web drivers by 38 % compared with BATON-only training. Viewpoint and visibility diversity are what the web corpus buys.</p>
+        <div data-widget="bars" data-src="key:bars_views" data-label="Sequences per camera-view type"><figure class="pj-fallback"><figcaption>View-type counts in the release manifest.</figcaption></figure></div></article>
+      <article class="finding reveal tilt" id="f-composition" style="--i:3"><span class="finding__n">9,010 <small>sequences · 3 sources</small></span><p class="finding__claim">One trunk, three sources, honest accounting.</p><p>Release manifest: BATON 1,347 routes (320 h, 301 drivers), web 4,765 spans (78 h, 23 creators), AIDE 2,898 clips (2.4 h). The paper's forecasting count (4,367) excludes the AIDE clips; the release counts them. Web curation funnel in the paper: 1,868 annotated videos → 873 driver videos → 79.9 h accepted → 71.7 h released.</p>
+        <div data-widget="bars" data-src="key:bars_sources" data-label="Hours per source"><figure class="pj-fallback"><figcaption>Composition in the paper.</figcaption></figure></div></article>
+      <article class="finding finding--wide reveal" id="f-aide" style="--i:4"><span class="finding__n">2,898 <small>AIDE clips with labels</small></span><p class="finding__claim">Semantics ride along in the same format.</p><p>AIDE's behaviour, emotion and scene labels are attached to the re-extracted sequences, so the player can show "Body Movement · Weariness · Smooth Traffic" next to the skeleton. Behaviour classes below; the format treats labels as metadata, not as supervision for the forecaster.</p>
+        <div data-widget="bars" data-src="key:bars_aide" data-label="AIDE behaviour labels"><figure class="pj-fallback"><figcaption>AIDE label counts.</figcaption></figure></div></article>
     </div>
-  </section>
+    <p class="pj-note pj-note--warn reveal"><b>What we do not claim.</b> Skeletons are not identities and not emotions: the benchmark forecasts motion, and the AIDE labels are reported, not inferred. No source pixels of any person appear on this page or in the release.</p>
+  </div>
+</section>
 
-  <section class="hero teaser reveal">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <img class="teaser-img" src="static/images/dm_teaser.jpg" alt="DriveMotion teaser" loading="lazy"/>
-        
-        </div></div>
-      </div>
+<!-- ================= method ================= -->
+<section class="pj-section pj-section--band" id="method">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">04 · METHOD</span><h2>From three kinds of video to one skeleton format</h2><p class="sec-lede">RTMW whole-body pose on every source, resampled to 10 Hz, with per-joint confidence, part validity, head pose and — for the fleet — time-aligned CAN; identity-disjoint splits; a dynamics-anchored protocol that never shows CAN to the model at inference.</p></div>
+    <figure class="pj-fig reveal"><img src="static/media/fig_pipeline.jpg" alt="DriveMotion pipeline from sources to skeleton sequences and the benchmark" width="2000" height="900" loading="lazy" data-zoom><figcaption><b>Pipeline.</b> Sources → extraction trunk → sequence format → protocols (release figure).</figcaption></figure>
+    <div class="grid-2" style="margin-top:24px">
+      <figure class="pj-fig reveal"><img src="static/media/fig_protocol.jpg" alt="Protocol A: dynamics-anchored strata; Protocol B: observation shift" width="2000" height="1000" loading="lazy" data-zoom><figcaption><b>Protocols.</b> A — pre-manoeuvre / post-manoeuvre / stable-control strata anchored on CAN events; B — held-out web drivers.</figcaption></figure>
+      <figure class="pj-fig reveal" style="--i:1"><img src="static/media/fig_stats.jpg" alt="Composition statistics of the release" width="2000" height="1000" loading="lazy" data-zoom><figcaption><b>Composition.</b> Sources, views and visibility levels (release figure).</figcaption></figure>
     </div>
-  </section>
-
-  <section class="section hero is-light reveal">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Overview</h2>
-          <div class="content has-text-justified">
-            <p>
-              DriveMotion combines in-cabin driver monitoring with motion forecasting, standardizing three heterogeneous
-              sources into a single skeleton motion representation and evaluation protocol. It provides 400 hours of in-cabin
-              motion at 10&nbsp;Hz, with 133 whole-body keypoints per frame (skeleton-only, privacy-reduced), yielding 9,010
-              sequences from 360 drivers and 680,082 forecasting windows, together with synchronized CAN telemetry and
-              road-camera context. The standardized task observes 8 seconds of motion and predicts the next 4 seconds. Source
-              data spans the BATON fleet (320 h), a web corpus (78 h), and AIDE (2.4 h, with behavior labels). Skeleton
-              artifacts and code are released under CC&nbsp;BY&nbsp;4.0.
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="grid-2" style="margin-top:24px">
+      <figure class="pj-fig reveal"><img src="static/media/fig_qual_dyn.jpg" alt="Qualitative forecasts around manoeuvre onsets" width="2000" height="1000" loading="lazy" data-zoom><figcaption><b>Qualitative.</b> Forecasts around manoeuvre onsets (skeletons only).</figcaption></figure>
+      <figure class="pj-fig reveal" style="--i:1"><img src="static/media/fig_ddpm.jpg" alt="Diversity of DDPM samples" width="1600" height="900" loading="lazy" data-zoom><figcaption><b>Stochastic forecasts.</b> DDPM sample diversity.</figcaption></figure>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="hero is-small reveal">
-    <div class="hero-body">
-      <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item"><img src="static/images/dm_pipeline.jpg" alt="Pipeline" loading="lazy"/><h2 class="subtitle has-text-centered">Pipeline: heterogeneous sources unified into a skeleton motion representation.</h2></div>
-          <div class="item"><img src="static/images/dm_data_example.jpg" alt="Data example" loading="lazy"/><h2 class="subtitle has-text-centered">An example of extracted skeleton motion with synchronized context.</h2></div>
-          <div class="item"><img src="static/images/dm_ddpm.jpg" alt="DDPM diversity" loading="lazy"/><h2 class="subtitle has-text-centered">Diverse motion futures from a diffusion-based forecaster.</h2></div>
-          <div class="item"><img src="static/images/dm_sequence.png" alt="Motion sequence" loading="lazy"/><h2 class="subtitle has-text-centered">A forecasted driver motion sequence.</h2></div>
-          <div class="item"><img src="static/images/dm_motion_energy.png" alt="Motion energy" loading="lazy"/><h2 class="subtitle has-text-centered">Motion-energy profiles over time.</h2></div>
-          <div class="item"><img src="static/images/dm_part_valid.png" alt="Part validity" loading="lazy"/><h2 class="subtitle has-text-centered">Per-body-part keypoint validity across the corpus.</h2></div>
-        </div>
-      </div>
+<!-- ================= results ================= -->
+<section class="pj-section" id="results">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">05 · RESULTS</span><h2>The anchored board</h2></div>
+    <p class="tbl-cap reveal">Protocol A · dynamics-anchored test windows · arXiv v1 · lower MPJPE is better, higher F1 is better</p>
+    <div class="tbl-wrap reveal"><table class="tbl tbl--num"><thead><tr><th>Model</th><th>MPJPE@4 s ↓</th><th>Part-State F1@2 s ↑</th></tr></thead><tbody>
+      <tr class="base"><td>Zero-motion (persistence)</td><td><data class="n" value="7.75" data-src="arxiv-gain">7.75</data></td><td>.215</td></tr><tr><td>GRU</td><td>6.83</td><td>.275</td></tr><tr><td>siMLPe</td><td>6.85</td><td>.227</td></tr><tr><td>Transformer ED</td><td>6.75</td><td>.282</td></tr><tr><td>Transformer + context (enriched)</td><td>6.95</td><td>.309</td></tr><tr class="hl"><td>Transformer-L</td><td><data class="n" value="6.63" data-src="arxiv-gain">6.63</data></td><td>.287</td></tr><tr><td>Transformer-XL</td><td>6.62</td><td>.284</td></tr><tr><td>CVAE</td><td>6.84</td><td>.257</td></tr><tr><td>DDPM</td><td>8.86</td><td>.299</td></tr><tr class="hl"><td>AR-LM (token model)</td><td>8.16</td><td>.458</td></tr><tr><td>Llama-3B</td><td>8.24</td><td>.457</td></tr></tbody></table></div>
+    <p class="pj-note pj-note--warn reveal"><b>Honest limits.</b> Decoding under-expresses the predictive signal: the models with the strongest geometry are not the ones with the highest action-state F1. Per-frame forecasts were not retained for the release renders. The web corpus is skeleton-only by construction and its source terms are retained by the sources.</p>
+    <details class="sources reveal"><summary>Sources &amp; notes</summary><ol data-auto></ol></details>
+  </div>
+</section>
+
+<!-- ================= data & access ================= -->
+<section class="pj-section pj-section--band" id="data">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">06 · DATA &amp; ACCESS</span><h2>Get the sequences</h2></div>
+    <div class="tiers">
+      <div class="tier tier--hi reveal"><span class="badge badge--warn">On request</span><h3>DriveMotion · full release</h3><p>9,010 sequences as keypoint tensors + skeleton videos, CAN and head pose where available, splits and protocol files. ~400 GB.</p><p class="mono" data-hf="HenryYHW/DriveMotion">as of 2026-10-02 · gated: manual · CC BY 4.0 (skeleton-derived)</p><div class="pj-cta"><a class="btn btn--primary btn--sm" href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank" rel="noopener">Request access</a></div></div>
+      <div class="tier reveal" style="--i:1"><span class="badge badge--ok">In the release</span><h3>Code &amp; protocol</h3><p>Extraction trunk, sequence format spec (ODMS), baselines and the anchored protocol ship with the dataset repository.</p><div class="pj-cta"><a class="btn btn--sm" href="https://huggingface.co/datasets/HenryYHW/DriveMotion/tree/main" target="_blank" rel="noopener">Browse files</a></div></div>
+      <div class="tier reveal" style="--i:2"><span class="badge badge--crit">Not released</span><h3>Source video</h3><p>No cabin pixels: fleet cabin video stays with BATON's gated release, web footage stays with its creators, AIDE with its authors. Takedown requests are honoured.</p></div>
     </div>
-  </section>
+    <blockquote class="quote reveal">“Every sequence in DriveMotion is released as a privacy-reduced skeleton motion video plus a standardized keypoint tensor — the driver's behavior is preserved, appearance identity is not.”<cite>Hugging Face dataset card · fetched 2026-10-02</cite></blockquote>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">Motion in Context</span></h2>
-      <p class="has-text-centered content">Skeleton motion overlaid on the in-cabin view and across source datasets.</p>
-      <div class="gif-grid">
-        <div class="gif-card"><img src="static/images/dm_overlay.gif" alt="Skeleton overlay" loading="lazy"/><div class="cap">Skeleton overlaid on the driver (10 Hz).</div></div>
-        <div class="gif-card"><img src="static/images/dm_motion_baton.gif" alt="BATON motion" loading="lazy"/><div class="cap">Motion from the BATON fleet source.</div></div>
-        <div class="gif-card"><img src="static/images/dm_motion_aide.gif" alt="AIDE motion" loading="lazy"/><div class="cap">Motion from the AIDE source with behavior labels.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section hero is-light reveal">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"><span class="section-title-accent">Can Models Predict Driver Motion?</span></h2>
-      <p class="has-text-centered content">A forecaster on dynamics-anchored <strong>pre-maneuver</strong> windows: the model observes 8&nbsp;s of motion history (plus road context) and rolls out the next 4&nbsp;s.</p>
-      <div class="has-text-centered">
-        <div class="gif-card" style="max-width:80%;margin:0 auto 1.1rem"><img src="static/images/dm_pred_vs_gt_0.gif" alt="Prediction vs ground truth, example 1" loading="lazy"/></div>
-        <div class="gif-card" style="max-width:80%;margin:0 auto 1.1rem"><img src="static/images/dm_pred_vs_gt_1.gif" alt="Prediction vs ground truth, example 2" loading="lazy"/></div>
-        <p class="content" style="font-size:.9rem;color:#363636">Left: ground truth (blue trails = nose / wrists). Right: Transformer (+ctx, enriched) prediction (orange trails) over the faint ground-truth ghost.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="bibtex-header"><h2 class="title">BibTeX</h2><button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX"><i class="fas fa-copy"></i> <span class="copy-text">Copy</span></button></div>
-      <pre id="bibtex-code"><code>@article{wang2026drivemotion,
+<!-- ================= cite ================= -->
+<section class="pj-section" id="cite">
+  <div class="pj-wrap">
+    <div class="sec-head reveal"><span class="sec-num">07 · CITE</span><h2>Read the paper, cite the benchmark</h2></div>
+    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@article{wang2026drivemotion,
   title   = {DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting},
   author  = {Wang, Yuhang and Wei, Chuheng and Yang, Jingxin and Liao, Xishun and Zhou, Hao},
   journal = {arXiv preprint arXiv:2609.08117},
   year    = {2026},
   url     = {https://huggingface.co/datasets/HenryYHW/DriveMotion}
-}</code></pre>
+}</pre></div>
+    <h3 class="sub-head">Related work from the lab</h3>
+    <div class="family reveal">
+      <a class="fam" href="/tridrive/"><img src="/images/th_tridrive.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">arXiv 2026</span><h4>TriDrive</h4><p>The forecaster in the car: driver, vehicle and road together at 5 Hz.</p></div></a>
+      <a class="fam" href="/baton/"><img src="/images/th_baton.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">Benchmark · arXiv 2026</span><h4>BATON</h4><p>The fleet source: control transitions with cabin, road and CAN.</p></div></a>
+      <a class="fam" href="/vlalert/"><img src="/images/th_vlalert.jpg" alt="" width="620" height="388" loading="lazy"><div><span class="fam__v">CoRL 2026</span><h4>VLAlert</h4><p>Observe before you alert.</p></div></a>
     </div>
-  </section>
+  </div>
+</section>
+</main>
 
-  <footer class="footer">
-    <div class="container"><div class="columns is-centered"><div class="column is-8"><div class="content">
-      <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-      You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-    </div></div></div></div>
-  </footer>
-  </main>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-
-      function countUp(el) {
-        var target = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0),
-            suf = el.dataset.suffix || "", dur = 1400, t0 = null;
-        function fmt(v) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString(); }
-        function step(t) {
-          if (!t0) t0 = t;
-          var p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(target * eased) + suf;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var io2 = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
-      }, { threshold: 0.4 });
-      document.querySelectorAll(".stat .num[data-count]").forEach(function (el) { io2.observe(el); });
-    });
-  </script>
-<script type="module" src="/assets/dark/hero-bg.js"></script>
+<footer class="pj-foot"><div class="pj-wrap"><b>Yuhang Wang</b> · University of South Florida · MOTIF-Lab<div class="pj-foot__links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a><a href="mailto:yuhangw@usf.edu">yuhangw@usf.edu</a></div></div></footer>
+<button class="totop" type="button" aria-label="Back to top" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 </body>
 </html>

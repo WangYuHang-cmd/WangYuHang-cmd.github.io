@@ -592,8 +592,10 @@
     this.size(); this.buildTwin(); this.ok(); this.dirty = true; this.kick(); this.maybeAutoplay();
   };
   Skeleton.prototype.size = function () { var b = sizeCanvas(this.cv, 600, 450); this.w = b.w; this.h = b.h; this.C = this.colors(); if (this.canCv && this.K && this.K.can) { var c = sizeCanvas(this.canCv, 600, 52); this.cw = c.w; this.ch = c.h; } };
-  Skeleton.prototype.P = function (f, j) { // canvas position of joint j at frame f (crop → canvas, aspect preserved)
-    var c = this.crop, x = (this.xs[f * this.k + j] - c[0]) / (c[2] - c[0]), y = (this.ys[f * this.k + j] - c[1]) / (c[3] - c[1]); return [x * this.w, y * this.h];
+  Skeleton.prototype.P = function (f, j) { // canvas position of joint j at frame f: the crop box is letterboxed into the canvas, aspect preserved
+    var c = this.crop, x = (this.xs[f * this.k + j] - c[0]) / (c[2] - c[0]), y = (this.ys[f * this.k + j] - c[1]) / (c[3] - c[1]);
+    if (!this.fit || this.fit.w !== this.w || this.fit.h !== this.h) { var cw = (c[2] - c[0]) * this.K.aspect, ch = c[3] - c[1], s = Math.min(this.w / cw, this.h / ch); this.fit = { w: this.w, h: this.h, sw: cw * s, sh: ch * s, ox: (this.w - cw * s) / 2, oy: (this.h - ch * s) / 2 }; }
+    return [this.fit.ox + x * this.fit.sw, this.fit.oy + y * this.fit.sh];
   };
   Skeleton.prototype.frameAt = function (t) { return clamp(Math.floor(t * this.hz), 0, this.n - 1); };
   Skeleton.prototype.drawPose = function (ctx, t, alpha, color, lw) {

@@ -59,6 +59,9 @@ drivemotion:
   windows:           {value: 680082, fmt: "0,0", source: arxiv:2609.08117v1, tag: in the paper}
   maneuvers:         {value: 76026, fmt: "0,0", source: arxiv:2609.08117v1, tag: in the paper}
   arm_ratio:         {value: 3.4, fmt: "0.0", unit: ×, source: arxiv:2609.08117v1, tag: in the paper}
+  f1_gain_pct:       {value: 44, fmt: "0", unit: "%", source: arxiv:2609.08117v1, tag: in the paper, locator: Abstract}
+  web_err_reduction_pct: {value: 38, fmt: "0", unit: "%", source: arxiv:2609.08117v1, tag: in the paper, locator: Abstract}
+  persistence_gain_pct: {value: 15, fmt: "0", unit: "%", source: arxiv:2609.08117v1, tag: in the paper, locator: Abstract}
   zero_motion_mpjpe: {value: 7.75, fmt: "0.00", source: arxiv:2609.08117v1, tag: in the paper}
   transformer_l_mpjpe: {value: 6.63, fmt: "0.00", source: arxiv:2609.08117v1, tag: in the paper}
 baton:

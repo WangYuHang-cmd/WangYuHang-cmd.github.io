@@ -1,0 +1,1 @@
+{"schema":"bars/1","unit":"h","max":null,"rows":[{"label":"BATON · 1,347 sequences","v":320.0,"v2":301,"emph":true,"note":"drivers"},{"label":"Web corpus · 4,765 sequences","v":78.0,"v2":23,"emph":false,"note":"drivers"},{"label":"AIDE · 2,898 sequences","v":2.4,"v2":null,"emph":false,"note":"2,898 clips"}],"meta":{"source":"release manifest · v = hours, v2 = drivers"}}

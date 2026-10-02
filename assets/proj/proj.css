@@ -399,7 +399,8 @@ canvas.pj-strip{display:block;width:100%;height:var(--h,68px);cursor:crosshair;t
 
 /* ---------- Skeleton ---------- */
 .pj-sk__grid{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px}
-.pj-sk .pj-plot{aspect-ratio:var(--ar,4/3);background:#05091a}
+.pj-sk .pj-plot{height:clamp(360px,54vw,560px);background:#05091a} /* the skeleton is letterboxed into whatever box it gets */
+.pj-w[data-mode="hero"] .pj-sk .pj-plot{height:auto;aspect-ratio:var(--ar,4/3)}
 .pj-sk canvas.pj-sk__cv{position:absolute;inset:0;width:100%;height:100%}
 .pj-sk__side{display:flex;flex-direction:column;gap:10px}
 .pj-sk__box{padding:10px 12px;border:1px solid var(--cl-border);border-radius:10px;background:var(--cl-surface)}
