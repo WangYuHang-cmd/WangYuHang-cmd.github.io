@@ -4,9 +4,19 @@ permalink: /publications/index.html
 title: Publications
 ---
 
-> Update: 26th September 2026
+> Update: 2nd October 2026
 >
 > (†: equal contribution, ~: corresponding author)
+
+## Preprints
+
+- [TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring](/tridrive/)<br>Yuhang Wang, Jingxin Yang, Chuheng Wei, Yuechen Guo, Jinghan Xu, Zhao Han, Hao Zhou<br>arXiv 2609.33000, September 2026. Under review. [[arXiv]](https://arxiv.org/abs/2609.33000) [[Model]](https://huggingface.co/HenryYHW/TriDrive)<br>
+
+- [DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting](/drivemotion/)<br>Yuhang Wang, Chuheng Wei, Jingxin Yang, Xishun Liao, Hao Zhou<br>arXiv 2609.08117, September 2026. [[arXiv]](https://arxiv.org/abs/2609.08117) [[Data]](https://huggingface.co/datasets/HenryYHW/DriveMotion)<br>
+
+- [DriveDNA: A Large-Scale Multimodal Naturalistic Driving Dataset and Benchmark for Driving Style Identification](/drivedna/)<br>Yuhang Wang, Lingyao Li, Hao Zhou<br>arXiv 2607.23822, July 2026. [[arXiv]](https://arxiv.org/abs/2607.23822) [[Data]](https://huggingface.co/datasets/HenryYHW/DriveDNA)<br>
+
+- [BATON: A Multimodal Benchmark for Bidirectional Automation Transition Observation in Naturalistic Driving](/baton/)<br>Yuhang Wang, Yiyao Xu, Chaoyun Yang, Lingyao Li, Jingran Sun, Hao Zhou<br>arXiv 2604.07263 (v2, July 2026). [[arXiv]](https://arxiv.org/abs/2604.07263) [[Data]](https://huggingface.co/datasets/HenryYHW/BATON)<br>
 
 ## Conference Paper
 

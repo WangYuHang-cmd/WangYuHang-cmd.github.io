@@ -18,7 +18,14 @@ PATHS = {  # overridable with PROJPIPE_* env vars
 }
 CAPS = {"video_bytes": 2_000_000, "figure_bytes": 350_000, "poster_bytes": 60_000, "lqip_bytes": 500, "json_bytes": 400_000,
         "first_view_bytes": 3_000_000, "total_media_bytes": 25_000_000}
-CABIN_ALLOW = ["530075d26cad58e4"]  # compared at export; never written
+def cabin_allow():
+    """Recorder ids whose cabin pixels may be exported. Kept OUT of the repository: PROJPIPE_CABIN_ALLOW (comma-separated) or
+    the file ~/Desktop/Drive/.projpipe_cabin_allow (one id per line). Compared at export; never written to outputs."""
+    env = os.environ.get("PROJPIPE_CABIN_ALLOW")
+    if env: return [x.strip() for x in env.split(",") if x.strip()]
+    f = os.environ.get("PROJPIPE_CABIN_ALLOW_FILE", os.path.expanduser("~/Desktop/Drive/.projpipe_cabin_allow"))
+    return [l.strip() for l in open(f)] if os.path.exists(f) else []
+CABIN_ALLOW = cabin_allow()
 FORBIDDEN = [
     ("dongle id", re.compile(r"(?<![0-9a-f.])[0-9a-f]{16}(?![0-9a-f])")),  # not after a decimal point (floats)
     ("route id", re.compile(r"[0-9a-f]{8}--[0-9a-f]{10}")),

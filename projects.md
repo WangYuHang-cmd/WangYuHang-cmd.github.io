@@ -40,13 +40,13 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/tridrive/"><img src="/images/th_tridrive.jpg" alt="TriDrive"></a>
     <div class="body">
-      <div class="venue">arXiv preprint 2026</div>
+      <div class="venue">arXiv 2026 · under review</div>
       <h3><a href="/tridrive/">TriDrive</a></h3>
       <p class="blurb">Joint driver, vehicle and road modeling for human-centered driving: a world-model-based driver-monitoring system that forecasts driver kinematics, vehicle dynamics and road demands, deployed in real time on comma four and validated in a 14-participant on-road study.</p>
       <div class="badges">
         <a class="primary" href="/tridrive/">Project Page →</a>
         <a href="https://arxiv.org/abs/2609.33000" target="_blank">arXiv</a>
-        <a href="/tridrive/#demo">Demo Video</a>
+        <a href="/tridrive/#signature">Explore</a>
         <a href="https://huggingface.co/HenryYHW/TriDrive" target="_blank">🤗 Code &amp; Models</a>
       </div>
     </div>
@@ -85,9 +85,9 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/baton/"><img src="/images/th_baton.jpg" alt="BATON"></a>
     <div class="body">
-      <div class="venue">Preprint 2026</div>
+      <div class="venue">arXiv 2026</div>
       <h3><a href="/baton/">BATON</a></h3>
-      <p class="blurb">A multimodal benchmark for bidirectional human–automation control transitions: 136.6 h of naturalistic driving with video, CAN, radar and GPS, and three prediction tasks.</p>
+      <p class="blurb">A multimodal benchmark for bidirectional human–automation control transitions: 781 routes, 173 drivers and 204.9 h of real-world driving-automation use with front and cabin video, CAN, radar and route context; takeover scored as detection (T3-D) and as anticipation (T3-A).</p>
       <div class="badges">
         <a class="primary" href="/baton/">Project Page →</a>
         <a href="https://arxiv.org/abs/2604.07263" target="_blank">arXiv</a>
@@ -100,12 +100,12 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/drivedna/"><img src="/images/th_drivedna.jpg" alt="DriveDNA"></a>
     <div class="body">
-      <div class="venue">Preprint 2026</div>
+      <div class="venue">arXiv 2026</div>
       <h3><a href="/drivedna/">DriveDNA</a></h3>
       <p class="blurb">A benchmark for driving-style identification — 4,121 drives from 465 drivers, 975 h — that isolates driver-specific behavior from vehicle, route and environment confounds.</p>
       <div class="badges">
         <a class="primary" href="/drivedna/">Project Page →</a>
-        <a href="https://huggingface.co/papers/2607.23822" target="_blank">Paper</a>
+        <a href="https://arxiv.org/abs/2607.23822" target="_blank">arXiv</a>
         <a href="https://github.com/WangYuHang-cmd/DriveDNA" target="_blank">GitHub</a>
         <a href="https://huggingface.co/datasets/HenryYHW/DriveDNA" target="_blank">🤗 Data</a>
       </div>
@@ -115,9 +115,9 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" alt="DriveMotion"></a>
     <div class="body">
-      <div class="venue">Dataset 2026</div>
+      <div class="venue">arXiv 2026</div>
       <h3><a href="/drivemotion/">DriveMotion</a></h3>
-      <p class="blurb">A multi-source benchmark for driver body-motion forecasting: 400 h of in-cabin skeleton motion (133 keypoints/frame, privacy-reduced) with an 8 s → 4 s prediction task.</p>
+      <p class="blurb">A multi-source, skeleton-only benchmark for driver motion forecasting: 400 h of in-cabin motion as 133-keypoint skeletons at 10 Hz from 360 drivers (fleet, web, AIDE), anchored on real manoeuvres.</p>
       <div class="badges">
         <a class="primary" href="/drivemotion/">Project Page →</a>
         <a href="https://arxiv.org/abs/2609.08117" target="_blank">arXiv</a>
