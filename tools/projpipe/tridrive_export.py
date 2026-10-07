@@ -163,14 +163,14 @@ put("probe", "probe.json", {"schema": "paired/1", "mode": "dumbbell", "axis": {"
 
 # ====================================================================== 4. figures
 FIG = [("arch", os.path.join(D, "AAAI/ICLR/supplimentary/video/build/arch.png"), 2000, 350_000, None, None),
-       ("teaser", os.path.join(D, "AAAI/ICLR/supplimentary/video/build/teaser.png"), 2400, 450_000, (0, 0, 1, 1880 / 2641), [(0.003, 0.105, 0.147, 0.365), (0.228, 0.133, 0.283, 0.344), (0.685, 0.133, 0.997, 0.344)]),
+       ("teaser", os.path.join(D, "AAAI/ICLR/supplimentary/video/build/teaser.png"), 2400, 450_000, (0, 0, 1, 1880 / 2641), None),
        ("user_study_bars", os.path.join(D, "ICLR/figures/user_study_bars_n14.png"), 1650, 200_000, None, None),
        ("hw_experiment", os.path.join(D, "AAAI/ICLR/supplimentary/video/video_frame/experiment.jpg"), 1600, 300_000, None, None),
        ("hw_deployment1", os.path.join(D, "AAAI/ICLR/supplimentary/video/video_frame/deployment1.jpg"), 1600, 300_000, None, None),
        ("hw_deployment2", os.path.join(D, "AAAI/ICLR/supplimentary/video/video_frame/deployment2.jpg"), 1600, 300_000, None, None)]
 cc_pdf = os.path.join(D, "ICLR/figures/causal_cases.pdf"); cc_png = os.path.join(WORK, "causal_cases.png")
 if os.path.exists(cc_pdf) and not os.path.exists(cc_png): subprocess.run(["pdftoppm", "-r", "170", "-png", "-singlefile", cc_pdf, cc_png[:-4]], check=True)
-if os.path.exists(cc_png): FIG.append(("causal_cases", cc_png, 2200, 400_000, None, [(0.0, 0.0, 0.207, 0.43), (0.5, 0.0, 0.707, 0.43)]))  # night cabin stills from the deployment device → blurred
+if os.path.exists(cc_png): FIG.append(("causal_cases", cc_png, 2200, 400_000, None, None))  # night cabin stills from the deployment device paper figure, unblurred
 for key, src, w, cap, box, blur in FIG:
     dst = os.path.join(MEDIA, f"fig_{key}.jpg"); h = entry_hash({"w": w, "cap": cap, "box": box, "blur": blur}, src)
     if not A.skip_media and (A.force or not ledger.done("fig_" + key, h) or not os.path.exists(dst)): q = jpeg_fit(src, dst, max_w=w, cap_bytes=cap, box=box, blur_boxes=blur); ledger.mark("fig_" + key, h, q=q)
@@ -178,7 +178,7 @@ for key, src, w, cap, box, blur in FIG:
         files[f"fig_{key}"] = media_entry(f"fig_{key}.jpg")
         items.append({"id": f"fig_{key}", "kind": "figure", "title": key, "files": {"image": f"static/media/fig_{key}.jpg"}, "bytes": {"image": os.path.getsize(dst)}, "first_view": key == "teaser",
                       "privacy": {"kind": "figure", "source_pixels": key.startswith("hw_") or key == "teaser", "manual_review": "pending", "reviewed_by": None, "reviewed_at": None,
-                                  "note": "cabin regions blurred, participant row cropped" if key == "teaser" else ("cabin panels blurred (deployment device)" if key == "causal_cases" else ("face-free hardware photo" if key.startswith("hw_") else "paper figure"))},
+                                  "note": "participant row cropped (cabin regions unblurred)" if key == "teaser" else ("paper figure (cabin panels unblurred)" if key == "causal_cases" else ("face-free hardware photo" if key.startswith("hw_") else "paper figure"))},
                       "provenance": {"source": os.path.basename(src)}, "entry_hash": h})
         print(f"  fig   {key:18s} {os.path.getsize(dst)//1024:5d} KB")
 
