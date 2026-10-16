@@ -3,7 +3,7 @@
 Static gates for a kit-based project page (<page>/index.html):
   refs      every local src/href/poster/data-src resolves to a file
   motion    no literal durations/beziers in page HTML (tokens live in proj.css)
-  venue     no submission-venue / anonymity leakage (KDD, WACV, ICLR, "anonymous", "submission")
+  venue     no submission-venue / anonymity leakage (KDD, WACV, ICLR, "anonymous", "submission"); public acceptances in ACCEPTED_VENUES are exempt
   claims    superlatives only inside elements carrying data-claim (verbatim paper quotes)
   numbers   every <data class="n" value=…> matches a value in tools/projpipe/registry.yaml for this page
   tiers     "gated: auto|manual" text in #data matches assets/proj/data/hf_meta.json
@@ -15,6 +15,8 @@ import argparse, html, json, os, re, sys, urllib.request
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 PAGES = ["tridrive", "adasto", "drivedna", "drivemotion", "baton"]
 VENUE_RX = re.compile(r"\b(KDD|WACV|ICLR|NeurIPS|CVPR|anonymous authors?|anonymi[sz]ed for review|double-blind|under submission|submitted to)\b", re.I)
+ACCEPTED_VENUES = ["WACV 2027", "Winter Conference on Applications of Computer Vision (WACV)"]  # public acceptances (DriveMotion · WACV 2027): the venue word passes only inside these exact forms
+ACCEPTED_RX = re.compile("|".join((r"\b" if v[0].isalnum() else "") + re.escape(v) + (r"\b" if v[-1].isalnum() else "") for v in ACCEPTED_VENUES), re.I)
 SUPERLATIVE_RX = re.compile(r"\b(the first|the only|state[- ]of[- ]the[- ]art|SOTA|the largest|the best|unprecedented|novel)\b", re.I)
 MOTION_RX = re.compile(r"\b\d+(?:\.\d+)?m?s\b(?=[^<]*[;\"])|cubic-bezier\(")
 
@@ -82,7 +84,10 @@ def check(page, online=False):
         ctx = scanned[max(0, m.start() - 20):m.end() + 10]
         if 'style="' in ctx or "transition" in ctx or "animation" in ctx: P.append(f"literal motion value in HTML: …{ctx.strip()}…")
     text = strip_tags(re.sub(r"<(script|style)[^>]*>.*?</\1>", "", body, flags=re.S))
-    for m in VENUE_RX.finditer(text): P.append(f"venue/anonymity leakage: '{m.group(0)}' …{text[max(0, m.start()-30):m.end()+30].strip()}…")
+    accepted = [(a.start(), a.end()) for a in ACCEPTED_RX.finditer(text)]
+    for m in VENUE_RX.finditer(text):
+        if any(a <= m.start() < b for a, b in accepted): continue
+        P.append(f"venue/anonymity leakage: '{m.group(0)}' …{text[max(0, m.start()-30):m.end()+30].strip()}…")
     # claims lock
     allowed = claim_text(body)
     for m in SUPERLATIVE_RX.finditer(text):

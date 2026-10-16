@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DriveMotion · A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</title>
 <meta name="description" content="DriveMotion: 400 hours of in-cabin driver motion as 133-keypoint skeletons at 10 Hz from 360 drivers and three sources (fleet, web, AIDE), with a dynamics-anchored forecasting benchmark. Released skeleton-only.">
-<meta name="keywords" content="driver motion forecasting, whole-body keypoints, in-cabin, skeleton, benchmark, BATON, AIDE, human motion prediction, driver monitoring">
+<meta name="keywords" content="driver motion forecasting, whole-body keypoints, in-cabin, skeleton, benchmark, BATON, AIDE, human motion prediction, driver monitoring, WACV 2027">
 <meta name="author" content="Yuhang Wang, Chuheng Wei, Jingxin Yang, Xishun Liao, Hao Zhou">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://wangyuhang-cmd.github.io/drivemotion/">
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://wangyuhang-cmd.github.io/drivemotion/static/media/render_baton.jpg">
 <meta name="citation_title" content="DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting">
 <meta name="citation_author" content="Wang, Yuhang"><meta name="citation_author" content="Wei, Chuheng"><meta name="citation_author" content="Yang, Jingxin"><meta name="citation_author" content="Liao, Xishun"><meta name="citation_author" content="Zhou, Hao">
-<meta name="citation_publication_date" content="2026"><meta name="citation_arxiv_id" content="2609.08117">
+<meta name="citation_publication_date" content="2027"><meta name="citation_conference_title" content="IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)"><meta name="citation_arxiv_id" content="2609.08117">
 <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
 <link rel="preload" href="/assets/proj/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/proj/proj.css">
@@ -57,11 +57,11 @@
   <div class="pj-wrap">
     <div class="pj-hero__grid">
       <div class="pj-hero__text">
-        <p class="pj-eyebrow">Dataset &amp; benchmark · driver motion · arXiv 2026</p>
+        <p class="pj-eyebrow">Dataset &amp; benchmark · driver motion · IEEE/CVF WACV 2027</p>
         <h1 class="pj-h1"><span class="pj-wordmark">DriveMotion</span><span class="pj-title">A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</span></h1>
         <p class="pj-thesis">A multi-source, <b>skeleton-only</b> benchmark that forecasts the driver's whole body — <b>133 keypoints at 10 Hz</b> — seconds ahead, anchored on real manoeuvres rather than on moments when nothing happens.</p>
         <p class="pj-lede">Three sources through one extraction trunk: a continuous fleet (time-aligned CAN, device head pose), a curated web corpus (front / side / back views, five visibility levels) and the AIDE clips (behaviour and emotion labels). Every sequence is released as a privacy-reduced skeleton video plus a standardized keypoint tensor — the behaviour is kept, the appearance is not.</p>
-        <div class="pj-pills"><span class="pj-pill pj-pill--accent">arXiv 2609.08117 · 2026</span><span class="pj-pill">400 h · 9,010 sequences · 360 drivers (release)</span><span class="pj-pill">CC BY 4.0 · skeleton-derived</span></div>
+        <div class="pj-pills"><span class="pj-pill pj-pill--accent">IEEE/CVF WACV 2027 · accepted · arXiv 2609.08117</span><span class="pj-pill">400 h · 9,010 sequences · 360 drivers (release)</span><span class="pj-pill">CC BY 4.0 · skeleton-derived</span></div>
         <div class="pj-cta">
           <a class="btn btn--primary" href="#signature">Open the player</a>
           <a class="btn" href="https://arxiv.org/abs/2609.08117" target="_blank" rel="noopener"><span class="arxiv-mark">arXiv</span> Paper</a>
@@ -94,7 +94,7 @@
     <div class="pj-overview">
       <div class="pj-abstract reveal" data-claim="arxiv-abs"><p>DriveMotion is a multi-source benchmark for continuous driver motion forecasting. It contains <data class="n" value="393" data-src="arxiv-abs">393</data> hours of <data class="n" value="133" data-src="arxiv-abs">133</data>-keypoint motion sequences at 10 Hz from <data class="n" value="360" data-src="arxiv-abs">360</data> drivers, integrating naturalistic driving data, curated public in-cabin videos, and the AIDE dataset into one skeleton representation. The primary protocol anchors evaluation on vehicle-dynamics transitions mined from CAN signals without providing CAN to the model at inference. Arm motion in pre-maneuver windows is <data class="n" value="3.4" data-src="arxiv-arm">3.4×</data> greater than in route-matched stable-driving controls. On these anchored windows, learned forecasters beat persistence by up to 15 %, while maneuver-enriched training improves forecast-derived Part-State F1 by <data class="n" value="44" data-src="arxiv-gain">44 %</data> over the zero-motion reference. Training on the full multi-source corpus further reduces forecasting error on held-out web drivers by <data class="n" value="38" data-src="arxiv-web">38 %</data> compared with BATON-only training.</p><p class="pj-w__cap">Condensed from the arXiv v1 abstract; sentences quoted verbatim carry a source chip.</p></div>
       <aside class="pj-glance reveal" style="--i:1"><dl>
-        <div><dt>Venue</dt><dd>arXiv 2609.08117 · v1 · 8 Sep 2026 · dataset &amp; benchmark</dd></div>
+        <div><dt>Venue</dt><dd>IEEE/CVF WACV 2027 · accepted · arXiv 2609.08117 v1 · 8 Sep 2026</dd></div>
         <div><dt>Links</dt><dd><a href="https://arxiv.org/abs/2609.08117" target="_blank" rel="noopener">arXiv</a><a href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank" rel="noopener">Dataset</a><a href="#cite">BibTeX</a></dd></div>
         <div><dt>Representation</dt><dd class="mono">COCO-WholeBody 133 keypoints · 10 Hz · per-joint confidence · part validity · head pose · CAN where available</dd></div>
         <div><dt>Protocols</dt><dd>A — dynamics-anchored forecasting (pre-manoeuvre / post / stable strata) · B — robustness under observation shift</dd></div>
@@ -199,12 +199,13 @@
 <section class="pj-section" id="cite">
   <div class="pj-wrap">
     <div class="sec-head reveal"><span class="sec-num">07 · CITE</span><h2>Read the paper, cite the benchmark</h2></div>
-    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@article{wang2026drivemotion,
-  title   = {DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting},
-  author  = {Wang, Yuhang and Wei, Chuheng and Yang, Jingxin and Liao, Xishun and Zhou, Hao},
-  journal = {arXiv preprint arXiv:2609.08117},
-  year    = {2026},
-  url     = {https://huggingface.co/datasets/HenryYHW/DriveMotion}
+    <div class="bib reveal"><div class="bib__head"><b>BibTeX</b><button class="btn btn--sm" type="button"><span>Copy</span></button></div><pre>@inproceedings{wang2027drivemotion,
+  title     = {DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting},
+  author    = {Wang, Yuhang and Wei, Chuheng and Yang, Jingxin and Liao, Xishun and Zhou, Hao},
+  booktitle = {IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  year      = {2027},
+  note      = {arXiv:2609.08117},
+  url       = {https://huggingface.co/datasets/HenryYHW/DriveMotion}
 }</pre></div>
     <h3 class="sub-head">Related work from the lab</h3>
     <div class="family reveal">

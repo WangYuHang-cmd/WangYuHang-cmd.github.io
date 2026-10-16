@@ -115,7 +115,7 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" alt="DriveMotion"></a>
     <div class="body">
-      <div class="venue">arXiv 2026</div>
+      <div class="venue">IEEE/CVF WACV 2027</div>
       <h3><a href="/drivemotion/">DriveMotion</a></h3>
       <p class="blurb">A multi-source, skeleton-only benchmark for driver motion forecasting: 400 h of in-cabin motion as 133-keypoint skeletons at 10 Hz from 360 drivers (fleet, web, AIDE), anchored on real manoeuvres.</p>
       <div class="badges">
