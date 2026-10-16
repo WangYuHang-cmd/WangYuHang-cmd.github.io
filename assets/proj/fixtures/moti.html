@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Moti · mascot harness</title>
+<!-- Dev harness for the Moti mascot (this folder is excluded from the Jekyll build). Same stage markup as the homepage
+     hero (plan §3.7); the inline .moti-stage rule mirrors what landing.css does on the homepage (sizing only). -->
+<link rel="stylesheet" href="/assets/dark/site-dark.css">
+<link rel="stylesheet" href="/assets/dark/hud.css">
+<link rel="stylesheet" href="/assets/dark/moti.css">
+<style>
+  html{scroll-behavior:auto} /* instant scrolling so the scroll-pause check is deterministic (site-dark.css smooth-scrolls) */
+  body.dark-site{background:var(--bg-0);min-height:100vh;margin:0}
+  .harness{max-width:1180px;margin:0 auto;padding:48px 16px 0}
+  .hero-stage{width:520px;max-width:100%;margin:0 auto}
+  .moti-stage{aspect-ratio:1/1;overflow:hidden;position:relative;background:radial-gradient(60% 45% at 50% 72%,rgba(51,224,255,.12),transparent 70%)}
+  .hint{margin:18px auto 0;max-width:60ch;font:500 .74rem/1.7 var(--mono);letter-spacing:.04em;color:var(--text-mute);text-align:center}
+  .spacer{height:3000px}
+</style>
+</head>
+<body class="dark-site">
+<main class="harness">
+  <div class="hero-stage">
+    <div class="moti-stage hud-frame" id="moti-stage" data-moti="poster">
+      <button class="moti-hit" type="button" aria-label="Moti, MOTIF-Lab's robo-car mascot — press to make Moti react">
+        <picture><source type="image/webp" srcset="/images/moti-poster.webp"><img src="/images/moti-poster.png" width="880" height="880" alt="" decoding="async"></picture>
+        <!-- <canvas class="moti-canvas" aria-hidden="true"> inserted by moti.js -->
+      </button>
+      <span class="moti-tag" aria-hidden="true">MOTI · ROBOCAR</span>
+      <div class="moti-bubble" role="group" aria-label="Moti says" hidden><p class="moti-bubble__text"></p><a class="moti-bubble__cta" href="/projects/"></a><button class="moti-bubble__x" type="button" aria-label="Dismiss">×</button></div>
+      <p class="sr-only" aria-live="polite" id="moti-live"></p>
+    </div>
+  </div>
+  <p class="hint">harness · <code>#moti-force</code> skips the GL caveat gate · <code>#moti-snapshot</code> renders the 880² rest pose (<code>__moti.snapshot()</code>) · <code>#moti-debug</code> drag to orbit</p>
+  <div class="spacer" aria-hidden="true"></div>
+</main>
+<script type="module" src="/assets/dark/moti.js"></script>
+</body>
+</html>

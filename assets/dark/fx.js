@@ -13,9 +13,12 @@
     };
     addEventListener("scroll", onScroll, { passive: true }); onScroll();
     var burger = nav.querySelector(".dk-burger");
-    if (burger) burger.addEventListener("click", function () { nav.classList.toggle("open"); });
+    if (burger) burger.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
     nav.querySelectorAll(".dk-links a").forEach(function (a) {
-      a.addEventListener("click", function () { nav.classList.remove("open"); });
+      a.addEventListener("click", function () { nav.classList.remove("open"); if (burger) burger.setAttribute("aria-expanded", "false"); });
       if (a.getAttribute("href") === location.pathname) a.classList.add("current");
     });
   }
@@ -88,13 +91,14 @@
   var canTilt = !reduced && matchMedia("(hover:hover) and (pointer:fine)").matches;
   if (canTilt) {
     document.querySelectorAll(".tilt-card").forEach(function (card) {
+      var spotOnly = card.classList.contains("spot-only");   /* spotlight (--mx/--my) only, no 3D rotate */
       card.addEventListener("pointermove", function (ev) {
         var r = card.getBoundingClientRect();
         var mx = (ev.clientX - r.left) / r.width, my = (ev.clientY - r.top) / r.height;
         card.style.setProperty("--mx", mx); card.style.setProperty("--my", my);
-        card.style.transform = "rotateX(" + ((0.5 - my) * 8) + "deg) rotateY(" + ((mx - 0.5) * 8) + "deg) translateY(-3px)";
+        if (!spotOnly) card.style.transform = "rotateX(" + ((0.5 - my) * 8) + "deg) rotateY(" + ((mx - 0.5) * 8) + "deg) translateY(-3px)";
       });
-      card.addEventListener("pointerleave", function () { card.style.transform = ""; });
+      card.addEventListener("pointerleave", function () { if (!spotOnly) card.style.transform = ""; });
     });
   }
 

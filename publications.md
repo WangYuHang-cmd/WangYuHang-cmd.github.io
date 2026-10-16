@@ -20,7 +20,7 @@ title: Publications
 
 - [DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting](/drivemotion/)<br>Yuhang Wang, Chuheng Wei, Jingxin Yang, Xishun Liao, Hao Zhou<br>IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027)<br>Lake Buena Vista, Florida, United States. January, 2027. [[arXiv]](https://arxiv.org/abs/2609.08117) [[Data]](https://huggingface.co/datasets/HenryYHW/DriveMotion)<br>
 
-- [Observe Before You Alert: Adaptive Driver Alerting with Vision–Language Models](/vlalert/)<br>Yuhang Wang, Lingyao Li, Hao Zhou<br>Conference on Robot Learning (CoRL 2026). [[PDF]](/file/Observe_Before_You_Alert.pdf) [[arXiv]](https://arxiv.org/abs/2609.08130)<br>
+- [Observe Before You Alert: Adaptive Driver Alerting with Vision–Language Models](/vlalert/)<br>Yuhang Wang, Lingyao Li, Hao Zhou<br>Conference on Robot Learning (CoRL 2026). CoRL 2026 Travel Award. [[PDF]](/file/Observe_Before_You_Alert.pdf) [[arXiv]](https://arxiv.org/abs/2609.08130)<br>
 
 - [ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement](/adasto/)<br>Yuhang Wang, Yiyao Xu, Jingran Sun, Hao Zhou<br>IEEE Intelligent Transportation Systems Conference (ITSC 2026)<br>
 

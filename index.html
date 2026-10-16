@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.className=document.documentElement.className.replace(/\bno-js\b/,'js');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yuhang Wang · Autonomous Driving Datasets &amp; Benchmarks</title>
 <meta name="description" content="Yuhang Wang (王雨航) — PhD student at University of South Florida, MOTIF-Lab. Large-scale real-world datasets and benchmarks for driving automation: OpenLKA, ADAS-TO, BATON, DriveDNA, DriveMotion, VLAlert, TriDrive.">
@@ -10,14 +11,22 @@
 <meta property="og:title" content="Yuhang Wang · Autonomous Driving Datasets &amp; Benchmarks">
 <meta property="og:description" content="Vision–language models, real-world datasets and benchmarks for driving automation. WACV 2027 · CoRL 2026 · ITSC 2026 · ITSC 2025 · SMI 2024 Best Paper.">
 <meta property="og:image" content="https://wangyuhang-cmd.github.io/images/default-thumb.png">
-<link rel="shortcut icon" href="/images/fav.ico">
-<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#070d1d">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/images/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/woff2" href="/assets/proj/fonts/inter-latin-var.woff2" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="modulepreload" href="/assets/dark/three-loader.js">
+<link rel="modulepreload" href="/assets/dark/moti-rig.js">
 <link rel="stylesheet" href="/assets/dark/site-dark.css">
+<link rel="stylesheet" href="/assets/dark/hud.css">
 <link rel="stylesheet" href="/assets/dark/landing.css">
-<script src="https://cdn.counter.dev/script.js" data-id="4c8f7caa-2b55-46cd-a995-2c4633303773" data-utcoffset="8"></script>
+<link rel="stylesheet" href="/assets/dark/moti.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Yuhang Wang","alternateName":["王雨航","Henry Wang"],"url":"https://wangyuhang-cmd.github.io/","image":"https://wangyuhang-cmd.github.io/images/portrait-800.jpg","email":"mailto:yuhangw@usf.edu","jobTitle":"PhD Student","affiliation":{"@type":"CollegeOrUniversity","name":"University of South Florida","url":"https://www.usf.edu/"},"memberOf":{"@type":"Organization","name":"MOTIF-Lab"},"knowsAbout":["Vision–language models","Autonomous driving safety","Driver behavior modeling","Large-scale real-world driving datasets and benchmarks"],"sameAs":["https://scholar.google.com/citations?user=2bYt9ZAAAAAJ&hl=en","https://github.com/WangYuHang-cmd","https://huggingface.co/HenryYHW","https://www.linkedin.com/in/yuhang-wang-28bb06283","https://www.researchgate.net/profile/Yuhang-Wang-72"]}
+</script>
+<script defer src="https://cdn.counter.dev/script.js" data-id="4c8f7caa-2b55-46cd-a995-2c4633303773" data-utcoffset="8"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T5N5JY1E21"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -26,28 +35,17 @@
   gtag('config', 'G-T5N5JY1E21');
 </script>
 <script defer src="/assets/dark/fx.js"></script>
-<script defer src="/assets/dark/parallax.js"></script>
-<script type="module" src="/assets/dark/hero-bg.js"></script>
 </head>
-<body class="dark-site">
+<body class="dark-site lp">
 
-<div class="bg-fallback" aria-hidden="true"></div>
-<div data-hero-bg data-mode="fixed" hidden></div>
-<div class="plx-stars" data-plx="0.06" data-plx-mode="fixed" aria-hidden="true"></div>
-<div class="plx-orbs" aria-hidden="true">
-  <span class="orb o1" data-plx="0.14" data-plx-mode="fixed"></span>
-  <span class="orb o2" data-plx="0.26" data-plx-mode="fixed"></span>
-  <span class="orb o3" data-plx="0.22" data-plx-mode="fixed"></span>
-  <span class="orb o4" data-plx="0.38" data-plx-mode="fixed"></span>
-  <span class="orb o5" data-plx="0.34" data-plx-mode="fixed"></span>
-  <span class="orb o6" data-plx="0.48" data-plx-mode="fixed"></span>
-</div>
+<a class="skip" href="#main">Skip to content</a>
+<div class="hud-bg" aria-hidden="true"></div>
 
 <nav class="dk-nav">
   <div class="dk-nav-inner">
     <a class="dk-brand" href="/">Yuhang <b>Wang</b></a>
-    <button class="dk-burger" aria-label="Menu"><span></span></button>
-    <ul class="dk-links">
+    <button class="dk-burger" aria-label="Menu" aria-expanded="false" aria-controls="dk-links"><span></span></button>
+    <ul class="dk-links" id="dk-links">
       <li><a href="/">About Me</a></li>
       <li><a href="/projects/">Projects</a></li>
       <li><a href="/publications/">Publications</a></li>
@@ -60,99 +58,299 @@
   </div>
 </nav>
 
-<main>
+<main id="main">
 
 <!-- ================= HERO ================= -->
-<header class="hero">
-  <div class="hero-inner" data-plx-hero>
-  <div class="hero-eyebrow">PhD Student · University of South Florida · MOTIF-Lab</div>
-  <h1>Yuhang <span class="grad">Wang</span> <span style="font-weight:700;color:var(--text-mute);font-size:.55em">王雨航</span></h1>
-  <p class="typewriter"><span class="tw" data-lines='["Vision–language models that decide when to alert the driver.","Large-scale real-world datasets and benchmarks for driving automation.","Human-centered AI for autonomous driving safety.","Modeling how drivers and automation share control."]'>Vision–language models that decide when to alert the driver.</span><span class="caret"></span></p>
-
-  <div class="cta-row">
-    <a class="btn primary" href="/projects/">View Projects</a>
-    <a class="btn" href="https://scholar.google.com/citations?user=2bYt9ZAAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
-    <a class="btn" href="https://huggingface.co/HenryYHW" target="_blank">🤗 Hugging Face</a>
-    <a class="btn" href="mailto:yuhangw@usf.edu">Email</a>
+<header class="hero" id="top">
+  <div class="hero-scene" aria-hidden="true">
+    <div class="hud-horizon"></div>
+    <div class="hud-floor"></div>
   </div>
+  <div class="lp-wrap hero-grid">
+    <div class="hero-copy">
+      <p class="hud-idx hero-eyebrow"><span class="hud-no">//</span><span class="hud-tag">PhD Student · University of South Florida · MOTIF-Lab</span></p>
+      <h1 class="hero-name">Yuhang <span class="grad">Wang</span> <span class="hero-cn" lang="zh-Hans">王雨航</span></h1>
+      <p class="typewriter"><span class="tw" data-lines='["Vision–language models that decide when to alert the driver.","Large-scale real-world datasets and benchmarks for driving automation.","Human-centered AI for autonomous driving safety.","Modeling how drivers and automation share control."]'>Vision–language models that decide when to alert the driver.</span><span class="caret" aria-hidden="true"></span></p>
 
-  <div class="venue-wall">
-    <span class="venue-pill">IEEE/CVF WACV 2027</span>
-    <span class="venue-pill">CoRL 2026</span>
-    <span class="venue-pill">IEEE ITSC 2026</span>
-    <span class="venue-pill">IEEE ITSC 2025</span>
-    <span class="venue-pill">TRB 2026</span>
-    <span class="venue-pill gold">SMI 2024 · Best Paper</span>
-  </div>
+      <div class="cta-row">
+        <a class="btn primary" href="/projects/">View Projects</a>
+        <a class="btn" href="https://scholar.google.com/citations?user=2bYt9ZAAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
+        <a class="btn" href="https://huggingface.co/HenryYHW" target="_blank">🤗 Hugging Face</a>
+        <a class="btn" href="mailto:yuhangw@usf.edu">Email</a>
+      </div>
 
-  <div class="focus-band">
-    <p class="focus-lede">My PhD builds <b>vision–language models</b>, <b>large-scale real-world datasets</b> and
-    <b>benchmarks</b> for safer driving automation.</p>
-    <div class="focus-grid">
-      <div class="focus-item"><span class="fi-ic">◈</span><b>Multimodal Learning</b><span>Video, CAN, radar &amp; language — fused for driving understanding</span></div>
-      <div class="focus-item"><span class="fi-ic">◎</span><b>Human-Centered AI</b><span>Alerting, trust and shared control that drivers accept</span></div>
-      <div class="focus-item"><span class="fi-ic">◉</span><b>Driver Behavior Modeling</b><span>Takeovers, driving style and body motion at scale</span></div>
-      <div class="focus-item"><span class="fi-ic">➤</span><b>Autonomous Driving</b><span>Safety of production ADAS &amp; automated vehicles</span></div>
+      <div class="venue-wall" aria-label="Venues">
+        <span class="venue-pill">IEEE/CVF WACV 2027</span>
+        <span class="venue-pill">CoRL 2026</span>
+        <span class="venue-pill">IEEE ITSC 2026</span>
+        <span class="venue-pill">IEEE ITSC 2025</span>
+        <span class="venue-pill">TRB 2026</span>
+        <span class="venue-pill gold">SMI 2024 · Best Paper</span>
+        <span class="venue-pill gold">CoRL 2026 · Travel Award</span>
+      </div>
+
+      <nav class="hero-jump" aria-label="Sections on this page">
+        <a href="#glance"><span class="hud-no">01</span>Glance</a>
+        <a href="#projects"><span class="hud-no">02</span>Projects</a>
+        <a href="#publications"><span class="hud-no">03</span>Publications</a>
+        <a href="#news"><span class="hud-no">04</span>News</a>
+        <a href="#about"><span class="hud-no">05</span>About</a>
+      </nav>
+    </div>
+
+    <div class="hero-stage">
+      <div class="moti-stage hud-frame" id="moti-stage" data-moti="poster">
+        <button class="moti-hit" type="button" aria-label="Moti, MOTIF-Lab's robo-car mascot — press to make Moti react">
+          <picture><source type="image/webp" srcset="/images/moti-poster.webp"><img src="/images/moti-poster.png" width="880" height="880" alt="" decoding="async"></picture>
+          <!-- <canvas class="moti-canvas" aria-hidden="true"> inserted by moti.js -->
+        </button>
+        <span class="moti-tag" aria-hidden="true">MOTI · ROBOCAR</span>
+        <div class="moti-bubble" role="group" aria-label="Moti says" hidden><p class="moti-bubble__text"></p><a class="moti-bubble__cta" href="/projects/"></a><button class="moti-bubble__x" type="button" aria-label="Dismiss">×</button></div>
+        <p class="sr-only" aria-live="polite" id="moti-live"></p>
+      </div>
     </div>
   </div>
-  </div><!-- /.hero-inner -->
-
-  <div class="scroll-hint" aria-hidden="true">▾</div>
 </header>
 
-<!-- ================= FEATURED PROJECTS ================= -->
-<section class="section" id="projects">
-  <span class="ghost" data-plx="-0.14" aria-hidden="true"><small>Projects</small>01</span>
-  <h2 class="section-title reveal" data-plx="-0.04">Featured Projects</h2>
-  <div class="tilt-grid">
-    <a class="tilt-card reveal" href="/tridrive/">
-      <div class="thumb"><img src="/images/th_tridrive.jpg" alt="TriDrive" loading="lazy"></div>
-      <div class="body"><div class="venue">arXiv 2026 · under review</div><h3>TriDrive</h3>
-      <p>Joint driver, vehicle and road modeling for human-centered driving — a world model that forecasts driver kinematics, vehicle dynamics and road demands, running in real time on comma four and validated with 14 drivers on the road.</p></div>
-    </a>
-    <a class="tilt-card reveal" href="/vlalert/">
-      <div class="thumb"><img src="/images/th_vlalert.jpg" alt="VLAlert" loading="lazy"></div>
-      <div class="body"><div class="venue">CoRL 2026</div><h3>VLAlert</h3>
-      <p>Observe Before You Alert: a vision–language framework for adaptive driver alerting (SILENT / OBSERVE / ALERT), with VLAlert-Bench — 192,892 labeled ticks from six datasets.</p></div>
-    </a>
-    <a class="tilt-card reveal" href="/adasto/">
-      <div class="thumb"><img src="/images/th_adasto.jpg" alt="ADAS-TO" loading="lazy"></div>
-      <div class="body"><div class="venue">IEEE ITSC 2026</div><h3>ADAS-TO</h3>
-      <p>15,000+ real-world ADAS takeover events from 327 drivers across 22 brands — multimodal and vision-language-annotated.</p></div>
-    </a>
-    <a class="tilt-card reveal" href="/openlka/">
-      <div class="thumb"><img src="/images/th_openlka.jpg" alt="OpenLKA" loading="lazy"></div>
-      <div class="body"><div class="venue">IEEE ITSC 2025</div><h3>OpenLKA</h3>
-      <p>The first large-scale open dataset of Lane Keeping Assist from 62 production vehicle models, pairing decoded CAN-bus logs with synchronized video.</p></div>
-    </a>
-    <a class="tilt-card reveal" href="/baton/">
-      <div class="thumb"><img src="/images/th_baton.jpg" alt="BATON" loading="lazy"></div>
-      <div class="body"><div class="venue">arXiv 2026</div><h3>BATON</h3>
-      <p>A multimodal benchmark for bidirectional human–automation control transitions: 781 routes, 173 drivers and 204.9 h of real-world driving-automation use, with takeover scored as detection and as anticipation.</p></div>
-    </a>
-    <a class="tilt-card reveal" href="/drivedna/">
-      <div class="thumb"><img src="/images/th_drivedna.jpg" alt="DriveDNA" loading="lazy"></div>
-      <div class="body"><div class="venue">arXiv 2026</div><h3>DriveDNA</h3>
-      <p>Driving-style identification — 4,121 drives from 465 drivers, 975 h — isolating driver-specific behavior from vehicle, route and environment confounds.</p></div>
-    </a>
-    <a class="tilt-card reveal" href="/drivemotion/">
-      <div class="thumb"><img src="/images/th_drivemotion.jpg" alt="DriveMotion" loading="lazy"></div>
-      <div class="body"><div class="venue">IEEE/CVF WACV 2027</div><h3>DriveMotion</h3>
-      <p>Driver body-motion forecasting: 400 h of in-cabin motion as 133-keypoint skeletons at 10 Hz from 360 drivers and three sources, with a dynamics-anchored forecasting benchmark — released skeleton-only.</p></div>
-    </a>
+<!-- ================= 01 AT A GLANCE ================= -->
+<section class="lp-sec glance" id="glance" aria-labelledby="glance-title">
+  <div class="lp-wrap">
+    <header class="sec-head">
+      <p class="hud-idx"><span class="hud-no">01</span><span class="hud-rule"></span><span class="hud-tag">At a glance</span></p>
+      <h2 class="sec-title sec-title--lede" id="glance-title">My PhD builds <b>vision–language models</b>, <b>large-scale real-world datasets</b> and
+      <b>benchmarks</b> for safer driving automation.</h2>
+    </header>
+    <div class="hud-frame hud-frame--band glance-frame reveal">
+      <ul class="stats">
+        <li class="stat"><b class="num" data-count="7">7</b><span class="lbl">Projects</span><span class="sub">6 datasets &amp; benchmarks, 1 on-road system</span></li>
+        <li class="stat"><b class="num" data-count="6">6</b><span class="lbl">Conference papers</span><span class="sub">WACV 2027 · CoRL 2026 · ITSC 2026 · ITSC 2025 · TRB 2026 · SMI 2024</span></li>
+        <li class="stat"><b class="num" data-count="975" data-suffix=" h">975<span class="plus"> h</span></b><span class="lbl">Naturalistic driving in DriveDNA</span><span class="sub">4,121 drives · 465 drivers</span></li>
+        <li class="stat"><b class="num" data-count="192892">192,892</b><span class="lbl">Labeled ticks in VLAlert-Bench</span><span class="sub">13,534 videos · 6 datasets</span></li>
+        <li class="stat"><b class="num" data-count="2">2</b><span class="lbl">Research awards</span><span class="sub">Best Paper SMI 2024 · Travel Award CoRL 2026</span></li>
+      </ul>
+      <ul class="focus-grid">
+        <li class="focus-item"><span class="fi-ic" aria-hidden="true">◈</span><b>Multimodal Learning</b><span>Video, CAN, radar &amp; language — fused for driving understanding</span></li>
+        <li class="focus-item"><span class="fi-ic" aria-hidden="true">◎</span><b>Human-Centered AI</b><span>Alerting, trust and shared control that drivers accept</span></li>
+        <li class="focus-item"><span class="fi-ic" aria-hidden="true">◉</span><b>Driver Behavior Modeling</b><span>Takeovers, driving style and body motion at scale</span></li>
+        <li class="focus-item"><span class="fi-ic" aria-hidden="true">➤</span><b>Autonomous Driving</b><span>Safety of production ADAS &amp; automated vehicles</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<!-- ================= ABOUT ================= -->
-<section class="section" id="about">
-  <span class="ghost" data-plx="-0.14" aria-hidden="true"><small>About</small>02</span>
-  <h2 class="section-title reveal" data-plx="-0.04">About Me</h2>
-  <div class="about-grid reveal">
-    <picture data-plx="0.10" style="display:block">
-      <source srcset="/images/portrait-800.webp" type="image/webp">
-      <img class="portrait" src="/images/portrait-800.jpg" alt="Yuhang Wang" width="280" loading="lazy">
-    </picture>
-    <div>
+<!-- ================= 02 FEATURED PROJECTS ================= -->
+<section class="lp-sec projects" id="projects" aria-labelledby="projects-title">
+  <div class="lp-wrap">
+    <header class="sec-head">
+      <p class="hud-idx"><span class="hud-no">02</span><span class="hud-rule"></span><span class="hud-tag">Projects</span></p>
+      <h2 class="sec-title" id="projects-title">Featured Projects</h2>
+      <p class="sec-lede">Six datasets and benchmarks and one on-road system, all built from real drivers, real vehicles and real roads.</p>
+      <a class="sec-more" href="/projects/">All projects <span aria-hidden="true">→</span></a>
+    </header>
+    <div class="bento">
+      <a class="tile tile--lg hud-frame reveal tilt-card spot-only" data-proj="drivemotion" href="/drivemotion/" style="--i:0">
+        <span class="tile-idx" aria-hidden="true">01</span>
+        <figure class="tile-media"><img src="/images/th_drivemotion.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>IEEE/CVF WACV 2027</p>
+          <h3 class="tile-title">DriveMotion</h3>
+          <p class="tile-sub">Driver body-motion forecasting</p>
+          <p class="tile-blurb">400 h of in-cabin motion as 133-keypoint skeletons at 10 Hz from 360 drivers — released skeleton-only.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile tile--lg hud-frame reveal tilt-card spot-only" data-proj="vlalert" href="/vlalert/" style="--i:1">
+        <span class="tile-idx" aria-hidden="true">02</span>
+        <figure class="tile-media"><img src="/images/th_vlalert.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>CoRL 2026<span class="hud-chip hud-chip--gold tile-award">Travel Award</span></p>
+          <h3 class="tile-title">VLAlert</h3>
+          <p class="tile-sub">Observe before you alert</p>
+          <p class="tile-blurb">Decides when to stay SILENT, OBSERVE or ALERT; VLAlert-Bench: 192,892 labeled ticks from six datasets.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile hud-frame reveal tilt-card spot-only" data-proj="tridrive" href="/tridrive/" style="--i:2">
+        <span class="tile-idx" aria-hidden="true">03</span>
+        <figure class="tile-media"><img src="/images/th_tridrive.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>arXiv 2026 · under review</p>
+          <h3 class="tile-title">TriDrive</h3>
+          <p class="tile-sub">Joint driver–vehicle–road modeling</p>
+          <p class="tile-blurb">Forecasts driver, vehicle and road demands in real time on comma four; validated with 14 drivers on the road.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile hud-frame reveal tilt-card spot-only" data-proj="adasto" href="/adasto/" style="--i:3">
+        <span class="tile-idx" aria-hidden="true">04</span>
+        <figure class="tile-media"><img src="/images/th_adasto.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>IEEE ITSC 2026</p>
+          <h3 class="tile-title">ADAS-TO</h3>
+          <p class="tile-sub">Human–ADAS takeover transitions</p>
+          <p class="tile-blurb">15,659 real-world ADAS takeover clips from 327 drivers across 22 brands, with vision-language annotations.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile hud-frame reveal tilt-card spot-only" data-proj="openlka" href="/openlka/" style="--i:4">
+        <span class="tile-idx" aria-hidden="true">05</span>
+        <figure class="tile-media"><img src="/images/th_openlka.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>IEEE ITSC 2025</p>
+          <h3 class="tile-title">OpenLKA</h3>
+          <p class="tile-sub">Lane keeping on real roads</p>
+          <p class="tile-blurb">Lane Keeping Assist from 62 production vehicle models — decoded CAN logs paired with synchronized video.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile hud-frame reveal tilt-card spot-only" data-proj="baton" href="/baton/" style="--i:5">
+        <span class="tile-idx" aria-hidden="true">06</span>
+        <figure class="tile-media"><img src="/images/th_baton.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>arXiv 2026</p>
+          <h3 class="tile-title">BATON</h3>
+          <p class="tile-sub">Bidirectional control transitions</p>
+          <p class="tile-blurb">781 routes, 173 drivers, 204.9 h of driving-automation use; takeover scored as detection and as anticipation.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile hud-frame reveal tilt-card spot-only" data-proj="drivedna" href="/drivedna/" style="--i:6">
+        <span class="tile-idx" aria-hidden="true">07</span>
+        <figure class="tile-media"><img src="/images/th_drivedna.jpg" alt="" width="620" height="388" loading="lazy" decoding="async"></figure>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>arXiv 2026</p>
+          <h3 class="tile-title">DriveDNA</h3>
+          <p class="tile-sub">Driving-style identification</p>
+          <p class="tile-blurb">4,121 drives from 465 drivers, 975 h — isolating driver-specific behavior from vehicle, route and environment.</p>
+          <span class="tile-cta">Open project <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="tile tile--all hud-frame hud-frame--band reveal tilt-card spot-only" data-proj="all-projects" href="/projects/" style="--i:7">
+        <span class="tile-idx" aria-hidden="true">08</span>
+        <div class="tile-body">
+          <p class="tile-venue"><span class="tile-dot" aria-hidden="true"></span>Index</p>
+          <h3 class="tile-title">All projects <span aria-hidden="true">→</span></h3>
+          <p class="tile-blurb">Every dataset, benchmark and system — with papers, code and data access in one place.</p>
+          <span class="tile-cta">Open the index <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 SELECTED PUBLICATIONS ================= -->
+<section class="lp-sec pubs-sec" id="publications" aria-labelledby="publications-title">
+  <div class="lp-wrap">
+    <header class="sec-head">
+      <p class="hud-idx"><span class="hud-no">03</span><span class="hud-rule"></span><span class="hud-tag">Publications</span></p>
+      <h2 class="sec-title" id="publications-title">Selected Publications</h2>
+      <p class="sec-lede">Five recent papers, newest first. Preprints and the complete list are on the publications page.</p>
+      <a class="sec-more" href="/publications/">All publications <span aria-hidden="true">→</span></a>
+    </header>
+    <ol class="pubs">
+      <li class="pub reveal" style="--i:0">
+        <div class="pub-badge"><span class="venue-pill">WACV 2027</span></div>
+        <div class="pub-main">
+          <h3 class="pub-title"><a href="/drivemotion/">DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</a></h3>
+          <p class="pub-authors"><b>Yuhang Wang</b>, Chuheng Wei, Jingxin Yang, Xishun Liao, Hao Zhou</p>
+          <p class="pub-where">IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027) · Lake Buena Vista, Florida, United States. January, 2027.</p>
+          <p class="pub-links"><a class="hud-chip" href="/drivemotion/">Project</a><a class="hud-chip" href="https://arxiv.org/abs/2609.08117" target="_blank">arXiv</a><a class="hud-chip" href="https://huggingface.co/datasets/HenryYHW/DriveMotion" target="_blank">Data</a></p>
+        </div>
+      </li>
+      <li class="pub reveal" style="--i:1">
+        <div class="pub-badge"><span class="venue-pill gold">CoRL&nbsp;2026 · Travel&nbsp;Award</span></div>
+        <div class="pub-main">
+          <h3 class="pub-title"><a href="/vlalert/">Observe Before You Alert: Adaptive Driver Alerting with Vision–Language Models</a></h3>
+          <p class="pub-authors"><b>Yuhang Wang</b>, Lingyao Li, Hao Zhou</p>
+          <p class="pub-where">Conference on Robot Learning (CoRL 2026). CoRL 2026 Travel Award.</p>
+          <p class="pub-links"><a class="hud-chip" href="/vlalert/">Project</a><a class="hud-chip" href="/file/Observe_Before_You_Alert.pdf">PDF</a><a class="hud-chip" href="https://arxiv.org/abs/2609.08130" target="_blank">arXiv</a><a class="hud-chip" href="https://huggingface.co/datasets/HenryYHW/VLAlert" target="_blank">Data</a></p>
+        </div>
+      </li>
+      <li class="pub reveal" style="--i:2">
+        <div class="pub-badge"><span class="venue-pill">ITSC 2026</span></div>
+        <div class="pub-main">
+          <h3 class="pub-title"><a href="/adasto/">ADAS-TO: A Large-Scale Multimodal Naturalistic Dataset and Empirical Characterization of Human Takeovers during ADAS Engagement</a></h3>
+          <p class="pub-authors"><b>Yuhang Wang</b>, Yiyao Xu, Jingran Sun, Hao Zhou</p>
+          <p class="pub-where">IEEE Intelligent Transportation Systems Conference (ITSC 2026)</p>
+          <p class="pub-links"><a class="hud-chip" href="/adasto/">Project</a><a class="hud-chip" href="https://arxiv.org/abs/2603.06986" target="_blank">arXiv</a><a class="hud-chip" href="https://huggingface.co/datasets/HenryYHW/ADAS-TO" target="_blank">Data</a><a class="hud-chip" href="https://github.com/OpenLKA/ADAS-TO" target="_blank">Code</a></p>
+        </div>
+      </li>
+      <li class="pub reveal" style="--i:3">
+        <div class="pub-badge"><span class="venue-pill">ITSC 2025</span></div>
+        <div class="pub-main">
+          <h3 class="pub-title"><a href="/openlka/">OpenLKA: An Open Dataset of Lane Keeping Assist from Production Vehicles Under Real-World Driving Conditions</a></h3>
+          <p class="pub-authors"><b>Yuhang Wang</b>, Abdulaziz Alhuraish, Shengming Yuan, Hao Zhou</p>
+          <p class="pub-where">IEEE Intelligent Transportation Systems Conference (ITSC 2025) · Gold Coast, Australia. November, 2025. Journal extension under review at <i>Accident Analysis &amp; Prevention</i>.</p>
+          <p class="pub-links"><a class="hud-chip" href="/openlka/">Project</a><a class="hud-chip" href="https://ieeexplore.ieee.org/document/11423194/" target="_blank">IEEE Xplore</a><a class="hud-chip" href="https://github.com/OpenLKA/OpenLKA" target="_blank">Code</a><a class="hud-chip" href="/openlka/#access">Data access</a></p>
+        </div>
+      </li>
+      <li class="pub reveal" style="--i:4">
+        <div class="pub-badge"><span class="venue-pill gold">SMI&nbsp;2024 · Best&nbsp;Paper</span></div>
+        <div class="pub-main">
+          <h3 class="pub-title"><a href="https://doi.org/10.1016/j.cag.2024.103998" target="_blank">Computational design of custom-fit PAP masks</a></h3>
+          <p class="pub-authors">Yukun Lu, <b>Yuhang Wang</b>, Peng Song, Hang Siang Wong, Yingjuan Mok and Ligang Liu</p>
+          <p class="pub-where">Shape Modeling International (SMI 2024) · Wayne State University, United States. July, 2024.</p>
+          <p class="pub-links"><a class="hud-chip" href="https://doi.org/10.1016/j.cag.2024.103998" target="_blank">DOI</a><a class="hud-chip" href="https://smiconf.github.io/2024/" target="_blank">SMI 2024</a></p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 04 NEWS ================= -->
+<section class="lp-sec news" id="news" aria-labelledby="news-title">
+  <div class="lp-wrap">
+    <header class="sec-head">
+      <p class="hud-idx"><span class="hud-no">04</span><span class="hud-rule"></span><span class="hud-tag">News</span></p>
+      <h2 class="sec-title" id="news-title">News &amp; Updates</h2>
+      <p class="sec-lede">Acceptances, releases and awards — newest first.</p>
+    </header>
+    <ol class="tl news-tl reveal">
+      <li class="tl-item" data-kind="award"><time class="tl-date" datetime="2026-10">Oct 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🏆 Awarded a <b style="color:var(--gold)">CoRL 2026 Travel Award</b> ($1,000) for <a href="/vlalert/"><b>Observe Before You Alert</b></a> at the Conference on Robot Learning. <a href="/awards/">[Awards]</a></p></div></li>
+      <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2026-10">Oct 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🎉 <a href="/drivemotion/"><b>DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</b></a> is accepted by <b>WACV 2027</b>! See you at Disney Springs, Florida, in January. <a href="https://arxiv.org/abs/2609.08117">[arXiv]</a> <a href="https://huggingface.co/datasets/HenryYHW/DriveMotion">[Data]</a></p></div></li>
+      <li class="tl-item"><time class="tl-date" datetime="2026-09">Sep 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🚗 New project page: <a href="/tridrive/"><b>TriDrive — Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving</b></a>, a world-model-based driver-monitoring system running in real time on comma four, validated in a 14-participant on-road study. <a href="/tridrive/#signature">[Explore]</a></p></div></li>
+      <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2026-09">Sep 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🎉 <a href="/vlalert/"><b>Observe Before You Alert: Adaptive Driver Alerting with Vision–Language Models</b></a> is accepted by <b>CoRL 2026</b>! <a href="/file/Observe_Before_You_Alert.pdf">[PDF]</a></p></div></li>
+      <li class="tl-item"><time class="tl-date" datetime="2026-09">Sep 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>📦 <a href="/drivemotion/"><b>DriveMotion</b></a> — a multi-source, skeleton-only benchmark for driver motion forecasting (400 h, 360 drivers) — is on <a href="https://arxiv.org/abs/2609.08117">arXiv</a> and <a href="https://huggingface.co/datasets/HenryYHW/DriveMotion">Hugging Face</a>.</p></div></li>
+      <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2026-08">Aug 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🎉 Three papers accepted by <b>ITSC 2026</b>: <a href="/adasto/"><b>ADAS-TO</b></a>, <b>Cut-In Gap Acceptance Toward Autonomous vs. Human-Driven Vehicles</b>, and <b>A Closed-loop, State-centric, Multi-agent Framework for Passenger Load Estimation</b>.</p></div></li>
+    </ol>
+    <details class="news-more hud-more">
+      <summary>14 earlier updates</summary>
+      <ol class="tl news-tl">
+        <li class="tl-item"><time class="tl-date" datetime="2026-07">Jul 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🧬 <a href="/drivedna/"><b>DriveDNA</b></a> — driving-style identification without the shortcuts (4,121 drives, 465 drivers, 975 h) — is on <a href="https://arxiv.org/abs/2607.23822">arXiv</a>.</p></div></li>
+        <li class="tl-item"><time class="tl-date" datetime="2026-04">Apr 2026</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🔁 <a href="/baton/"><b>BATON</b></a> — a multimodal benchmark for bidirectional human–automation control transitions — is on <a href="https://arxiv.org/abs/2604.07263">arXiv</a> (v2, Jul 2026: 781 routes, 173 drivers, 204.9 h).</p></div></li>
+        <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2025-10">Oct 2025</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>3 papers accepted by TRB Annual Meeting — see you in D.C.!</p></div></li>
+        <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2025-07">Jul 2025</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><b>From OpenLKA to LKAlert</b> abstract accepted by INFORMS 2025 (Intelligent Transportation Systems and Cybersecurity session), Atlanta.</p></div></li>
+        <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2025-06">Jun 2025</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><a href="/openlka/"><b>OpenLKA</b></a> is accepted by <b>ITSC 2025</b>.</p></div></li>
+        <li class="tl-item" data-kind="award"><time class="tl-date" datetime="2024-09">Sep 2024</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><a href="https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub"><b>Computational design of custom-fit PAP masks</b></a> won the <b style="color:var(--gold)">Best Paper award at SMI 2024</b>.</p></div></li>
+        <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2024-10">Oct 2024</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>Extended abstract accepted by the Second USF Artificial Intelligence + X Symposium (poster).</p></div></li>
+        <li class="tl-item"><time class="tl-date" datetime="2024-05">May 2024</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>Received a PhD offer from the Civil Engineering department at the University of South Florida!</p></div></li>
+        <li class="tl-item" data-kind="accept"><time class="tl-date" datetime="2024-05">May 2024</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><a href="https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub"><b>Computational design of custom-fit PAP masks</b></a> accepted for presentation at <a href="https://smiconf.github.io/2024/">SMI 2024</a>.</p></div></li>
+        <li class="tl-item"><time class="tl-date" datetime="2023-10">Oct 2023</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>Started as a visiting student at <a href="https://sutd-cgl.github.io/">SUTD CGL Lab</a>, advised by <a href="https://istd.sutd.edu.sg/people/faculty/peng-song">Prof. Peng Song</a>.</p></div></li>
+        <li class="tl-item" data-kind="award"><time class="tl-date" datetime="2023-10">Oct 2023</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🥈 Silver Medal at CCPC Guilin — <a href="https://board.xcpcio.com/ccpc/9th/guilin?group=official">Team 廉颇老矣，尚能夺金? · rank 47</a>.</p></div></li>
+        <li class="tl-item"><time class="tl-date" datetime="2023-05">May 2023</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>Joined ZelosTech's PnC group as an algorithm engineering intern.</p></div></li>
+        <li class="tl-item" data-kind="award"><time class="tl-date" datetime="2023-05">May 2023</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>🥇 Gold Medal at the ICPC National Contest — <a href="https://board.xcpcio.com/icpc/48th/xian-invitational">Team Tops dogs like real party · rank 16</a>.</p></div></li>
+        <li class="tl-item"><time class="tl-date" datetime="2021-11">Nov 2021</time><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p>Joined the team supervised by <a href="https://faculty.nuist.edu.cn/xuxiaolong">Prof. Xiaolong Xu</a>.</p></div></li>
+      </ol>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 05 ABOUT ================= -->
+<section class="lp-sec about" id="about" aria-labelledby="about-title">
+  <div class="lp-wrap">
+    <header class="sec-head">
+      <p class="hud-idx"><span class="hud-no">05</span><span class="hud-rule"></span><span class="hud-tag">About</span></p>
+      <h2 class="sec-title" id="about-title">About Me</h2>
+    </header>
+    <div class="about-grid reveal">
+      <figure class="about-portrait hud-frame">
+        <picture>
+          <source srcset="/images/portrait-800.webp" type="image/webp">
+          <img class="portrait" src="/images/portrait-800.jpg" alt="Yuhang Wang" width="280" height="373" loading="lazy" decoding="async">
+        </picture>
+        <figcaption>05 · Tampa, FL</figcaption>
+      </figure>
+      <div class="about-body">
       <p>I am <b style="color:#fff">Yuhang Wang (Henry, 王雨航)</b>, a PhD student in Civil Engineering
       Transportation at the University of South Florida, working as a research assistant at the
       MOTIF-Lab advised by <a href="https://sites.google.com/view/haozhou-cv" target="_blank">Prof. Hao Zhou</a>.
@@ -167,67 +365,42 @@
         <span class="chip">Autonomous Driving Safety</span><span class="chip">Multimodal Learning</span>
         <span class="chip">Human-Centered AI</span><span class="chip">Driver Behavior Modeling</span>
       </div>
-      <ul class="timeline">
-        <li><span class="tl-date">Aug 2024 – Present</span><br><b>University of South Florida</b> — Transportation PhD student, advised by <a href="https://sites.google.com/view/haozhou-cv" target="_blank">Prof. Hao Zhou</a></li>
-        <li><span class="tl-date">Oct 2023 – Jul 2024</span><br><b>Singapore University of Technology and Design</b> — Visiting student, advised by <a href="https://istd.sutd.edu.sg/people/faculty/peng-song" target="_blank">Prof. Peng Song</a></li>
-        <li><span class="tl-date">Sep 2020 – Jun 2024</span><br><b>Nanjing University of Information Science and Technology</b> — BEng in CS, advised by <a href="https://faculty.nuist.edu.cn/xuxiaolong/zh_CN/index/87901/list/index.htm" target="_blank">Prof. Xiaolong Xu</a></li>
-      </ul>
+      <ol class="tl tl--edu">
+        <li class="tl-item" data-kind="now"><span class="tl-date">Aug 2024 – Present</span><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><b>University of South Florida</b> — Transportation PhD student, advised by <a href="https://sites.google.com/view/haozhou-cv" target="_blank">Prof. Hao Zhou</a></p></div></li>
+        <li class="tl-item"><span class="tl-date">Oct 2023 – Jul 2024</span><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><b>Singapore University of Technology and Design</b> — Visiting student, advised by <a href="https://istd.sutd.edu.sg/people/faculty/peng-song" target="_blank">Prof. Peng Song</a></p></div></li>
+        <li class="tl-item"><span class="tl-date">Sep 2020 – Jun 2024</span><span class="tl-dot" aria-hidden="true"></span><div class="tl-body"><p><b>Nanjing University of Information Science and Technology</b> — BEng in CS, advised by <a href="https://faculty.nuist.edu.cn/xuxiaolong/zh_CN/index/87901/list/index.htm" target="_blank">Prof. Xiaolong Xu</a></p></div></li>
+      </ol>
+      </div>
     </div>
   </div>
-</section>
-
-<!-- ================= NEWS ================= -->
-<section class="section" id="news">
-  <span class="ghost" data-plx="-0.14" aria-hidden="true"><small>News</small>03</span>
-  <h2 class="section-title reveal" data-plx="-0.04">News &amp; Updates</h2>
-  <ul class="news-list reveal" data-plx="0.03">
-    <li><span class="nd">Oct 2026</span><p>🎉 <a href="/drivemotion/"><b>DriveMotion: A Large-Scale Multi-Source Benchmark for Driver Motion Sequence Modeling and Forecasting</b></a> is accepted by <b>WACV 2027</b>! See you at Disney Springs, Florida, in January. <a href="https://arxiv.org/abs/2609.08117">[arXiv]</a> <a href="https://huggingface.co/datasets/HenryYHW/DriveMotion">[Data]</a></p></li>
-    <li><span class="nd">Sep 2026</span><p>🚗 New project page: <a href="/tridrive/"><b>TriDrive — Joint Driver, Vehicle, and Road Modeling for Human-Centered Driving</b></a>, a world-model-based driver-monitoring system running in real time on comma four, validated in a 14-participant on-road study. <a href="/tridrive/#signature">[Explore]</a></p></li>
-    <li><span class="nd">Sep 2026</span><p>🎉 <a href="/vlalert/"><b>Observe Before You Alert: Adaptive Driver Alerting with Vision–Language Models</b></a> is accepted by <b>CoRL 2026</b>! <a href="/file/Observe_Before_You_Alert.pdf">[PDF]</a></p></li>
-    <li><span class="nd">Aug 2026</span><p>🎉 Three papers accepted by <b>ITSC 2026</b>: <a href="/adasto/"><b>ADAS-TO</b></a>, <b>Cut-In Gap Acceptance Toward Autonomous vs. Human-Driven Vehicles</b>, and <b>A Closed-loop, State-centric, Multi-agent Framework for Passenger Load Estimation</b>.</p></li>
-    <li><span class="nd">Sep 2026</span><p>📦 <a href="/drivemotion/"><b>DriveMotion</b></a> — a multi-source, skeleton-only benchmark for driver motion forecasting (400 h, 360 drivers) — is on <a href="https://arxiv.org/abs/2609.08117">arXiv</a> and <a href="https://huggingface.co/datasets/HenryYHW/DriveMotion">Hugging Face</a>.</p></li>
-    <li><span class="nd">Jul 2026</span><p>🧬 <a href="/drivedna/"><b>DriveDNA</b></a> — driving-style identification without the shortcuts (4,121 drives, 465 drivers, 975 h) — is on <a href="https://arxiv.org/abs/2607.23822">arXiv</a>.</p></li>
-    <li><span class="nd">Apr 2026</span><p>🔁 <a href="/baton/"><b>BATON</b></a> — a multimodal benchmark for bidirectional human–automation control transitions — is on <a href="https://arxiv.org/abs/2604.07263">arXiv</a> (v2, Jul 2026: 781 routes, 173 drivers, 204.9 h).</p></li>
-    <li><span class="nd">Oct 2025</span><p>3 papers accepted by TRB Annual Meeting — see you in D.C.!</p></li>
-    <li><span class="nd">Jul 2025</span><p><b>From OpenLKA to LKAlert</b> abstract accepted by INFORMS 2025 (Intelligent Transportation Systems and Cybersecurity session), Atlanta.</p></li>
-    <li><span class="nd">Jun 2025</span><p><a href="/openlka/"><b>OpenLKA</b></a> is accepted by <b>ITSC 2025</b>.</p></li>
-    <li><span class="nd">Sep 2024</span><p><a href="https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub"><b>Computational design of custom-fit PAP masks</b></a> won the <b style="color:var(--gold)">Best Paper award at SMI 2024</b>.</p></li>
-  </ul>
-  <details class="news-more reveal">
-    <summary>Earlier news</summary>
-    <ul class="news-list">
-      <li><span class="nd">Oct 2024</span><p>Extended abstract accepted by the Second USF Artificial Intelligence + X Symposium (poster).</p></li>
-      <li><span class="nd">May 2024</span><p>Received a PhD offer from the Civil Engineering department at the University of South Florida!</p></li>
-      <li><span class="nd">May 2024</span><p><a href="https://www.sciencedirect.com/science/article/pii/S009784932400133X?via%3Dihub"><b>Computational design of custom-fit PAP masks</b></a> accepted for presentation at <a href="https://smiconf.github.io/2024/">SMI 2024</a>.</p></li>
-      <li><span class="nd">Oct 2023</span><p>Started as a visiting student at <a href="https://sutd-cgl.github.io/">SUTD CGL Lab</a>, advised by <a href="https://istd.sutd.edu.sg/people/faculty/peng-song">Prof. Peng Song</a>.</p></li>
-      <li><span class="nd">Oct 2023</span><p>🥈 Silver Medal at CCPC Guilin — <a href="https://board.xcpcio.com/ccpc/9th/guilin?group=official">Team 廉颇老矣，尚能夺金? · rank 47</a>.</p></li>
-      <li><span class="nd">May 2023</span><p>Joined ZelosTech's PnC group as an algorithm engineering intern.</p></li>
-      <li><span class="nd">May 2023</span><p>🥇 Gold Medal at the ICPC National Contest — <a href="https://board.xcpcio.com/icpc/48th/xian-invitational">Team Tops dogs like real party · rank 16</a>.</p></li>
-      <li><span class="nd">Nov 2021</span><p>Joined the team supervised by <a href="https://faculty.nuist.edu.cn/xuxiaolong">Prof. Xiaolong Xu</a>.</p></li>
-    </ul>
-  </details>
 </section>
 
 </main>
 
 <!-- ================= FOOTER ================= -->
 <footer class="dk-footer">
-  <div class="embed-row">
-    <div data-embed-src="//clustrmaps.com/globe.js?d=Nz73efCm0j_zrK-Hu4wIlrHLSqmw5p95zxZhqDcMIG0" data-embed-id="clstr_globe"></div>
-    <div>
-      <a class="twitter-timeline" data-lang="en" data-theme="dark" data-height="320" href="https://twitter.com/Henry_YhWang?ref_src=twsrc%5Etfw">Tweets by Henry_YhWang</a>
-      <div data-embed-src="https://platform.twitter.com/widgets.js" data-embed-charset="utf-8"></div>
-    </div>
+  <div class="lp-wrap">
+    <details class="embed-strip hud-more">
+      <summary>Visitor globe &amp; latest posts</summary>
+      <div class="embed-row">
+        <div data-embed-src="//clustrmaps.com/globe.js?d=Nz73efCm0j_zrK-Hu4wIlrHLSqmw5p95zxZhqDcMIG0" data-embed-id="clstr_globe"></div>
+        <div>
+          <a class="twitter-timeline" data-lang="en" data-theme="dark" data-height="320" href="https://twitter.com/Henry_YhWang?ref_src=twsrc%5Etfw">Tweets by Henry_YhWang</a>
+          <div data-embed-src="https://platform.twitter.com/widgets.js" data-embed-charset="utf-8"></div>
+        </div>
+      </div>
+    </details>
+    <p class="foot-links">
+      <a href="https://github.com/WangYuHang-cmd" target="_blank">GitHub</a> ·
+      <a href="https://scholar.google.com/citations?user=2bYt9ZAAAAAJ&amp;hl=en" target="_blank">Scholar</a> ·
+      <a href="https://huggingface.co/HenryYHW" target="_blank">Hugging Face</a> ·
+      <a href="https://www.researchgate.net/profile/Yuhang-Wang-72" target="_blank">ResearchGate</a> ·
+      <a href="https://www.linkedin.com/in/yuhang-wang-28bb06283" target="_blank">LinkedIn</a>
+    </p>
+    <p class="foot-copy">© 2026 Yuhang Wang · Built with three.js on GitHub Pages</p>
   </div>
-  <p style="margin-top:1.6rem">
-    <a href="https://github.com/WangYuHang-cmd" target="_blank">GitHub</a> ·
-    <a href="https://scholar.google.com/citations?user=2bYt9ZAAAAAJ&amp;hl=en" target="_blank">Scholar</a> ·
-    <a href="https://huggingface.co/HenryYHW" target="_blank">Hugging Face</a> ·
-    <a href="https://www.researchgate.net/profile/Yuhang-Wang-72" target="_blank">ResearchGate</a> ·
-    <a href="https://www.linkedin.com/in/yuhang-wang-28bb06283" target="_blank">LinkedIn</a>
-  </p>
-  <p>© 2026 Yuhang Wang · Built with three.js on GitHub Pages</p>
 </footer>
 
+<script type="module" src="/assets/dark/moti.js"></script>
 </body>
 </html>

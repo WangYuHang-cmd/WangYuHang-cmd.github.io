@@ -1,0 +1,97 @@
+/* hud.css — shared "night-drive HUD" primitives for the homepage and the markdown pages (dark layout).
+   Opt-in classes only (no element selectors), so loading it on every page is harmless.
+   Tokens extend site-dark.css; per-project accents mirror assets/proj/proj.css (kept in sync by hand). */
+:root{
+  --hud-line:rgba(96,180,255,.14); --hud-line-hi:rgba(51,224,255,.55);
+  --hud-tick:10px; --hud-tick-w:1px; --ink:#061021;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  --ease-out:cubic-bezier(.2,.7,.2,1); --d-fast:160ms; --d-base:240ms; --d-reveal:560ms;
+  --fs-xs:.75rem; --fs-sm:.875rem;
+  --acc-tridrive:#33e0ff;    --acc-tridrive-rgb:51,224,255;
+  --acc-vlalert:#5c8bff;     --acc-vlalert-rgb:92,139,255;
+  --acc-adasto:#ff6b6b;      --acc-adasto-rgb:255,107,107;
+  --acc-openlka:#ffb454;     --acc-openlka-rgb:255,180,84;
+  --acc-baton:#f0c34e;       --acc-baton-rgb:240,195,78;
+  --acc-drivedna:#b07cff;    --acc-drivedna-rgb:176,124,255;
+  --acc-drivemotion:#3ddc97; --acc-drivemotion-rgb:61,220,151;
+}
+
+/* ---------- frame with four corner ticks (tick colour follows --acc when a component sets it) ---------- */
+.hud-frame{position:relative;isolation:isolate;border:1px solid var(--hud-line);border-radius:4px;background:var(--surface)}
+.hud-frame::before{content:"";position:absolute;inset:-1px;z-index:2;pointer-events:none;border-radius:inherit;
+  --t:var(--acc,var(--hud-line-hi));
+  background-image:linear-gradient(var(--t),var(--t)),linear-gradient(var(--t),var(--t)),linear-gradient(var(--t),var(--t)),linear-gradient(var(--t),var(--t)),
+                   linear-gradient(var(--t),var(--t)),linear-gradient(var(--t),var(--t)),linear-gradient(var(--t),var(--t)),linear-gradient(var(--t),var(--t));
+  background-size:var(--hud-tick) var(--hud-tick-w),var(--hud-tick-w) var(--hud-tick),var(--hud-tick) var(--hud-tick-w),var(--hud-tick-w) var(--hud-tick),
+                  var(--hud-tick) var(--hud-tick-w),var(--hud-tick-w) var(--hud-tick),var(--hud-tick) var(--hud-tick-w),var(--hud-tick-w) var(--hud-tick);
+  background-position:0 0,0 0,100% 0,100% 0,0 100%,0 100%,100% 100%,100% 100%;
+  background-repeat:no-repeat}
+.hud-frame--band{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M0 59.5h60M59.5 0v60' stroke='%23ffffff' stroke-opacity='.035' stroke-width='1'/></svg>")}
+
+/* ---------- index label:  02 ── PROJECTS ---------- */
+.hud-idx{display:flex;align-items:center;gap:.75rem;margin:0;font:600 var(--fs-xs)/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent-2)}
+.hud-no{color:#fff;font-variant-numeric:tabular-nums}
+.hud-rule{width:40px;height:1px;background:var(--hud-line-hi);flex:none}
+.hud-tag{color:var(--accent-2)}
+
+/* ---------- mono outlined chips (links / badges) ---------- */
+.hud-chip{display:inline-flex;align-items:center;gap:.35rem;font:600 .7rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  padding:.38rem .6rem;border:1px solid var(--hud-line);border-radius:4px;color:var(--text-dim);text-decoration:none;
+  transition:color var(--d-fast),border-color var(--d-fast)}
+.hud-chip:hover,.hud-chip:focus-visible{color:#fff;border-color:var(--hud-line-hi)}
+.hud-chip--gold{color:var(--gold);border-color:rgba(240,195,78,.45)}
+
+/* ---------- timeline (news, education, awards) ---------- */
+.tl{list-style:none;margin:0;padding:0}
+.dk-page .tl{padding-left:0}
+.tl-item{display:grid;grid-template-columns:6.5rem 1.25rem minmax(0,1fr);column-gap:.75rem;padding:.75rem 0;margin:0}
+.dk-page .tl-item{margin:0}
+.tl-date{font:700 .78rem/1.7 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2);text-align:right;white-space:nowrap}
+.tl-dot{position:relative;align-self:stretch}
+.tl-dot::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--hud-line);transform:translateX(-50%)}
+.tl-item:first-child .tl-dot::before{top:.6em}
+.tl-item:last-child .tl-dot::before{bottom:auto;height:.6em}
+.tl-dot::after{content:"";position:absolute;left:50%;top:.6em;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);
+  background:var(--bg-1);border:1px solid var(--accent-2);box-shadow:0 0 0 3px rgba(51,224,255,.12)}
+.tl-item[data-kind="accept"] .tl-dot::after,.tl-item[data-kind="now"] .tl-dot::after{background:var(--accent-2)}
+.tl-item[data-kind="award"] .tl-date{color:var(--gold)}
+.tl-item[data-kind="award"] .tl-dot::after{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,195,78,.18),0 0 14px rgba(240,195,78,.45)}
+.tl-body p{margin:0;font-size:.95rem}
+.tl-body b{color:#fff}
+@media (max-width:640px){
+  .tl-item{grid-template-columns:1.25rem minmax(0,1fr);grid-template-areas:"dot date" "dot body"}
+  .tl-date{grid-area:date;text-align:left;font-size:.7rem}
+  .tl-dot{grid-area:dot}
+  .tl-body{grid-area:body}
+  .hud-panel .tl-item{grid-template-columns:1.25rem minmax(0,1fr)}
+}
+
+/* ---------- <details> with a mono "+ more" summary chip ---------- */
+.hud-more summary{list-style:none;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;padding:.55rem .9rem;
+  border:1px solid var(--hud-line);border-radius:4px;color:var(--text-dim);font:600 var(--fs-xs)/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.hud-more summary::-webkit-details-marker{display:none}
+.hud-more summary::before{content:"+";color:var(--accent-2)}
+.hud-more[open] summary::before{content:"\2212"}
+.hud-more summary:hover{color:#fff;border-color:var(--hud-line-hi)}
+
+/* ---------- HUD panels on markdown pages (Awards) ---------- */
+.hud-page{display:grid;gap:1.4rem;margin:1.4rem 0 2rem}
+.hud-panel{padding:1.1rem 1.25rem 1.25rem}
+.hud-panel__head{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-bottom:.5rem}
+.dk-page .hud-panel h2{margin:.15rem 0 .5rem;padding:0;font-size:clamp(1.25rem,1rem + 1vw,1.6rem);font-weight:800;letter-spacing:-.01em;color:#fff}
+.dk-page .hud-panel h2::after{display:none}
+.hud-panel .tl-item{grid-template-columns:5.5rem 1.25rem minmax(0,1fr)}
+.hud-panel .tl-body{color:var(--text-dim)}
+.hud-count{margin-left:auto;font:600 var(--fs-xs)/1 var(--mono);letter-spacing:.12em;color:var(--text-mute)}
+
+/* award glyphs: <span class="aw-glyph" data-medal="trophy|gold|silver|bronze|ribbon"><svg …></svg></span> */
+.aw-glyph{display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;margin-right:.45rem;vertical-align:-.42rem;color:var(--accent-2)}
+.aw-glyph svg{width:1.25rem;height:1.25rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.aw-glyph[data-medal="trophy"],.aw-glyph[data-medal="gold"]{color:var(--gold);filter:drop-shadow(0 0 6px rgba(240,195,78,.45))}
+.aw-glyph[data-medal="silver"]{color:#c9d4ea}
+.aw-glyph[data-medal="bronze"]{color:#d9915a}
+.aw-glyph[data-medal="ribbon"]{color:var(--accent-2)}
+
+/* ---------- utilities ---------- */
+.sr-only{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (prefers-contrast:more){:root{--hud-line:rgba(96,180,255,.3)}}

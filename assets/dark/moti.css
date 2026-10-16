@@ -1,0 +1,50 @@
+/* moti.css — everything INSIDE #moti-stage. The hero sizes the box itself (1:1, 380–520px, overflow hidden,
+   .hud-frame border, radial floor glow); this file owns the hit button, poster, canvas cross-fade, tag and bubble.
+   Stage states: [data-moti="poster|loading|live|lost"] → poster visible unless live; canvas visible only when live. */
+.moti-stage{--ax:49%;--ay:21.3%} /* rest-pose bubble anchor (poster mode); moti.js overrides with the live projection */
+.moti-hit{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;margin:0;padding:0;background:transparent;border:0;
+  border-radius:inherit;color:inherit;font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;appearance:none;outline:none}
+.moti-hit:focus-visible{outline:2px solid var(--accent-2);outline-offset:-3px;box-shadow:inset 0 0 0 7px rgba(51,224,255,.1)}
+.moti-stage .moti-hit picture,.moti-stage .moti-hit img,.moti-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none}
+.moti-stage .moti-hit img{object-fit:contain;border-radius:0;opacity:1;transition:opacity var(--d-reveal,560ms) var(--ease-out,ease)}
+.moti-canvas{pointer-events:none;opacity:0;transition:opacity var(--d-reveal,560ms) var(--ease-out,ease)}
+.moti-stage[data-moti="live"] .moti-hit img{opacity:0}
+.moti-stage[data-moti="live"] .moti-canvas{opacity:1}
+.moti-stage[data-moti="loading"] .moti-hit img{animation:moti-breathe 1.4s ease-in-out infinite alternate}
+@keyframes moti-breathe{from{opacity:.82}to{opacity:1}}
+
+/* small mono label, bottom-left; the dot goes live with the renderer */
+.moti-tag{position:absolute;left:14px;bottom:11px;z-index:3;pointer-events:none;display:inline-flex;align-items:center;gap:.55rem;
+  font:600 var(--fs-xs,.75rem)/1 var(--mono,ui-monospace,monospace);letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute)}
+.moti-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--text-mute);flex:none}
+.moti-stage[data-moti="live"] .moti-tag::before{background:var(--accent-2);box-shadow:0 0 8px var(--accent-2);animation:moti-blink 2.2s ease-in-out infinite}
+@keyframes moti-blink{50%{opacity:.35}}
+
+/* speech bubble: glass panel with a tail; --bx/--by/--tx are set by moti.js from the projected head anchor */
+.moti-bubble{position:absolute;left:var(--bx,var(--ax));top:var(--by,var(--ay));z-index:4;box-sizing:border-box;
+  transform:translate(-50%,-100%) translateY(-10px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.3rem .45rem;align-items:start;
+  width:max-content;max-width:min(26ch,calc(100% - 24px));padding:.6rem .5rem .62rem .8rem;
+  background:var(--glass,rgba(8,16,36,.66));border:1px solid var(--hud-line-hi,rgba(51,224,255,.55));border-radius:10px;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 0 0 1px rgba(51,224,255,.06);
+  color:var(--text,#e8eefc);font-size:.84rem;line-height:1.4;text-align:left;letter-spacing:0;text-transform:none}
+.moti-bubble[hidden]{display:none}
+.moti-bubble::after{content:"";position:absolute;left:var(--tx,50%);bottom:-7px;width:12px;height:12px;transform:translateX(-50%) rotate(45deg);
+  background:var(--glass,rgba(8,16,36,.66));border-right:1px solid var(--hud-line-hi,rgba(51,224,255,.55));border-bottom:1px solid var(--hud-line-hi,rgba(51,224,255,.55));border-radius:0 0 2px 0}
+.moti-bubble.is-in{animation:moti-pop var(--d-base,240ms) var(--ease-out,ease) both}
+@keyframes moti-pop{from{opacity:0;transform:translate(-50%,-100%) translateY(-2px) scale(.96)}}
+.moti-bubble__text{grid-column:1;margin:0;color:#fff;font-weight:500;text-wrap:pretty}
+.moti-bubble__cta{grid-column:1;justify-self:start;display:inline-flex;align-items:center;gap:.3rem;margin-top:.05rem;padding:.3rem .55rem;
+  border:1px solid rgba(51,224,255,.4);border-radius:4px;font:600 .66rem/1 var(--mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent-2);text-decoration:none;transition:color var(--d-fast,160ms),border-color var(--d-fast,160ms),background var(--d-fast,160ms)}
+.moti-bubble__cta:hover,.moti-bubble__cta:focus-visible{color:#fff;border-color:var(--hud-line-hi,rgba(51,224,255,.55));background:rgba(51,224,255,.1);outline:none}
+.moti-bubble__x{grid-column:2;grid-row:1 / span 2;width:1.5rem;height:1.5rem;margin:-.2rem -.05rem 0 0;padding:0;border:0;border-radius:4px;background:transparent;
+  color:var(--text-mute);font:400 1.05rem/1 var(--font,system-ui,sans-serif);cursor:pointer;transition:color var(--d-fast,160ms),background var(--d-fast,160ms)}
+.moti-bubble__x:hover{color:#fff;background:var(--surface-2,rgba(255,255,255,.08))}
+.moti-bubble__x:focus-visible{outline:2px solid var(--accent-2);outline-offset:1px}
+
+@media (max-width:900px){.moti-bubble{font-size:.78rem;max-width:min(36ch,calc(100% - 24px));padding:.5rem .45rem .55rem .7rem}}
+
+@media (prefers-reduced-motion:reduce){
+  .moti-stage .moti-hit img,.moti-canvas{transition:none}
+  .moti-bubble.is-in,.moti-stage[data-moti="loading"] .moti-hit img,.moti-stage[data-moti="live"] .moti-tag::before{animation:none}
+}

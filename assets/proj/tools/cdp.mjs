@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process'; import { writeFileSync, mkdtempSync 
 const args = process.argv.slice(2); const url = args[0]; const [W, H] = (args[1] || '1400x900').split('x').map(Number);
 const flag = (n) => args.includes(n); const val = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : null; };
 const port = 9222 + Math.floor(Math.random() * 500); const prof = mkdtempSync(join(tmpdir(), 'cdp-'));
-const chrome = spawn('google-chrome', ['--headless=new', '--disable-gpu', '--hide-scrollbars', `--remote-debugging-port=${port}`, `--user-data-dir=${prof}`, `--window-size=${W},${H}`, 'about:blank'], { stdio: 'ignore' });
+const chrome = spawn('google-chrome', ['--headless=new', '--disable-gpu', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader-webgl', '--hide-scrollbars', `--remote-debugging-port=${port}`, `--user-data-dir=${prof}`, `--window-size=${W},${H}`, 'about:blank'], { stdio: 'ignore' });
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 let wsUrl = null; for (let i = 0; i < 50 && !wsUrl; i++) { await sleep(200); try { const list = await (await fetch(`http://127.0.0.1:${port}/json`)).json(); wsUrl = list.find(t => t.type === 'page')?.webSocketDebuggerUrl; } catch { /* not up yet */ } }
 if (!wsUrl) { chrome.kill(); console.error('chrome did not start'); process.exit(2); }

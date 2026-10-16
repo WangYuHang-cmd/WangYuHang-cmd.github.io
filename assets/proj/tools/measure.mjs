@@ -7,7 +7,7 @@ const args = process.argv.slice(2); const url = args[0]; const outPath = args.in
 const FAIL = 3_000_000, WARN = 2_500_000; const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 async function run(W, H) {
   const port = 9300 + Math.floor(Math.random() * 500), prof = mkdtempSync(join(tmpdir(), 'measure-'));
-  const chrome = spawn('google-chrome', ['--headless=new', '--disable-gpu', '--hide-scrollbars', `--remote-debugging-port=${port}`, `--user-data-dir=${prof}`, `--window-size=${W},${H}`, 'about:blank'], { stdio: 'ignore' });
+  const chrome = spawn('google-chrome', ['--headless=new', '--disable-gpu', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader-webgl', '--hide-scrollbars', `--remote-debugging-port=${port}`, `--user-data-dir=${prof}`, `--window-size=${W},${H}`, 'about:blank'], { stdio: 'ignore' });
   let wsUrl = null; for (let i = 0; i < 50 && !wsUrl; i++) { await sleep(200); try { wsUrl = (await (await fetch(`http://127.0.0.1:${port}/json`)).json()).find(t => t.type === 'page')?.webSocketDebuggerUrl; } catch { } }
   if (!wsUrl) { chrome.kill(); throw new Error('chrome did not start'); }
   const ws = new WebSocket(wsUrl); await new Promise(r => ws.onopen = r); let id = 0; const pending = new Map(); const reqs = new Map(); const exceptions = [];
