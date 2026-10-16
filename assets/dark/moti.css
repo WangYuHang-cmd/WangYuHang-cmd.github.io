@@ -10,7 +10,7 @@
 .moti-canvas{pointer-events:none;opacity:0;transition:opacity var(--d-reveal,560ms) var(--ease-out,ease)}
 .moti-stage[data-moti="live"] .moti-hit img{opacity:0}
 .moti-stage[data-moti="live"] .moti-canvas{opacity:1}
-.moti-stage[data-moti="loading"] .moti-hit img{animation:moti-breathe 1.4s ease-in-out infinite alternate}
+.moti-stage[data-moti="loading"] .moti-hit img{animation:moti-breathe 1.4s ease-in-out 13 alternate} /* capped: covers the two 8 s CDN timeouts */
 @keyframes moti-breathe{from{opacity:.82}to{opacity:1}}
 
 /* small mono label, bottom-left; the dot goes live with the renderer */
@@ -36,7 +36,9 @@
 .moti-bubble__cta{grid-column:1;justify-self:start;display:inline-flex;align-items:center;gap:.3rem;margin-top:.05rem;padding:.3rem .55rem;
   border:1px solid rgba(51,224,255,.4);border-radius:4px;font:600 .66rem/1 var(--mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;
   color:var(--accent-2);text-decoration:none;transition:color var(--d-fast,160ms),border-color var(--d-fast,160ms),background var(--d-fast,160ms)}
-.moti-bubble__cta:hover,.moti-bubble__cta:focus-visible{color:#fff;border-color:var(--hud-line-hi,rgba(51,224,255,.55));background:rgba(51,224,255,.1);outline:none}
+.moti-bubble__cta:hover,.moti-bubble__cta:focus-visible{color:#fff;border-color:var(--hud-line-hi,rgba(51,224,255,.55));background:rgba(51,224,255,.1)}
+.moti-bubble__cta:hover{outline:none}
+.moti-bubble__cta:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
 .moti-bubble__x{grid-column:2;grid-row:1 / span 2;width:1.5rem;height:1.5rem;margin:-.2rem -.05rem 0 0;padding:0;border:0;border-radius:4px;background:transparent;
   color:var(--text-mute);font:400 1.05rem/1 var(--font,system-ui,sans-serif);cursor:pointer;transition:color var(--d-fast,160ms),background var(--d-fast,160ms)}
 .moti-bubble__x:hover{color:#fff;background:var(--surface-2,rgba(255,255,255,.08))}

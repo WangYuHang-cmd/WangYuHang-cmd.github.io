@@ -5,7 +5,7 @@
    Dev switches (hash): #moti-force skips the GL performance-caveat gate (headless SwiftShader), #moti-snapshot renders
    the 880² rest pose for the poster (→ __moti.snapshot()), #moti-debug adds a drag-to-orbit for tuning. */
 import { loadThree, hasWebGL } from './three-loader.js';
-import { buildRig, K, ACCENTS } from './moti-rig.js';
+let buildRig = null, K = null, ACCENTS = null; // moti-rig.js is imported in boot() once the gates pass, so gated clients never download it
 
 const LINES = [ // ≤ 70 chars, each with a real link (plan §2d)
   ["Hi, I'm Moti — Yuhang's co-pilot. Ask me about his datasets.", '#about', 'About Yuhang'],
@@ -28,7 +28,8 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 let mode = 'poster', running = false, THREE = null, renderer = null, rig = null, canvas = null;
 const tier = (() => { if (DEV.force) return innerWidth < 768 ? 'low' : 'high';
   return innerWidth < 768 || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 ? 'low' : 'high'; })();
-const app = { visible: true, tabVisible: !document.hidden, nearTop: scrollY < innerHeight * .95, lost: false, hover: false, focus: false, tap: false,
+const VIS = { run: .2, idle: .6 }; // stage intersection ratios: render while ≥ 20 % of the stage is on screen, idle bubbles only at ≥ 60 %
+const app = { visible: true, inView: true, tabVisible: !document.hidden, lost: false, hover: false, focus: false, tap: false,
   clickIdx: 0, lineIdx: 0, autoShows: 0, quiet: false, fps: 0 };
 try { app.quiet = sessionStorage.getItem('moti:quiet') === '1'; } catch { /* storage blocked: never quiet */ }
 // rest-pose projections of the head centre / bubble anchor as stage fractions (refreshed from the rig when live)
@@ -54,7 +55,10 @@ function say(i = nextLine()) {
   clearTimeout(hideTimer); if (!rmq.matches) hideTimer = setTimeout(tryHide, 7000);
   return true;
 }
-function tryHide() { if (stage.matches(':hover') || stage.matches(':focus-within')) { hideTimer = setTimeout(tryHide, 1000); return; } hideBubble(); }
+function tryHide() { // hold the bubble only while a fine pointer really hovers or keyboard focus is on Moti / inside the bubble — not for the
+  // sticky :hover of touch or the non-visible focus a mouse click leaves on the button, which kept it open until the next click elsewhere
+  const kbd = hit.matches(':focus-visible') || bubble.contains(document.activeElement), hov = finePointer && app.hover;
+  if (hov || kbd) { hideTimer = setTimeout(tryHide, 1000); return; } hideBubble(); }
 function hideBubble() { clearTimeout(hideTimer); if (bubble) bubble.hidden = true; }
 function dismiss() { hideBubble(); app.quiet = true; clearTimeout(idleTimer); clearTimeout(dwellTimer); try { sessionStorage.setItem('moti:quiet', '1'); } catch { /* ignore */ } }
 function placeBubble() {
@@ -65,7 +69,7 @@ function placeBubble() {
 }
 function armIdle(ms) { // idle lines: first at 6 s, then every 22–30 s, at most 3 per page view, never when quiet / reduced motion
   clearTimeout(idleTimer); if (rmq.matches || app.quiet || app.autoShows >= 3) return;
-  idleTimer = setTimeout(() => { if (app.visible && app.tabVisible && app.nearTop && bubble.hidden && !app.quiet) { app.autoShows++; say(); } armIdle(22000 + Math.random() * 8000); }, ms);
+  idleTimer = setTimeout(() => { if (app.inView && app.tabVisible && bubble.hidden && !app.quiet) { app.autoShows++; say(); } armIdle(22000 + Math.random() * 8000); }, ms);
 }
 
 /* ---------- hover / focus / click reactions ---------- */
@@ -109,7 +113,7 @@ function wireInput() {
 
 /* ---------- lifecycle ---------- */
 const setMode = (m) => { mode = m; stage.dataset.moti = m; };
-const shouldRun = () => mode === 'live' && app.visible && app.tabVisible && app.nearTop && !app.lost && !DEV.snapshot;
+const shouldRun = () => mode === 'live' && app.visible && app.tabVisible && !app.lost && !DEV.snapshot;
 let lastRender = 0;
 function syncLoop() { const want = shouldRun(); if (!renderer || want === running) return; running = want; lastRender = performance.now(); renderer.setAnimationLoop(want ? frame : null); }
 function frame(now) {
@@ -129,9 +133,10 @@ function resize() {
 }
 function wireObservers() {
   let raf = 0; new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(resize); }).observe(stage);
-  new IntersectionObserver(([e]) => { app.visible = e.isIntersecting; syncLoop(); }).observe(stage);
+  new IntersectionObserver((entries) => { // the stage's own visibility drives the loop (a viewport-based scrollY gate froze Moti in stacked layouts); last entry = newest
+    const e = entries[entries.length - 1]; app.visible = e.isIntersecting && e.intersectionRatio >= VIS.run; app.inView = e.intersectionRatio >= VIS.idle; syncLoop();
+  }, { threshold: [0, VIS.run, VIS.idle] }).observe(stage);
   document.addEventListener('visibilitychange', () => { app.tabVisible = !document.hidden; syncLoop(); });
-  addEventListener('scroll', () => { app.nearTop = scrollY < innerHeight * .95; syncLoop(); }, { passive: true });
   rmq.addEventListener('change', (e) => { if (e.matches && renderer) teardown('poster'); });
 }
 function teardown(to) { try { renderer?.setAnimationLoop(null); rig?.dispose(); renderer?.dispose(); canvas?.remove(); } catch { /* ignore */ } running = false; renderer = rig = canvas = null; setMode(to); }
@@ -157,8 +162,12 @@ async function start() {
 async function boot() {
   wireInput(); wireObservers();
   const gate = gateReason(); if (gate) { if (!rmq.matches) armIdle(6000); return; }
-  try { setMode('loading'); THREE = await loadThree(); await start(); }
-  catch (err) { console.warn('[moti] poster fallback:', err?.message || err); teardown('poster'); }
+  try {
+    setMode('loading');
+    const [three, rigMod] = await Promise.all([loadThree(), import('./moti-rig.js')]); THREE = three; ({ buildRig, K, ACCENTS } = rigMod);
+    if (rmq.matches || navigator.connection?.saveData) { setMode('poster'); if (!rmq.matches) armIdle(6000); return; } // re-check: the gates may have flipped while loading
+    await start();
+  } catch (err) { console.warn('[moti] poster fallback:', err?.message || err); teardown('poster'); }
 }
 
 window.__moti = {

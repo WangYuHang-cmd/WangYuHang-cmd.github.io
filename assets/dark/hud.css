@@ -36,10 +36,11 @@
 
 /* ---------- mono outlined chips (links / badges) ---------- */
 .hud-chip{display:inline-flex;align-items:center;gap:.35rem;font:600 .7rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
-  padding:.38rem .6rem;border:1px solid var(--hud-line);border-radius:4px;color:var(--text-dim);text-decoration:none;
+  padding:.38rem .6rem;border:1px solid var(--hud-line);border-radius:4px;text-decoration:none;
   transition:color var(--d-fast),border-color var(--d-fast)}
+.hud-chip,a.hud-chip{color:var(--text-dim)} /* a. form: same colour on the markdown pages, where .dark-site a would win */
 .hud-chip:hover,.hud-chip:focus-visible{color:#fff;border-color:var(--hud-line-hi)}
-.hud-chip--gold{color:var(--gold);border-color:rgba(240,195,78,.45)}
+.hud-chip--gold,a.hud-chip--gold{color:var(--gold);border-color:rgba(240,195,78,.45)}
 
 /* ---------- timeline (news, education, awards) ---------- */
 .tl{list-style:none;margin:0;padding:0}
@@ -58,6 +59,8 @@
 .tl-item[data-kind="award"] .tl-dot::after{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,195,78,.18),0 0 14px rgba(240,195,78,.45)}
 .tl-body p{margin:0;font-size:.95rem}
 .tl-body b{color:#fff}
+.tl-body a b{color:inherit} /* linked titles keep the link colour and its hover */
+.tl-body a:not(.hud-chip){text-decoration:underline;text-decoration-color:rgba(51,224,255,.45);text-underline-offset:.15em}
 @media (max-width:640px){
   .tl-item{grid-template-columns:1.25rem minmax(0,1fr);grid-template-areas:"dot date" "dot body"}
   .tl-date{grid-area:date;text-align:left;font-size:.7rem}

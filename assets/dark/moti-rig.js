@@ -137,9 +137,10 @@ export function buildRig(THREE, { tier = 'high', accents = ACCENTS, seed = 7, re
   const shadow = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.9).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: shadowTex(THREE), transparent: true, opacity: .6, depthWrite: false }));
   shadow.position.set(0, .006, .05); shadow.renderOrder = 2; root.add(shadow);
   const roadGeo = new THREE.PlaneGeometry(3.2, 6.4, 1, 8);
-  { const p = roadGeo.attributes.position, col = new Float32Array(p.count * 3);
-    for (let i = 0; i < p.count; i++) { const f = Math.pow(Math.sin(Math.PI * (p.getY(i) + 3.2) / 6.4), .8); col[i * 3] = col[i * 3 + 1] = col[i * 3 + 2] = f; }
-    roadGeo.setAttribute('color', new THREE.BufferAttribute(col, 3)); roadGeo.rotateX(-Math.PI / 2); }
+  { const p = roadGeo.attributes.position, col = new Float32Array(p.count * 4); // RGBA (USE_COLOR_ALPHA): the fade drives alpha, not the colour —
+    // additive blending accumulates destination alpha, so an RGB-only fade left a ~56 % black slab where the strip had faded to black
+    for (let i = 0; i < p.count; i++) { const f = Math.pow(Math.sin(Math.PI * (p.getY(i) + 3.2) / 6.4), .8); col[i * 4] = col[i * 4 + 1] = col[i * 4 + 2] = 1; col[i * 4 + 3] = f; }
+    roadGeo.setAttribute('color', new THREE.BufferAttribute(col, 4)); roadGeo.rotateX(-Math.PI / 2); }
   const road = mesh(roadGeo, new THREE.MeshBasicMaterial({ map: dash, color: 0x33e0ff, vertexColors: true, transparent: true, opacity: .75, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }), 0, .004, -.6, root);
   road.renderOrder = 1;
   const ripple = new THREE.Mesh(new THREE.RingGeometry(.95, 1.0, 48).rotateX(-Math.PI / 2), flat({ color: 0x33e0ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));

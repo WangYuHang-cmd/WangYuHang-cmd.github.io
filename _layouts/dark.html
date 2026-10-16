@@ -30,8 +30,8 @@
 <nav class="dk-nav">
   <div class="dk-nav-inner">
     <a class="dk-brand" href="/">Yuhang <b>Wang</b></a>
-    <button class="dk-burger" aria-label="Menu"><span></span></button>
-    <ul class="dk-links">
+    <button class="dk-burger" aria-label="Menu" aria-expanded="false" aria-controls="dk-links"><span></span></button>
+    <ul class="dk-links" id="dk-links">
       {% for link in site.links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>
       {% endfor %}<li><a class="cv-btn" href="/file/CV-Yuhang.pdf" target="_blank">CV</a></li>
     </ul>
