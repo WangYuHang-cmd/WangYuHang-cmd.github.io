@@ -113,7 +113,8 @@ def check(page, online=False):
     css = open(os.path.join(ROOT, "assets", "proj", "proj.css"), encoding="utf8").read()
     acc = re.search(r'body\[data-proj="%s"\]\{--pj-accent:(#[0-9a-f]{6})' % page, css)
     if acc:
-        a = acc.group(1); bg = "#070d1d"; surf = blend("#ffffff", 0.045, "#0a1428")
+        tokens = dict(re.findall(r"(--cl-bg(?:-1)?):(#[0-9a-f]{6})", css))  # kit v1.1: read the theme tokens instead of literals
+        a = acc.group(1); bg = tokens.get("--cl-bg", "#070d1d"); surf = blend("#ffffff", 0.045, tokens.get("--cl-bg-1", "#0a1428"))
         for name, b in (("--cl-bg", bg), ("--cl-surface", surf)):
             c = contrast(a, b)
             if c < 4.5: P.append(f"accent {a} on {name} contrast {c:.2f} < 4.5")

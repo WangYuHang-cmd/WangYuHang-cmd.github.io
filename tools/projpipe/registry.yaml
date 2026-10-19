@@ -82,3 +82,17 @@ baton:
   tabular_same_rows_auprc: {value: 0.771, fmt: ".000", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.4}
   wm_gain_pct:       {value: 42, fmt: "0", unit: "%", source: arxiv:2604.07263v2, tag: in the paper, locator: Sec. 5.2}
   stale_v1_hours:    {value: 136.6, fmt: "0.0", unit: h, source: arxiv:2604.07263v1, tag: in the paper, note: arXiv listing abstract (stale); 127 drivers · 380 routes}
+openlka:
+  hours_release:     {value: 389.1, fmt: "0.0", unit: h, source: portal:https://openlka.github.io/, tag: latest release, note: decoded and time-aligned LKA driving on the portal hero}
+  hours_paper:       {value: 400, fmt: "0", unit: h, source: arxiv:2505.09092v1, tag: in the paper, locator: Abstract, note: "400 hours of driving data from 62 production vehicle models"}
+  models:            {value: 62, fmt: "0", source: arxiv:2505.09092v1, tag: in the paper, locator: Abstract}
+  automakers:        {value: 12, fmt: "0", source: portal:https://openlka.github.io/, tag: latest release}
+  drivers:           {value: 53, fmt: "0", source: portal:https://openlka.github.io/, tag: latest release}
+  cities:            {value: 80, fmt: "0", unit: "+", source: portal:https://openlka.github.io/, tag: latest release}
+  can_hz:            {value: 100, fmt: "0", unit: Hz, source: portal:https://openlka.github.io/, tag: latest release}
+  decoders:          {value: 9, fmt: "0", source: portal:https://openlka.github.io/, tag: latest release, note: vehicle decoders; 7 verified DBC files}
+vlalert:
+  videos:            {value: 13534, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table, note: Total Videos}
+  ticks:             {value: 192892, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table, note: "Ticks (1 Hz)"}
+  actions:           {value: 3, fmt: "0", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: SILENT / OBSERVE / ALERT}
+  sources:           {value: 6, fmt: "0", source: hf:HenryYHW/VLAlert#README, tag: latest release, note: "integrates six driving-event datasets"}
