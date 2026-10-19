@@ -96,3 +96,28 @@ vlalert:
   ticks:             {value: 192892, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table, note: "Ticks (1 Hz)"}
   actions:           {value: 3, fmt: "0", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: SILENT / OBSERVE / ALERT}
   sources:           {value: 6, fmt: "0", source: hf:HenryYHW/VLAlert#README, tag: latest release, note: "integrates six driving-event datasets"}
+  daus:              {value: 0.4878, fmt: ".0000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: "DAUS 0.4878 compared with 0.4752 for Open-BADAS"}
+  daus_badas:        {value: 0.4752, fmt: ".0000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  auroc:             {value: 0.689, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: from 0.610}
+  auroc_base:        {value: 0.610, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  ap_tick:           {value: 0.195, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: from 0.176}
+  ap_tick_base:      {value: 0.176, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  f1_t:              {value: 0.297, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: from 0.276}
+  f1_t_base:         {value: 0.276, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  bal_acc:           {value: 0.648, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: from 0.581}
+  bal_acc_base:      {value: 0.581, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  critic_clips:      {value: 221, fmt: "0", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: held-out ADAS-TO-Critic clips}
+  r5s:               {value: 88.7, fmt: "0.0", unit: "%", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: from 74.2%}
+  r5s_base:          {value: 74.2, fmt: "0.0", unit: "%", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  f1_critic:         {value: 0.686, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract, note: from 0.585}
+  f1_critic_base:    {value: 0.585, fmt: ".000", source: arxiv:2609.08130v1, tag: in the paper, locator: Abstract}
+  split_train_ticks: {value: 97649, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_val_ticks:   {value: 11220, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_test_ticks:  {value: 23661, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_adasto_ticks: {value: 21020, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_accident_ticks: {value: 39342, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_train_videos: {value: 6406, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_val_videos:  {value: 1219, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_test_videos: {value: 2647, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_adasto_videos: {value: 1051, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+  split_accident_videos: {value: 2211, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
