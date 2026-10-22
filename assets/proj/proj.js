@@ -190,6 +190,7 @@
     this.st = { sig: null, t: 0, playing: false, hover: null, drag: null, dirty: true, raf: 0, hz: 10, n: 0, t0: 0, dur: 0, events: [], ranges: {}, bandId: null, bandFrom: null, bandAt: 0, userStarted: false, userPaused: false, prevT: 0, clock0: 0, pendingSeek: null, full: false, clips: null, clip: null, abort: null, lastText: 0 };
     // media (author-provided or none)
     this.media = $('.pj-sc__media', root); this.video = this.media && $('video', this.media);
+    if (this.media && 'IntersectionObserver' in win) { var selfM = this; new IntersectionObserver(function (es) { var e = es[es.length - 1]; selfM.mediaVisible50 = e.intersectionRatio >= 0.5; selfM.onVisibility(); }, { threshold: [0, 0.5] }).observe(this.media); } // tall widgets: autoplay when the media box itself is half visible
     if (this.media && this.media.parentNode !== body) body.appendChild(this.media);
     var stripsBox = $('.pj-sc__strips', root); if (!stripsBox) { stripsBox = el('div', 'pj-sc__strips'); } if (stripsBox.parentNode !== body) body.appendChild(stripsBox);
     this.stripsBox = stripsBox;
@@ -433,7 +434,7 @@
   Scrubber.prototype.toggle = function () { if (modalOpen()) return; this.st.userStarted = true; if (this.st.playing) { this.st.userPaused = true; this.pause(); } else { this.st.userPaused = false; this.play(); } };
   Scrubber.prototype.autoPause = function () { if (this.st.playing) { this.st.userStarted = false; this.pause(); } };
   Scrubber.prototype.maybeAutoplay = function () {
-    var st = this.st; if (st.playing || st.userPaused || !st.sig || !this.visible50 || reduced() || doc.hidden || modalOpen()) return;
+    var st = this.st; if (st.playing || st.userPaused || !st.sig || !(this.visible50 || this.mediaVisible50) || reduced() || doc.hidden || modalOpen()) return;
     if (this.video && (win.innerWidth < 768 || saveData())) return; st.userStarted = false; this.play();
   };
   Scrubber.prototype.onVisibility = function () { if (!this.visible || doc.hidden || modalOpen()) this.autoPause(); else this.maybeAutoplay(); };

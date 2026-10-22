@@ -44,6 +44,11 @@ items["route_window"] = {"id": "route_window", "kind": "clip", "title": f"Route 
 
 # ---------------------------------------------------------------- B. openpilot vs BATON-WM case studies (road frames only)
 cs = json.load(open(os.path.join(FIGS, "casestudy_data.json"))); groups = {"KIA_SPORTAGE_5TH_GEN": "A", "HYUNDAI_ELANTRA_2022_NON_SCC": "B"}; case_clips = []
+_take = list(csv.DictReader(open(os.path.join(HF, "benchmark", "takeover_events_or.csv"))))   # release event table: vehicle_model + event_time_sec
+def case_route(c):
+    """The paper's case lives in the release under a pseudonymous route id: match its vehicle model + takeover time (unique within 0.3 s)."""
+    model = c["route"].split("/")[0]; hits = {r["route_id"] for r in _take if r["vehicle_model"] == model and abs(float(r["event_time_sec"]) - c["event_t"]) < 0.3}
+    assert len(hits) == 1, (model, c["event_t"], hits); return hits.pop()
 for i, c in enumerate(cs["cases"], 1):
     model = c["route"].split("/")[0]; op_t = np.array(c["op_t"]) - c["event_t"]; op = np.array(c["op_any2"]); hz = 20
     t = np.round(np.arange(round((op_t[-1] - op_t[0]) * hz) + 1) / hz + op_t[0], 2); opv = np.interp(t, op_t, op)
@@ -56,12 +61,23 @@ for i, c in enumerate(cs["cases"], 1):
             "media": {"poster": f"static/media/case{i}_frame.jpg", "aspect": "526/330"},
             "meta": {"protocol": "T3-D onset detection (leak-safe: driver inputs visible)", "split": "cross-driver test", "horizon_s": 3.0, "lead_s": num(c["lead"], 1), "lead_is_cap": abs(c["lead"] - 3.0) < 0.05, "v_ego_mps": num(c["frame_vego_ms"], 2), "route_group": groups.get(model, "?"), "vehicle": model.replace("_", " ").title(),
                      "op_series": "openpilot modelV2 disengage probability (any, 2 s) recovered from the route logs", "op_at_event": num(c["op_at_event"], 4), "op_max_pre10": num(c.get("op_max2_pre10_1"), 4), "thr_note": "F1-optimal threshold on the validation split", "first_alarm_rel_s": num(next((w["end"] - c["event_t"] for w in wins if w["score"] >= cs["thr_ours"]), None), 2)}}
+    rid = case_route(c); qsrc = os.path.join(HF, rid, "qcamera.mp4"); assert os.path.exists(qsrc), f"fetch {rid}/qcamera.mp4 from the release into {HF} first"
+    ca, cb = c["event_t"] + float(t[0]), c["event_t"] + float(t[-1]); cmp4 = os.path.join(MEDIA, f"case{i}.mp4"); ch = entry_hash({"r": rid, "a": ca, "b": cb}, qsrc)
+    if A.force or not ledger.done(f"case{i}_clip", ch) or not os.path.exists(cmp4):
+        fit_cap(lambda crf, scale: h264(qsrc, cmp4, t_a=ca, t_b=cb, crf=crf, scale=scale), cmp4, 900_000); ledger.mark(f"case{i}_clip", ch)
+    cpr = ffprobe(cmp4); assert abs(cpr["duration"] - (cb - ca)) < 0.3, (cpr["duration"], cb - ca)
+    sigc["media"] = {"video": f"static/media/case{i}.mp4", "poster": f"static/media/case{i}_frame.jpg", "t0_video_s": 0.0, "aspect": "526/330"}   # video time 0 = signal t0 (event_t + t0)
     put(f"signals_case{i}", f"signals_case{i}.json", sigc)
     src = os.path.join(FIGS, f"casestudy_frame_case{i}.png"); dst = os.path.join(MEDIA, f"case{i}_frame.jpg"); jpeg_fit(src, dst, max_w=526, cap_bytes=CAPS["poster_bytes"], q0=78)
     files[f"poster_case{i}"] = media_entry(f"case{i}_frame.jpg")
+    files[f"media_case{i}"] = media_entry(f"case{i}.mp4")
+    items[f"case{i}_clip"] = {"id": f"case{i}_clip", "kind": "clip", "title": f"Case {i} · front camera · {cb - ca:.0f} s around the override", "files": {"video": f"static/media/case{i}.mp4", "poster": f"static/media/case{i}_frame.jpg", "signals": f"static/data/signals_case{i}.json"},
+                             "bytes": {"video": os.path.getsize(cmp4), "poster": os.path.getsize(dst)}, "first_view": False, "duration_s": num(cb - ca, 2), "key_moment": {"t": num(-float(t[0]), 2), "label": "override"},
+                             "privacy": {"kind": "road", "source_pixels": True, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "front camera only (qcamera) from the BATON release, pseudonymous driver, window around the takeover; dcamera never downloaded"},
+                             "provenance": {"source": "BATON release route (benchmark test split) · qcamera 526×330 · 20 fps", "video": {"codec": "h264", "fps": "20/1"}}}
     items[f"case{i}_frame"] = {"id": f"case{i}_frame", "kind": "figure", "title": f"Case {i} road frame", "files": {"image": f"static/media/case{i}_frame.jpg"}, "bytes": {"image": os.path.getsize(dst)}, "first_view": False, "privacy": {"kind": "road", "source_pixels": True, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "front-camera frame 3 s before the override (paper figure asset)"}, "provenance": {"source": os.path.basename(src)}, "entry_hash": entry_hash({"i": i}, src)}
     fa = sigc["meta"]["first_alarm_rel_s"]
-    case_clips.append({"id": f"case{i}", "title": f"Case {i} · {model.replace('_', ' ').title()}", "sub": f"{c['frame_vego_ms']*3.6:.0f} km/h · group {groups.get(model,'?')} · first window ≥ τ at {fa:+.1f} s" if fa is not None else f"{c['frame_vego_ms']*3.6:.0f} km/h · group {groups.get(model,'?')} · no window ≥ τ", "src": f"static/data/signals_case{i}.json", "poster": f"static/media/case{i}_frame.jpg"})
+    case_clips.append({"id": f"case{i}", "title": f"Case {i} · {model.replace('_', ' ').title()}", "sub": f"{c['frame_vego_ms']*3.6:.0f} km/h · group {groups.get(model,'?')} · first window ≥ τ at {fa:+.1f} s" if fa is not None else f"{c['frame_vego_ms']*3.6:.0f} km/h · group {groups.get(model,'?')} · no window ≥ τ", "src": f"static/data/signals_case{i}.json", "poster": f"static/media/case{i}_frame.jpg", "video": f"static/media/case{i}.mp4"})
 put("cases", "cases.json", {"schema": "clips/1", "default": "case1", "clips": case_clips, "meta": {"thr_ours": num(cs["thr_ours"], 4), "ryg": {"green": cs["ryg_green"], "yellow": cs["ryg_yellow"]}, "note": "Four hand-picked cases; openpilot predictions exist for 26 benchmark routes (5 in the test split) — exploratory, as in the paper. All four are crawl / stop-and-go takeovers."}})
 
 # ---------------------------------------------------------------- C. figures (no cabin pixels)
