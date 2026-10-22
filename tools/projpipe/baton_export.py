@@ -5,7 +5,8 @@ Usage: baton_export.py [--force]"""
 import argparse, csv, glob, json, os, re, shutil, sys
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import PATHS, CAPS, write_json, carry_review, num, nums, signals_from_baton_csv, timeline_from_signals, h264, fit_cap, poster, lqip, jpeg_fit, ffprobe, sha256_file, entry_hash, Ledger
+from common import PATHS, CAPS, write_json, carry_review, num, nums, signals_from_baton_csv, timeline_from_signals, h264, hstack, fit_cap, poster, lqip, jpeg_fit, ffprobe, sha256_file, entry_hash, Ledger, cabin_allow
+import subprocess
 REPO = PATHS["repo"]; D = PATHS["drive"]; PAGE = os.path.join(REPO, "baton"); DATA = os.path.join(PAGE, "static", "data"); MEDIA = os.path.join(PAGE, "static", "media")
 WORK = os.path.join(PATHS["work"], "baton"); HF = os.path.join(WORK, "hf"); FIGS = os.path.join(D, "BATON_Paper", "figs")
 for d in (DATA, MEDIA, WORK): os.makedirs(d, exist_ok=True)
@@ -27,20 +28,26 @@ sig = signals_from_baton_csv(rd, T_A, T_B, hz=10, clip_id="route_window", events
 sig["events"] = [{"t": num(pair[0] - T_A, 2), "kind": "handover", "label": "Handover ↑ · driver engages the assistance system (official event)", "glyph": "↑"}, {"t": num(pair[1] - T_A, 2), "kind": "takeover", "label": "Takeover ↓ · driver takes control back (official event)", "glyph": "↓"}]
 for i in range(len(sig["cols"]["t"])):  # DMS distraction edges as secondary events
     pass
-sig["media"] = {"video": "static/media/route_window.mp4", "poster": "static/media/route_window.jpg", "t0_video_s": 0.0, "aspect": "526/330"}
-sig["meta"].update({"source": "BATON-Sample (public, pseudonymous) · Honda Civic · front camera 526×330 + 10 Hz CSVs", "events": "benchmark/activation_events_or.csv + takeover_events_or.csv (or_v1 definition)", "window": [num(T_A, 1), num(T_B, 1)]})
+# cabin video is embedded only for the lab's own recorders: the outside-repo allow file lists them as `release:<repo>/<driver>` lines
+CAB_OK = f"release:HenryYHW/BATON-Sample/{ROUTE.split('/')[0]}" in set(cabin_allow()); dcam = os.path.join(rd, "dcamera.mp4"); qcam = os.path.join(rd, "qcamera.mp4"); use_cab = CAB_OK and os.path.exists(dcam)
+def vdims(path):
+    w, hgt = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0", path], capture_output=True, text=True).stdout.strip().split(",")[:2]; return int(w), int(hgt)
+mp4 = os.path.join(MEDIA, "route_window.mp4"); jpg = os.path.join(MEDIA, "route_window.jpg"); h = entry_hash({"r": ROUTE, "a": T_A, "b": T_B, "cab": use_cab}, *([qcam, dcam] if use_cab else [qcam]))
+if A.force or not ledger.done("route_window", h) or not os.path.exists(mp4):
+    if use_cab: fit_cap(lambda crf, scale: hstack(dcam, qcam, mp4, t_a=T_A, t_b=T_B, crf=crf, height=300 if not scale else 240), mp4, CAPS["video_bytes"])   # cabin | road, 956x300
+    else: fit_cap(lambda crf, scale: h264(qcam, mp4, t_a=T_A, t_b=T_B, crf=crf, scale=scale), mp4, 1_400_000)
+    poster(mp4, jpg, pair[1] - T_A, q=5)
+    if os.path.getsize(jpg) > CAPS["poster_bytes"]: jpeg_fit(jpg, jpg, max_w=960, cap_bytes=CAPS["poster_bytes"], q0=72)
+    ledger.mark("route_window", h)
+pr = ffprobe(mp4); assert abs(pr["duration"] - (T_B - T_A)) < 0.3, (pr["duration"], T_B - T_A); VW, VH = vdims(mp4)
+sig["media"] = {"video": "static/media/route_window.mp4", "poster": "static/media/route_window.jpg", "t0_video_s": 0.0, "aspect": f"{VW}/{VH}"}
+sig["meta"].update({"source": "BATON-Sample (public, pseudonymous) · Honda Civic · " + ("cabin + front camera" if use_cab else "front camera 526×330") + " + 10 Hz CSVs", "events": "benchmark/activation_events_or.csv + takeover_events_or.csv (or_v1 definition)", "window": [num(T_A, 1), num(T_B, 1)]})
 put("signals_route", "signals_route.json", sig, first_view=True)
 tl = timeline_from_signals(sig, lane_col="cc_enabled", lane_label="assistance engaged", extra=(("is_distracted", "DMS"),)); tl["lanes"][0]["marks"] = [{"t": e["t"], "kind": e["kind"], "label": e["label"].split(" · ")[0]} for e in sig["events"]]
 put("timeline_route", "timeline_route.json", tl, first_view=True)
-mp4 = os.path.join(MEDIA, "route_window.mp4"); jpg = os.path.join(MEDIA, "route_window.jpg"); h = entry_hash({"r": ROUTE, "a": T_A, "b": T_B}, os.path.join(rd, "qcamera.mp4"))
-if A.force or not ledger.done("route_window", h) or not os.path.exists(mp4):
-    fit_cap(lambda crf, scale: h264(os.path.join(rd, "qcamera.mp4"), mp4, t_a=T_A, t_b=T_B, crf=crf, scale=scale), mp4, 1_400_000); poster(mp4, jpg, pair[1] - T_A, q=5)
-    if os.path.getsize(jpg) > CAPS["poster_bytes"]: jpeg_fit(jpg, jpg, max_w=526, cap_bytes=CAPS["poster_bytes"], q0=72)
-    ledger.mark("route_window", h)
-pr = ffprobe(mp4); assert abs(pr["duration"] - (T_B - T_A)) < 0.3, (pr["duration"], T_B - T_A)
 files["media_route_window"] = media_entry("route_window.mp4"); files["poster_route_window"] = media_entry("route_window.jpg")
 items["route_window"] = {"id": "route_window", "kind": "clip", "title": f"Route window · handover + takeover · {T_B - T_A:.0f} s", "files": {"video": "static/media/route_window.mp4", "poster": "static/media/route_window.jpg", "signals": "static/data/signals_route.json"}, "bytes": {"video": pr["bytes"], "poster": os.path.getsize(jpg)}, "first_view": True, "duration_s": num(pr["duration"], 2), "key_moment": {"t": num(pair[1] - T_A, 2), "label": "takeover"}, "poster_lqip": lqip(jpg),
-                         "privacy": {"kind": "road", "source_pixels": True, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "front camera only (qcamera), public sample route, pseudonymous driver; dcamera never downloaded"}, "provenance": {"source": "BATON-Sample qcamera.mp4", "video": {"codec": pr["codec"], "fps": pr["fps"]}}, "entry_hash": h}
+                         "privacy": ({"kind": "cabin_allowlisted", "allowlisted": True, "source_pixels": True, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "lab recorder (the lab's own consented driver, listed in the outside-repo allow file); cabin | front camera composite from the public BATON-Sample route"} if use_cab else {"kind": "road", "source_pixels": True, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "front camera only (qcamera), public sample route, pseudonymous driver; dcamera not used"}), "provenance": {"source": "BATON-Sample qcamera.mp4", "video": {"codec": pr["codec"], "fps": pr["fps"]}}, "entry_hash": h}
 
 # ---------------------------------------------------------------- B. openpilot vs BATON-WM case studies (road frames only)
 cs = json.load(open(os.path.join(FIGS, "casestudy_data.json"))); groups = {"KIA_SPORTAGE_5TH_GEN": "A", "HYUNDAI_ELANTRA_2022_NON_SCC": "B"}; case_clips = []

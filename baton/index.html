@@ -73,8 +73,8 @@
       </div>
       <a class="pj-hero__stage" href="#signature" aria-label="Open the transition explorer at this moment">
         <div data-widget="scrubber" data-mode="hero" data-sync="bt" data-src="key:signals_route" data-strips="v_ego_mps" data-eager data-label="Hero: a public sample route with one handover and one takeover">
-          <div class="pj-sc__media" style="--ar:526/330"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/route_window.jpg" src="static/media/route_window.mp4" width="526" height="330"></video></div>
-          <figure class="pj-fallback"><img src="static/media/route_window.jpg" alt="Front-camera frame at the moment the driver takes control back" width="526" height="330"></figure>
+          <div class="pj-sc__media" style="--ar:956/300"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/route_window.jpg" src="static/media/route_window.mp4" width="956" height="300"></video></div>
+          <figure class="pj-fallback"><img src="static/media/route_window.jpg" alt="Cabin and front-camera frames at the moment the driver takes control back" width="956" height="300"></figure>
         </div>
         <div class="pj-stage__cap"><span>live · <b>public sample route</b> · 10 Hz</span><span class="pj-pill pj-pill--live">↑ handover · ↓ takeover</span></div>
       </a>
@@ -101,7 +101,7 @@
         <div><dt>Modalities</dt><dd class="mono">road + cabin video 20 fps · CAN / IMU 100 Hz · radar · driver monitor · planner 20 Hz · GPS 10–20 Hz</dd></div>
         <div><dt>Tasks</dt><dd>T1 action recognition (7 classes) · T2 handover prediction · T3-D takeover onset detection · T3-A pre-override anticipation</dd></div>
         <div><dt>License</dt><dd>CC BY-NC 4.0 · <span data-hf="HenryYHW/BATON">gated, manual approval</span> · <span data-hf="HenryYHW/BATON-Sample">sample gated, auto approval</span></dd></div>
-        <div><dt>Privacy</dt><dd>Pseudonymous drivers; in-cabin video is released only under the gated license and is never embedded on this page.</dd></div>
+        <div><dt>Privacy</dt><dd>Pseudonymous drivers. In-cabin video on this page comes from a single route — the lab's own consented driver on the public sample route; the four case studies show the front camera only.</dd></div>
       </dl></aside>
     </div>
   </div>
@@ -111,8 +111,8 @@
 <section class="pj-section pj-section--band" id="signature">
   <div class="pj-wrap">
     <div class="sec-head reveal"><span class="sec-num">02 · TRANSITIONS</span><h2>One route, both directions</h2><p class="sec-lede">A public sample route: the driver engages the assistance system (↑ handover), drives with it, then takes control back (↓ takeover). Front camera and 10 Hz signals on one clock; the shaded stretch is the assistance system engaged; the two events are the benchmark's official ones.</p></div>
-    <div data-widget="scrubber" data-sync="bt" data-src="key:signals_route" data-hud='[{"col":"v_ego_mps","fmt":"mph"},{"col":"cc_enabled","fmt":"bool","label":"assist"},{"col":"is_distracted","fmt":"bool","label":"DMS","alert":true}]' data-ribbon="<b>Source:</b> BATON-Sample (public, auto-approved) — one Honda Civic route, pseudonymous driver; front camera only. Events from the benchmark tables (or_v1 definition). The cabin stream exists in the release but is not shown here." data-label="Transition explorer">
-      <div class="pj-sc__media" style="--ar:526/330"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/route_window.jpg" src="static/media/route_window.mp4" width="526" height="330"></video></div>
+    <div data-widget="scrubber" data-sync="bt" data-src="key:signals_route" data-hud='[{"col":"v_ego_mps","fmt":"mph"},{"col":"cc_enabled","fmt":"bool","label":"assist"},{"col":"is_distracted","fmt":"bool","label":"DMS","alert":true}]' data-ribbon="<b>Source:</b> BATON-Sample (public, auto-approved) — one Honda Civic route driven by the lab's own consented driver, cabin and front camera side by side. Events from the benchmark tables (or_v1 definition)." data-label="Transition explorer">
+      <div class="pj-sc__media" style="--ar:956/300"><span class="rec">● REC</span><video muted playsinline loop preload="none" poster="static/media/route_window.jpg" src="static/media/route_window.mp4" width="956" height="300"></video></div>
       <div class="pj-sc__strips">
         <canvas class="pj-strip" data-col="v_ego_mps" data-label="speed" data-unit="mph" data-fmt="mph" data-color="accent" data-layers="shade:*"></canvas>
         <canvas class="pj-strip" data-col="steer_deg" data-label="steering angle" data-unit="deg" data-sym data-color="violet" data-layers="shade:*"></canvas>
