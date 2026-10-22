@@ -142,10 +142,14 @@ def check_page(page):
     for p in sorted(glob.glob(os.path.join(data_dir, "*.json"))):
         pr = check_file(p)
         if pr: P[os.path.relpath(p, repo)] = pr
+    ext_p = os.path.join(repo, page, "static", "EXTERNAL_REFS.txt")   # legacy files hot-linked by other sites: not part of the page's budget
+    external = {os.path.join(repo, page, "static", l.strip()) for l in open(ext_p, encoding="utf8") if l.strip() and not l.startswith("#")} if os.path.exists(ext_p) else set()
     for p in sorted(glob.glob(os.path.join(media_dir, "*.mp4"))):
+        if os.path.abspath(p) in {os.path.abspath(e) for e in external}: continue
         pr = check_media(p)
         if pr: P[os.path.relpath(p, repo)] = pr
     for p in sorted(glob.glob(os.path.join(media_dir, "*.jpg"))):
+        if os.path.abspath(p) in {os.path.abspath(e) for e in external}: continue
         sz = os.path.getsize(p); cap = CAPS["poster_bytes"] if "poster" in p or "lqip" in p else CAPS["figure_bytes"]
         if sz > cap: P[os.path.relpath(p, repo)] = [f"{sz//1024} KB > cap {cap//1024} KB"]
     html = os.path.join(root, "index.html")
@@ -158,7 +162,7 @@ def check_page(page):
         for k, f in (m.get("files") or {}).items():
             fp = os.path.join(root, f["path"]) if not f["path"].startswith("static/") else os.path.join(root, f["path"])
             if not os.path.exists(fp): P.setdefault("manifest", []).append(f"files.{k} → {f['path']} missing")
-        total = sum(os.path.getsize(p) for p in glob.glob(os.path.join(media_dir, "*")))
+        total = sum(os.path.getsize(p) for p in glob.glob(os.path.join(media_dir, "*")) if os.path.abspath(p) not in {os.path.abspath(e) for e in external})
         if total > CAPS["total_media_bytes"]: P.setdefault("budget", []).append(f"media {total/1e6:.1f} MB > {CAPS['total_media_bytes']/1e6:.0f} MB")
         # stale assets: tracked files under static/ that no manifest item or file references (favicon exempt)
         try:
