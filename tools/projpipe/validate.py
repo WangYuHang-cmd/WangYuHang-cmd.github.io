@@ -170,7 +170,7 @@ def check_page(page):
             html_txt = open(html, encoding="utf8").read() if os.path.exists(html) else ""
             for tpath in tracked:
                 rel = os.path.relpath(tpath, page)
-                if rel.endswith("favicon.ico") or rel.endswith("manifest.json") or rel.endswith("SHA256SUMS"): continue
+                if rel.endswith(("favicon.ico", "manifest.json", "SHA256SUMS", "EXTERNAL_REFS.txt")): continue
                 if rel in external: continue   # hot-linked from outside (Hugging Face cards etc.); listed in static/EXTERNAL_REFS.txt
                 if rel not in refd and os.path.basename(rel) not in html_txt: P.setdefault("stale", []).append(rel)
         except Exception as e: P.setdefault("stale", []).append(f"git ls-files failed: {e}")
