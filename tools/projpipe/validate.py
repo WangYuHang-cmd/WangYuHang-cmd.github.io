@@ -163,12 +163,15 @@ def check_page(page):
         # stale assets: tracked files under static/ that no manifest item or file references (favicon exempt)
         try:
             tracked = subprocess.run(["git", "ls-files", os.path.join(page, "static")], capture_output=True, text=True, cwd=repo).stdout.split()
+            ext_p = os.path.join(repo, page, "static", "EXTERNAL_REFS.txt")   # files other sites hot-link; never delete, never flag as stale
+            external = {os.path.join("static", l.strip()) for l in open(ext_p, encoding="utf8") if l.strip() and not l.startswith("#")} if os.path.exists(ext_p) else set()
             refd = set(f["path"] for f in (m.get("files") or {}).values())
             for it in m.get("items") or []: refd |= set((it.get("files") or {}).values())
             html_txt = open(html, encoding="utf8").read() if os.path.exists(html) else ""
             for tpath in tracked:
                 rel = os.path.relpath(tpath, page)
                 if rel.endswith("favicon.ico") or rel.endswith("manifest.json") or rel.endswith("SHA256SUMS"): continue
+                if rel in external: continue   # hot-linked from outside (Hugging Face cards etc.); listed in static/EXTERNAL_REFS.txt
                 if rel not in refd and os.path.basename(rel) not in html_txt: P.setdefault("stale", []).append(rel)
         except Exception as e: P.setdefault("stale", []).append(f"git ls-files failed: {e}")
     return P

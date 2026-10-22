@@ -1,0 +1,9 @@
+# Files hot-linked from outside this site (Hugging Face dataset card HenryYHW/ADAS-TO_longitudinal via wangyuhang-cmd.github.io).
+# Not referenced by index.html — keep them at these exact paths; validate.py does not flag them as stale.
+images/longi_case_vs_control.png
+images/longi_closing_to_stop.gif
+images/longi_closing_to_stop_signals.png
+images/longi_fast_closing.gif
+images/longi_fast_closing_signals.png
+images/longi_typical_following.gif
+images/longi_typical_following_signals.png

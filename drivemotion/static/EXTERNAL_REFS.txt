@@ -1,0 +1,14 @@
+# Files hot-linked from outside this site (Hugging Face dataset card HenryYHW/DriveMotion via raw.githubusercontent.com).
+# Not referenced by index.html — keep them at these exact paths; validate.py does not flag them as stale.
+media/teaser.png
+media/teaser.jpg
+media/data_example.jpg
+media/ddpm_diversity.jpg
+media/demo_aide.gif
+media/demo_baton.gif
+media/demo_web.gif
+media/pipeline.jpg
+media/pred_vs_gt_0.gif
+media/pred_vs_gt_1.gif
+media/protocol.png
+media/stats.png
