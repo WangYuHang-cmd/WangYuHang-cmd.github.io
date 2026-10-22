@@ -277,6 +277,12 @@
     st.shade = (sig.shade || []).map(function (sh) { return { runs: self.runs(sh.col), color: tok(sh.color || 'accent', self.root), alpha: sh.alpha || 0.12, label: sh.label || sh.col }; });
     st.bandId = sig.bands && sig.bands.length ? this.bandGroup(sig.bands[0]) : null; st.full = this.hero || st.dur <= 120; if (this.winBtn) { this.winBtn.hidden = st.dur <= 30; this.winBtn.textContent = st.full ? 'Zoom · 20 s' : 'Full clip'; this.winBtn.setAttribute('aria-pressed', String(st.full)); } this.root.classList.toggle('is-full', st.full);
     if (this.media && sig.media && !this.video && sig.media.poster) { var im = $('img.pj-sc__poster', this.media) || el('img', 'pj-sc__poster'); im.alt = ''; im.src = sig.media.poster; if (!im.parentNode) this.media.insertBefore(im, this.media.firstChild); if (sig.media.aspect) this.media.style.setProperty('--ar', sig.media.aspect); }
+    if (this.video && sig.media) { // signals/1 media: a <video> declared without src (e.g. BATON's signature player) takes its source from the data file
+      if (sig.media.video && !this.video.getAttribute('src') && !this.video.querySelector('source')) { this.video.src = sig.media.video; this.video.load(); }
+      if (sig.media.poster && !this.video.getAttribute('poster')) this.video.poster = sig.media.poster;
+      if (sig.media.aspect && this.media) this.media.style.setProperty('--ar', sig.media.aspect);
+      if (isNum(sig.media.t0_video_s) && sig.media.t0_video_s) st.vt0 = sig.media.t0_video_s;
+    }
     if (this.scrub) { this.scrub.max = String(Math.max(1, Math.round(st.dur * 10))); this.scrub.value = '0'; }
     this.buildEvents(); this.buildBandChips(); this.buildLegend(); this.buildTwin(); this.ok();
     st.t = st.t0; st.prevT = st.t; st.dirty = true; this.kick();
