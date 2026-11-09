@@ -38,6 +38,21 @@ Below is the full set of projects. Explore more of my work on
 <div class="works-grid">
 
   <div class="work-card">
+    <a class="thumb" href="/vtt/"><img src="/images/th_vtt.jpg" alt="VTT"></a>
+    <div class="body">
+      <div class="venue">IEEE IV 2027 · in submission</div>
+      <h3><a href="/vtt/">VTT</a></h3>
+      <p class="blurb">From 60-s windows of trajectory and CAN signals, infer a car's footprint size class (SMALL / MID / LARGE) and powertrain (BEV vs ICE) for car models never seen in training — 9,062 drives, 3,949.8 h and 174 car models, with a held-out-model benchmark scored at drive and vehicle level.</p>
+      <div class="badges">
+        <a class="primary" href="/vtt/">Project Page →</a>
+        <a href="/vtt/static/VTT_IV2027_draft.pdf" target="_blank">Paper</a>
+        <a href="https://github.com/WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset" target="_blank">GitHub</a>
+        <a href="https://huggingface.co/datasets/HenryYHW/Vehicle_Power_Type_Trajectory_Dataset" target="_blank">🤗 Data</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-card">
     <a class="thumb" href="/tridrive/"><img src="/images/th_tridrive.jpg" alt="TriDrive"></a>
     <div class="body">
       <div class="venue">arXiv 2026 · under review</div>

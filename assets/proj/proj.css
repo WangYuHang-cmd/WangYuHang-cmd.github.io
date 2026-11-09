@@ -31,6 +31,7 @@ body[data-proj="drivedna"]{--pj-accent:#b07cff;--pj-accent-rgb:176,124,255;--pj-
 body[data-proj="drivemotion"]{--pj-accent:#3ddc97;--pj-accent-rgb:61,220,151;--pj-accent-2:#a6f0d0}
 body[data-proj="baton"]{--pj-accent:#f0c34e;--pj-accent-rgb:240,195,78;--pj-accent-2:#f8e2a3}
 body[data-proj="vlalert"]{--pj-accent:#ffb648;--pj-accent-rgb:255,182,72;--pj-accent-2:#ffd597}
+body[data-proj="vtt"]{--pj-accent:#5c8bff;--pj-accent-rgb:92,139,255;--pj-accent-2:#b3c6ff}
 
 /* ---------- fonts (self-hosted Inter variable, latin; metric-matched fallback keeps the swap CLS-free) ---------- */
 @font-face{font-family:Inter;font-style:normal;font-weight:400 800;font-display:swap;src:url("fonts/inter-latin-var.woff2") format("woff2");

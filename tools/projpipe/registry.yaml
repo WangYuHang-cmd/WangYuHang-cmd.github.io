@@ -121,3 +121,23 @@ vlalert:
   split_test_videos: {value: 2647, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
   split_adasto_videos: {value: 1051, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
   split_accident_videos: {value: 2211, fmt: "0,0", source: hf:HenryYHW/VLAlert#README, tag: latest release, locator: split table}
+vtt:
+  drives:            {value: 9062, fmt: "0,0", source: hf:HenryYHW/Vehicle_Power_Type_Trajectory_Dataset#README, tag: latest release, locator: At a glance}
+  hours:             {value: 3949.8, fmt: "0,0.0", unit: h, source: hf:HenryYHW/Vehicle_Power_Type_Trajectory_Dataset#README, tag: latest release, locator: At a glance, note: nominal; 3,078.1 h moving}
+  vehicles:          {value: 1431, fmt: "0,0", source: hf:HenryYHW/Vehicle_Power_Type_Trajectory_Dataset#README, tag: latest release, locator: At a glance, note: pseudonymous device x platform}
+  models:            {value: 174, fmt: "0", source: hf:HenryYHW/Vehicle_Power_Type_Trajectory_Dataset#README, tag: latest release, locator: At a glance, note: 360 platforms / 38 brands}
+  windows_eligible:  {value: 201390, fmt: "0,0", source: hf:HenryYHW/Vehicle_Power_Type_Trajectory_Dataset#README, tag: latest release, locator: At a glance, note: 60-s windows; 241,476 listed}
+  heldout_models:    {value: 41, fmt: "0", source: hf:HenryYHW/Vehicle_Power_Type_Trajectory_Dataset#README, tag: latest release, locator: Splits, note: split_platform test}
+  bev_drive_f1:      {value: 93.0, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/RESULTS.md, tag: latest release, locator: split_platform BEV vs ICE table, note: 1-D ResNet recipe B5 drive_full 3 seeds ± 0.8; bi-GRU B5 92.6}
+  bev_drive_ci_lo:   {value: 87.2, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#paper/tables/ci.json, tag: latest release, note: 95 % cluster bootstrap over car models (ResNet B5 drive_full)}
+  bev_drive_ci_hi:   {value: 96.6, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#paper/tables/ci.json, tag: latest release}
+  bev_vehicle_f1:    {value: 93.4, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/RESULTS.md, tag: latest release, note: bi-GRU B5 vehicle_full; ResNet B5 92.8}
+  size_drive_f1:     {value: 67.1, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/RESULTS.md, tag: latest release, locator: split_platform size table, note: bi-GRU recipe S9 drive_full 3 seeds ± 0.0; CI [54.4, 74.2]}
+  size_drive_ref:    {value: 62.9, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/RESULTS.md, tag: latest release, note: reference bi-GRU drive_full}
+  size_window_f1:    {value: 53.2, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/RESULTS.md, tag: latest release, note: bi-GRU S9 window test_full}
+  oracle_sigma010:   {value: 92.1, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: footprint-noise oracle sigma 0.10 m^2}
+  oracle_sigma015:   {value: 86.6, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: sigma 0.15 m^2}
+  oracle_sigma020:   {value: 80.7, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: sigma 0.20 m^2; 90 needs about ± 0.12 m^2}
+  near_threshold:    {value: 21, fmt: "0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: of 41 held-out models within 0.15 m^2 of an other-class training model}
+  majority_oracle:   {value: 72.0, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: per-car-model majority oracle on the reference ensemble (63.2 achieved)}
+  mass_oracle:       {value: 63.3, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: curb-mass oracle on 1,139 test drives}
