@@ -4,11 +4,13 @@ permalink: /publications/index.html
 title: Publications
 ---
 
-> Update: 16th October 2026
+> Update: 9th November 2026
 >
 > (†: equal contribution, ~: corresponding author)
 
 ## Preprints
+
+- [CANTraj: Recovering Vehicle Trajectories from CAN Signals in Naturalistic Driving](/cantraj/)<br>Yuhang Wang, Jingxin Yang, Chuheng Wei, Suyang Chen, Haozhuang Chi, Hao Zhou<br>Paper under review, 2026. [[Code]](https://github.com/WangYuHang-cmd/GPS--CAN) [[Data]](https://huggingface.co/datasets/HenryYHW/CANTraj)<br>
 
 - [TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring](/tridrive/)<br>Yuhang Wang, Jingxin Yang, Chuheng Wei, Yuechen Guo, Jinghan Xu, Zhao Han, Hao Zhou<br>arXiv 2609.33000, September 2026. Under review. [[arXiv]](https://arxiv.org/abs/2609.33000) [[Model]](https://huggingface.co/HenryYHW/TriDrive)<br>
 

@@ -38,6 +38,22 @@ Below is the full set of projects. Explore more of my work on
 <div class="works-grid">
 
   <div class="work-card">
+    <a class="thumb" href="/cantraj/"><img src="/images/th_cantraj.jpg" alt="CANTraj"></a>
+    <div class="body">
+      <div class="venue">paper under review · 2026</div>
+      <h3><a href="/cantraj/">CANTraj</a></h3>
+      <p class="blurb">A dataset of paired CAN and GNSS drives (3,940 drives, 454 drivers) and a benchmark for recovering vehicle trajectories from vehicle-bus signals: eight protocols, six re-implemented published attacks, failure-aware metrics.</p>
+      <div class="badges">
+        <a class="primary" href="/cantraj/">Project Page →</a>
+        <a href="https://github.com/WangYuHang-cmd/GPS--CAN" target="_blank">GitHub</a>
+        <a href="https://huggingface.co/datasets/HenryYHW/CANTraj" target="_blank">🤗 Data</a>
+        <a href="https://github.com/WangYuHang-cmd/GPS--CAN/blob/main/supplementary/supplementary.pdf" target="_blank">Supplementary</a>
+        <a href="/cantraj/#examples">Explore</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-card">
     <a class="thumb" href="/vtt/"><img src="/images/th_vtt.jpg" alt="VTT"></a>
     <div class="body">
       <div class="venue">IEEE IV 2027 · in submission</div>

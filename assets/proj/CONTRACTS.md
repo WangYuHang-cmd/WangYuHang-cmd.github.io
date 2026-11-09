@@ -79,7 +79,7 @@ Optional `lanes[].colors`: `{ "<free state>": "<colour token | #rrggbb>" }` for 
 ```
 Decode: `x = bbox[0] + (xi + 32000) / 64000 * (bbox[2] − bbox[0])` (same for y). Invariants: decoded lengths == `n`, every `idx` value < `names.length`.
 Also used for ADAS-TO's TTC/THW long tail with dims `{critical}` and `meta.axes = {x:"min TTC (s)", y:"min THW (s)"}`.
-Optional `meta.ticks = { "x":[…], "y":[…] }` (data units inside `bbox`) for quantitative axes: the kit pads the plot (left 48 / bottom 24 px), draws tick labels and moves the representative label to the bottom-right; `meta.guides` keep working in the padded frame. Optional `meta.point_noun` names the points in the pinned-category label (default "windows"). Clouds of ≤ 200 points are drawn with larger, more opaque dots (one point per car model on VTT).
+Optional `meta.ticks = { "x":[…], "y":[…], "dp":{ "x":1 } }` (data units inside `bbox`; `dp` = decimals per axis, optional) for quantitative axes: the kit pads the plot (left 48 / bottom 24 px), draws tick labels and moves the representative label to the bottom-right; `meta.guides` keep working in the padded frame. Optional `meta.point_noun` names the points in the pinned-category label (default "windows"). Clouds of ≤ 200 points are drawn with larger, more opaque dots (one point per car model on VTT).
 Page side: `data-pulse="keep-mode"` keeps the chosen colour dim while the representatives light up in turn (plain `data-pulse` switches the colouring to each representative's dim).
 
 ## kpts/1 — keypoint sequences (Skeleton)

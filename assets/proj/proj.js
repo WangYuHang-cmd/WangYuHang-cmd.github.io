@@ -557,9 +557,10 @@
     if (M.axes && !this.hero) { ctx.fillStyle = this.C.mute; ctx.font = '500 10px ' + SANS; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; tw = ctx.measureText(M.axes.x || '').width; ctx.fillText(M.axes.x || '', W - 8, H - 4); ctx.save(); ctx.translate(tk ? 8 : 12, 8); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'right'; ctx.textBaseline = 'top'; ctx.fillText(M.axes.y || '', 0, 0); ctx.restore(); }
     if (tk && bb && bb.length === 4) { // meta.ticks: tick labels in data units along the padded axes (an x label that would run into the axis title is skipped)
       ctx.fillStyle = this.C.mute; ctx.font = '500 9px ' + MONO; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-      (tk.x || []).forEach(function (v) { if (!isNum(v) || bb[2] === bb[0]) return; var x = pd.l + (v - bb[0]) / (bb[2] - bb[0]) * PW, s = String(v), hw = ctx.measureText(s).width / 2; if (x - hw < pd.l - 6 || x + hw > W - 8 - tw - 10) return; ctx.fillText(s, x, H - 3); ctx.fillRect(x - .5, H - pd.b, 1, 4); });
+      var tdp = tk.dp || {}, tf = function (v, k) { return isNum(tdp[k]) ? v.toFixed(tdp[k]) : String(v); };
+      (tk.x || []).forEach(function (v) { if (!isNum(v) || bb[2] === bb[0]) return; var x = pd.l + (v - bb[0]) / (bb[2] - bb[0]) * PW, s = tf(v, 'x'), hw = ctx.measureText(s).width / 2; if (x - hw < pd.l - 6 || x + hw > W - 8 - tw - 10) return; ctx.fillText(s, x, H - 3); ctx.fillRect(x - .5, H - pd.b, 1, 4); });
       ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-      (tk.y || []).forEach(function (v) { if (!isNum(v) || bb[3] === bb[1]) return; var y = pd.t + (1 - (v - bb[1]) / (bb[3] - bb[1])) * PH; ctx.fillText(String(v), pd.l - 8, y); ctx.fillRect(pd.l - 5, y - .5, 4, 1); });
+      (tk.y || []).forEach(function (v) { if (!isNum(v) || bb[3] === bb[1]) return; var y = pd.t + (1 - (v - bb[1]) / (bb[3] - bb[1])) * PH; ctx.fillText(tf(v, 'y'), pd.l - 8, y); ctx.fillRect(pd.l - 5, y - .5, 4, 1); });
     }
     if (this.hoverI >= 0) { var hp = this.px(this.hoverI); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(hp[0], hp[1], 5, 0, 6.283); ctx.stroke(); }
   };
