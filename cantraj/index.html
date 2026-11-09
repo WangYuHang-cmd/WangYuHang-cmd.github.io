@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CANTraj · Recovering Vehicle Trajectories from CAN Signals in Naturalistic Driving</title>
+<meta name="description" content="CANTraj pairs decoded CAN events with time-aligned GNSS tracks for thousands of naturalistic drives; CANTraj-Bench measures how much of a trajectory can be recovered from the vehicle signals once one position is known.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wangyuhang-cmd.github.io/cantraj/">
+<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+<style>
+  :root { color-scheme: dark; --bg:#070d1d; --panel:#0b1730; --text:#e8eefc; --dim:#c7d5ef; --mute:#9fb2d6; --accent:#5ee0c8; --accent-2:#5c8bff; --border:rgba(96,180,255,.18); }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 20px 64px; }
+  nav a { color: var(--dim); text-decoration: none; margin-right: 18px; font-size: .95rem; }
+  nav a:hover { color: var(--accent); }
+  .eyebrow { color: var(--accent); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin: 40px 0 10px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 8px; }
+  h1 small { display:block; font-size: .45em; font-weight: 500; color: var(--dim); margin-top: 10px; line-height: 1.35; }
+  p.lede { font-size: 1.1rem; color: var(--dim); margin: 22px 0; }
+  .btns { display:flex; flex-wrap:wrap; gap: 12px; margin: 26px 0; }
+  .btn { display:inline-block; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--border); color: var(--text); text-decoration: none; background: var(--panel); }
+  .btn.primary { background: var(--accent); color: #061021; border-color: var(--accent); font-weight: 600; }
+  .btn:hover { border-color: var(--accent); }
+  .note { border: 1px solid var(--border); background: var(--panel); border-radius: 14px; padding: 16px 18px; color: var(--dim); }
+  .note b { color: var(--text); }
+  .stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 28px 0; }
+  .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+  .stat b { display:block; font-size: 1.6rem; color: var(--accent-2); }
+  .stat span { color: var(--mute); font-size: .9rem; }
+  footer { margin-top: 48px; color: var(--mute); font-size: .9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a href="/">Home</a><a href="/projects/">Projects</a><a href="/publications/">Publications</a></nav>
+  <p class="eyebrow">Dataset &amp; benchmark · CAN-to-trajectory recovery · paper under review (2026)</p>
+  <h1>CANTraj <small>Recovering Vehicle Trajectories from CAN Signals in Naturalistic Driving</small></h1>
+  <p class="lede">Remove the GPS and keep the CAN bus, and the route is still there. CANTraj pairs decoded CAN events with time-aligned GNSS tracks for thousands of naturalistic drives; CANTraj-Bench measures how much of a trajectory six re-implemented published methods and the benchmark's own baselines recover from the vehicle signals once one position is known.</p>
+  <div class="stats">
+    <div class="stat"><b>3,940</b><span>drives with paired CAN and GNSS</span></div>
+    <div class="stat"><b>454</b><span>pseudonymous drivers</span></div>
+    <div class="stat"><b>98,972</b><span>benchmark episodes</span></div>
+    <div class="stat"><b>8</b><span>evaluation protocols</span></div>
+  </div>
+  <div class="btns">
+    <a class="btn primary" href="https://huggingface.co/datasets/HenryYHW/CANTraj" target="_blank" rel="noopener">Data on Hugging Face</a>
+    <a class="btn" href="https://github.com/WangYuHang-cmd/GPS--CAN" target="_blank" rel="noopener">Code on GitHub</a>
+    <a class="btn" href="/projects/">All projects</a>
+  </div>
+  <p class="note"><b>The full project page is being published.</b> It brings an interactive trajectory viewer for recovered windows, the complete benchmark results with distribution curves, horizon and robustness studies, the LLM-agent selection study and the dataset composition. Check back shortly.</p>
+  <footer>Yuhang Wang · University of South Florida</footer>
+</div>
+</body>
+</html>
