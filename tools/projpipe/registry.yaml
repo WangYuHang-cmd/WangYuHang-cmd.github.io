@@ -141,3 +141,559 @@ vtt:
   near_threshold:    {value: 21, fmt: "0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: of 41 held-out models within 0.15 m^2 of an other-class training model}
   majority_oracle:   {value: 72.0, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: per-car-model majority oracle on the reference ensemble (63.2 achieved)}
   mass_oracle:       {value: 63.3, fmt: "0.0", source: github:WangYuHang-cmd/-Vehicle_Power_Type_Trajectory_Dataset#experiments/ORACLES.md, tag: latest release, note: curb-mass oracle on 1,139 test drives}
+cantraj:
+  # corpus scopes
+  release_drives:      {value: 3940, fmt: "0,0", unit: drives, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S1}
+  release_drivers:     {value: 454, fmt: "0", unit: drivers, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S1}
+  release_hours:       {value: 1659, fmt: "0,0", unit: h, source: log:release-manifests, tag: latest release, note: kept span after the two-minute trims}
+  hf_drives:           {value: 3988, fmt: "0,0", unit: drives, source: hf:HenryYHW/CANTraj#README, tag: latest release, note: incl. the 48-drive controlled supplement}
+  hf_drivers:          {value: 468, fmt: "0", unit: drivers, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hf_hours:            {value: 1665, fmt: "0,0", unit: h, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  controlled_drives:   {value: 48, fmt: "0", unit: drives, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  bench_drives:        {value: 3675, fmt: "0,0", unit: drives, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  bench_drivers:       {value: 431, fmt: "0", unit: drivers, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  bench_episodes:      {value: 98972, fmt: "0,0", unit: episodes, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  bench_hours:         {value: 1380, fmt: "0,0", unit: h, source: log:release-manifests, tag: in the paper}
+  bench_km:            {value: 85919, fmt: "0,0", unit: km, source: log:release-manifests, tag: in the paper}
+  platforms:           {value: 266, fmt: "0", unit: platforms, source: log:release-manifests, tag: in the paper}
+  brands:              {value: 27, fmt: "0", unit: brands, source: log:release-manifests, tag: in the paper}
+  # benchmark structure
+  protocols:           {value: 8, fmt: "0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  protocols_evaluated: {value: 5, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv distinct protocols}
+  published_methods:   {value: 6, fmt: "0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  method_rows:         {value: 17, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: methods.csv}
+  heldout_drives:      {value: 776, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S2}
+  heldout_drivers:     {value: 94, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S2}
+  test_drives:         {value: 302, fmt: "0", source: log:release-manifests, tag: in the paper}
+  test_drivers:        {value: 43, fmt: "0", source: log:release-manifests, tag: in the paper}
+  fewshot_drives:      {value: 474, fmt: "0", source: log:release-manifests, tag: in the paper}
+  fewshot_drivers:     {value: 51, fmt: "0", source: log:release-manifests, tag: in the paper}
+  train_drives:        {value: 2044, fmt: "0,0", source: log:release-manifests, tag: in the paper}
+  train_drivers:       {value: 206, fmt: "0", source: log:release-manifests, tag: in the paper}
+  val_drives:          {value: 733, fmt: "0", source: log:release-manifests, tag: in the paper}
+  val_drivers:         {value: 45, fmt: "0", source: log:release-manifests, tag: in the paper}
+  unassigned_drives:   {value: 122, fmt: "0", source: log:release-manifests, tag: in the paper}
+  unassigned_drivers:  {value: 86, fmt: "0", source: log:release-manifests, tag: in the paper}
+  w01_test:            {value: 9299, fmt: "0,0", unit: windows, source: log:release-manifests, tag: in the paper}
+  w01_fewshot:         {value: 9671, fmt: "0,0", unit: windows, source: log:release-manifests, tag: in the paper}
+  w05_test:            {value: 1917, fmt: "0,0", unit: windows, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  w05_fewshot:         {value: 1963, fmt: "0,0", unit: windows, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  w05_fewshot_map:     {value: 1959, fmt: "0,0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  w15_test:            {value: 608, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  w15_fewshot:         {value: 565, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  w15_fewshot_map:     {value: 561, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  full_test:           {value: 282, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  full_fewshot:        {value: 460, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  map_start_excluded:  {value: 14, fmt: "0", unit: windows, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  map_start_pool:      {value: 5795, fmt: "0,0", unit: windows, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  map_start_dist_med:  {value: 2.6, fmt: "0.0", unit: m, source: log:release-manifests, tag: in the paper}
+  map_start_rule_m:    {value: 400, fmt: "0", unit: m, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  disc_base_km:        {value: 5, fmt: "0", unit: km, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  disc_rate_mps:       {value: 40, fmt: "0", unit: m/s, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  disc_max_km:         {value: 60, fmt: "0", unit: km, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  elig_fix_pct:        {value: 80, fmt: "0", unit: "%", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  elig_gap_s:          {value: 30, fmt: "0", unit: s, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  elig_path_m:         {value: 100, fmt: "0", unit: m, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  pf_particles:        {value: 2000, fmt: "0,0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  beam_width:          {value: 200, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  beam_k:              {value: 10, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  lag_modem:           {value: 0.7, fmt: "0.0", unit: s, source: log:release-manifests, tag: in the paper}
+  lag_ublox:           {value: 0.2, fmt: "0.0", unit: s, source: log:release-manifests, tag: in the paper}
+  # composition
+  receivers_modem:     {value: 2998, fmt: "0,0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  receivers_ublox:     {value: 990, fmt: "0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  rate_10hz:           {value: 432, fmt: "0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  rate_1hz:            {value: 3556, fmt: "0,0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  bench_modem:         {value: 2793, fmt: "0,0", source: log:release-manifests, tag: in the paper}
+  bench_ublox:         {value: 882, fmt: "0", source: log:release-manifests, tag: in the paper}
+  dur_bin_0_5:         {value: 628, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_bin_5_10:        {value: 685, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_bin_10_20:       {value: 858, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_bin_20_30:       {value: 562, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_bin_30_60:       {value: 606, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_bin_60_120:      {value: 238, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_bin_120p:        {value: 98, fmt: "0", source: log:release-manifests, tag: latest release}
+  dur_median_kept_s:   {value: 880, fmt: "0", unit: s, source: log:release-manifests, tag: latest release}
+  dpd_1:               {value: 134, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_2:               {value: 78, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_3_5:             {value: 111, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_6_10:            {value: 49, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_11_20:           {value: 25, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_21_50:           {value: 23, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_50p:             {value: 11, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_median:          {value: 3, fmt: "0", source: log:release-manifests, tag: latest release}
+  dpd_max:             {value: 303, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_honda:         {value: 595, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_hyundai:       {value: 575, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_rivian:        {value: 421, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_chevrolet:     {value: 338, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_ford:          {value: 324, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_acura:         {value: 321, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_kia:           {value: 260, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_toyota:        {value: 216, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_tesla:         {value: 205, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_vw:            {value: 161, fmt: "0", source: log:release-manifests, tag: latest release}
+  brand_other:         {value: 259, fmt: "0", source: log:release-manifests, tag: latest release}
+  hf_csv_files:        {value: 5801, fmt: "0,0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hf_csv_gb:           {value: 4.46, fmt: "0.00", unit: GB, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hf_events_gb:        {value: 24.0, fmt: "0.0", unit: GB, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hf_bench_gb:         {value: 0.85, fmt: "0.00", unit: GB, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hf_total_gb:         {value: 29.4, fmt: "0.0", unit: GB, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hf_models:           {value: 24, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: latest release, locator: README.md}
+  hf_model_files:      {value: 73, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: latest release, locator: README.md}
+  hf_models_mb:        {value: 3.3, fmt: "0.0", unit: MB, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: latest release, locator: README.md}
+  tiles_total:         {value: 5111, fmt: "0,0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  tiles_truncated:     {value: 149, fmt: "0", source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  # recovered windows (V01 captions)
+  ex_ade_beam_1:       {value: 1.36, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_filter_1:     {value: 2.41, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_beam_2:       {value: 3.25, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_filter_2:     {value: 5.28, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_beam_3:       {value: 3.76, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_filter_3:     {value: 4.56, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_beam_4:       {value: 4.04, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_filter_4:     {value: 4.42, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_beam_5:       {value: 5.15, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_filter_5:     {value: 5.21, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_beam_6:       {value: 5.75, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_ade_filter_6:     {value: 11.51, fmt: "0.00", unit: m, source: log:report-tables, tag: in the paper}
+  ex_km_1:             {value: 5.15, fmt: "0.0", unit: km, source: log:report-tables, tag: in the paper}
+  ex_km_2:             {value: 9.35, fmt: "0.0", unit: km, source: log:report-tables, tag: in the paper}
+  ex_km_3:             {value: 4.11, fmt: "0.0", unit: km, source: log:report-tables, tag: in the paper}
+  ex_km_4:             {value: 2.94, fmt: "0.0", unit: km, source: log:report-tables, tag: in the paper}
+  ex_km_5:             {value: 4.35, fmt: "0.0", unit: km, source: log:report-tables, tag: in the paper}
+  ex_km_6:             {value: 4.82, fmt: "0.0", unit: km, source: log:report-tables, tag: in the paper}
+  ex_turns_max:        {value: 14, fmt: "0", source: log:report-tables, tag: in the paper}
+  # main board (5 min unless named; test unless named)
+  beam_med:            {value: 37, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_beam_steer__G3 F-M-Hp}
+  beam_lo:             {value: 24, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_hi:             {value: 54, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_route:          {value: 88, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  pf_med:              {value: 43, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_pf_steer__G3 O-M-Hp}
+  pf_lo:               {value: 29, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  pf_hi:               {value: 59, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  pf_route:            {value: 87, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_fs_med:         {value: 21, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_fs_route:       {value: 92, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  pf_fs_med:           {value: 27, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  pf_fs_route:         {value: 90, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  opd2_med:            {value: 42, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv opd2__G3}
+  opd2_lo:             {value: 27, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  opd2_hi:             {value: 68, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  opd2_route:          {value: 79, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  macro_med:           {value: 84, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv macrotracking__G3}
+  macro_route:         {value: 62, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  macro_fs_med:        {value: 52, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  macro_fs_route:      {value: 65, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ep_hp_med:           {value: 87, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv elastic_pathing_hp__G1}
+  ep_hp_lo:            {value: 38, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ep_hp_hi:            {value: 324, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ep_hp_route:         {value: 58, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ep_hp_fail:          {value: 89, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ep_drv_med:          {value: 538, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv ade_driver_median}
+  ep_med:              {value: 129, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv elastic_pathing__G1}
+  ep_route:            {value: 53, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ep_fail:             {value: 62, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dewri_hp_med:        {value: 81, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv dewri_hp__G1}
+  dewri_hp_route:      {value: 62, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dewri_hp_fail:       {value: 18, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dewri_med:           {value: 293, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv dewri__G1}
+  dewri_route:         {value: 46, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dewri_fail:          {value: 8, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  spy_hp_med:          {value: 1474, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv spy_hp__G3}
+  spy_hp_route:        {value: 20, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  spy_med:             {value: 2198, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv spy__G3}
+  spy_route:           {value: 11, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  spy_area_fail:       {value: 227, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv spy_area__G3}
+  ct_out:              {value: 2, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv can_trace__G2}
+  ct_n:                {value: 245, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ct_fs_out:           {value: 5, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ct_fs_n:             {value: 162, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  ct_area_out:         {value: 85, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv can_trace_area__G2}
+  area_ct_out_pct:     {value: 74, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: area_coverage.csv}
+  area_spy_out_pct:    {value: 80, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: area_coverage.csv}
+  pf_none_med:         {value: 286, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_pf_none__G1}
+  pf_none_route:       {value: 56, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_none_med:       {value: 165, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_beam_none__G1}
+  beam_none_route:     {value: 54, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dr_med:              {value: 921, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv dr_steer__G3}
+  dr_lo:               {value: 461, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dr_hi:               {value: 1742, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dr_route:            {value: 4, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dr_fs_med:           {value: 1669, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dr_fs_route:         {value: 2, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  straight_med:        {value: 735, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv dr_none__G1}
+  straight_route:      {value: 9, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  dr_cal_med:          {value: 1312, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv dr_steer_calib__G3}
+  gru_med:             {value: 543, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv learned_gru_s0__G3}
+  gru_route:           {value: 7, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  gru_fs_med:          {value: 393, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  gru_fs_route:        {value: 5, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  hold_med:            {value: 3314, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv p0_hold__G1}
+  pf_hm_med:           {value: 138, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_pf_steer__G3 O-M-Hm}
+  pf_hm_route:         {value: 79, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_hm_med:         {value: 41, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_beam_steer__G3 F-M-Hm}
+  beam_hm_route:       {value: 81, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_none_hm_med:    {value: 1314, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_beam_none__G1 F-M-Hm}
+  beam_none_hm_route:  {value: 32, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  pf_none_hm_med:      {value: 1773, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_pf_none__G1 O-M-Hm}
+  pf_none_hm_route:    {value: 34, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv}
+  beam_w15_test:       {value: 149, fmt: "0", unit: m, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  beam_w15_fs:         {value: 106, fmt: "0", unit: m, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  pf_w15_test:         {value: 178, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv w15}
+  pf_w15_fs:           {value: 127, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv w15}
+  beam_hm_w15_test:    {value: 155, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv w15}
+  beam_full_test:      {value: 1179, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv full}
+  beam_full_fs:        {value: 94, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv full}
+  beam_hm_full_test:   {value: 1244, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv full}
+  beam_hm_full_fs:     {value: 124, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv full}
+  full_dur_med_test:   {value: 19, fmt: "0", unit: min, source: log:report-tables, tag: in the paper}
+  full_dur_med_fs:     {value: 11, fmt: "0", unit: min, source: log:report-tables, tag: in the paper}
+  curv_med:            {value: 84, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv dr_curvature__G5}
+  pf_curv_med:         {value: 44, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv map_pf_curvature__G5}
+  # paired comparisons (pairs.csv, 5 min, test)
+  pair_map_gain:       {value: -825, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_map_gain_win:   {value: 89, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_pf:        {value: -27.5, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_pf_lo:     {value: -41.4, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_pf_hi:     {value: -11.3, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_pf_mean:   {value: -599, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_beam_med:  {value: 0.0, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_beam_mean: {value: -395, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_beam_lo:   {value: -554, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_beam_hi:   {value: -206, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_head_beam_win:  {value: 16, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_beam_vs_pf:     {value: -2.7, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_beam_vs_pf_lo:  {value: -3.0, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_beam_vs_pf_hi:  {value: -2.0, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_lineage_vs_pf:  {value: -1.4, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_lineage_lo:     {value: -2.3, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_lineage_hi:     {value: -0.9, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_beam_vs_lineage: {value: -0.5, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_beam_lineage_lo: {value: -1.3, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_beam_lineage_hi: {value: 0.3, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_opd_vs_pf:      {value: -1.9, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_opd_vs_pf_lo:   {value: -3.5, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_opd_vs_pf_hi:   {value: 2.3, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_opd_mean:       {value: 116, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_opd_mean_lo:    {value: 34, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_opd_mean_hi:    {value: 245, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_ep_vs_beam_none_hm: {value: -51.2, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_ep_bn_lo:       {value: -212, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_ep_bn_hi:       {value: -33.0, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_gru_vs_dr:      {value: -120, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_gru_vs_dr_lo:   {value: -592, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_gru_vs_dr_hi:   {value: 361, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_gru_vs_dr_fs:   {value: -714, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_gru_seed_sd:    {value: 115, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_steer_pf:       {value: -59.5, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_macro_vs_pf:    {value: 31.2, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_macro_lo:       {value: 20.6, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  pair_macro_hi:       {value: 70.0, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: pairs.csv}
+  # horizon cohort
+  coh_n_test:          {value: 205, fmt: "0", unit: drives, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_drivers_test:    {value: 37, fmt: "0", unit: drivers, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_n_fs:            {value: 221, fmt: "0", unit: drives, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_drivers_fs:      {value: 44, fmt: "0", unit: drivers, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_beam_1:          {value: 17, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_beam_5:          {value: 44, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_beam_15:         {value: 303, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_pf_1:            {value: 19, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_pf_5:            {value: 56, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_pf_15:           {value: 672, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_opd2_1:          {value: 11, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_opd2_5:          {value: 48, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_opd2_15:         {value: 1316, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_macro_1:         {value: 20, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_macro_5:         {value: 62, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_macro_15:        {value: 1351, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_dr_1:            {value: 24, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_dr_5:            {value: 500, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_dr_15:           {value: 3308, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_ep_hm_15:        {value: 3335, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_ep_hm_fail:      {value: 11, fmt: "0", unit: drives, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_beam_none_hm_15: {value: 5352, fmt: "0,0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cohort_horizon.csv}
+  coh_pair_med:        {value: -3.1, fmt: "0.0", unit: m, source: log:report-tables, tag: in the paper, locator: cohort_pairs.csv}
+  coh_pair_med_lo:     {value: -6.1, fmt: "0.0", unit: m, source: log:report-tables, tag: in the paper, locator: cohort_pairs.csv}
+  coh_pair_med_hi:     {value: -1.6, fmt: "0.0", unit: m, source: log:report-tables, tag: in the paper, locator: cohort_pairs.csv}
+  coh_pair_mean:       {value: -552, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: cohort_pairs.csv}
+  coh_pair_mean_lo:    {value: -1421, fmt: "0,0", unit: m, source: log:report-tables, tag: in the paper, locator: cohort_pairs.csv}
+  coh_pair_mean_hi:    {value: -99, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: cohort_pairs.csv}
+  # robustness (percentage points unless named)
+  rob_mild_max:        {value: 1.3, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_steer_q10:       {value: 10, fmt: "0", unit: deg, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_steer_n5:        {value: 5, fmt: "0", unit: deg, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_steer_q20:       {value: 20, fmt: "0", unit: deg, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_sq20:         {value: -1.4, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_sq20_lo:      {value: -2.5, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_sq20_hi:      {value: -0.4, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_s02_test:     {value: -2.7, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_s02_fs:       {value: -5.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_beam_s02_fs:     {value: -1.8, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_s02_med:      {value: 49, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_rate_02:         {value: 0.2, fmt: "0.0", unit: Hz, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pq1_max:         {value: 0.7, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_beam_pq5_test:   {value: -3.3, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_pq5_fs:       {value: -7.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_pf_pq5_med:      {value: 122, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_beam_pq5_med:    {value: 105, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_beam_none_pq5:   {value: -0.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_beam_none_pq5_lo: {value: -1.5, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_beam_none_pq5_hi: {value: 0.1, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_hard_min:        {value: 82.6, fmt: "0.0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_delay_pf:        {value: 1.1, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_delay_beam:      {value: 1.3, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_delay_s:         {value: 0.5, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: map-attack sweep}
+  rob_dr_max:          {value: 0.4, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: robustness_w05.csv}
+  # top-K, taxonomy
+  topk_bn_hm_3:        {value: 210, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_bn_hm_10:       {value: 72, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_bn_hm_first:    {value: 21, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_bs_hm_10:       {value: 27, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_bs_hm_first:    {value: 54, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_ep_hm_10:       {value: 96, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_ep_single:      {value: 1484, fmt: "0,0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_ep_out:         {value: 1855, fmt: "0,0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_dewri_hm_10:    {value: 49, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  topk_dewri_first:    {value: 39, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: topk_w05.csv}
+  tax_bn_hm_top1:      {value: 18, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  tax_bn_hm_rank:      {value: 24, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  tax_bn_hm_none:      {value: 58, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  tax_bs_hp_top1:      {value: 61, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  tax_bs_hp_rank:      {value: 10, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  tax_bs_hp_none:      {value: 28, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  tax_threshold_m:     {value: 50, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: window_taxonomy_w05.csv}
+  route_recall_min:    {value: 0.8, fmt: "0.0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: main_board.csv route_ok definition}
+  agent_C:             {value: 75, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  # signal study
+  sig_n:               {value: 407, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_drivers:         {value: 31, fmt: "0", unit: drivers, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_seeds:           {value: 3, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_steer_min:       {value: -120, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_steer_max:       {value: -234, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_ped_speed_min:   {value: -4.8, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_ped_speed_max:   {value: 6.1, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_ped_all_min:     {value: -6.4, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_ped_all_max:     {value: 0.9, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_flags_speed:     {value: 5.2, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_flags_speed_lo:  {value: 0.8, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_flags_speed_hi:  {value: 10.7, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_gains_w05.csv}
+  sig_s1:              {value: 339, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_sets_w05.csv}
+  sig_s2c:             {value: 413, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_sets_w05.csv}
+  sig_s2b:             {value: 351, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_sets_w05.csv}
+  sig_s3:              {value: 49, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_sets_w05.csv}
+  sig_s4c:             {value: 42, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_sets_w05.csv}
+  sig_s4b:             {value: 37, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: signal_sets_w05.csv}
+  sig_shuffle_steer_min: {value: 3.4, fmt: "0.0", source: log:report-tables, tag: in the paper, locator: sig_signal_use.csv}
+  sig_shuffle_steer_max: {value: 3.8, fmt: "0.0", source: log:report-tables, tag: in the paper, locator: sig_signal_use.csv}
+  sig_shuffle_ped_min: {value: -0.5, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: sig_signal_use.csv}
+  sig_shuffle_ped_max: {value: 9.2, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: sig_signal_use.csv}
+  sig_shuffle_ped_steer_min: {value: 4.2, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: sig_signal_use.csv}
+  sig_shuffle_ped_steer_max: {value: 7.2, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: sig_signal_use.csv}
+  # cost
+  cost_n:              {value: 92, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_n_w05:          {value: 76, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_dr:             {value: 0.03, fmt: "0.00", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_macro:          {value: 0.08, fmt: "0.00", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_beam:           {value: 0.24, fmt: "0.00", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_pf:             {value: 0.57, fmt: "0.00", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_ep_p90:         {value: 0.13, fmt: "0.00", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_spy_area:       {value: 4.93, fmt: "0.00", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_spy_area_fail:  {value: 9, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_ct:             {value: 0.63, fmt: "0.00", unit: s, source: log:report-tables, tag: in the paper, locator: cost_pedal.csv}
+  cost_ct_area:        {value: 0.09, fmt: "0.00", unit: s, source: log:report-tables, tag: in the paper, locator: cost_pedal.csv}
+  cost_ct_n:           {value: 25, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: cost_pedal.csv}
+  cost_graph:          {value: 2.6, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_rss:            {value: 2.1, fmt: "0.0", unit: GB, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_threads:        {value: 24, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf}
+  prep_tiles_min:      {value: 46, fmt: "0", unit: min, source: log:report-tables, tag: in the paper, locator: map_prep_cost.csv}
+  prep_valhalla_min:   {value: 44, fmt: "0", unit: min, source: log:report-tables, tag: in the paper, locator: map_prep_cost.csv}
+  prep_valhalla_gb:    {value: 3.4, fmt: "0.0", unit: GB, source: log:report-tables, tag: in the paper, locator: map_prep_cost.csv}
+  cost_acc_beam:       {value: 21, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_beam_route: {value: 84, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_pf:         {value: 26, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_pf_route:   {value: 87, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_opd2:       {value: 23, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_opd2_route: {value: 76, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_macro:      {value: 75, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_macro_route: {value: 50, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_acc_pf500:      {value: 24, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost_accuracy.csv}
+  cost_beam_b50:       {value: 50, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  cost_pf_n500:        {value: 500, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: cost.csv}
+  # density, complementarity, failures, confidence
+  dens_cut_low:        {value: 56, fmt: "0", unit: nodes/km2, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_cut_high:       {value: 246, fmt: "0", unit: nodes/km2, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_n:              {value: 1292, fmt: "0,0", unit: windows, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_drv_low:        {value: 33, fmt: "0", unit: drivers, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_drv_mid:        {value: 82, fmt: "0", unit: drivers, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_drv_high:       {value: 81, fmt: "0", unit: drivers, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf_low:         {value: 29, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf_mid:         {value: 39, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf_high:        {value: 36, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pfn_low:        {value: 73, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pfn_mid:        {value: 677, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pfn_high:       {value: 843, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_beam_low:       {value: 24, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_beam_mid:       {value: 32, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_beam_high:      {value: 33, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_dr_low:         {value: 2102, fmt: "0,0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_dr_mid:         {value: 1245, fmt: "0,0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_dr_high:        {value: 632, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf_lost_low:    {value: 17, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf_lost_high:   {value: 27, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf15_low:       {value: 89, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_pf15_high:      {value: 264, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_beam15_low:     {value: 77, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_beam15_high:    {value: 162, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_n15_low:        {value: 414, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_n15_mid:        {value: 381, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  dens_n15_high:       {value: 374, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: T7b_density_strata_v11.csv}
+  cfail_dens_low:      {value: 0.9, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_dens_high:     {value: 2.9, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  comp_oracle:         {value: 98, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_gain:           {value: 10, fmt: "0", unit: pp, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_gain_lo:        {value: 6, fmt: "0", unit: pp, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_gain_hi:        {value: 16, fmt: "0", unit: pp, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_all_fail:       {value: 2.3, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_all_fail_lo:    {value: 1.4, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_all_fail_hi:    {value: 3.6, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_A:              {value: 96.9, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv}
+  comp_B:              {value: 77.7, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv}
+  comp_Bp:             {value: 71.6, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv}
+  comp_attain_max:     {value: 22, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_members_w05.csv}
+  comp_attain_beam:    {value: 19, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: complementarity_members_w05.csv}
+  comp_ade_gain:       {value: -3.4, fmt: "0.0", unit: m, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_ade_gain_lo:    {value: -5.4, fmt: "0.0", unit: m, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_ade_gain_hi:    {value: -2.3, fmt: "0.0", unit: m, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  comp_set_members:    {value: 10, fmt: "0", unit: methods, source: log:report-tables, tag: in the paper, locator: complementarity_w05.csv set D}
+  cfail_t01:           {value: 0.1, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_t23:           {value: 1.4, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_t46:           {value: 5.3, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_t7:            {value: 8.7, fmt: "0.0", unit: "%", source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_n01:           {value: 2234, fmt: "0,0", unit: windows, source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_n23:           {value: 712, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_n46:           {value: 528, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  cfail_n7:            {value: 402, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: common_failure_strata_w05.csv}
+  drv_beam_med:        {value: 88, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: driver_route_w05.csv}
+  drv_beam_below:      {value: 3, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: driver_route_w05.csv}
+  drv_n:               {value: 36, fmt: "0", unit: drivers, source: log:report-tables, tag: in the paper, locator: driver_route_w05.csv}
+  drv_min_windows:     {value: 5, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: driver_route_w05.csv}
+  fail_pf_30s:         {value: 43, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_beam_30s:       {value: 38, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_chance_pf:      {value: 23, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_chance_beam:    {value: 22, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_lost_pf:        {value: 73, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_lost_beam:      {value: 70, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_lost_n:         {value: 1169, fmt: "0,0", unit: windows, source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_pfn_30s:        {value: 93, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  fail_window_s:       {value: 30, fmt: "0", unit: s, source: log:report-tables, tag: in the paper, locator: T7a_lost_road_timing_v11.csv}
+  conf_beam_auroc:     {value: 0.47, fmt: "0.00", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_auroc_lo:  {value: 0.41, fmt: "0.00", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_auroc_hi:  {value: 0.52, fmt: "0.00", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_rho:       {value: -0.01, fmt: "0.00", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_prob1:     {value: 29, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_tau:            {value: 0.9, fmt: "0.0", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_cov:       {value: 46, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_route:     {value: 87, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_beam_err:       {value: 13, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_bn_auroc:       {value: 0.81, fmt: "0.00", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_bn_hm_auroc:    {value: 0.65, fmt: "0.00", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_bn_cov:         {value: 13, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_bn_route:       {value: 97, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_prob1_ep:       {value: 69, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  conf_prob1_dewri:    {value: 87, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: confidence_w05_w15.csv}
+  # LLM selection
+  agent_n_test:        {value: 268, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_n_fs:          {value: 391, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_n_all:         {value: 659, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_drv_test:      {value: 42, fmt: "0", unit: drivers, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_drv_fs:        {value: 50, fmt: "0", unit: drivers, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_A:             {value: 69, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_A_lo:          {value: 58, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_A_hi:          {value: 85, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_B:             {value: 75, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_B_lo:          {value: 67, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_B_hi:          {value: 87, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_C_lo:          {value: 66, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_C_hi:          {value: 88, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_Bp:            {value: 74, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_Cp:            {value: 78, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_Cp_lo:         {value: 71, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_ade_A:         {value: 49, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_ade_B:         {value: 38, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_ade_C:         {value: 41, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_ade_Bp:        {value: 43, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_ade_Cp:        {value: 39, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_cost_A:        {value: 0.3, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_cost_B:        {value: 1.1, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_cost_C:        {value: 36.4, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_cost_Bp:       {value: 4.8, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_cost_Cp:       {value: 102.4, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_fs_A:          {value: 83, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_fs_C:          {value: 84, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_fs_Bp:         {value: 82, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_fs_Cp:         {value: 81, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_fs_cost_B:     {value: 1.0, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_fs_cost_C:     {value: 35.0, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_fs_cost_Bp:    {value: 4.4, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_fs_cost_Cp:    {value: 99.2, fmt: "0.0", unit: s, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_diff_cb:       {value: 0.1, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_pairs_w05.csv}
+  agent_diff_cb_lo:    {value: -1.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_pairs_w05.csv}
+  agent_diff_cb_hi:    {value: 3.4, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_pairs_w05.csv}
+  agent_diff_cb_fs:    {value: 0.7, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_pairs_w05.csv}
+  agent_diff_cb_fs_lo: {value: -2.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_pairs_w05.csv}
+  agent_diff_cb_fs_hi: {value: 2.8, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_pairs_w05.csv}
+  agent_diff_cpbp:     {value: 4.1, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpbp_lo:  {value: 1.3, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpbp_hi:  {value: 7.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpbp_fs:  {value: -0.7, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpbp_fs_lo: {value: -2.8, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpbp_fs_hi: {value: 1.6, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpc:      {value: -0.4, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_diff_cpc_hi:   {value: 2.0, fmt: "0.0", unit: pp, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_pairs_w05.csv}
+  agent_oracle3:       {value: 83, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_oracle_all:    {value: 87, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_oracle3_fs:    {value: 92, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_oracle_all_fs: {value: 94, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_vote_test:     {value: 79, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_fde_A:         {value: 33, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_fde_B:         {value: 25, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_fde_C:         {value: 26, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  agent_live_ratio:    {value: 1.1, fmt: "0.0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_live_check.csv}
+  agent_presets:       {value: 10, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_turns:         {value: 12, fmt: "0", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_max_w05.csv}
+  agent_fde_m:         {value: 500, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: agent_w05.csv}
+  # controlled supplement, reproducibility, media
+  supp_n:              {value: 46, fmt: "0", unit: windows, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_drives:         {value: 27, fmt: "0", unit: drives, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_drivers:        {value: 12, fmt: "0", unit: drivers, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_macro:          {value: 19, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_macro_route:    {value: 85, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_opd2:           {value: 25, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_opd2_route:     {value: 65, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_beam:           {value: 46, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_beam_route:     {value: 61, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_pf:             {value: 75, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_pf_route:       {value: 59, fmt: "0", unit: "%", source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_dr:             {value: 117, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_speed_min:      {value: 337, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  supp_speed_max:      {value: 763, fmt: "0", unit: m, source: log:report-tables, tag: in the paper, locator: supplement_summary.csv}
+  a3_identical:        {value: 100, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: a3_visibility.csv}
+  a3_n:                {value: 651, fmt: "0", unit: windows, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: a3_visibility.csv}
+  a3_drives:           {value: 60, fmt: "0", unit: drives, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: a3_visibility.csv}
+  a3_seed_pct:         {value: 19, fmt: "0", unit: "%", source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: a3_visibility.csv}
+  a3_tol_m:            {value: 1, fmt: "0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: a3_visibility.csv}
+  macro_sample_m:      {value: 7.1, fmt: "0.0", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  opd_sample_logs:     {value: 8, fmt: "0", unit: logs, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  opd_sample_total:    {value: 59, fmt: "0", unit: logs, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  opd_sample_med_m:    {value: 0.33, fmt: "0.00", unit: m, source: github:WangYuHang-cmd/GPS--CAN@266c4af, tag: in the paper, locator: supplementary.pdf S3}
+  anim_overview_s:     {value: 14, fmt: "0", unit: s, source: log:media, tag: latest release}
+  anim_replay_s:       {value: 20, fmt: "0", unit: s, source: log:media, tag: latest release}
+  clip_s:              {value: 24, fmt: "0", unit: s, source: log:media, tag: latest release}
+  window_s:            {value: 300, fmt: "0", unit: s, source: log:media, tag: in the paper}
+  frame_t_s:           {value: 150, fmt: "0", unit: s, source: log:media, tag: in the paper}
+  trim_min:            {value: 2, fmt: "0", unit: min, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hz_full:             {value: 100, fmt: "0", unit: Hz, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  hz_compressed:       {value: 10, fmt: "0", unit: Hz, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  win_minutes_1:       {value: 1, fmt: "0", unit: min, source: hf:HenryYHW/CANTraj#README, tag: latest release}
+  win_minutes_15:      {value: 15, fmt: "0", unit: min, source: hf:HenryYHW/CANTraj#README, tag: latest release}

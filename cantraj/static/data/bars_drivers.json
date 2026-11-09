@@ -1,0 +1,1 @@
+{"schema":"bars/1","unit":"drivers","dp":0,"max":150,"rows":[{"label":"1 drive","v":134},{"label":"2 drives","v":78},{"label":"3–5","v":111},{"label":"6–10","v":49},{"label":"11–20","v":25},{"label":"21–50","v":23},{"label":"more than 50","v":11}],"meta":{"source":"benchmark drives per driver, 431 drivers","median":3,"max":303}}

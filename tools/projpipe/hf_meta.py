@@ -4,7 +4,7 @@ publish.sh stamps the result into each page's #data band as static markup; pages
 import json, sys, urllib.request, datetime, os
 REPOS = [("datasets", "HenryYHW/ADAS-TO"), ("datasets", "HenryYHW/ADAS-TO-Sample"), ("datasets", "HenryYHW/ADAS-TO-Critical"), ("datasets", "HenryYHW/ADAS-TO_longitudinal"),
          ("datasets", "HenryYHW/BATON"), ("datasets", "HenryYHW/BATON-Sample"), ("datasets", "HenryYHW/DriveDNA"), ("datasets", "HenryYHW/DriveDNA-Sample"),
-         ("datasets", "HenryYHW/DriveMotion"), ("datasets", "HenryYHW/VLAlert"), ("datasets", "HenryYHW/Vehicle_Power_Type_Trajectory_Dataset"), ("models", "HenryYHW/TriDrive")]
+         ("datasets", "HenryYHW/DriveMotion"), ("datasets", "HenryYHW/VLAlert"), ("datasets", "HenryYHW/Vehicle_Power_Type_Trajectory_Dataset"), ("datasets", "HenryYHW/CANTraj"), ("models", "HenryYHW/TriDrive")]
 LICENSE_NAMES = {"cc-by-nc-4.0": "CC BY-NC 4.0", "cc-by-4.0": "CC BY 4.0", "cc-by-sa-4.0": "CC BY-SA 4.0", "mit": "MIT", "apache-2.0": "Apache 2.0", "other": "custom license"}
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "proj", "data", "hf_meta.json")
 def fetch(kind, repo):

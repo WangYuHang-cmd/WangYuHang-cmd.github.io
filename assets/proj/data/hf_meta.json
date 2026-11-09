@@ -112,6 +112,16 @@
    "downloads": 808,
    "private": false
   },
+  "HenryYHW/CANTraj": {
+   "type": "dataset",
+   "gated": "manual",
+   "license": "other",
+   "license_name": "drivedna-research-license",
+   "lastModified": "2026-11-09T14:36:33.000Z",
+   "sha": "9141ca1eac9da105f0edfe4b533b9919b93bc8e1",
+   "downloads": 2907,
+   "private": false
+  },
   "HenryYHW/TriDrive": {
    "type": "model",
    "gated": "manual",
