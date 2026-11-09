@@ -3,8 +3,11 @@
 (experiments/results/*_probs.npz), the demo figures / animation (VehicleTypeTraj/demo) and the paper figures. Forward-camera clips are cut through
 demo/vizlib.cut_clip, so the private drive -> raw clip mapping never enters this script (nor any output or log). Needs the VTT conda interpreter:
     source ~/Desktop/Drive/VehicleTypeTraj/env.sh && cd tools/projpipe && $CPY vtt_export.py [--force]
-Outputs vtt/static/{data,media}, manifest.json, sources.json, numbers.json (from registry.yaml "vtt:") and static/SHA256SUMS."""
-import argparse, glob, json, os, re, sys
+Outputs vtt/static/{data,media}, manifest.json, sources.json, numbers.json (from registry.yaml "vtt:") and static/SHA256SUMS.
+Licence plates: every clip is written with the lower face of each close vehicle blurred, from the per-frame box tables
+vtt_plates/<clip>.json that vtt_plate_scan.py (YOLO11x, run from here in the openpilot venv) produces for the unblurred cut kept
+under WORK; stills get the fixed boxes of PLATE_BLUR (output pixels). Both feed the ledger hashes, so a re-run reproduces them."""
+import argparse, glob, hashlib, json, os, re, shutil, subprocess, sys
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import PATHS, CAPS, write_json, carry_review, num, nums, edges, h264, fit_cap, poster, lqip, jpeg_fit, ffprobe, sha256_file, entry_hash, Ledger
@@ -90,16 +93,99 @@ def decision(drive_id, tags):
     d = V.decide(drive_id, tags); return {"cls": d["cls"], "prob": num(d["prob"], 3), "truth": d["truth"], "correct": bool(d["correct"]), "n_windows": d["n_windows"], "tags": list(tags), "mean": {c: num(m, 3) for c, m in zip(d["classes"], d["mean"])}}
 def dstr(d): return f"{d['cls']} {d['prob']:.2f}"
 S80 = "scale=trunc(iw*0.8/2)*2:trunc(ih*0.8/2)*2"; S75 = "scale=trunc(iw*0.75/2)*2:trunc(ih*0.75/2)*2"
-def fit_clip(drive_id, a, b, dst, cap):
-    """Staged re-encodes of the forward camera until the mp4 fits the cap: the 60-90 s cases start at the native 20 fps, the 180-s hero at 10 fps; then a smaller frame."""
+# ---------------------------------------------------------------- privacy: licence plates of other vehicles
+# Clips: the unblurred cut is written to WORK/cuts/<clip>.mp4 (never into the page). vtt_plate_scan.py ($PY of env.sh = openpilot venv: ultralytics + CUDA; run from
+# here whenever the table is missing or does not match the cut's digest) finds every close vehicle in the cut with YOLO11x and writes per-frame boxes over the lower
+# face of each one to vtt_plates/<clip>.json (+ hand-placed "manual" boxes over clip seconds). blur_clip() re-encodes the cut with the boxes blurred into the page; a
+# clip whose table holds no box is copied unchanged. Stills: PLATE_BLUR = boxes in the pixels of the written file (posters: clip size; figures: the <= 2000-px JPEG),
+# blurred as the file is written. A poster cut from a blurred clip is blurred already; its entry only guards the poster frame.
+HERE = os.path.dirname(os.path.abspath(__file__)); PLATES = os.path.join(HERE, "vtt_plates"); SCAN = os.path.join(HERE, "vtt_plate_scan.py"); CUTS = os.path.join(WORK, "cuts"); os.makedirs(CUTS, exist_ok=True)
+PY_VENV = os.environ.get("PY") or os.path.expanduser("~/Desktop/Drive/openpilot/.venv/bin/python3")
+YOLO_W = os.environ.get("VTT_YOLO", os.path.expanduser("~/Desktop/Drive/OpenDriver/Dataset/loader/yolo11x.pt"))
+PLATE_BLUR = {"case5.jpg": [(232, 212, 304, 250)],                                   # sedan stopped ahead, plate at (243,220)-(291,241) of the 526x330 poster frame
+              "fig_demo04.jpg": [(243, 182, 295, 208), (611, 182, 667, 208)],       # the same sedan in stills 1 and 2 of the strip (plates ~40x14 px in the 2000-px JPEG)
+              "fig_demo10.jpg": [(61, 566, 104, 606), (678, 502, 720, 532)]}        # animation poster frame: edge-cut front plate of the car at left, rear plate of the car ahead
+# reviewed 2026-11-09 at 4-8x zoom: every other still (hero / case1-4 / case6 / anim posters, fig_demo01-03 / 05-09, images/th_vtt.jpg) shows no plate wider than ~20 px (no character resolvable)
+def clip_sig(mp4):
+    pr = ffprobe(mp4); fa, fb = pr["fps"].split("/"); return {"width": pr["width"], "height": pr["height"], "fps": round(float(fa) / float(fb), 3), "duration": round(pr["duration"], 2), "sha256": sha256_file(mp4)}
+def load_table(cid): p = os.path.join(PLATES, f"{cid}.json"); return json.load(open(p)) if os.path.exists(p) else None
+def plate_keys(cid, still):
+    """ledger-hash ingredients of the plate pass besides the scanner script and the detector weights (hashed as source files): the manual boxes and the still's fixed boxes."""
+    return {"manual": (load_table(cid) or {}).get("manual", []), "still_blur": PLATE_BLUR.get(still)}
+def scanner_digest(): return hashlib.sha1(open(SCAN, "rb").read()).hexdigest()[:12]
+def plate_table(cid, cut):
+    """The box table matching this cut (size, fps, duration, file digest) and the current scanner; otherwise vtt_plate_scan.py is run on the cut (openpilot venv) and the fresh table returned."""
+    t = load_table(cid); sig = clip_sig(cut)
+    if not t or t.get("scanner") != scanner_digest() or any(t["sig"].get(k) != v for k, v in sig.items()):
+        print(f"  scan  {cid}: plate table {'stale' if t else 'missing'} → vtt_plate_scan.py (YOLO11x)")
+        subprocess.run([PY_VENV, SCAN, cid, "--src", cut], check=True, env={**os.environ, "VTT_YOLO": YOLO_W}); t = load_table(cid)
+        assert t and t.get("scanner") == scanner_digest() and all(t["sig"].get(k) == v for k, v in sig.items()), (cid, "the scan did not produce a table matching the cut")
+    return t
+def blur_boxes_image(im, boxes, feather=4):
+    """Feathered Gaussian blur of pixel boxes in a PIL image (sigma 6-14 px, a tenth of the box height): plate characters vanish, the vehicle's shape stays readable."""
+    from PIL import Image, ImageDraw, ImageFilter
+    W, H = im.size
+    for x0, y0, x1, y1 in boxes:
+        x0, y0, x1, y1 = max(0, int(x0)), max(0, int(y0)), min(W, int(x1)), min(H, int(y1))
+        if x1 - x0 < 2 or y1 - y0 < 2: continue
+        reg = im.crop((x0, y0, x1, y1)).filter(ImageFilter.GaussianBlur(min(14.0, max(6.0, 0.1 * (y1 - y0)))))
+        m = Image.new("L", reg.size, 0); ImageDraw.Draw(m).rectangle((feather, feather, reg.width - 1 - feather, reg.height - 1 - feather), fill=255)
+        im.paste(reg, (x0, y0), m.filter(ImageFilter.GaussianBlur(feather / 2)))
+    return im
+def blur_clip(src, dst, tab, crf, dilate=2):
+    """src → dst with the table's boxes blurred: detector boxes are carried ±dilate frames, manual boxes [t0, t1, x0, y0, x1, y1] hold over their clip seconds; x264 as the cut."""
+    pr = ffprobe(src); W, H = pr["width"], pr["height"]; fa, fb = pr["fps"].split("/"); fps = float(fa) / float(fb); sig = tab["sig"]
+    per = {int(k): v for k, v in tab["boxes"].items()}; manual = tab.get("manual", []); nbytes = W * H * 3
+    dec = subprocess.Popen(["ffmpeg", "-v", "error", "-nostdin", "-i", src, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
+    enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", f"{fps:g}", "-i", "-", "-c:v", "libx264", "-preset", "slow", "-crf", str(crf), "-g", "40", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an", dst], stdin=subprocess.PIPE)
+    from PIL import Image
+    i = nb = 0
+    while True:
+        buf = dec.stdout.read(nbytes)
+        if len(buf) < nbytes: break
+        t = i / fps; boxes = [bx for j in range(i - dilate, i + dilate + 1) for bx in per.get(j, [])] + [m[2:6] for m in manual if m[0] <= t <= m[1]]
+        if boxes: buf = blur_boxes_image(Image.frombytes("RGB", (W, H), buf), boxes).tobytes(); nb += 1
+        enc.stdin.write(buf); i += 1
+    enc.stdin.close(); rc_e, rc_d = enc.wait(), dec.wait(); assert rc_e == 0 and rc_d == 0 and abs(i - sig["n_frames"]) <= 1, (tab["clip"], rc_e, rc_d, i, sig["n_frames"])
+    return {"frames": i, "frames_blurred": nb, "boxes": sum(len(v) for v in per.values()), "manual": len(manual), "crf": crf}
+def plated(cid, cut, dst, cap, crf):
+    """The page copy of a cut: the boxes of its plate table blurred (crf stepped up on its own when the second generation overshoots the cap), or an unchanged copy when the table holds no box."""
+    tab = plate_table(cid, cut)
+    if not (tab["boxes"] or tab.get("manual")):
+        shutil.copyfile(cut, dst); return {"frames": tab["sig"]["n_frames"], "frames_blurred": 0, "boxes": 0, "manual": 0, "crf": None}
+    for crf_b in range(crf, crf + 7):
+        res = blur_clip(cut, dst, tab, crf_b)
+        if os.path.getsize(dst) <= cap: return res
+    raise AssertionError((cid, "blurred clip still over the cap", os.path.getsize(dst)))
+def plate_note(led, still=None, base="forward camera only (qcamera.ts pieces of a pseudonymous held-out drive) cut through vizlib.cut_clip; cabin video never opened"):
+    p = (led or {}).get("plates") or {}
+    s = (f"licence plates: lower face of every close vehicle blurred in {p['frames_blurred']} of {p['frames']} frames (YOLO11x scan of the cut, {p['boxes']} boxes + {p['manual']} manual; tools/projpipe/vtt_plate_scan.py)"
+         if p.get("frames_blurred") else "licence plates: the YOLO11x scan of the cut found no close vehicle, nothing to blur")
+    if PLATE_BLUR.get(still): s += f"; poster: {len(PLATE_BLUR[still])} fixed plate box(es) blurred"
+    return f"{base}; {s} — review before publishing"
+def fit_clip(drive_id, a, b, dst, cap, cid, still):
+    """Staged re-encodes of the forward camera into WORK/cuts until the cut fits the cap: the 60-90 s cases start at the native 20 fps, the 180-s hero at 10 fps; then a smaller frame.
+    dst (the page copy) is that cut with its plate table blurred, see plated()."""
+    cut = os.path.join(CUTS, f"{cid}.mp4")
     stages = [(30, 10, None), (32, 10, None), (34, 10, None), (32, 10, S80), (34, 10, S80), (34, 10, S75)] if b - a > 100 else [(28, None, None), (30, None, None), (32, None, None), (30, 10, None), (32, 10, None), (34, 10, None), (34, 10, S75)]
     for crf, fps, scale in stages:
-        info = V.cut_clip(drive_id, a, b, dst, crf=crf, fps=fps, scale=scale)
-        if os.path.getsize(dst) <= cap: break
-    assert os.path.getsize(dst) <= cap and abs(info["duration_s"] - (b - a)) < 0.5, (drive_id, a, b, info["duration_s"], os.path.getsize(dst)); return info
-def make_poster(mp4, jpg, t):
+        info = V.cut_clip(drive_id, a, b, cut, crf=crf, fps=fps, scale=scale)
+        if os.path.getsize(cut) <= cap: break
+    assert os.path.getsize(cut) <= cap and abs(info["duration_s"] - (b - a)) < 0.5, (drive_id, a, b, info["duration_s"], os.path.getsize(cut))
+    info["plates"] = plated(cid, cut, dst, cap, crf); return info
+def make_poster(mp4, jpg, t, still=None):
     poster(mp4, jpg, t, q=5)
+    if PLATE_BLUR.get(still):                            # boxes are clip pixels and the poster has the clip's size here (jpeg_fit below only shrinks an over-cap poster)
+        from PIL import Image
+        blur_boxes_image(Image.open(jpg).convert("RGB"), PLATE_BLUR[still]).save(jpg, "JPEG", quality=90, optimize=True)
     if os.path.getsize(jpg) > CAPS["poster_bytes"]: jpeg_fit(jpg, jpg, max_w=960, cap_bytes=CAPS["poster_bytes"], q0=72)
+def fig_blur_norm(src, fname):
+    """PLATE_BLUR boxes of a figure (pixels of the <= 2000-px output) → normalised boxes for jpeg_fit, which blurs before it resizes."""
+    bl = PLATE_BLUR.get(fname)
+    if not bl: return None
+    from PIL import Image
+    W, H = Image.open(src).size; ow = min(W, 2000); oh = int(H * ow / W) if W > 2000 else H
+    return [(x0 / ow, y0 / oh, x1 / ow, y1 / oh) for x0, y0, x1, y1 in bl]
 
 # ---------------------------------------------------------------- A. hero: Tesla Model Y (held-out BEV), 1:00-4:00 = windows 1-3, lift-off decelerations
 HERO = "drive_309083"; HA, HB = 60.0, 240.0; hinfo = V.drive_info(HERO)
@@ -107,10 +193,10 @@ sig = span_signals(HERO, HA, HB, "hero", t_off=HA); span_events(sig, HA, HB, ("D
 se, wins = step_series(HERO, [PBEV], HA, HB, "BEV", "pbev", "P(BEV) · 1-D ResNet B5 · 60-s window", "accent", t_off=HA); sig["series"] = [se]
 sig["thresholds"] = [{"col": "pbev", "v": 0.5, "label": "decision threshold 0.5", "color": "mute", "style": "dash"}]
 hdec = decision(HERO, [PBEV]); assert hdec["cls"] == "BEV" and abs(hdec["prob"] - 0.93) < 0.01, hdec
-mp4 = os.path.join(MEDIA, "hero.mp4"); jpg = os.path.join(MEDIA, "hero.jpg"); h = entry_hash({"d": HERO, "a": HA, "b": HB, "cap": CAPS["video_bytes"]}, table_path(HERO), VIZLIB)
+mp4 = os.path.join(MEDIA, "hero.mp4"); jpg = os.path.join(MEDIA, "hero.jpg"); h = entry_hash({"d": HERO, "a": HA, "b": HB, "cap": CAPS["video_bytes"], **plate_keys("hero", "hero.jpg")}, table_path(HERO), VIZLIB, SCAN, YOLO_W)
 lift = [e["t"] - HA for e in sig["events"] if e["kind"] == "liftoff"]; hero_key_t = lift[0] if lift else 75.0   # clip seconds (poster frame, key moment)
 if A.force or not ledger.done("hero_clip", h) or not os.path.exists(mp4) or not os.path.exists(jpg):
-    ci = fit_clip(HERO, HA, HB, mp4, CAPS["video_bytes"]); make_poster(mp4, jpg, hero_key_t); ledger.mark("hero_clip", h, crf=ci["crf"], fps=ci["fps"], scale=ci["scale"], n_pieces=ci["n_pieces"])
+    ci = fit_clip(HERO, HA, HB, mp4, CAPS["video_bytes"], "hero", "hero.jpg"); make_poster(mp4, jpg, hero_key_t, "hero.jpg"); ledger.mark("hero_clip", h, crf=ci["crf"], fps=ci["fps"], scale=ci["scale"], n_pieces=ci["n_pieces"], plates=ci["plates"])
 pr = ffprobe(mp4); assert abs(pr["duration"] - (HB - HA)) < 0.5, pr["duration"]; led = ledger.rows["hero_clip"]
 sig["media"] = {"video": "static/media/hero.mp4", "poster": "static/media/hero.jpg", "t0_video_s": 0.0, "aspect": f"{pr['width']}/{pr['height']}"}
 sig["meta"].update({"model": hinfo["model"], "truth": {"powertrain": hinfo["powertrain"], "size_class": hinfo["size_class"], "footprint_m2": num(hinfo["footprint_m2"], 3)}, "decision": hdec, "decision_text": f"{dstr(hdec)} · true {hdec['truth']}", "windows": wins,
@@ -122,8 +208,8 @@ put("signals_hero", "signals_hero.json", sig, first_view=True)
 files["media_hero"] = media_entry("hero.mp4"); files["poster_hero"] = media_entry("hero.jpg")
 items["hero_clip"] = {"id": "hero_clip", "kind": "clip", "title": f"Hero · {hinfo['model']} · 1:00-4:00 · lift-off decelerations · {HB - HA:.0f} s", "files": {"video": "static/media/hero.mp4", "poster": "static/media/hero.jpg", "signals": "static/data/signals_hero.json"},
                      "bytes": {"video": pr["bytes"], "poster": os.path.getsize(jpg)}, "first_view": True, "duration_s": num(pr["duration"], 2), "key_moment": {"t": hero_key_t, "label": "lift-off deceleration"}, "poster_lqip": lqip(jpg),
-                     "privacy": PRIV_ROAD("forward camera only (qcamera.ts pieces of a pseudonymous held-out drive) cut through vizlib.cut_clip; cabin video never opened; licence plates of other vehicles may be legible — review before publishing"),
-                     "provenance": {"source": "raw forward-camera segments (private library) mapped through the private pseudonym table inside vizlib", "video": {"codec": pr["codec"], "fps": pr["fps"]}}, "entry_hash": h}
+                     "privacy": PRIV_ROAD(plate_note(led, "hero.jpg")),
+                     "provenance": {"source": "raw forward-camera segments (private library) mapped through the private pseudonym table inside vizlib", "video": {"codec": pr["codec"], "fps": pr["fps"]}, "plate_blur": led.get("plates")}, "entry_hash": h}
 # timeline over the whole drive: automation per window, window decision (ResNet B5 seed 1), hero span marked
 win = V.load_windows(HERO); prh = V.probs_for_drive(HERO, [PBEV]); pmap = dict(zip(prh["w_idx"].astype(int), prh["pred"])); dur = float(hinfo["duration_s"]); span = [0.0, num(dur, 1)]
 def merged(states):
@@ -165,10 +251,10 @@ for c in CASES:
     if c["size"]:
         ds = decision(d, c["size"]); assert ds["cls"] == EXPECT_SIZE[k][0] and abs(ds["prob"] - EXPECT_SIZE[k][1]) < 0.011, (k, ds); decs["size"] = ds; parts.insert(0, dstr(ds)); truth.insert(0, ds["truth"])
     das_drive = float(info["das_any_s"]) / float(info["duration_s"]); sub = " · ".join(parts) + " · true " + " / ".join(truth) + (f" · {100 * das_drive:.0f} % automation" if k in (3, 4) else "")
-    cmp4 = os.path.join(MEDIA, f"{cid}.mp4"); cjpg = os.path.join(MEDIA, f"{cid}.jpg"); ch = entry_hash({"d": d, "a": a, "b": b, "cap": CASE_CAP}, table_path(d), VIZLIB)
+    cmp4 = os.path.join(MEDIA, f"{cid}.mp4"); cjpg = os.path.join(MEDIA, f"{cid}.jpg"); ch = entry_hash({"d": d, "a": a, "b": b, "cap": CASE_CAP, **plate_keys(cid, f"{cid}.jpg")}, table_path(d), VIZLIB, SCAN, YOLO_W)
     keys = [e["t"] for e in sigc["events"] if e["kind"] == c["key"]] if c["key"] else []; key_t = keys[0] if keys else num((b - a) / 2, 1)
     if A.force or not ledger.done(f"{cid}_clip", ch) or not os.path.exists(cmp4) or not os.path.exists(cjpg):
-        ci = fit_clip(d, a, b, cmp4, CASE_CAP); make_poster(cmp4, cjpg, key_t); ledger.mark(f"{cid}_clip", ch, crf=ci["crf"], fps=ci["fps"], scale=ci["scale"], n_pieces=ci["n_pieces"])
+        ci = fit_clip(d, a, b, cmp4, CASE_CAP, cid, f"{cid}.jpg"); make_poster(cmp4, cjpg, key_t, f"{cid}.jpg"); ledger.mark(f"{cid}_clip", ch, crf=ci["crf"], fps=ci["fps"], scale=ci["scale"], n_pieces=ci["n_pieces"], plates=ci["plates"])
     cpr = ffprobe(cmp4); assert abs(cpr["duration"] - (b - a)) < 0.5, (cid, cpr["duration"]); led = ledger.rows[f"{cid}_clip"]
     sigc["media"] = {"video": f"static/media/{cid}.mp4", "poster": f"static/media/{cid}.jpg", "t0_video_s": 0.0, "aspect": f"{cpr['width']}/{cpr['height']}"}
     sigc["meta"].update({"model": info["model"], "truth": {"powertrain": info["powertrain"], "size_class": info["size_class"], "footprint_m2": num(info["footprint_m2"], 3)}, "decisions": decs, "decision_text": sub, "windows": meta_w, "why": c["why"],
@@ -179,8 +265,8 @@ for c in CASES:
     files[f"media_{cid}"] = media_entry(f"{cid}.mp4"); files[f"poster_{cid}"] = media_entry(f"{cid}.jpg")
     items[f"{cid}_clip"] = {"id": f"{cid}_clip", "kind": "clip", "title": f"Case {k} · {info['model']} · {V.fmt_mmss(a)}-{V.fmt_mmss(b)} · {b - a:.0f} s", "files": {"video": f"static/media/{cid}.mp4", "poster": f"static/media/{cid}.jpg", "signals": f"static/data/signals_{cid}.json"},
                             "bytes": {"video": cpr["bytes"], "poster": os.path.getsize(cjpg)}, "first_view": False, "duration_s": num(cpr["duration"], 2), "key_moment": {"t": key_t, "label": c["key"] or "mid-clip"}, "poster_lqip": lqip(cjpg),
-                            "privacy": PRIV_ROAD("forward camera only (qcamera.ts pieces of a pseudonymous held-out drive) cut through vizlib.cut_clip; cabin video never opened; licence plates of other vehicles may be legible — review before publishing"),
-                            "provenance": {"source": "raw forward-camera segments (private library) mapped through the private pseudonym table inside vizlib", "video": {"codec": cpr["codec"], "fps": cpr["fps"]}}, "entry_hash": ch}
+                            "privacy": PRIV_ROAD(plate_note(led, f"{cid}.jpg")),
+                            "provenance": {"source": "raw forward-camera segments (private library) mapped through the private pseudonym table inside vizlib", "video": {"codec": cpr["codec"], "fps": cpr["fps"]}, "plate_blur": led.get("plates")}, "entry_hash": ch}
     case_clips.append({"id": cid, "title": f"Case {k} · {info['model']}", "sub": sub, "src": f"static/data/signals_{cid}.json", "video": f"static/media/{cid}.mp4", "poster": f"static/media/{cid}.jpg"})
 put("cases", "cases.json", {"schema": "clips/1", "default": "case1", "clips": case_clips, "meta": {"note": "Six held-out car models (split_platform test). Decisions: drive-level mean of the window probability vectors → arg-max; cases 1, 2 and the size decision of case 5 use one seed (as the demo figures), the others the 3-seed mean.",
                                                                                                    "tags": {"pbev_series": PBEV, "psize_series": PSIZE, "resnet_b5_seeds": RES_B5, "gru_s9_seeds": GRU_S9}}})
@@ -202,20 +288,22 @@ FIG = [("demo01", DEMO, "demo01_bev_regen.png", True, "Lift-off decelerations of
        ("evidence", PFIG, "evidence_sufficiency.png", False, "Evidence sufficiency: drive-level macro-F1 against windows sampled per drive"),
        ("ceiling", PFIG, "footprint_noise_oracle.png", False, "Footprint-noise oracle with the achieved and majority-oracle lines")]
 for key, sdir, name, pixels, title in FIG:
-    src = os.path.join(sdir, name); fname = "fig_demo10.jpg" if key == "demo10_poster" else f"fig_{key}.jpg"; dst = os.path.join(MEDIA, fname); h = entry_hash({"k": key}, src)
-    if A.force or not ledger.done("fig_" + key, h) or not os.path.exists(dst): jpeg_fit(src, dst, max_w=2000, cap_bytes=CAPS["figure_bytes"]); ledger.mark("fig_" + key, h)
+    src = os.path.join(sdir, name); fname = "fig_demo10.jpg" if key == "demo10_poster" else f"fig_{key}.jpg"; dst = os.path.join(MEDIA, fname); h = entry_hash({"k": key, **({"blur": PLATE_BLUR[fname]} if fname in PLATE_BLUR else {})}, src)
+    if A.force or not ledger.done("fig_" + key, h) or not os.path.exists(dst): jpeg_fit(src, dst, max_w=2000, cap_bytes=CAPS["figure_bytes"], blur_boxes=fig_blur_norm(src, fname)); ledger.mark("fig_" + key, h)
     files["fig_" + key] = media_entry(fname)
     items["fig_" + key] = {"id": "fig_" + key, "kind": "figure", "title": title, "files": {"image": f"static/media/{fname}"}, "bytes": {"image": os.path.getsize(dst)}, "first_view": key == "demo01",
-                           "privacy": {"kind": "figure", "source_pixels": pixels, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "demo / paper figure; " + ("embeds forward-camera stills of pseudonymous held-out drives (plates may be legible)" if pixels else "no camera pixels")},
+                           "privacy": {"kind": "figure", "source_pixels": pixels, "manual_review": "pending", "reviewed_by": None, "reviewed_at": None, "note": "demo / paper figure; " + (("embeds forward-camera stills of pseudonymous held-out drives; " + (f"{len(PLATE_BLUR[fname])} licence plate box(es) blurred (PLATE_BLUR)" if fname in PLATE_BLUR else "no legible licence plate found at review")) if pixels else "no camera pixels")},
                            "provenance": {"source": name}, "entry_hash": h}
-asrc = os.path.join(DEMO, "demo10_animation.mp4"); amp4 = os.path.join(MEDIA, "anim.mp4"); ajpg = os.path.join(MEDIA, "anim.jpg"); ah = entry_hash({"k": "anim", "cap": CAPS["video_bytes"]}, asrc)
+asrc = os.path.join(DEMO, "demo10_animation.mp4"); acut = os.path.join(CUTS, "anim.mp4"); amp4 = os.path.join(MEDIA, "anim.mp4"); ajpg = os.path.join(MEDIA, "anim.jpg")
+ah = entry_hash({"k": "anim", "cap": CAPS["video_bytes"], **plate_keys("anim", "anim.jpg")}, asrc, SCAN, YOLO_W)
 if A.force or not ledger.done("anim", ah) or not os.path.exists(amp4) or not os.path.exists(ajpg):
-    fit_cap(lambda crf, scale: h264(asrc, amp4, crf=crf, scale=scale or "scale=960:-2"), amp4, CAPS["video_bytes"]); make_poster(amp4, ajpg, 50.0); ledger.mark("anim", ah)
-apr = ffprobe(amp4); files["media_anim"] = media_entry("anim.mp4"); files["poster_anim"] = media_entry("anim.jpg")
+    acrf, _ = fit_cap(lambda crf, scale: h264(asrc, acut, crf=crf, scale=scale or "scale=960:-2"), acut, CAPS["video_bytes"])
+    pl = plated("anim", acut, amp4, CAPS["video_bytes"], acrf); make_poster(amp4, ajpg, 50.0, "anim.jpg"); ledger.mark("anim", ah, plates=pl)
+apr = ffprobe(amp4); files["media_anim"] = media_entry("anim.mp4"); files["poster_anim"] = media_entry("anim.jpg"); aled = ledger.rows["anim"]
 items["anim"] = {"id": "anim", "kind": "clip", "title": f"Animated minute · {hinfo['model']} · window 2 · {apr['duration']:.0f} s", "files": {"video": "static/media/anim.mp4", "poster": "static/media/anim.jpg"}, "bytes": {"video": apr["bytes"], "poster": os.path.getsize(ajpg)},
                  "first_view": False, "duration_s": num(apr["duration"], 2), "key_moment": {"t": 50.0, "label": "window decision"}, "poster_lqip": lqip(ajpg),
-                 "privacy": PRIV_ROAD("rendered demo animation (demo10_animation.mp4) that embeds forward-camera frames of a pseudonymous held-out drive; cabin video never used; plates may be legible — review before publishing"),
-                 "provenance": {"source": "demo10_animation.mp4 re-encoded", "video": {"codec": apr["codec"], "fps": apr["fps"], "size": f"{apr['width']}x{apr['height']}"}}, "entry_hash": ah}
+                 "privacy": PRIV_ROAD(plate_note(aled, "anim.jpg", base="rendered demo animation (demo10_animation.mp4) that embeds forward-camera frames of a pseudonymous held-out drive; cabin video never used")),
+                 "provenance": {"source": "demo10_animation.mp4 re-encoded", "video": {"codec": apr["codec"], "fps": apr["fps"], "size": f"{apr['width']}x{apr['height']}"}, "plate_blur": aled.get("plates")}, "entry_hash": ah}
 
 # ---------------------------------------------------------------- D. leaderboards (experiments/RESULTS.md, split_platform; v = drive-level, v2 = window-level macro-F1)
 # labels / notes are short on purpose: the kit renders them in a 150-190 px column (ellipsis beyond that); the full description stays in the results table of the page
