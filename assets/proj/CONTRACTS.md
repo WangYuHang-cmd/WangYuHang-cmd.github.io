@@ -50,6 +50,7 @@ Invariants: `n ≥ 2`, `cols.t` present and monotonic with step `1/hz` (± 1e-3)
 `fans[].p.length == round(horizon_s/step_s)`.
 `t0` may be non-zero (e.g. drive time for a clip that shares a `data-sync` group with a whole-drive timeline): the kit maps video time 0 to `t0` and shows clip-relative clocks.
 Page side: a `canvas.pj-strip` without `data-col` that only draws `series:` layers may carry `data-optional` — it is hidden for clips that carry none of its series.
+A scrubber may carry `data-full`: a clip longer than 120 s then opens in the full-clip view instead of the 20-s zoom (the button still toggles).
 
 ## clips/1 — clip index for a Scrubber with a picker
 ```jsonc
@@ -78,6 +79,8 @@ Optional `lanes[].colors`: `{ "<free state>": "<colour token | #rrggbb>" }` for 
 ```
 Decode: `x = bbox[0] + (xi + 32000) / 64000 * (bbox[2] − bbox[0])` (same for y). Invariants: decoded lengths == `n`, every `idx` value < `names.length`.
 Also used for ADAS-TO's TTC/THW long tail with dims `{critical}` and `meta.axes = {x:"min TTC (s)", y:"min THW (s)"}`.
+Optional `meta.ticks = { "x":[…], "y":[…] }` (data units inside `bbox`) for quantitative axes: the kit pads the plot (left 48 / bottom 24 px), draws tick labels and moves the representative label to the bottom-right; `meta.guides` keep working in the padded frame. Optional `meta.point_noun` names the points in the pinned-category label (default "windows"). Clouds of ≤ 200 points are drawn with larger, more opaque dots (one point per car model on VTT).
+Page side: `data-pulse="keep-mode"` keeps the chosen colour dim while the representatives light up in turn (plain `data-pulse` switches the colouring to each representative's dim).
 
 ## kpts/1 — keypoint sequences (Skeleton)
 ```jsonc
