@@ -48,6 +48,8 @@ A plain `data-src="static/data/x.json"` bypasses the manifest (fixtures, dev).
 Invariants: `n ≥ 2`, `cols.t` present and monotonic with step `1/hz` (± 1e-3), all `cols.*` length `n`,
 `events[].t` inside the clip, `series[].t.length == series[].v.length`, each `bands[].q.*` length == `bands[].t.length`,
 `fans[].p.length == round(horizon_s/step_s)`.
+`t0` may be non-zero (e.g. drive time for a clip that shares a `data-sync` group with a whole-drive timeline): the kit maps video time 0 to `t0` and shows clip-relative clocks.
+Page side: a `canvas.pj-strip` without `data-col` that only draws `series:` layers may carry `data-optional` — it is hidden for clips that carry none of its series.
 
 ## clips/1 — clip index for a Scrubber with a picker
 ```jsonc
@@ -62,6 +64,7 @@ Invariants: `n ≥ 2`, `cols.t` present and monotonic with step `1/hz` (± 1e-3)
   "meta":{ } }
 ```
 Invariants: `span[0] < span[1]`, every seg inside span with `t0 ≤ t1`, marks inside span. States: `on | off | na | <free>`.
+Optional `lanes[].colors`: `{ "<free state>": "<colour token | #rrggbb>" }` for the free states (a free state without an entry is resolved as a token name itself); the text twin reports the share of each free state.
 
 ## embedding/1 — 2-D points with categorical dims (Scatter)
 ```jsonc
@@ -102,12 +105,13 @@ absent parts carry `score == 0`. The kit owns the bone topology. Invariants: dec
                "cost":false, "rows":[ { "id":"P01", "a":3, "b":6 }, { "id":"P05", "a":null, "b":5 } ] } ],
   "meta":{ } }
 ```
-`a`/`b` may be `null` (unpaired → hollow dot). Dumbbell mode: `rows[].label`, `rows[].emph` (true = full opacity), `axis.chance` (dashed line).
+`a`/`b` may be `null` (unpaired → hollow dot). Dumbbell mode: `rows[].label`, `rows[].emph` (true = full opacity), `axis.chance` (dashed line); an optional `groups[].chance` overrides it for that group (tasks with different chance levels).
 
 ## bars/1 — magnitudes (Bars; also leaderboards)
 ```jsonc
 { "schema":"bars/1", "unit":"", "max":null, "rows":[ { "label":"zero-motion", "v":7.75, "v2":0.215, "color":"mute", "emph":false, "note":"persistence" } ], "meta":{ } }
 ```
+Optional `dp` / `v2_dp`: decimals shown for `v` / `v2` (defaults 2 — or 0 when `|v| ≥ 100` — and 3).
 
 ## hist/1 — histograms (Hist; latency waterfalls)
 ```jsonc

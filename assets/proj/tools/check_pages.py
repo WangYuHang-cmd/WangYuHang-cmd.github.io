@@ -13,7 +13,7 @@ Static gates for a kit-based project page (<page>/index.html):
 """
 import argparse, html, json, os, re, sys, urllib.request
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-PAGES = ["tridrive", "adasto", "drivedna", "drivemotion", "baton"]
+PAGES = ["tridrive", "adasto", "drivedna", "drivemotion", "baton", "vtt"]
 VENUE_RX = re.compile(r"\b(KDD|WACV|ICLR|NeurIPS|CVPR|anonymous authors?|anonymi[sz]ed for review|double-blind|under submission|submitted to)\b", re.I)
 ACCEPTED_VENUES = ["WACV 2027", "Winter Conference on Applications of Computer Vision (WACV)"]  # public acceptances (DriveMotion · WACV 2027): the venue word passes only inside these exact forms
 ACCEPTED_RX = re.compile("|".join((r"\b" if v[0].isalnum() else "") + re.escape(v) + (r"\b" if v[-1].isalnum() else "") for v in ACCEPTED_VENUES), re.I)

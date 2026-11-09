@@ -44,17 +44,18 @@ def episodes(drive_id):
                              das_any_frac=float(fl["das_any_frac"]), brake_frac=float(arr["brake_pressed"][ep.i0:ep.i1].mean()), human_strict=bool(fl["human_strict"])))
         _EP[drive_id] = pd.DataFrame(rows)
     return _EP[drive_id]
-def span_signals(drive_id, a, b, clip_id, extra=()):
-    """signals/1 of drive time [a, b): the drive-table rows on the nominal 10 Hz clock (t from 0). The case drives have no gap rows (asserted)."""
+def span_signals(drive_id, a, b, clip_id, extra=(), t_off=0.0):
+    """signals/1 of drive time [a, b): the drive-table rows on the nominal 10 Hz clock. t runs from t_off (0 = clip time; t_off = a gives drive time, which a synced
+    whole-drive timeline needs — the kit maps video time 0 to t0 either way). The case drives have no gap rows (asserted)."""
     df = V.load_drive(drive_id); t = df["t_s"].to_numpy(); k0, k1 = int(np.searchsorted(t, a, "left")), int(np.searchsorted(t, b, "left")); s = df.iloc[k0:k1]; n = len(s)
     assert n == round((b - a) * HZ) and int(s["gap"].sum()) == 0, (drive_id, a, b, n)
     flag = lambda c: [int(v) for v in s[c].to_numpy().astype(bool)]
-    cols = {"t": [num(i / HZ, 1) for i in range(n)], "v_ego_mps": nums(s["v_mps"], 2), "a_mps2": nums(s["a_mps2"], 2), "gas_pressed": flag("gas_pressed"), "brake_pressed": flag("brake_pressed"), "das_any": flag("das_any"),
+    cols = {"t": [num(t_off + i / HZ, 1) for i in range(n)], "v_ego_mps": nums(s["v_mps"], 2), "a_mps2": nums(s["a_mps2"], 2), "gas_pressed": flag("gas_pressed"), "brake_pressed": flag("brake_pressed"), "das_any": flag("das_any"),
             "lead_d_m": nums(np.where(s["lead_valid"].to_numpy(), s["lead_d_m"].to_numpy(dtype=float), np.nan), 1)}
     if "steer_angle_deg" in extra: cols["steer_angle_deg"] = nums(s["steer_angle_deg"], 1)
     if "yaw_rate_degps" in extra: cols["yaw_rate_degps"] = nums(np.degrees(s["yaw_rate_radps"].to_numpy(dtype=float)), 2)
     present = [k for k in cols if k != "t"]
-    return {"schema": "signals/1", "id": clip_id, "hz": HZ, "n": n, "t0": 0.0, "duration_s": num(n / HZ, 1), "cols": cols, "labels": {k: LAB[k] for k in present}, "units": {k: UNI[k] for k in present if k in UNI},
+    return {"schema": "signals/1", "id": clip_id, "hz": HZ, "n": n, "t0": num(t_off, 1), "duration_s": num(n / HZ, 1), "cols": cols, "labels": {k: LAB[k] for k in present}, "units": {k: UNI[k] for k in present if k in UNI},
             "ranges": {k: [0, 1] for k in ("gas_pressed", "brake_pressed", "das_any")}, "shade": [{"col": "das_any", "color": "accent", "alpha": 0.12, "label": "automation active"}],
             "events": [], "series": [], "bands": [], "fans": [], "thresholds": [], "meta": {"drive_id": drive_id, "span_s": [a, b], "das_any_share": num(s["das_any"].mean(), 3), "brake_pressed_share": num(s["brake_pressed"].mean(), 3), "v_max_mps": num(s["v_mps"].max(), 1)}}
 def debounce(col, min_run):
@@ -69,21 +70,21 @@ def debounce(col, min_run):
     return out
 def span_events(sig, a, b, types, human_only=()):
     """Episode onsets inside the span (kinds liftoff / brake / stop / launch / turn; a lift-off under automation is labelled as such) + automation edges."""
-    drive_id = sig["meta"]["drive_id"]; eps = episodes(drive_id); sel = eps[(eps["t_on"] >= a) & (eps["t_on"] < b) & eps["type"].isin(types)].sort_values("t_on"); ev, detail = [], []
+    drive_id = sig["meta"]["drive_id"]; off = float(sig["t0"]); eps = episodes(drive_id); sel = eps[(eps["t_on"] >= a) & (eps["t_on"] < b) & eps["type"].isin(types)].sort_values("t_on"); ev, detail = [], []
     for r in sel.itertuples():
         if r.type in human_only and r.das_any_frac > 0: continue
         kind, label, glyph = EV[r.type]
         if r.type == "DEC_LIFT" and r.das_any_frac > 0.5: kind, label = "liftoff_das", "deceleration under automation, brake not pressed"
-        ev.append({"t": num(r.t_on - a, 1), "kind": kind, "label": label, "glyph": glyph})
-        detail.append({"type": r.type, "t": num(r.t_on - a, 1), "dur_s": num(r.dur_s, 1), "dv_mps": num(r.dv, 2), "peak_a_mps2": num(r.peak_a, 2), "das_any_frac": num(r.das_any_frac, 2), "brake_frac": num(r.brake_frac, 2)})
+        ev.append({"t": num(r.t_on - a + off, 1), "kind": kind, "label": label, "glyph": glyph})
+        detail.append({"type": r.type, "t": num(r.t_on - a + off, 1), "dur_s": num(r.dur_s, 1), "dv_mps": num(r.dv, 2), "peak_a_mps2": num(r.peak_a, 2), "das_any_frac": num(r.das_any_frac, 2), "brake_frac": num(r.brake_frac, 2)})
     c = sig["cols"]; das = debounce(c["das_any"], int(HZ))          # edges of runs ≥ 1 s only (the flag flickers around engage / disengage); the shade keeps the raw column
     for i in edges(das, True): ev.append({"t": c["t"][i], "kind": "engage", "label": "automation activity starts", "glyph": "+"})
     for i in edges(das, False): ev.append({"t": c["t"][i], "kind": "disengage", "label": "automation activity ends", "glyph": "−"})
     ev.sort(key=lambda e: e["t"]); sig["events"] = ev; sig["meta"]["episodes"] = detail; return ev
-def step_series(drive_id, tags, a, b, cls, sid, label, color):
-    """One value per scored 60-s window that overlaps [a, b): t = window end (t0_s + 60) relative to the clip start, v = P(cls)."""
+def step_series(drive_id, tags, a, b, cls, sid, label, color, t_off=0.0):
+    """One value per scored 60-s window that overlaps [a, b): t = window end (t0_s + 60) on the clip clock (+ t_off), v = P(cls)."""
     pr = V.probs_for_drive(drive_id, tags); w = pr[(pr["t1_s"] > a) & (pr["t0_s"] < b)]
-    return ({"id": sid, "label": label, "unit": "", "color": color, "style": "step", "window_s": 60.0, "t": [num(float(x) + 60.0 - a, 1) for x in w["t0_s"]], "v": nums(w[f"p_{cls}"], 3)},
+    return ({"id": sid, "label": label, "unit": "", "color": color, "style": "step", "window_s": 60.0, "t": [num(float(x) + 60.0 - a + t_off, 1) for x in w["t0_s"]], "v": nums(w[f"p_{cls}"], 3)},
             [{"w_idx": int(x.w_idx), "t0_s": num(x.t0_s, 1), "p": num(getattr(x, f"p_{cls}"), 3), "das_any_frac": num(x.das_any_frac, 3)} for x in w.itertuples()])
 def decision(drive_id, tags):
     d = V.decide(drive_id, tags); return {"cls": d["cls"], "prob": num(d["prob"], 3), "truth": d["truth"], "correct": bool(d["correct"]), "n_windows": d["n_windows"], "tags": list(tags), "mean": {c: num(m, 3) for c, m in zip(d["classes"], d["mean"])}}
@@ -102,12 +103,12 @@ def make_poster(mp4, jpg, t):
 
 # ---------------------------------------------------------------- A. hero: Tesla Model Y (held-out BEV), 1:00-4:00 = windows 1-3, lift-off decelerations
 HERO = "drive_309083"; HA, HB = 60.0, 240.0; hinfo = V.drive_info(HERO)
-sig = span_signals(HERO, HA, HB, "hero"); span_events(sig, HA, HB, ("DEC_LIFT",), human_only=("DEC_LIFT",))
-se, wins = step_series(HERO, [PBEV], HA, HB, "BEV", "pbev", "P(BEV) · 1-D ResNet B5 · 60-s window", "accent"); sig["series"] = [se]
+sig = span_signals(HERO, HA, HB, "hero", t_off=HA); span_events(sig, HA, HB, ("DEC_LIFT",), human_only=("DEC_LIFT",))   # t = drive time: the hero scrubber and the whole-drive timeline share one sync group
+se, wins = step_series(HERO, [PBEV], HA, HB, "BEV", "pbev", "P(BEV) · 1-D ResNet B5 · 60-s window", "accent", t_off=HA); sig["series"] = [se]
 sig["thresholds"] = [{"col": "pbev", "v": 0.5, "label": "decision threshold 0.5", "color": "mute", "style": "dash"}]
 hdec = decision(HERO, [PBEV]); assert hdec["cls"] == "BEV" and abs(hdec["prob"] - 0.93) < 0.01, hdec
 mp4 = os.path.join(MEDIA, "hero.mp4"); jpg = os.path.join(MEDIA, "hero.jpg"); h = entry_hash({"d": HERO, "a": HA, "b": HB, "cap": CAPS["video_bytes"]}, table_path(HERO), VIZLIB)
-lift = [e["t"] for e in sig["events"] if e["kind"] == "liftoff"]; hero_key_t = lift[0] if lift else 75.0
+lift = [e["t"] - HA for e in sig["events"] if e["kind"] == "liftoff"]; hero_key_t = lift[0] if lift else 75.0   # clip seconds (poster frame, key moment)
 if A.force or not ledger.done("hero_clip", h) or not os.path.exists(mp4) or not os.path.exists(jpg):
     ci = fit_clip(HERO, HA, HB, mp4, CAPS["video_bytes"]); make_poster(mp4, jpg, hero_key_t); ledger.mark("hero_clip", h, crf=ci["crf"], fps=ci["fps"], scale=ci["scale"], n_pieces=ci["n_pieces"])
 pr = ffprobe(mp4); assert abs(pr["duration"] - (HB - HA)) < 0.5, pr["duration"]; led = ledger.rows["hero_clip"]
@@ -115,7 +116,8 @@ sig["media"] = {"video": "static/media/hero.mp4", "poster": "static/media/hero.j
 sig["meta"].update({"model": hinfo["model"], "truth": {"powertrain": hinfo["powertrain"], "size_class": hinfo["size_class"], "footprint_m2": num(hinfo["footprint_m2"], 3)}, "decision": hdec, "decision_text": f"{dstr(hdec)} · true {hdec['truth']}", "windows": wins,
                     "clip": {"fps": led.get("fps") or 20, "crf": led.get("crf"), "scale": led.get("scale"), "n_pieces": led.get("n_pieces"), "duration_s": num(pr["duration"], 2)},
                     "source": "VTT build drive table (10 Hz) + saved test probabilities of the final 1-D ResNet (recipe B5, seed 1); forward camera 526×330 (pseudonymous held-out drive)",
-                    "note": "1:00-4:00 of the drive = windows 1-3; the lift-off decelerations are DEC_LIFT episodes of experiments/episodes.py without automation activity"})
+                    "note": "1:00-4:00 of the drive = windows 1-3; the lift-off decelerations are DEC_LIFT episodes of experiments/episodes.py without automation activity",
+                    "clock": "t is drive time (t0 = 60 s, video time 0 = t0) so the cursor of the whole-drive timeline in the same sync group lines up; the kit shows clip-relative clocks"})
 put("signals_hero", "signals_hero.json", sig, first_view=True)
 files["media_hero"] = media_entry("hero.mp4"); files["poster_hero"] = media_entry("hero.jpg")
 items["hero_clip"] = {"id": "hero_clip", "kind": "clip", "title": f"Hero · {hinfo['model']} · 1:00-4:00 · lift-off decelerations · {HB - HA:.0f} s", "files": {"video": "static/media/hero.mp4", "poster": "static/media/hero.jpg", "signals": "static/data/signals_hero.json"},
@@ -134,10 +136,10 @@ def merged(states):
 auto = merged([(num(w.t0_s, 1), min(num(w.t1_s, 1), span[1]), "on" if float(w.das_any_frac) >= 0.5 else "off") for w in win.itertuples()])
 deci = merged([(num(w.t0_s, 1), min(num(w.t1_s, 1), span[1]), pmap.get(int(w.w_idx), "na")) for w in win.itertuples()])
 tl = {"schema": "timeline/1", "span": span, "lanes": [{"id": "automation", "label": "automation activity (per 60-s window)", "segs": auto, "marks": []},
-                                                      {"id": "decision", "label": "window decision · 1-D ResNet B5", "segs": deci, "colors": {"BEV": "accent", "ICE": "blue"},
+                                                      {"id": "decision", "label": "window decision · 1-D ResNet B5", "segs": deci, "colors": {"BEV": "accent", "ICE": "coral"},
                                                        "marks": [{"t": HA, "kind": "hero_start", "label": "hero clip starts (1:00)"}, {"t": HB, "kind": "hero_end", "label": "hero clip ends (4:00)"}]}],
       "meta": {"drive_id": HERO, "model": hinfo["model"], "truth": hinfo["powertrain"], "decision": hdec, "n_windows": int(len(win)), "n_windows_scored": int(len(prh)), "das_any_share_of_drive": num(hinfo["das_any_s"] / dur, 3),
-               "windows_read_as": {"BEV": int((prh["pred"] == "BEV").sum()), "ICE": int((prh["pred"] == "ICE").sum())}, "states": "automation lane: on = das_any in ≥ 50 % of the window's samples; decision lane: arg-max of the window's P(BEV, ICE), na = window not scored (ineligible); colors = suggested tokens for the free states"}}
+               "windows_read_as": {"BEV": int((prh["pred"] == "BEV").sum()), "ICE": int((prh["pred"] == "ICE").sum())}, "states": "automation lane: on = das_any in ≥ 50 % of the window's samples; decision lane: arg-max of the window's P(BEV, ICE), na = window not scored (ineligible); colors = colour tokens of the free states (BEV = page accent, ICE = coral), read by the kit"}}
 put("timeline_hero", "timeline_hero.json", tl, first_view=True)
 
 # ---------------------------------------------------------------- B. six cases (held-out car models; forward camera + 10 Hz signals + window probabilities)
@@ -222,7 +224,7 @@ BEV_ROWS = [("statistics + GBM", 73.2, 69.5, "mute", False, "180 window statisti
 SIZE_ROWS = [("statistics + GBM", 54.7, 49.7, "mute", False, "180 window statistics"), ("LLM + statistics + GBM", 64.9, 54.1, "mute", False, "34 LLM-proposed physical features + statistics"), ("1-D ResNet", 61.1, 53.6, None, False, "reference recipe · 3 seeds ± 1.3"),
              ("bi-GRU", 62.9, 54.7, None, False, "reference recipe · 3 seeds ± 0.8"), ("Transformer", 61.8, 52.5, None, False, "reference recipe · 3 seeds ± 0.9"), ("Mamba-2", 61.2, 53.1, None, False, "reference recipe · 3 seeds ± 0.3"),
              ("final recipe · bi-GRU S9", 67.1, 53.2, None, True, "3 seeds ± 0.0 · 95 % CI [54.4, 74.2] · 1-D ResNet S9 66.8"), ("episode MIL", 64.6, 54.2, None, False, "window-mean aggregation; own bag prediction 64.3")]
-def bars(rows, task): return {"schema": "bars/1", "unit": "", "max": 100, "rows": [{"label": l, "v": v, "v2": v2, "color": col, "emph": em, "note": nt} for l, v, v2, col, em, nt in rows], "meta": {"source": f"experiments/RESULTS.md · split_platform · {task}", "v": "drive_full macro-F1 (mean of the window probability vectors per test drive)", "v2": "window test_full macro-F1", "chance": "about 50 (BEV vs ICE) / 33 (size)"}}
+def bars(rows, task): return {"schema": "bars/1", "unit": "", "max": 100, "dp": 1, "v2_dp": 1, "rows": [{"label": l, "v": v, "v2": v2, "color": col, "emph": em, "note": nt} for l, v, v2, col, em, nt in rows], "meta": {"source": f"experiments/RESULTS.md · split_platform · {task}", "v": "drive_full macro-F1 (mean of the window probability vectors per test drive)", "v2": "window test_full macro-F1", "chance": "about 50 (BEV vs ICE) / 33 (size)"}}
 put("bars_bev", "bars_bev.json", bars(BEV_ROWS, "BEV vs ICE")); put("bars_size", "bars_size.json", bars(SIZE_ROWS, "size (SMALL / MID / LARGE)"))
 
 # ---------------------------------------------------------------- E. held-out car models: paired (reference → final recipe), scatter (footprint vs share correct), P(BEV) histogram
@@ -251,7 +253,8 @@ def dim(labels, order): idx = {u: i for i, u in enumerate(order)}; return {"name
 reps = [{"dim": "model", "name": m, "label": f"{m} · {MM.loc[m, 'size_class']} · {MM.loc[m, 'powertrain'] if pd.notna(MM.loc[m, 'powertrain']) else 'other'} · {MM.loc[m, 'fp']:.2f} m² · {100 * SF.loc[m, 'share']:.0f} % of {int(SF.loc[m, 'n'])} drives correct", "i": names.index(m)} for m in EMPH]
 put("scatter_models", "scatter_models.json", {"schema": "embedding/1", "n": len(names), "bbox": bb, "xy_i16": b64_i16(inter),
     "dims": {"size_class": dim(list(MM["size_class"]), ["SMALL", "MID", "LARGE"]), "powertrain": dim(pt, ["BEV", "ICE", "HEV", "PHEV", "other"]), "model": dim(names, names)}, "reps": reps,
-    "meta": {"axes": {"x": "footprint (m^2)", "y": "share of drives decided correctly (size)"}, "vlines": [{"x": 4.43, "label": "SMALL | MID"}, {"x": 4.88, "label": "MID | LARGE"}], "model": "bi-GRU recipe S9, mean of 3 seeds, split_platform test, drive_full rule",
+    "meta": {"axes": {"x": "footprint (m^2)", "y": "share of drives decided correctly (size)"}, "vlines": [{"x": 4.43, "label": "SMALL | MID"}, {"x": 4.88, "label": "MID | LARGE"}],
+             "guides": [{"axis": "x", "v": num((4.43 - bb[0]) / (bb[2] - bb[0]), 4), "label": "4.43 m²"}, {"axis": "x", "v": num((4.88 - bb[0]) / (bb[2] - bb[0]), 4), "label": "4.88 m²"}], "model": "bi-GRU recipe S9, mean of 3 seeds, split_platform test, drive_full rule",
              "footprint": "drive-weighted mean of the platform footprints of the model's test drives (several generations for some models)", "labels": "size_class / powertrain = majority label among the model's size-eligible test drives (e.g. most Toyota Corolla test drives are HEV)", "footprint_ranges": {m: [num(r.fp_min, 3), num(r.fp_max, 3)] for m, r in MM.iterrows() if r.fp_max - r.fp_min > 1e-6},
              "n_drives": {m: int(v) for m, v in MM["n_drives"].items()}, "shares": {m: num(v, 3) for m, v in SF["share"].items()}, "source": "saved split_platform test probabilities + build index (held-out car models)"}})
 z = np.load(os.path.join(V.RESULTS_DIR, PBEV + "_probs.npz"), allow_pickle=True); pb = np.asarray(z["probs"], float)[:, 0]; yy = np.asarray(z["y"]).astype(int)
