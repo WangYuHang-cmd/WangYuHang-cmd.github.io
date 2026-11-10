@@ -112,11 +112,10 @@ Below is the full set of projects. Explore more of my work on
       </div>
     </div>
   </div>
-
   <div class="work-card">
     <a class="thumb" href="/baton/"><img src="/images/th_baton.jpg" alt="BATON"></a>
     <div class="body">
-      <div class="venue">arXiv 2026</div>
+      <div class="venue">Accepted KDD 2027 (round 1)</div>
       <h3><a href="/baton/">BATON</a></h3>
       <p class="blurb">A multimodal benchmark for bidirectional human–automation control transitions: 781 routes, 173 drivers and 204.9 h of real-world driving-automation use with front and cabin video, CAN, radar and route context; takeover scored as detection (T3-D) and as anticipation (T3-A).</p>
       <div class="badges">
@@ -131,7 +130,7 @@ Below is the full set of projects. Explore more of my work on
   <div class="work-card">
     <a class="thumb" href="/drivedna/"><img src="/images/th_drivedna.jpg" alt="DriveDNA"></a>
     <div class="body">
-      <div class="venue">arXiv 2026</div>
+      <div class="venue">Accepted KDD 2027 (round 1)</div>
       <h3><a href="/drivedna/">DriveDNA</a></h3>
       <p class="blurb">A benchmark for driving-style identification — 4,121 drives from 465 drivers, 975 h — that isolates driver-specific behavior from vehicle, route and environment confounds.</p>
       <div class="badges">
@@ -142,6 +141,7 @@ Below is the full set of projects. Explore more of my work on
       </div>
     </div>
   </div>
+
 
   <div class="work-card">
     <a class="thumb" href="/drivemotion/"><img src="/images/th_drivemotion.jpg" alt="DriveMotion"></a>
